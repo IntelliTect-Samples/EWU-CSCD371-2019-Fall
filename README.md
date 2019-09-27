@@ -3,7 +3,7 @@
 ### Conventions
 
 - Create solution first, then create projects in subdirs.
-- Test should be named like so: `public void class_methodBeingTested_expectedResult() {}`
+- Test should be named like so: `public void Class_MethodBeingTested_ExpectedResult() {}`
 
 ### When Starting New Solution
 
