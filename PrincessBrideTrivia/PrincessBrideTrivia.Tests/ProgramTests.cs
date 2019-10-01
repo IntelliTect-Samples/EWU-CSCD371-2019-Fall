@@ -55,6 +55,12 @@ namespace PrincessBrideTrivia.Tests
             Assert.IsTrue(File.Exists(filePath));
         }
 
+        [TestMethod]
+        public void FixSomeCode()
+        {
+            Assert.IsTrue(true);
+        }
+
         [DataTestMethod]
         [DataRow(1, 1, "100%")]
         [DataRow(5, 10, "50%")]
