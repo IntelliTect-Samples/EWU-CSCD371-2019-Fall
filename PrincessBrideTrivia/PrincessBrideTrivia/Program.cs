@@ -7,6 +7,7 @@ namespace PrincessBrideTrivia
     {
         public static void Main(string[] args)
         {
+            // adding a comment for comments sake
             string filePath = GetFilePath();
             Question[] questions = LoadQuestions(filePath);
 
