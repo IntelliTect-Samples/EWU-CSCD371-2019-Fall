@@ -24,6 +24,8 @@ namespace PrincessBrideTrivia
 
         public static string GetPercentCorrect(int numberCorrectAnswers, int numberOfQuestions)
         {
+            //DevNote: could be integer division issue here.
+            //If the statement does: 5 / 10 * 100, (5/10) in integer division is 0, then * 100 is still 0.
             return (numberCorrectAnswers / numberOfQuestions * 100) + "%";
         }
 
