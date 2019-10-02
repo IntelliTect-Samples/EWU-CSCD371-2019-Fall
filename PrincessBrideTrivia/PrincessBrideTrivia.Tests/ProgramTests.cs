@@ -111,5 +111,29 @@ namespace PrincessBrideTrivia.Tests
                 File.AppendAllLines(filePath, lines);
             }
         }
+
+        private static void RandomizeQuestions_QuestionsDontChange()
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 2);
+                Question[] questions = Program.LoadQuestions(filePath);
+
+                // Act
+                Question[] randomQuestions = Program.RandomizeQuestions(questions);
+
+                // Assert
+                foreach(Question question in randomQuestions)
+                {
+                    Assert.IsNotNull(question);
+                }
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
     }
 }
