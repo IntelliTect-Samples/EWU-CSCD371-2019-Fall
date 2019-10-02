@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace PrincessBrideTrivia
 {
@@ -8,7 +9,7 @@ namespace PrincessBrideTrivia
         public static void Main(string[] args)
         {
             string filePath = GetFilePath();
-            Question[] questions = LoadQuestions(filePath);
+            Question[] questions = RandomizeQuestions(LoadQuestions(filePath));
 
             int numberCorrect = 0;
             for (int i = 0; i < questions.Length; i++)
@@ -92,6 +93,12 @@ namespace PrincessBrideTrivia
                 questions[i] = question;
             }
             return questions;
+        }
+
+        public static Question[] RandomizeQuestions(Question[] questions)
+        {
+            Random rnd = new Random();
+            return questions.OrderBy(question => rnd.Next()).ToArray();
         }
     }
 }
