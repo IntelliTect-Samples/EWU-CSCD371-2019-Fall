@@ -9,10 +9,13 @@ namespace PrincessBrideTrivia.Tests
         [TestMethod]
         public void LoadQuestions_QuestionsNotNull() //my test method
         {
+            //Arrange
             string filePath = Program.GetFilePath();
-            
+
+            //Act
             Question[] testQuestions = Program.LoadQuestions(filePath);
             
+            //Assert
             for(int i = 0; i < testQuestions.Length; i++)
             {
                 Assert.IsNotNull(testQuestions[i]);
