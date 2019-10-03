@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.IO;
 
 namespace PrincessBrideTrivia
@@ -8,7 +9,7 @@ namespace PrincessBrideTrivia
         public static void Main(string[] args)
         {
             string filePath = GetFilePath();
-            Question[] questions = LoadQuestions(filePath);
+            Question[] questions = RandomizeAnswers(LoadQuestions(filePath));
 
             int numberCorrect = 0;
             for (int i = 0; i < questions.Length; i++)
@@ -64,6 +65,20 @@ namespace PrincessBrideTrivia
         public static string GetFilePath()
         {
             return "Trivia.txt";
+        }
+
+        public static Question[] RandomizeAnswers(Question[] questions)
+        {
+            Random rnd = new Random();
+            return questions.Select(question => {
+                    Question q = new Question();
+                    q.Text = question.Text;
+                    q.Answers = question.Answers.OrderBy(_ => rnd.Next())
+                                                .ToArray();
+                    q.CorrectAnswerIndex = (Array.IndexOf(q.Answers, question.CorrectAnswer)+1)
+                                           .ToString();
+                    return q;
+                }).ToArray();
         }
 
         public static Question[] LoadQuestions(string filePath)
