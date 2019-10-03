@@ -26,7 +26,7 @@ namespace PrincessBrideTrivia
         {
             //DevNote: could be integer division issue here.
             //If the statement does: 5 / 10 * 100, (5/10) in integer division is 0, then * 100 is still 0.
-            return ((1.0 * numberCorrectAnswers) / (1.0 * numberOfQuestions) * 100) + "%";
+            return (numberCorrectAnswers / numberOfQuestions * 100) + "%";
         }
 
         public static bool AskQuestion(Question question)
