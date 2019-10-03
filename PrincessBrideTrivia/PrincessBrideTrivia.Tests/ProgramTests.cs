@@ -1,5 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace PrincessBrideTrivia.Tests
 {
@@ -72,6 +75,36 @@ namespace PrincessBrideTrivia.Tests
             Assert.AreEqual(expectedString, percentage);
         }
 
+        /*Bonus*/
+        [TestMethod]
+        public void CheckIfRandom_ChecksIfAnswersAreRandomized()
+        {
+            //Arrange
+            Question question = GenerateAQuestion();
+            Question questionCopy = question;
+
+            //Act
+            question = Program.RandomizeQuestionAnswersOrder(question);
+
+            //Assert
+            CollectionAssert.AreEqual(question.Answers, questionCopy.Answers);
+        }
+
+        /*Bonus*/
+        [TestMethod]
+        public void CheckCorrectAnswerIndex_CheckCorrectAnswerIndexAfterAnswerRandomization()
+        {
+            //Arrange
+            Question question = GenerateAQuestion();
+            string correctAnswer = question.Answers[Convert.ToInt32(question.CorrectAnswerIndex) - 1];
+
+            //Act
+            question = Program.RandomizeQuestionAnswersOrder(question);
+
+            //Assert
+            Assert.AreEqual(question.Answers[Convert.ToInt32(question.CorrectAnswerIndex) - 1], correctAnswer);
+        }
+
 
         private static void GenerateQuestionsFile(string filePath, int numberOfQuestions)
         {
@@ -85,6 +118,19 @@ namespace PrincessBrideTrivia.Tests
                 lines[4] = "2";
                 File.AppendAllLines(filePath, lines);
             }
+        }
+
+        private static Question GenerateAQuestion()
+        {
+            Question question = new Question();
+            question.Text = "This is the question text";
+            question.Answers = new string[3];
+            question.Answers[0] = "Question 1";
+            question.Answers[1] = "Question 2";
+            question.Answers[2] = "Question 3";
+            question.CorrectAnswerIndex = "1";
+
+            return question;
         }
     }
 }

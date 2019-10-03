@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace PrincessBrideTrivia
 {
@@ -24,7 +26,8 @@ namespace PrincessBrideTrivia
 
         public static string GetPercentCorrect(int numberCorrectAnswers, int numberOfQuestions)
         {
-            return (numberCorrectAnswers / numberOfQuestions * 100) + "%";
+            return Math.Floor((float)numberCorrectAnswers / (float)numberOfQuestions * 100) + "%";
+            /*Issue 2: Integer division cannot be used here, that is why the function would only return 0% or 100%, because the number calculated would be floored to 0 every time n/7 questions were answered correctly where n < 7.*/
         }
 
         public static bool AskQuestion(Question question)
@@ -89,8 +92,36 @@ namespace PrincessBrideTrivia
                 question.Answers[1] = answer2;
                 question.Answers[2] = answer3;
                 question.CorrectAnswerIndex = correctAnswerIndex;
+
+                /*Bonus:*/
+                questions[i] = RandomizeQuestionAnswersOrder(question);
+
+                //questions[i] = question;
+                /*Issue 1: Function never added the populated question object to the questions array.*/
             }
             return questions;
+        }
+
+        /*Bonus - Using Knuth shuffle*/
+        public static Question RandomizeQuestionAnswersOrder(Question question)
+        {
+            string correctAnswer = question.Answers[Convert.ToInt32(question.CorrectAnswerIndex) - 1];
+
+            Random rand = new Random();
+
+            for (int i = 0; i < question.Answers.Length; i++)
+            {
+                string temp = question.Answers[i];
+
+                int randIndex = rand.Next(i, question.Answers.Length);
+
+                question.Answers[i] = question.Answers[randIndex];
+                question.Answers[randIndex] = temp;
+            }
+
+            question.CorrectAnswerIndex = (Array.IndexOf(question.Answers, correctAnswer) + 1).ToString();
+
+            return question;
         }
     }
 }
