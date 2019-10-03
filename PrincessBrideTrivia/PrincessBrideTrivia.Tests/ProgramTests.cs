@@ -73,6 +73,7 @@ namespace PrincessBrideTrivia.Tests
             Assert.AreEqual(expectedString, percentage);
         }
 
+        /*Issue 1 Test case*/
         [TestMethod]
         public void LoadQuestions_ChecksIfQuestionsAreNotNull()
         {
