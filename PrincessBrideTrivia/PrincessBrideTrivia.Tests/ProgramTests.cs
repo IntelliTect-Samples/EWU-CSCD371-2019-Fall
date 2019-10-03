@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System.Linq;
 
 namespace PrincessBrideTrivia.Tests
 {
@@ -17,6 +18,7 @@ namespace PrincessBrideTrivia.Tests
 
                 // Act
                 Question[] questions = Program.LoadQuestions(filePath);
+                bool hasNoNullQuestions = questions.All(x => x != null);
 
                 // Assert 
                 Assert.AreEqual(2, questions.Length);
