@@ -22,6 +22,7 @@ namespace PrincessBrideTrivia.Tests
 
                 // Assert 
                 Assert.AreEqual(2, questions.Length);
+                Assert.IsTrue(hasNoNullQuestions);
             }
             finally
             {
