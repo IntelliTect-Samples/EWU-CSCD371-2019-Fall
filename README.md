@@ -18,6 +18,8 @@ System.NullReferenceException
 Expected:
 The application is expected to display trivia questions that the user can attempt to answer. It should not be crashing.
 
+An associated unit test should also be created to prove it won't crash this way again in the future.
+
 Issue 2:
 Reproduction steps:
 Run the unit tests.

@@ -24,8 +24,6 @@ namespace PrincessBrideTrivia
 
         public static string GetPercentCorrect(int numberCorrectAnswers, int numberOfQuestions)
         {
-            //DevNote: could be integer division issue here.
-            //If the statement does: 5 / 10 * 100, (5/10) in integer division is 0, then * 100 is still 0.
             return (numberCorrectAnswers / numberOfQuestions * 100) + "%";
         }
 
@@ -68,7 +66,6 @@ namespace PrincessBrideTrivia
             return "Trivia.txt";
         }
 
-        //Issue #1 possibility: Unless I'm completely missing it, it seems as though the method does not add new questions to the questions array as it steps through the for loop.
         public static Question[] LoadQuestions(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
