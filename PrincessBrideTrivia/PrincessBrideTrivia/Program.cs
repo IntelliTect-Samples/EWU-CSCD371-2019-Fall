@@ -68,6 +68,7 @@ namespace PrincessBrideTrivia
             return "Trivia.txt";
         }
 
+        //Issue #1 possibility: Unless I'm completely missing it, it seems as though the method does not add new questions to the questions array as it steps through the for loop.
         public static Question[] LoadQuestions(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
