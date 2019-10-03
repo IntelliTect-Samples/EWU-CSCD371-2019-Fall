@@ -66,6 +66,7 @@ namespace PrincessBrideTrivia
             return "Trivia.txt";
         }
 
+        //Issue 1 may be located here. The array does not get populated as it runs through.
         public static Question[] LoadQuestions(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
