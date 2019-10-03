@@ -47,7 +47,7 @@ namespace PrincessBrideTrivia.Tests
         public void GetFilePath_ReturnsFileThatExists()
         {
             // Arrange
-
+            // Fixing issue 2
             // Act
             string filePath = Program.GetFilePath();
 
