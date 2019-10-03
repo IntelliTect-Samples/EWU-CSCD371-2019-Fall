@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System.Linq;
 
 namespace PrincessBrideTrivia.Tests
 {
@@ -71,6 +72,31 @@ namespace PrincessBrideTrivia.Tests
                 foreach(Question question in questions)
                 {
                     Assert.IsNotNull(question);
+                }
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
+
+        [TestMethod]
+        public void RandomizeAnswers_SameCorrectAnswer()
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 2);
+
+                // Act
+                Question[] questions = Program.LoadQuestions(filePath);
+                Question[] randomQuestions = Program.RandomizeAnswers(questions);
+
+                // Assert
+                foreach(var (a1, a2) in questions.Zip(randomQuestions, (q1, q2) => (q1.CorrectAnswer, q2.CorrectAnswer)))
+                {
+                    Assert.IsTrue(a1 == a2);
                 }
             }
             finally
