@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace PrincessBrideTrivia
 {
@@ -10,6 +8,7 @@ namespace PrincessBrideTrivia
         public static void Main(string[] args)
         {
             string filePath = GetFilePath();
+
             Question[] questions = LoadQuestions(filePath);
 
             int numberCorrect = 0;

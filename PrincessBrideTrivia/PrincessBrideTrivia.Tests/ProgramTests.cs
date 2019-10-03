@@ -1,8 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace PrincessBrideTrivia.Tests
 {
