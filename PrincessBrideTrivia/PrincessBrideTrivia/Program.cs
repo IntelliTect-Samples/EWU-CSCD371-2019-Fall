@@ -19,12 +19,13 @@ namespace PrincessBrideTrivia
                     numberCorrect++;
                 }
             }
+
             Console.WriteLine("You got " + GetPercentCorrect(numberCorrect, questions.Length) + " correct");
         }
 
         public static string GetPercentCorrect(int numberCorrectAnswers, int numberOfQuestions)
         {
-            return (numberCorrectAnswers / numberOfQuestions * 100) + "%";
+            return (double) numberCorrectAnswers / numberOfQuestions * 100 + "%";
         }
 
         public static bool AskQuestion(Question question)
@@ -90,6 +91,7 @@ namespace PrincessBrideTrivia
                 question.Answers[2] = answer3;
                 question.CorrectAnswerIndex = correctAnswerIndex;
             }
+
             return questions;
         }
     }
