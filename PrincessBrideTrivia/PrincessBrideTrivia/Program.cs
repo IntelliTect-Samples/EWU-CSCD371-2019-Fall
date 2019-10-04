@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace PrincessBrideTrivia
 {
@@ -24,9 +25,6 @@ namespace PrincessBrideTrivia
 
         public static string GetPercentCorrect(int numberCorrectAnswers, int numberOfQuestions)
         {
-            Console.WriteLine("Number correct: " + numberCorrectAnswers);
-            Console.WriteLine("Number total: " + numberOfQuestions);
-
             return ((double)numberCorrectAnswers / (double)numberOfQuestions * 100) + "%";
         }
 
@@ -85,13 +83,34 @@ namespace PrincessBrideTrivia
 
                 string correctAnswerIndex = lines[lineIndex + 4];
 
+                int[] a = new int[3];
+                for (int j = 0; j < 3; j++) {
+                    a[j] = -1;
+                }
+                Random rand = new Random();
+                for (int j = 0; j < 3; j++) {
+                    while (true) {
+                        int temp = rand.Next(3);
+                        int pos = Array.IndexOf(a, temp);
+                        if (pos == -1) {
+                            a[j] = temp;
+                            break;
+                        }
+                    }
+                }
                 Question question = new Question();
                 question.Text = questionText;
                 question.Answers = new string[3];
-                question.Answers[0] = answer1;
-                question.Answers[1] = answer2;
-                question.Answers[2] = answer3;
-                question.CorrectAnswerIndex = correctAnswerIndex;
+                question.Answers[a[0]] = answer1;
+                question.Answers[a[1]] = answer2;
+                question.Answers[a[2]] = answer3;
+                for (int j = 0; j < 3; j++) {
+                    if (j+1 == int.Parse(correctAnswerIndex)) {
+                        question.CorrectAnswerIndex = a[j]+1 + "";
+                        break;
+                    }
+                    
+                }
                 questions[i] = question;
             }
             return questions;
