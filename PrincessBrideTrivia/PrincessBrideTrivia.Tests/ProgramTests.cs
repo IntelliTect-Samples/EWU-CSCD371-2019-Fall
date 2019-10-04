@@ -86,6 +86,19 @@ namespace PrincessBrideTrivia.Tests
             Assert.IsNotNull(questions[0]);
         }
 
+        [TestMethod]
+        public void Answers_AreRandomized() {
+
+            //Arrange
+
+            // Act
+            Question[] questions = Program.LoadQuestions(Program.GetFilePath());
+            Question[] questions2 = Program.LoadQuestions(Program.GetFilePath());
+
+            //Assert
+            Assert.AreNotEqual(questions, questions2);
+        }
+
 
         private static void GenerateQuestionsFile(string filePath, int numberOfQuestions)
         {
