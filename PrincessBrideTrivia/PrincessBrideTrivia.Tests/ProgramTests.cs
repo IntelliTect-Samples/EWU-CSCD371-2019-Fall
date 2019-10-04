@@ -86,29 +86,5 @@ namespace PrincessBrideTrivia.Tests
                 File.AppendAllLines(filePath, lines);
             }
         }
-        [TestMethod]
-        public void LoadQuestions_ArrayContentsAreNonNull()
-        {
-            string filePath = Path.GetRandomFileName();
-            try
-            {
-                // Arrange
-                GenerateQuestionsFile(filePath, 2);
-
-                // Act
-                Question[] questions = Program.LoadQuestions(filePath);
-
-                // Assert
-
-                for (int i = 0; i < questions.Length; i++)
-                {
-                    Assert.IsNotNull(questions[i]);
-                }
-            }
-            finally
-            {
-                File.Delete(filePath);
-            }
-        }
     }
 }
