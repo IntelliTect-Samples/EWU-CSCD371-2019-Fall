@@ -1,6 +1,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using PrincessBrideTrivia;
 
 namespace PrincessBrideTrivia.Tests
 {
@@ -71,6 +72,18 @@ namespace PrincessBrideTrivia.Tests
 
             // Assert
             Assert.AreEqual(expectedString, percentage);
+        }
+
+        [TestMethod]
+        public void Question_IsNotNull() {
+
+            // Arrange
+
+            // Act
+            Question[] questions = Program.LoadQuestions(Program.GetFilePath());
+
+            // Assert
+            Assert.IsNotNull(questions[0]);
         }
 
 
