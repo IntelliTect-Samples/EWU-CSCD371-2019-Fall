@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace PrincessBrideTrivia
 {
@@ -24,9 +25,6 @@ namespace PrincessBrideTrivia
 
         public static string GetPercentCorrect(int numberCorrectAnswers, int numberOfQuestions)
         {
-            Console.WriteLine("Number correct: " + numberCorrectAnswers);
-            Console.WriteLine("Number total: " + numberOfQuestions);
-
             return ((double)numberCorrectAnswers / (double)numberOfQuestions * 100) + "%";
         }
 
@@ -58,9 +56,18 @@ namespace PrincessBrideTrivia
         public static void DisplayQuestion(Question question)
         {
             Console.WriteLine("Question: " + question.Text);
+            Random rand = new Random();
+            int[] a = new int[3];
             for (int i = 0; i < question.Answers.Length; i++)
             {
-                Console.WriteLine((i + 1) + ": " + question.Answers[i]);
+                while (true) {
+                    int temp = rand.Next(3)+1;
+                    if (!a.Contains(temp)) {
+                        a[i] = temp;
+                    break;
+                    }
+                }
+                Console.WriteLine((i + 1) + ": " + question.Answers[a[i]-1]);
             }
         }
 
