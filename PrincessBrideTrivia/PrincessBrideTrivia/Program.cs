@@ -68,6 +68,7 @@ namespace PrincessBrideTrivia
 
         public static Question[] LoadQuestions(string filePath)
         {
+            Random randomGenerator = new Random();
             string[] lines = File.ReadAllLines(filePath);
 
             Question[] questions = new Question[lines.Length / 5];
@@ -89,10 +90,61 @@ namespace PrincessBrideTrivia
                 question.Answers[1] = answer2;
                 question.Answers[2] = answer3;
                 question.CorrectAnswerIndex = correctAnswerIndex;
+                RandomizeAnswerOrder(question, randomGenerator);
 
                 questions[i] = question;
             }
             return questions;
+        }
+
+        public static void RandomizeAnswerOrder(Question question, Random randomGenerator)
+        {
+            // create a sequence of ints from 0 to length-1 in random order
+            // initialize to -1 to easily tell which indices have been mapped
+            int[] randomMapping = new int[question.Answers.Length];
+            for (int i = 0; i < randomMapping.Length; i++)
+            {
+                randomMapping[i] = -1;
+            }
+
+            // collisions on random index are solved by finding the first free index
+            //    direction checked for first free index is randomly chosen
+            for (int i = 0; i < randomMapping.Length; i++)
+            {
+                int newIndex = randomGenerator.Next(0, randomMapping.Length - 1);
+                if (randomMapping[newIndex] == -1)
+                {
+                    randomMapping[newIndex] = i;
+                }
+                else
+                {
+                    int direction = (int)Math.Pow(-1, randomGenerator.Next(1, 2));
+                    for (int j = 0; j < randomMapping.Length; j++)
+                    {
+                        // can't use modulo by itself here
+                        // it's actually a remainder that returns negatives on modulo of negative numbers
+                        newIndex = (newIndex + direction) % randomMapping.Length;
+                        if (newIndex < 0)
+                        {
+                            newIndex = randomMapping.Length - 1;
+                        }
+
+                        if (randomMapping[newIndex] == -1)
+                        {
+                            randomMapping[newIndex] = i;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // answer is indexed naturally (starts at 1), need to adjust for that
+            string[] oldAnswers = (string[])question.Answers.Clone();
+            question.CorrectAnswerIndex = $"{randomMapping[int.Parse(question.CorrectAnswerIndex) - 1] + 1}";
+            for (int i = 0; i < randomMapping.Length; i++)
+            {
+                question.Answers[i] = oldAnswers[randomMapping[i]];
+            }
         }
     }
 }

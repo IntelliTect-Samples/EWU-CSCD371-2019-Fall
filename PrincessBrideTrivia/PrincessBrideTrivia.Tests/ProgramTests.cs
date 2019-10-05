@@ -51,6 +51,31 @@ namespace PrincessBrideTrivia.Tests
             }
         }
 
+        [TestMethod]
+        public void LoadQuestions_AnswerIndexCorrectAfterRandomizingAnswerorder()
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 1);
+
+                // Act
+                Question question = Program.LoadQuestions(filePath)[0];
+                string correctAnswer = question.Answers[int.Parse(question.CorrectAnswerIndex) - 1];
+
+                Program.RandomizeAnswerOrder(question, new System.Random());
+                string randomizedCorrectAnswer = question.Answers[int.Parse(question.CorrectAnswerIndex) - 1];
+
+                // Assert 
+                Assert.IsTrue(string.Equals(correctAnswer, randomizedCorrectAnswer));
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
+
         [DataTestMethod]
         [DataRow("1", true)]
         [DataRow("2", false)]
