@@ -96,7 +96,7 @@ namespace PrincessBrideTrivia.Tests
             Question[] questions2 = Program.LoadQuestions(Program.GetFilePath());
 
             //Assert
-            Assert.AreNotEqual(questions, questions2);
+                Assert.AreNotEqual(Question.ToString(questions), Question.ToString(questions2));
         }
 
 
