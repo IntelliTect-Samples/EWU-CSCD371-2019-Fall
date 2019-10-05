@@ -83,7 +83,9 @@ namespace PrincessBrideTrivia.Tests
             Question[] questions = Program.LoadQuestions(Program.GetFilePath());
 
             // Assert
-            Assert.IsNotNull(questions[0]);
+            for (int i = 0; i < questions.Length; i++) {
+                Assert.IsNotNull(questions[i]);
+            }
         }
 
 
