@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace PrincessBrideTrivia
@@ -24,12 +25,12 @@ namespace PrincessBrideTrivia
 
         public static string GetPercentCorrect(int numberCorrectAnswers, int numberOfQuestions)
         {
-            return (numberCorrectAnswers / (double) numberOfQuestions * 100) + "%";
+            return (numberCorrectAnswers / numberOfQuestions * 100) + "%";
         }
 
         public static bool AskQuestion(Question question)
         {
-            DisplayQuestion(question);
+            DisplayQuestion(RandomizeAnswers(question));
 
             string userGuess = GetGuessFromUser();
             return DisplayResult(userGuess, question);
@@ -59,6 +60,21 @@ namespace PrincessBrideTrivia
             {
                 Console.WriteLine((i + 1) + ": " + question.Answers[i]);
             }
+
+        }
+
+        public static Question RandomizeAnswers(Question question)
+        {
+            Random random = new Random();
+            
+            for (int i = 0; i < question.Answers.Length; i++)
+            {
+                int k = random.Next(question.Answers.Length);
+                string temp = question.Answers[k];
+                question.Answers[k] = question.Answers[i];
+                question.Answers[i] = temp;
+            }
+            return question;
         }
 
         public static string GetFilePath()
@@ -89,6 +105,7 @@ namespace PrincessBrideTrivia
                 question.Answers[1] = answer2;
                 question.Answers[2] = answer3;
                 question.CorrectAnswerIndex = correctAnswerIndex;
+                questions[i] = question;
             }
             return questions;
         }

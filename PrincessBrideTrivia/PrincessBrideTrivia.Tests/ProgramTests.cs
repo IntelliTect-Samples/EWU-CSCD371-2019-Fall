@@ -86,5 +86,91 @@ namespace PrincessBrideTrivia.Tests
                 File.AppendAllLines(filePath, lines);
             }
         }
+        [TestMethod]
+        public void LoadQuestions_ArrayContentsAreNonNull()
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 2);
+
+                // Act
+                Question[] questions = Program.LoadQuestions(filePath);
+
+                // Assert
+
+                for (int i = 0; i < questions.Length; i++)
+                {
+                    Assert.IsNotNull(questions[i]);
+                }
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
+
+        [TestMethod]
+        public void LoadQuestions_AnswerOrderIsRandomized()
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 2);
+
+                // Act
+                Question[] questions = Program.LoadQuestions(filePath);
+
+                // Assert
+
+                for (int i = 0; i < questions.Length; i++)
+                {
+                    Assert.IsNotNull(questions[i]);
+                }
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
+
+        [TestMethod]
+        public void DisplayQuestion_AnswersPrintInRandomOrder()
+        {
+            string filePath = Program.GetFilePath();
+
+            try
+            {
+                // Arrange
+                Question[] questions1 = Program.LoadQuestions(filePath);
+                Question[] questions2 = Program.LoadQuestions(filePath);
+
+
+                // Act
+                for (int i = 0; i < questions1.Length; i++)
+                {
+                    Program.RandomizeAnswers(questions1[i]);
+                }
+
+                // Assert
+                int count = 0;
+                for (int i = 0; i < questions1.Length; i++)
+                {
+                    if ((questions2[i].Equals(questions1[i])))
+                    {
+                        count++;
+                    }
+                }
+                Assert.IsFalse(count == questions1.Length);
+
+
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
     }
 }
