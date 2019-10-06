@@ -99,6 +99,20 @@ namespace PrincessBrideTrivia.Tests
                 Assert.AreNotEqual(Question.ToString(questions), Question.ToString(questions2));
         }
 
+        [TestMethod]
+        public void CorrectAnswerIndex_IsCorrect() {
+            // Arrange
+
+            // Act
+            Question[] random = Program.LoadQuestions(Program.GetFilePath());
+            Question[] nonRandom = Program.LoadQuestionsNonRandom(Program.GetFilePath());
+
+            // Assert
+            for (int i = 0; i < random.Length; i++) {
+                Assert.AreEqual(random[i].Answers[int.Parse(random[i].CorrectAnswerIndex)-1], nonRandom[i].Answers[int.Parse(nonRandom[i].CorrectAnswerIndex)-1]);
+            }
+        }
+
 
         private static void GenerateQuestionsFile(string filePath, int numberOfQuestions)
         {
