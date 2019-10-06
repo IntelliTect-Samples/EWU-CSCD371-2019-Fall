@@ -92,7 +92,7 @@ namespace PrincessBrideTrivia.Tests
             //Arrange
 
             // Act
-            Question[] questions = Program.LoadQuestions(Program.GetFilePath());
+            Question[] questions = Program.LoadQuestionsNonRandom(Program.GetFilePath());
             Question[] questions2 = Program.LoadQuestions(Program.GetFilePath());
 
             //Assert
