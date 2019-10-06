@@ -30,7 +30,7 @@ namespace PrincessBrideTrivia
 
         public static bool AskQuestion(Question question)
         {
-            DisplayQuestion(question); 
+            DisplayQuestion(RandomizeAnswers(question)); 
 
             string userGuess = GetGuessFromUser();
             return DisplayResult(userGuess, question);
@@ -63,7 +63,19 @@ namespace PrincessBrideTrivia
 
         }
 
-         
+        public static Question RandomizeAnswers(Question question)
+        {
+            Random random = new Random();
+
+            for (int i = 0; i < question.Answers.Length; i++)
+            {
+                int k = random.Next(question.Answers.Length);
+                string temp = question.Answers[k];
+                question.Answers[k] = question.Answers[i];
+                question.Answers[i] = temp;
+            }
+            return question;
+        }
 
         public static string GetFilePath()
         {
