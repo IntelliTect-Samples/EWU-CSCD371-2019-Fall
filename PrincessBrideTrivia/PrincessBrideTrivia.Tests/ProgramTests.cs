@@ -112,31 +112,6 @@ namespace PrincessBrideTrivia.Tests
         }
 
         [TestMethod]
-        public void LoadQuestions_AnswerOrderIsRandomized()
-        {
-            string filePath = Path.GetRandomFileName();
-            try
-            {
-                // Arrange
-                GenerateQuestionsFile(filePath, 2);
-
-                // Act
-                Question[] questions = Program.LoadQuestions(filePath);
-
-                // Assert
-
-                for (int i = 0; i < questions.Length; i++)
-                {
-                    Assert.IsNotNull(questions[i]);
-                }
-            }
-            finally
-            {
-                File.Delete(filePath);
-            }
-        }
-
-        [TestMethod]
         public void DisplayQuestion_AnswersPrintInRandomOrder()
         {
             string filePath = Program.GetFilePath();
