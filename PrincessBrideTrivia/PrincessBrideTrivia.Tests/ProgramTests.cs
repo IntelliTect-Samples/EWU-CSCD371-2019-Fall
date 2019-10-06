@@ -110,42 +110,5 @@ namespace PrincessBrideTrivia.Tests
                 File.Delete(filePath);
             }
         }
-
-        [TestMethod]
-        public void DisplayQuestion_AnswersPrintInRandomOrder()
-        {
-            string filePath = Program.GetFilePath();
-
-            try
-            {
-                // Arrange
-                Question[] questions1 = Program.LoadQuestions(filePath);
-                Question[] questions2 = Program.LoadQuestions(filePath);
-
-
-                // Act
-                for (int i = 0; i < questions1.Length; i++)
-                {
-                    Program.RandomizeAnswers(questions1[i]);
-                }
-
-                // Assert
-                int count = 0;
-                for (int i = 0; i < questions1.Length; i++)
-                {
-                    if ((questions2[i].Equals(questions1[i])))
-                    {
-                        count++;
-                    }
-                }
-                Assert.IsFalse(count == questions1.Length);
-
-
-            }
-            finally
-            {
-                File.Delete(filePath);
-            }
-        }
     }
 }
