@@ -66,13 +66,22 @@ namespace PrincessBrideTrivia
         public static Question RandomizeAnswers(Question question)
         {
             Random random = new Random();
+            string correctAnswer = question.Answers[Int32.Parse(question.CorrectAnswerIndex) - 1];
 
             for (int i = 0; i < question.Answers.Length; i++)
             {
                 int k = random.Next(question.Answers.Length);
-                string temp = question.Answers[k];
-                question.Answers[k] = question.Answers[i];
-                question.Answers[i] = temp;
+                    
+                    string temp = question.Answers[k];
+                    question.Answers[k] = question.Answers[i];
+                    question.Answers[i] = temp;
+            }
+            for (int i = 0; i < question.Answers.Length; i++)
+            {
+                if(question.Answers[i].Equals(correctAnswer))
+                {
+                    question.CorrectAnswerIndex = (i + 1).ToString();
+                }
             }
             return question;
         }
