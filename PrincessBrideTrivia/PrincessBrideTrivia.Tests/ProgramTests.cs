@@ -116,36 +116,26 @@ namespace PrincessBrideTrivia.Tests
         {
             string filePath = Program.GetFilePath();
 
-            try
+            // Arrange 
+            Question[] notRandomAnswers = Program.LoadQuestions(filePath);
+            Question[] randomAnswers = Program.LoadQuestions(filePath);
+            int numberOfEqualAnswers = 0;
+            int numberOfTotalAnswers = 0;
+            // Act 
+            for (int i = 0; i < notRandomAnswers.Length; i++)
             {
-                // Arrange 
-                Question[] questions1 = Program.LoadQuestions(filePath);
-                Question[] questions2 = Program.LoadQuestions(filePath);
-
-
-                // Act 
-                for (int i = 0; i < questions1.Length; i++)
+                Program.RandomizeAnswers(randomAnswers[i]);
+                for (int k = 0; k < randomAnswers[i].Answers.Length; k++)
                 {
-                    Program.RandomizeAnswers(questions1[i]);
-                }
-
-                // Assert 
-                int count = 0;
-                for (int i = 0; i < questions1.Length; i++)
-                {
-                    if ((questions2[i].Equals(questions1[i])))
+                    if (randomAnswers[i].Answers[k].Equals(notRandomAnswers[i].Answers[k]))
                     {
-                        count++;
+                        numberOfEqualAnswers++;
                     }
+                    numberOfTotalAnswers++;
                 }
-                Assert.IsFalse(count == questions1.Length);
-
-
             }
-            finally
-            {
-                File.Delete(filePath);
-            }
+            // Assert 
+            Assert.IsFalse(numberOfEqualAnswers == numberOfTotalAnswers);
         }
     }
 }
