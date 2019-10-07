@@ -75,7 +75,6 @@ namespace PrincessBrideTrivia
             {
                 int lineIndex = i * 5;
                 string questionText = lines[lineIndex];
-
                 string answer1 = lines[lineIndex + 1];
                 string answer2 = lines[lineIndex + 2];
                 string answer3 = lines[lineIndex + 3];
@@ -89,6 +88,7 @@ namespace PrincessBrideTrivia
                 question.Answers[1] = answer2;
                 question.Answers[2] = answer3;
                 question.CorrectAnswerIndex = correctAnswerIndex;
+                questions[i] = question; 
             }
             return questions;
         }
