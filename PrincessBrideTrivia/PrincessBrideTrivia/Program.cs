@@ -9,6 +9,8 @@ namespace PrincessBrideTrivia
         {
             string filePath = GetFilePath();
             Question[] questions = LoadQuestions(filePath);
+
+            questions = QuestionsRandomizer(questions);
  
             int numberCorrect = 0;
             for (int i = 0; i < questions.Length; i++)
@@ -93,6 +95,40 @@ namespace PrincessBrideTrivia
                 questions[i] = question;
             }
             return questions;
+        }
+
+        public static Question[] QuestionsRandomizer(Question[] questions)
+        {
+            Question[] newQuestions = new Question[questions.Length];//New Questions to be returned after randomizing
+            Boolean[] sequence = new bool[questions.Length];
+            Random rnd = new Random();
+            int newPosition;
+
+            for (int i = 0; i < sequence.Length; i++)
+            {
+                sequence[i] = true;
+            }
+
+            for(int i = 0; i < newQuestions.Length; i++)
+            {
+                bool state = true;
+                while (state == true)
+                {
+                    newPosition = rnd.Next(questions.Length);
+                    if (sequence[newPosition] == true)//Checks if the new position of the question is already in use
+                    {
+                        state = false;
+                        sequence[newPosition] = false;
+                        newQuestions[newPosition] = questions[i];
+                    }
+                    else
+                    {
+                        state = true;
+                    }
+                }
+                
+            }
+            return newQuestions;
         }
     }
 }

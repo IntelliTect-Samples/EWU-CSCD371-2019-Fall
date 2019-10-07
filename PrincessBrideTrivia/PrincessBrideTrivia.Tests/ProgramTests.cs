@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 
 namespace PrincessBrideTrivia.Tests
@@ -27,8 +28,7 @@ namespace PrincessBrideTrivia.Tests
             }
         }
 
-        //[TestMethod]
-        [DataTestMethod]
+        [TestMethod]
         public void LoadQuestions_ReturnNotNull()
         {
             string filePath = Path.GetRandomFileName();
@@ -46,6 +46,28 @@ namespace PrincessBrideTrivia.Tests
                 Assert.IsNotNull(questions[0].Answers[1]);
                 Assert.IsNotNull(questions[0].Answers[2]);
                 Assert.IsNotNull(questions[0].CorrectAnswerIndex);
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
+
+        [TestMethod]
+        public void QuestionsAreRandom()
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFileRandomTest(filePath, 15);
+
+                // Act
+                Question[] questionsNotRandom = Program.LoadQuestions(filePath);
+                Question[] questionRandom = Program.QuestionsRandomizer(questionsNotRandom);
+
+                // Assert 
+                Assert.AreNotEqual(questionsNotRandom, questionRandom);
             }
             finally
             {
@@ -109,6 +131,21 @@ namespace PrincessBrideTrivia.Tests
                 lines[2] = "Answer 2";
                 lines[3] = "Answer 3";
                 lines[4] = "2";
+                File.AppendAllLines(filePath, lines);
+            }
+        }
+
+        private static void GenerateQuestionsFileRandomTest(string filePath, int numberOfQuestions)
+        {
+            Random rnd = new Random();
+            for (int i = 0; i < numberOfQuestions; i++)
+            {
+                string[] lines = new string[5];
+                lines[0] = "Question " + i + " this is the question text";
+                lines[1] = "Answer 1";
+                lines[2] = "Answer 2";
+                lines[3] = "Answer 3";
+                lines[4] = rnd.Next(3).ToString();
                 File.AppendAllLines(filePath, lines);
             }
         }
