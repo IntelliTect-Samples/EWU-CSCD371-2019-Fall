@@ -22,7 +22,7 @@ namespace PrincessBrideTrivia
             Console.WriteLine("You got " + GetPercentCorrect(numberCorrect, questions.Length) + " correct");
         }
 
-        public static string GetPercentCorrect(int numberCorrectAnswers, int numberOfQuestions)
+        public static string GetPercentCorrect(double numberCorrectAnswers, double numberOfQuestions)
         {
             return (numberCorrectAnswers / numberOfQuestions * 100) + "%";
         }
