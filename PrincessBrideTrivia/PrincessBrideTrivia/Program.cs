@@ -76,11 +76,14 @@ namespace PrincessBrideTrivia
                 int lineIndex = i * 5;
                 string questionText = lines[lineIndex];
 
-                string answer1 = lines[lineIndex + 1];
-                string answer2 = lines[lineIndex + 2];
-                string answer3 = lines[lineIndex + 3];
+                int[] randomizedIndexes = MakeRandomArray();
+
+                string answer1 = lines[lineIndex + randomizedIndexes[0]];
+                string answer2 = lines[lineIndex + randomizedIndexes[1]];
+                string answer3 = lines[lineIndex + randomizedIndexes[2]];
 
                 string correctAnswerIndex = lines[lineIndex + 4];
+                int updatedCorrectAnswerIndex = Array.IndexOf(randomizedIndexes, int.Parse(correctAnswerIndex)) + 1;
 
                 Question question = new Question();
                 question.Text = questionText;
@@ -88,11 +91,30 @@ namespace PrincessBrideTrivia
                 question.Answers[0] = answer1;
                 question.Answers[1] = answer2;
                 question.Answers[2] = answer3;
-                question.CorrectAnswerIndex = correctAnswerIndex;
+                question.CorrectAnswerIndex = updatedCorrectAnswerIndex.ToString();
 
                 questions[i] = question;
             }
             return questions;
+        }
+
+        private static int[] MakeRandomArray()
+        {
+            int[] indexes = new int[3];
+            for (int i = 0; i < 3; i++)
+                indexes[i] = i + 1;
+
+            Random r = new Random();
+            for(int i = 3; i > 1; i--)
+            {
+                int indexToSwap = r.Next(i);
+                int temp = indexes[indexToSwap];
+
+                indexes[indexToSwap] = indexes[i - 1];
+                indexes[i - 1] = temp;
+            }
+
+            return indexes;
         }
     }
 }
