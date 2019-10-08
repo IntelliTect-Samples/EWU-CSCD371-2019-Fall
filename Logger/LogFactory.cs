@@ -4,8 +4,10 @@
     {
         public BaseLogger CreateLogger(string className)
         {
-            
-            return null;
+            Logger logger = new BaseLogger() {
+                LoggerName = className
+            };
+            return logger;
         }
     }
 }
