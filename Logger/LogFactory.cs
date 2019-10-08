@@ -6,7 +6,7 @@
 
         public BaseLogger CreateLogger(string className)
         {
-            logger = new FileLogger() {
+            logger = new FileLogger("FactoryLogger") {
                 LoggerName = className
             };
             return logger;

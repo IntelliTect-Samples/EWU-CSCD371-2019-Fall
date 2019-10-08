@@ -1,29 +1,41 @@
 ﻿using System;
+using System.IO;
 
 namespace Logger
 {
     public class FileLogger: BaseLogger
     {
         private string _LoggerName; // Is this the correct naming convention?
+        private string fileName;
+        private StreamWriter writer;
 
-        public string LoggerName
+        public string LoggerName { get; set; }
+
+        public FileLogger(string fileName)
         {
-            get { return _LoggerName; }
-
-            // TODO: check for existing filepath before creating new file?
-            set { _LoggerName = value; }
+            this.fileName = fileName + ".log";
+            this.writer = new StreamWriter(this.fileName);
         }
 
-        public static void Main(string[] args) { }
+        ~FileLogger()
+        {
+            writer.Flush();
+            writer.Close();
+        }
 
         override public void Log(LogLevel logLevel, string message)
         {
             // "10/7/2019 12:38:59 AM FileLoggerTests Warning: Test message"
-            string log = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss tt") +
+            var log = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss tt") +
                 $"{LoggerName} {logLevel}: {message}";
+            WriteToFile(log);
             return;
         }
 
-        private void WriteToFile() {}
+        private void WriteToFile(string log) {
+            Console.WriteLine($"Writing to log file: {log}");
+            writer.WriteLine(log);
+            writer.Flush();
+        }
     }
 }
