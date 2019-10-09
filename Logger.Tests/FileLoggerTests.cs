@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System;
 
 namespace Logger.Tests
 {
@@ -8,9 +9,11 @@ namespace Logger.Tests
     {
         [TestMethod]
         public void LogMessage_DidCreateFile() {
-            FileLogger fileLogger = new FileLogger("TestFile") { LoggerName = "TestLogger" };
+            string fileName = "TestFile";
+            FileLogger fileLogger = new FileLogger(fileName) { LoggerName = "TestLogger" };
             fileLogger.Log(LogLevel.Warning, "Test Message");
-            Assert.IsTrue(File.Exists("TestFile.log"));
+            Assert.IsTrue(File.Exists($"{fileName}.log"));
+            File.Delete($"{fileName}.log");
         }
     }
 }
