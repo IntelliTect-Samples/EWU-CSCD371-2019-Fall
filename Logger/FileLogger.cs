@@ -27,13 +27,12 @@ namespace Logger
         {
             // "10/7/2019 12:38:59 AM FileLoggerTests Warning: Test message"
             var log = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss tt") +
-                $"{LoggerName} {logLevel}: {message}";
+                $" {LoggerName} {logLevel}: {message}";
             WriteToFile(log);
             return;
         }
 
         private void WriteToFile(string log) {
-            Console.WriteLine($"Writing to log file: {log}");
             writer.WriteLine(log);
             writer.Flush();
         }
