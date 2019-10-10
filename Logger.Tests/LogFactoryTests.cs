@@ -7,8 +7,15 @@ namespace Logger.Tests
     public class LogFactoryTests
     {
         [TestMethod]
-        public void CreateLogger_IsReturnedLoggerNull() {
+        public void CreateLogger_UnconfiguredLogFactory_IsLoggerNull() {
             LogFactory logFactory = new LogFactory();
+            Assert.IsNull(logFactory.CreateLogger("test"));
+        }
+
+        [TestMethod]
+        public void CreateLogger_ConfiguredLogFactory_IsLoggerNotNull() {
+            LogFactory logFactory = new LogFactory();
+            logFactory.ConfigureFileLogger("SomePath.log");
             Assert.IsNotNull(logFactory.CreateLogger("test"));
         }
     }
