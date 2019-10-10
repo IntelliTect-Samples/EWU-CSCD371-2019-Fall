@@ -359,3 +359,7 @@ MigrationBackup/
 .DS_Store
 
 *.sqlite
+
+# Vim open editor lock files
+*.swo
+*.swp

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Logger.Tests
@@ -48,12 +49,28 @@ namespace Logger.Tests
             foreach (string line in File.ReadLines($"{fileName}.log")) {
                 MatchCollection matches = AMPMRegex.Matches(line);
                 Assert.AreEqual(matches.Count, 1);
+
                 matches = dateRegex.Matches(line);
                 Assert.AreEqual(matches.Count, 1);
+
                 matches = timeRegex.Matches(line);
                 Assert.AreEqual(matches.Count, 1);
             }
             File.Delete($"{fileName}.log");
         }
+
+        [TestMethod]
+        public void LogMessage_DidLogCorrectNumTimes_Success()
+        {
+            string fileName = "TestFile";
+            FileLogger fileLogger = new FileLogger(fileName) { LoggerName = "TestLogger" };
+            fileLogger.Log(LogLevel.Warning, "Test Message");
+            fileLogger.Log(LogLevel.Error, "Test Message");
+            fileLogger.Log(LogLevel.Information, "Test Message");
+            fileLogger.Log(LogLevel.Debug, "Test Message");
+            Assert.AreEqual(4, File.ReadLines($"{fileName}.log").Count());
+            File.Delete($"{fileName}.log");
+        }
+
     }
 }
