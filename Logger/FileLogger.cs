@@ -6,9 +6,9 @@ namespace Logger
 {
     public class FileLogger : BaseLogger
     {
-        private String path;
+        private string path;
         
-        public FileLogger(String path)
+        public FileLogger(string path)
         {
             this.path = path;
         }
@@ -19,8 +19,8 @@ namespace Logger
             sb.Append(DateTime.Now);
             sb.Append(ClassName);
             sb.Append(logLevel);
-            sb.Append(message);
-            sb.Append(Environment.NewLine);
+            sb.AppendLine(message);
+            //sb.Append(Environment.NewLine);
 
             File.AppendAllText(path, sb.ToString());
         }
