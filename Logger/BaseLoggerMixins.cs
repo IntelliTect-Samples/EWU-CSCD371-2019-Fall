@@ -11,8 +11,10 @@ namespace Logger
             if (baseLogger == null)
                 throw new ArgumentNullException(baseLogger.ToString());
 
-            else
+            else {
+                message = Convert.ToString(vs); 
                 baseLogger.Log(logLevel, message);
+            }
         }
 
         public static void Warning(this BaseLogger baseLogger, string message, params object[] vs)
@@ -23,7 +25,10 @@ namespace Logger
                 throw new ArgumentNullException(baseLogger.ToString());
 
             else
+            {
+                message = Convert.ToString(vs);
                 baseLogger.Log(logLevel, message);
+            }
         }
 
         public static void Information(this BaseLogger baseLogger, string message, params object[] vs)
@@ -34,7 +39,10 @@ namespace Logger
                 throw new ArgumentNullException(baseLogger.ToString());
 
             else
+            {
+                message = Convert.ToString(vs);
                 baseLogger.Log(logLevel, message);
+            }
         }
 
 
@@ -46,7 +54,10 @@ namespace Logger
                 throw new ArgumentNullException(baseLogger.ToString());
 
             else
+            {
+                message = Convert.ToString(vs);
                 baseLogger.Log(logLevel, message);
+            }
         }
     }
 }

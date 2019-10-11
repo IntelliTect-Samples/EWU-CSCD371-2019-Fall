@@ -19,7 +19,7 @@ namespace Logger
 
             else
             {
-                Console.WriteLine("please update your path here: ");
+                Console.WriteLine("path doesn't exist, enter your path here: ");
                 path = Console.ReadLine();
                 File.Create(path);
                 
