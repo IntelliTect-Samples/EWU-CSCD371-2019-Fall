@@ -1,14 +1,16 @@
-﻿using Logger;
-using System;
+﻿using System;
 
-public class FileLogger : BaseLogger
+namespace Logger
 {
-	public FileLogger()
-	{
-	}
-
-    public override void Log(LogLevel logLevel, string message)
+    public class FileLogger : BaseLogger
     {
-        throw new NotImplementedException();
+        public FileLogger()
+        {
+        }
+
+        public override void Log(LogLevel logLevel, string message)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
