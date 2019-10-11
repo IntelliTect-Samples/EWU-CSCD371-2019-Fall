@@ -7,23 +7,23 @@ namespace Logger
 {
     public class FileLogger : BaseLogger
     {
-        StreamWriter sw;
-
+        private string path;
         public FileLogger(string filePath) 
         {
-            if(!File.Exists(filePath))
+            this.path = filePath;
+            if (!File.Exists(filePath))
             {
-                sw = File.CreateText(filePath);
-            }   
+                File.CreateText(filePath);
+            }
+            
         }
 
         public override void Log(LogLevel logLevel, string message)
         {
-            DateTime now = DateTime.Now;
-            sw.WriteLine(now);
-            sw.WriteLine(className);
-            sw.WriteLine(logLevel.ToString() + ":");
-            sw.WriteLine(message);
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                sw.WriteLine($"{DateTime.Now} {className} {logLevel.ToString() + ": "} {message}");
+            }           
         }
     }
 }
