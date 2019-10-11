@@ -5,11 +5,8 @@ namespace Logger
 {
     public class FileLogger: BaseLogger
     {
-        private string _LoggerName; // Is this the correct naming convention?
         private string fileName;
         private StreamWriter writer;
-
-        public string LoggerName { get; set; }
 
         public FileLogger(string fileName)
         {
