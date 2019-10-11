@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Logger
@@ -12,6 +11,7 @@ namespace Logger
         {
             this.filePath = filePath;
         }
+
         public override void Log(LogLevel logLevel, string message)
         {
             StringBuilder sb = new StringBuilder();

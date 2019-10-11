@@ -42,6 +42,7 @@ namespace Logger
 
             baseLogger.Log(logLevel, message);
         }
+
         public static void Information(this BaseLogger baseLogger, string message, params object[] args)
         {
             if (baseLogger is null)

@@ -33,7 +33,6 @@ namespace Logger.Tests
             Assert.AreEqual(LogLevel.Error, logger.LoggedMessages[0].LogLevel);
             Assert.AreEqual("Message 42", logger.LoggedMessages[0].Message);
         }
-
     }
 
     public class TestLogger : BaseLogger
