@@ -6,5 +6,16 @@ namespace Logger.Tests
     public class FileLoggerTests
     {
         
+        [TestMethod]
+        public void AppendsCorrectMessage()
+        {
+            //Arrange
+
+            //Act
+
+            //Assert
+
+        }
+
     }
 }
