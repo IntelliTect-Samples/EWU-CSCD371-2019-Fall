@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 namespace Logger
 {
-    class FileLogger : BaseLogger
+    public class FileLogger : BaseLogger
     {
         private string path;
 
@@ -36,9 +36,5 @@ namespace Logger
             streamWriter.WriteLine( DateTime.Now.ToString() + " " + className + " " + logLevel + " " + message);
         }
 
-        public void CreateLogger(string newLog)
-        {
-            this.path = newLog;
-        }
     }
 }
