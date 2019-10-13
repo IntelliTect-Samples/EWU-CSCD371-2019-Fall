@@ -23,10 +23,7 @@ namespace Logger
             {
                 throw new ArgumentNullException("baseLogger is null!");
             }
-            else
-            {
-                baseLogger.Log(logLevel, String.Format(s, args));
-            }
+            baseLogger.Log(logLevel, String.Format(s, args));
         }
 
         public static void Information(this BaseLogger baseLogger, string s, params object[] args)
@@ -37,10 +34,7 @@ namespace Logger
             {
                 throw new ArgumentNullException("baseLogger is null!");
             }
-            else
-            {
-                baseLogger.Log(logLevel, String.Format(s, args));
-            }
+            baseLogger.Log(logLevel, String.Format(s, args));
         }
 
         public static void Debug(this BaseLogger baseLogger, string s, params object[] args)
@@ -51,10 +45,7 @@ namespace Logger
             {
                 throw new ArgumentNullException("baseLogger is null!");
             }
-            else
-            {
-                baseLogger.Log(logLevel, String.Format(s, args));
-            }
+            baseLogger.Log(logLevel, String.Format(s, args));
         }
     }
 }
