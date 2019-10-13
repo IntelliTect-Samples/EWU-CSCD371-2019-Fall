@@ -12,16 +12,15 @@ namespace Logger
             this.outPath = outPath;
             if (!File.Exists(outPath))
             {
-                File.Create(outPath);
+                File.Create(outPath).Close();
             }
         }
 
         public override void Log(LogLevel logLevel, string s)
         {
-            using (StreamWriter sw = new StreamWriter(outPath, true))
-            {
-                sw.WriteLine($"{DateTime.Now.ToString()}{className}{logLevel}{s}");
-            }
+            StreamWriter sw = new StreamWriter(outPath, true);
+            sw.WriteLine($"{DateTime.Now.ToString()}{className}{logLevel}{s}");
+            sw.Close();
         }
     }
 }
