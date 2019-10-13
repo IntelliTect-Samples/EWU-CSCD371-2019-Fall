@@ -20,13 +20,36 @@ namespace Logger.Tests
         */
 
         [TestMethod]
-        public void FileIO_OpensAndLogs()
+        public void FileIO_DefaultConstructor_OpensAndLogs()
         {
-            FileLogger logger;
+            FileLogger logger = new FileLogger();
+            string logFilePath = logger.FilePath;
+            try
+            {
+                // Arrange
+                LogLevel level = LogLevel.Information;
+                string message = "test";
+
+                // Act
+                logger.Log(level, message);
+
+                // Assert
+                Assert.IsFalse(string.IsNullOrEmpty(File.ReadAllText(logFilePath)));
+            }
+            finally
+            {
+                File.Delete(logFilePath);
+            }
+        }
+
+        [TestMethod]
+        public void FileIO_CustomPathConstructor_OpensAndLogs()
+        {
             string logFilePath = Path.GetRandomFileName();
             try
             {
                 // Arrange
+                FileLogger logger;
                 LogLevel level = LogLevel.Information;
                 string message = "test";
 

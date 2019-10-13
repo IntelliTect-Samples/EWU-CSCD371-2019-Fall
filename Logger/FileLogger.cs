@@ -6,11 +6,13 @@ namespace Logger
 {
     public class FileLogger : BaseLogger
     {
-        private static string FilePath { get; set; }
+        public string FilePath { get; private set; }
 
-        public FileLogger() => FilePath = DateTime.Now.ToString("s") + ".txt";
+        private static string GetDefaultPath() => Path.Combine(Directory.GetCurrentDirectory(), DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".txt");
 
-        public FileLogger(string logFilePath) => FilePath = logFilePath;
+        public FileLogger() => FilePath = GetDefaultPath();
+
+        public FileLogger(string logFilePath) => FilePath = string.IsNullOrEmpty(logFilePath) ? GetDefaultPath() : logFilePath;
 
         public override void Log(LogLevel logLevel, string message)
         {
