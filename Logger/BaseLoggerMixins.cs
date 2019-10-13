@@ -25,10 +25,6 @@ namespace Logger
             }
             else
             {
-                for (int i = 0; i < args.Length; i++)
-                {
-                    s += args[i].ToString();
-                }
                 baseLogger.Log(logLevel, String.Format(s, args));
             }
         }
@@ -43,10 +39,6 @@ namespace Logger
             }
             else
             {
-                for (int i = 0; i < args.Length; i++)
-                {
-                    s += args[i].ToString();
-                }
                 baseLogger.Log(logLevel, String.Format(s, args));
             }
         }
@@ -61,10 +53,6 @@ namespace Logger
             }
             else
             {
-                for (int i = 0; i < args.Length; i++)
-                {
-                    s += args[i].ToString();
-                }
                 baseLogger.Log(logLevel, String.Format(s, args));
             }
         }
