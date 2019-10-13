@@ -12,13 +12,7 @@ namespace Logger
             {
                 throw new ArgumentNullException("baseLogger is null!");
             }
-            else
-            {
-                for (int i = 0;i<args.Length;i++){
-                    s+=args[i].ToString();
-                }
-                baseLogger.Log(logLevel, s);
-            }
+            baseLogger.Log(logLevel, String.Format(s, args));
         }
 
         public static void Warning(this BaseLogger baseLogger, string s, params object[] args)
@@ -31,10 +25,11 @@ namespace Logger
             }
             else
             {
-                for (int i = 0;i<args.Length;i++){
-                    s+=args[i].ToString();
+                for (int i = 0; i < args.Length; i++)
+                {
+                    s += args[i].ToString();
                 }
-                baseLogger.Log(logLevel, s);
+                baseLogger.Log(logLevel, String.Format(s, args));
             }
         }
 
@@ -48,10 +43,11 @@ namespace Logger
             }
             else
             {
-                for (int i = 0;i<args.Length;i++){
-                    s+=args[i].ToString();
+                for (int i = 0; i < args.Length; i++)
+                {
+                    s += args[i].ToString();
                 }
-                baseLogger.Log(logLevel, s);
+                baseLogger.Log(logLevel, String.Format(s, args));
             }
         }
 
@@ -65,10 +61,11 @@ namespace Logger
             }
             else
             {
-                for (int i = 0;i<args.Length;i++){
-                    s+=args[i].ToString();
+                for (int i = 0; i < args.Length; i++)
+                {
+                    s += args[i].ToString();
                 }
-                baseLogger.Log(logLevel, s);
+                baseLogger.Log(logLevel, String.Format(s, args));
             }
         }
     }
