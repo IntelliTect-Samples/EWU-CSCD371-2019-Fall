@@ -12,7 +12,7 @@
             BaseLogger baseLogger = new FileLogger(outPath){
                 className = className
             };
-            return BaseLogger;
+            return baseLogger;
         }
 
         public void ConfigureFileLogger(string outPath){

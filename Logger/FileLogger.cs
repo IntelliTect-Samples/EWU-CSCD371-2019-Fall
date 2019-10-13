@@ -10,18 +10,18 @@ namespace Logger
         public FileLogger(string outPath)
         {
             this.outPath = outPath;
-            if (!File.Exists(filePath))
+            if (!File.Exists(outPath))
             {
-                File.Create(filePath);
+                File.Create(outPath);
             }
         }
-    }
 
-    public override void Log(LogLevel logLevel, string s)
-    {
-        using (StreamWriter sw = new StreamWriter(outPath, true))
+        public override void Log(LogLevel logLevel, string s)
         {
-            sw.WriteLine($"{DateTime.Now.ToString()}{ClassName}{logLevel}{s}");
+            using (StreamWriter sw = new StreamWriter(outPath, true))
+            {
+                sw.WriteLine($"{DateTime.Now.ToString()}{className}{logLevel}{s}");
+            }
         }
     }
 }
