@@ -11,7 +11,7 @@ namespace Logger
                 throw new ArgumentNullException();
             }
 
-            baseLogger.Log(LogLevel.Error, string.Format(message, args));
+            baseLogger.Log(LogLevel.Error, message);
         }
 
         public static void Warning(this BaseLogger baseLogger, string message, params string[] args)
@@ -21,7 +21,7 @@ namespace Logger
                 throw new ArgumentNullException();
             }
 
-            baseLogger.Log(LogLevel.Warning, string.Format(message, args));
+            baseLogger.Log(LogLevel.Warning, message);
         }
 
         public static void Information(this BaseLogger baseLogger, string message, params string[] args)
@@ -31,7 +31,7 @@ namespace Logger
                 throw new ArgumentNullException();
             }
 
-            baseLogger.Log(LogLevel.Information, string.Format(message, args));
+            baseLogger.Log(LogLevel.Information, message);
         }
 
         public static void Debug(this BaseLogger baseLogger, string message, params string[] args)
@@ -41,7 +41,7 @@ namespace Logger
                 throw new ArgumentNullException();
             }
 
-            baseLogger.Log(LogLevel.Debug, string.Format(message, args));
+            baseLogger.Log(LogLevel.Debug, message);
         }
     }
 }
