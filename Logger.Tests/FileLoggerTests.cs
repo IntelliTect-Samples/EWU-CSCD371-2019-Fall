@@ -8,7 +8,7 @@ namespace Logger.Tests
     {
 
         [TestMethod]
-        public void AppendsMessage()
+        public void Log_AppendsMessage()
         {
             //Arrange
             string path = "AppendsMessage.txt";

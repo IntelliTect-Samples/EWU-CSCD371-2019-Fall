@@ -3,6 +3,6 @@
     public abstract class BaseLogger
     {
         public abstract void Log(LogLevel logLevel, string message);
-        protected string ClassName { get; set; }
+        public string ClassName { get; set; }
     }
 }
