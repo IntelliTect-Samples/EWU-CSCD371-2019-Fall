@@ -29,7 +29,7 @@ namespace Logger.Tests
             //Arrange
             string filePath = "TestFile.txt";
             string className = "TestClass";
-            string testLog = $"{System.DateTime.Now.ToString()} TestClass Error: Test Message\n";
+            string testLog = $"{System.DateTime.Now} TestClass Error: Test Message\n";
             FileLogger fileLogger = new FileLogger(filePath) { ClassName = className };
 
             //Act

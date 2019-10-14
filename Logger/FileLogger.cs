@@ -6,7 +6,7 @@
         public FileLogger(string filePath) => this.filePath = filePath;
         public override void Log(LogLevel logLevel, string message)
         {
-            string logMessage = $"{System.DateTime.Now.ToString()} {ClassName} {logLevel}: {message}\n";
+            string logMessage = $"{System.DateTime.Now} {ClassName} {logLevel}: {message}\n";
 
             System.IO.File.AppendAllText(filePath, logMessage);
         }
