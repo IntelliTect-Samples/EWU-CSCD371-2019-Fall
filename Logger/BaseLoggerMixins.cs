@@ -4,6 +4,12 @@ namespace Logger
 {
     public static class BaseLoggerMixins
     {
+        private static string LogLevelMessage(LogLevel LL, string message)
+        {
+
+            return null;//TODO
+        }
+
         public static void Error(this BaseLogger baseLogger, string message, params int[] v)
         {
             if (baseLogger is null) { throw new ArgumentNullException(); }
@@ -15,7 +21,7 @@ namespace Logger
                 parameters[i] = v[i].ToString();
             }
 
-            baseLogger.Log(LogLevel.Error, String.Format(message, parameters));//check for null?
+            baseLogger.Log(LogLevel.Error, string.Format(message, parameters));//check for null?
         }
     }
 }
