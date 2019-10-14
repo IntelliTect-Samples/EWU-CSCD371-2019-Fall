@@ -1,25 +1,36 @@
 # EWU-CSCD371-2019-Fall
-## Assignment 2
-For this assignment we are going to build a simple logging system. It will append items to a file. Some code for this assignment is already provided.
+
+Issue 1:
+Reproduction steps:
+Run the application. 
+
+Observed:
+The application throws a NullReferenceException and crashes.
+System.NullReferenceException
+  HResult=0x80004003
+  Message=Object reference not set to an instance of an object.
+  Source=PrincessBrideTrivia
+  StackTrace:
+   at PrincessBrideTrivia.Program.DisplayQuestion(Question question) in C:\Dev\EWU\EWU-CSCD371-2019-Fall\PrincessBrideTrivia\Program.cs:line 57
+   at PrincessBrideTrivia.Program.AskQuestion(Question question) in C:\Dev\EWU\EWU-CSCD371-2019-Fall\PrincessBrideTrivia\Program.cs:line 32
+   at PrincessBrideTrivia.Program.Main(String[] args) in C:\Dev\EWU\EWU-CSCD371-2019-Fall\PrincessBrideTrivia\Program.cs:line 16
+
+Expected:
+The application is expected to display trivia questions that the user can attempt to answer. It should not be crashing.
+
+An associated unit test should also be created to prove it won't crash this way again in the future.
+
+Issue 2:
+Reproduction steps:
+Run the unit tests.
+
+Observed:
+The GetPercentCorrect_ReturnsExpectedPercentage unit test is currently failing. 
+
+Expected:
+The unit test is correct. The method being tested is wrong and should be fixed so the unit test passes. After the user has finished answering all of the questions the percentage of correct answers should be displayed to them.
 
 
-- There is an existing `BaseLogger` class. It needs an **auto property** to hold the class name. This property should be set in the `LogFactory` using an **object initializer**.
-- Create a `FileLogger` that derives from `BaseLogger`. It should take in a path to a file to write the log message to. When its `Log` method is called, it should **append** messages on their own line in the file. The output should include all of the following:
-  - The current date/time
-  - The name of the class that created the logger
-  - The log level
-  - The message
-  - The format may vary, but an example might look like this "10/7/2019 12:38:59 AM FileLoggerTests Warning: Test message"
-- The `LogFactory` should be updated with a new method `ConfigureFileLogger`. This should take in a file path and store it in a **private member**. It should use this when instantiating a new `FileLogger` in its `CreateLogger` method. 
-- If the file logger has not be configured in the `LogFactory`, its `CreateLogger` method should return `null`.
-- Inside of `BaseLoggerMixins` implement **extension methods** on `BaseLogger` for `Error`, `Warning`, `Information`, and `Debug`. Each of these methods should take in a `string` for the message, as well as a **parameter array** of arguments for the message. Each of these extension methods is expected to be a shortcut for calling the `BaseLogger.Log` method, by automatically supplying the appropriate `LogLevel`. These methods should throw an exception if the `BaseLogger` parameter is null. There are a couple example unit tests to get you started. 
-- All of the above should be unit tested.
-
-### Extra Credit
-- Implement an additional logger. This logger must be unit tested. Some options to consider could be one that uses `System.Console` or `System.Diagnostics.Trace`.
-
-### Relevant APIs to know about
-[System.IO.Path](https://docs.microsoft.com/en-us/dotnet/api/system.io.path?view=netcore-3.0) IF you find yourself using string operations to build up a file path, stop and look through the members of this static class.
-
-[System.IO.File](https://docs.microsoft.com/en-us/dotnet/api/system.io.file?view=netcore-3.0) A simple class that can handle simple file reads and writes.
-
+Issue 3 (extra credit)
+Feature request:
+Currently the application displays all of the answers in the same order each time. Adjust the application so the answers are displayed in a random order. Add appropriate unit tests and ensure the app continues to function properly.
