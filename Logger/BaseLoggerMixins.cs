@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 
 namespace Logger
 {
@@ -12,16 +11,13 @@ namespace Logger
                 throw new ArgumentNullException("baseLogger is null");
             }
 
-            StringBuilder sb = new StringBuilder();
-            foreach (object o in args)
+            for (int i = 0; i < args.Length; i++)
             {
-                sb.Append(o.ToString());
+                string toBeReplaced = "{" + i + "}";
+                message = message.Replace(toBeReplaced, args[i].ToString());
             }
-            message += sb.ToString();
 
-            LogLevel logLevel = LogLevel.Error;
-
-            baseLogger.Log(logLevel, message);
+            baseLogger.Log(LogLevel.Error, message);
         }
 
         public static void Warning(this BaseLogger baseLogger, string message, params object[] args)
@@ -31,16 +27,13 @@ namespace Logger
                 throw new ArgumentNullException("baseLogger is null");
             }
 
-            StringBuilder sb = new StringBuilder();
-            foreach (object o in args)
+            for (int i = 0; i < args.Length; i++)
             {
-                sb.Append(o.ToString());
+                string toBeReplaced = "{" + i + "}";
+                message = message.Replace(toBeReplaced, args[i].ToString());
             }
-            message += sb.ToString();
 
-            LogLevel logLevel = LogLevel.Warning;
-
-            baseLogger.Log(logLevel, message);
+            baseLogger.Log(LogLevel.Warning, message);
         }
 
         public static void Information(this BaseLogger baseLogger, string message, params object[] args)
@@ -50,16 +43,13 @@ namespace Logger
                 throw new ArgumentNullException("baseLogger is null");
             }
 
-            StringBuilder sb = new StringBuilder();
-            foreach (object o in args)
+            for (int i = 0; i < args.Length; i++)
             {
-                sb.Append(o.ToString());
+                string toBeReplaced = "{" + i + "}";
+                message = message.Replace(toBeReplaced, args[i].ToString());
             }
-            message += sb.ToString();
 
-            LogLevel logLevel = LogLevel.Information;
-
-            baseLogger.Log(logLevel, message);
+            baseLogger.Log(LogLevel.Information, message);
         }
 
         public static void Debug(this BaseLogger baseLogger, string message, params object[] args)
@@ -69,16 +59,13 @@ namespace Logger
                 throw new ArgumentNullException("baseLogger is null");
             }
 
-            StringBuilder sb = new StringBuilder();
-            foreach (object o in args)
+            for (int i = 0; i < args.Length; i++)
             {
-                sb.Append(o.ToString());
+                string toBeReplaced = "{" + i + "}";
+                message = message.Replace(toBeReplaced, args[i].ToString());
             }
-            message += sb.ToString();
 
-            LogLevel logLevel = LogLevel.Debug;
-
-            baseLogger.Log(logLevel, message);
+            baseLogger.Log(LogLevel.Debug, message);
         }
     }
 }
