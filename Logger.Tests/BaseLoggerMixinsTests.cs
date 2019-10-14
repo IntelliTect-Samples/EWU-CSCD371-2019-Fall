@@ -14,9 +14,29 @@ namespace Logger.Tests
             // Arrange
 
             // Act
-            //BaseLoggerMixins.Error(null, "");
-            BaseLoggerMixins.Error(null, "", "Testing for null");
+            BaseLoggerMixins.Error(null, "");
             // Assert
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Warning_WithNullLogger_ThrowsException()
+        {
+            BaseLoggerMixins.Warning(null, "");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Information_WithNullLogger_ThrowsException()
+        {
+            BaseLoggerMixins.Information(null, "");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Debug_WithNullLogger_ThrowsException()
+        {
+            BaseLoggerMixins.Debug(null, "");
         }
 
         [TestMethod]
