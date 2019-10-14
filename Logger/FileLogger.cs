@@ -17,10 +17,12 @@ namespace Logger
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(DateTime.Now);
+            sb.Append(" ");
             sb.Append(ClassName);
+            sb.Append(" ");
             sb.Append(logLevel);
+            sb.Append(": ");
             sb.AppendLine(message);
-            //sb.Append(Environment.NewLine);
 
             File.AppendAllText(path, sb.ToString());
         }
