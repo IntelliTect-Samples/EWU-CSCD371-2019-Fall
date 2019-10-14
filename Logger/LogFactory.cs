@@ -4,7 +4,12 @@
     {
         public BaseLogger CreateLogger(string className)
         {
-            ClassName = className;
+            if(className == "BlankLogger")
+            {
+                BlankLogger blankLogger = new BlankLogger();
+                blankLogger.ClassName = className;
+                return blankLogger;
+            }
             return null;
         }
     }

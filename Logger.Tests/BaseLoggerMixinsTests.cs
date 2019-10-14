@@ -44,5 +44,7 @@ namespace Logger.Tests
         {
             LoggedMessages.Add((logLevel, message));
         }
+
+        public override string ClassName{get;set;}
     }
 }
