@@ -31,5 +31,18 @@ namespace Logger.Tests
             //Assert
             Assert.IsNotNull(logger);
         }
+
+        [TestMethod]
+        public void CreateFileLogger_NoPathConfigured()
+        {
+            //Arrange
+            LogFactory logFactory = new LogFactory();
+
+            //Act
+            var logger = logFactory.CreateLogger("FileLogger");
+
+            //Assert
+            Assert.IsNull(logger);
+        }
     }
 }
