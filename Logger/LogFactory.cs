@@ -1,11 +1,15 @@
-﻿namespace Logger
+﻿using System;
+
+namespace Logger
 {
     public class LogFactory
     {
         public BaseLogger CreateLogger(string className)
         {
-            
-            return null;
+            if (className.Equals("FileLogger"))
+                return new FileLogger(className);
+            else
+                throw new ArgumentException();
         }
     }
 }
