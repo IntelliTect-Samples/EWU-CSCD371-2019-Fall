@@ -8,20 +8,13 @@ namespace Logger
 
         public BaseLogger CreateLogger(string className)
         {
-            if (className.Equals("FileLogger"))
+            if (className.Equals("FileLogger") && !(FilePath is null))
             {
-                if (FilePath is null)
+                return new FileLogger("testfile.txt")
                 {
-                    return null;
-                }
+                    ClassName = className
+                };
 
-                else
-                {
-                    return new FileLogger("testfile.txt")
-                    {
-                        ClassName = className
-                    };
-                }
             }
             else
             {
