@@ -29,11 +29,21 @@ namespace Logger.Tests
             string filePath = Path.GetRandomFileName();
 
             //Act
-            FileLogger fileLogger = new FileLogger(filePath);
+            FileLogger fileLogger = new FileLogger(filePath)
+            {
+                ClassName = nameof(FileLoggerTests)
+            };
+
             fileLogger.Log(LogLevel.Information, "Random message");
+
+            string[] result = File.ReadAllLines(filePath);
 
             //Assert
             Assert.AreEqual(1, File.ReadLines(filePath).Count());
+            Assert.IsTrue(result[0].Contains("Random message"));
+            Assert.IsTrue(result[0].Contains("Information"));
+
+            File.Delete(filePath);
         }
     }
 }

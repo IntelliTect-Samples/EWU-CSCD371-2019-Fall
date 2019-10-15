@@ -15,24 +15,12 @@ namespace Logger
             }
         }
 
-        public static void Error(this BaseLogger baseLogger, string message, params object[] args)
-        {
-            GenericMixin(baseLogger, message, 0, args);
-        }
+        public static void Error(this BaseLogger baseLogger, string message, params object[] args) => GenericMixin(baseLogger, message, 0, args);
 
-        public static void Warning(this BaseLogger baseLogger, string message, params object[] args)
-        {
-            GenericMixin(baseLogger, message, 1, args);
-        }
+        public static void Warning(this BaseLogger baseLogger, string message, params object[] args) => GenericMixin(baseLogger, message, 1, args);
 
-        public static void Information(this BaseLogger baseLogger, string message, params object[] args)
-        {
-            GenericMixin(baseLogger, message, 2, args);
-        }
+        public static void Information(this BaseLogger baseLogger, string message, params object[] args) => GenericMixin(baseLogger, message, 2, args);
 
-        public static void Debug(this BaseLogger baseLogger, string message, params object[] args)
-        {
-            GenericMixin(baseLogger, message, 3, args);
-        }
+        public static void Debug(this BaseLogger baseLogger, string message, params object[] args) => GenericMixin(baseLogger, message, 3, args);
     }
 }
