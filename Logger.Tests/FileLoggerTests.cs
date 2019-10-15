@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 
 namespace Logger.Tests
@@ -40,6 +41,26 @@ namespace Logger.Tests
             finally
             {
                 File.Delete("newfile.txt");
+            }
+        }
+
+        [TestMethod]
+        public void FileLogger_Log_AppendsToFile()
+        {
+            try
+            {
+                //Arrange
+                FileLogger testLogger = new FileLogger("logfile.txt");
+
+                //act
+                testLogger.Log(LogLevel.Error, "teststring");
+                string logFileConents = File.ReadAllText("logfile.txt");
+                //Assert
+                Assert.AreEqual($"{DateTime.Now} FileLoggerTests {LogLevel.Error}: teststring", logFileConents);
+            }
+            finally
+            {
+                File.Delete("logfile.txt");
             }
         }
     }

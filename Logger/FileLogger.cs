@@ -21,7 +21,11 @@ namespace Logger
         }
         public override void Log(LogLevel logLevel, string message)
         {
-            throw new NotImplementedException();
+            StreamWriter streamWriter = File.AppendText(this.FilePath);
+
+            streamWriter.Write($"{DateTime.Now} FileLoggerTests {LogLevel.Error}: {message}");
+
+            streamWriter.Close();
         }
     }
 }
