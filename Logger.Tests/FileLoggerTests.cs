@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System;
 
 namespace Logger.Tests
 {
@@ -29,7 +30,7 @@ namespace Logger.Tests
             //Arrange
             string filePath = "TestFile.txt";
             string className = "TestClass";
-            string testLog = $"{System.DateTime.Now} TestClass Error: Test Message\n";
+            string testLog = $"{DateTime.Now} TestClass Error: Test Message{Environment.NewLine}";
             FileLogger fileLogger = new FileLogger(filePath) { ClassName = className };
 
             //Act
