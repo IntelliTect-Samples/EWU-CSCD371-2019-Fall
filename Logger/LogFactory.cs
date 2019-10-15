@@ -13,7 +13,7 @@
             {
                 BaseLogger logger = new FileLogger(filePath)
                 {
-                    className = className
+                    ClassName = className
                 };
 
                 return logger;

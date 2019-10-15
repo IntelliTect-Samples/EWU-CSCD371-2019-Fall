@@ -21,7 +21,7 @@ namespace Logger
         {
             using (StreamWriter sw = new StreamWriter(path))
             {
-                sw.WriteLine($"{DateTime.Now} {className} {logLevel} {message}");
+                sw.WriteLine($"{DateTime.Now} {ClassName} {logLevel} {message}");
             }
         }
     }
