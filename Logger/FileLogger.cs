@@ -16,7 +16,7 @@ namespace Logger
         {
             if(!(path is null) && File.Exists(path))
             {
-                string output = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt") + " " + ClassName + " " + logLevel + ": " + message;
+                string output = DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt") + " " + ClassName + " " + logLevel + ": " + message + Environment.NewLine;
                 File.AppendAllText(path, output);
             }
         }
