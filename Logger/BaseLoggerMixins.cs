@@ -18,7 +18,7 @@ namespace Logger
 
         private static void WriteLog(BaseLogger logger, LogLevel level, string message, params object[] args)
         {
-            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (logger is null) throw new ArgumentNullException(nameof(logger));
 
             logger.Log(level, string.Format(message, args));
         }

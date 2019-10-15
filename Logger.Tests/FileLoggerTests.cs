@@ -6,19 +6,6 @@ namespace Logger.Tests
     [TestClass]
     public class FileLoggerTests
     {
-        /*
-        [TestMethod]
-        public void BaseTest()
-        {
-            try
-            {
-                // Arrange
-                // Act
-                // Assert
-            }
-        }
-        */
-
         [TestMethod]
         public void FileIO_DefaultConstructor_OpensAndLogs()
         {
