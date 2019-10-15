@@ -4,13 +4,27 @@ namespace Logger
 {
     public static class BaseLoggerMixins
     {
-        private static string LogLevelMessage(LogLevel LL, string message)
+        public static void Error(this BaseLogger baseLogger, string message, params int[] v)
         {
-
-            return null;//TODO
+            LogLevelMessage(LogLevel.Error, baseLogger, message, v);
         }
 
-        public static void Error(this BaseLogger baseLogger, string message, params int[] v)
+        public static void Warning(this BaseLogger baseLogger, string message, params int[] v)
+        {
+            LogLevelMessage(LogLevel.Warning, baseLogger, message, v);
+        }
+
+        public static void Information(this BaseLogger baseLogger, string message, params int[] v)
+        {
+            LogLevelMessage(LogLevel.Information, baseLogger, message, v);
+        }
+
+        public static void Debug(this BaseLogger baseLogger, string message, params int[] v)
+        {
+            LogLevelMessage(LogLevel.Debug, baseLogger, message, v);
+        }
+
+        private static void LogLevelMessage(LogLevel LL, BaseLogger baseLogger, string message, params int[] v)
         {
             if (baseLogger is null) { throw new ArgumentNullException(); }
 
@@ -21,7 +35,7 @@ namespace Logger
                 parameters[i] = v[i].ToString();
             }
 
-            baseLogger.Log(LogLevel.Error, string.Format(message, parameters));//check for null?
+            baseLogger.Log(LL, string.Format(message, parameters));
         }
     }
 }
