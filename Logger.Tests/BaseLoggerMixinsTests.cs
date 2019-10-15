@@ -34,6 +34,31 @@ namespace Logger.Tests
             Assert.AreEqual("Message 42", logger.LoggedMessages[0].Message);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Error_WithNullMessage_ThrowsException()
+        {
+            //Arrange
+            var logger = new TestLogger();
+
+            //Act
+            logger.Error(null);
+
+            //Assert
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Error_WithEmptyMessage_ThrowsException()
+        {
+            //Arrange
+            var logger = new TestLogger();
+
+            //Act
+            logger.Error("");
+
+            //Assert
+        }
     }
 
     public class TestLogger : BaseLogger
