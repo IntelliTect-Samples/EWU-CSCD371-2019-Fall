@@ -9,7 +9,7 @@ namespace Logger.Tests
         [TestMethod]
         public void Log_WroteToFile_Success()
         {
-            string path = Path.GetRandomFileName();
+            string path = Path.GetTempFileName();
             try
             {
                 // Arrange
@@ -21,7 +21,8 @@ namespace Logger.Tests
                 testLogger.Log(LogLevel.Debug, "Test Text");
 
                 // Assert
-                Assert.AreEqual("Test Text", File.ReadAllLines(path));
+                string line = File.ReadAllText(path);
+                Assert.IsTrue(line.Contains("Test Text"));
             }
             finally
             {

@@ -6,57 +6,53 @@ namespace Logger
     {
         public static void Error(this BaseLogger baseLogger, string message, params object[] args)
         {
-            LogLevel logLevel = LogLevel.Error;
-
             if(baseLogger is null)
             {
-                throw new ArgumentNullException(baseLogger.ToString());
+                throw new ArgumentNullException("baseLogger is null");
             }
             else
             {
-                baseLogger.Log(logLevel, message);
+                LogLevel logLevel = LogLevel.Error;
+                baseLogger.Log(logLevel, String.Format(message, args));
             }
         }
 
         public static void Warning(this BaseLogger baseLogger, string message, params object[] args)
         {
-            LogLevel logLevel = LogLevel.Warning;
-
             if (baseLogger is null)
             {
-                throw new ArgumentNullException(baseLogger.ToString());
+                throw new ArgumentNullException("baseLogger is null");
             }
             else
             {
-                baseLogger.Log(logLevel, message);
+                LogLevel logLevel = LogLevel.Warning;
+                baseLogger.Log(logLevel, String.Format(message, args));
             }
         }
 
         public static void Information(this BaseLogger baseLogger, string message, params object[] args)
         {
-            LogLevel logLevel = LogLevel.Information;
-
             if (baseLogger is null)
             {
-                throw new ArgumentNullException(baseLogger.ToString());
+                throw new ArgumentNullException("baseLogger is null");
             }
             else
             {
-                baseLogger.Log(logLevel, message);
+                LogLevel logLevel = LogLevel.Information;
+                baseLogger.Log(logLevel, String.Format(message, args));
             }
         }
 
         public static void Debug(this BaseLogger baseLogger, string message, params object[] args)
         {
-            LogLevel logLevel = LogLevel.Debug;
-
             if (baseLogger is null)
             {
-                throw new ArgumentNullException(baseLogger.ToString());
+                throw new System.ArgumentNullException("baseLogger is null");
             }
             else
             {
-                baseLogger.Log(logLevel, message);
+                LogLevel logLevel = LogLevel.Debug;
+                baseLogger.Log(logLevel, String.Format(message, args));
             }
         }
     }
