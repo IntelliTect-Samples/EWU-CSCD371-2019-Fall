@@ -7,13 +7,17 @@ namespace Logger
     {
         public String filePath { get; }
 
-        public FileLogger(String filePath)
+        internal FileLogger(String filePath)
         {
             this.filePath = filePath;
         }
 
         public override void Log(LogLevel logLevel, string message)
         {
+            if (message is null)
+            {
+                throw new ArgumentNullException("Null message");
+            }
             StringBuilder sb = new StringBuilder();
             sb.Append(System.DateTime.Now + " ");
             sb.Append(this.name + " ");

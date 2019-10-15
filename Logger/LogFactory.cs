@@ -1,4 +1,6 @@
-﻿namespace Logger
+﻿using System;
+
+namespace Logger
 {
     public class LogFactory
     {
@@ -6,6 +8,8 @@
 
         public BaseLogger CreateLogger(string className)
         {
+            if (className is null)
+                throw new ArgumentNullException("className was null");
             if (!(this.filePath is null))
             {
                 FileLogger myLogger = new FileLogger(this.filePath) { name = className };
@@ -16,6 +20,8 @@
 
         public void ConfigureFileLogger(string filePath)
         {
+            if (filePath is null)
+                throw new ArgumentNullException("filePath was null");
             this.filePath = filePath;
         }
     }

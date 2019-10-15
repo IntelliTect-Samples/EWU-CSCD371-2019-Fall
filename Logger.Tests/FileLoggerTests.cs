@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Logger.Tests
 {
@@ -6,13 +7,13 @@ namespace Logger.Tests
     public class FileLoggerTests
     {
         [TestMethod]
-        public void Test_File_Contents_Match_Empty_File()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Null_Message_ThrowsException()
         {
             LogFactory myFactory = new LogFactory();
-            //File.WriteAllText("test.txt", "");
             myFactory.ConfigureFileLogger("test.txt");
-            FileLogger myLogger = (FileLogger)myFactory.CreateLogger("FileLoggerTests");
-            myLogger.Log(LogLevel.Debug, "Testing to see if written to file correctly");
+            FileLogger myLogger = (FileLogger)myFactory.CreateLogger("test");
+            myLogger.Log(LogLevel.Error, null);
         }
     }
 }
