@@ -4,12 +4,33 @@ namespace Logger
 {
     public class LogFactory
     {
+        private string FilePath;
+
         public BaseLogger CreateLogger(string className)
         {
             if (className.Equals("FileLogger"))
-                return new FileLogger(className);
+                if (FilePath is null)
+                {
+                    return null;
+                }
+
+                else
+                {
+                    return new FileLogger("testfile.txt")
+                    {
+                        ClassName = className
+                    };
+                }
             else
-                throw new ArgumentException();
+            {
+                return null;
+            }
+
+        }
+
+        public void ConfigureFileLogger(string filePath)
+        {
+            this.FilePath = filePath;
         }
     }
 }

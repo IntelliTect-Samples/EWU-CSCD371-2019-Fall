@@ -15,6 +15,7 @@ namespace Logger.Tests
             LogFactory logFactory = new LogFactory();
 
             //Act
+            logFactory.ConfigureFileLogger("testfile.txt");
             var testLogger = logFactory.CreateLogger("FileLogger");
 
             //Assert
@@ -28,6 +29,7 @@ namespace Logger.Tests
             LogFactory logFactory = new LogFactory();
 
             //Act
+            logFactory.ConfigureFileLogger("testfile.txt");
             var testLogger = logFactory.CreateLogger("FileLogger");
 
             //Assert
@@ -35,19 +37,30 @@ namespace Logger.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void LogFactory_Constructor_Invalid_ClassName()
+        public void LogFactory_Constructor_Sets_ClassNameProperty()
         {
             //Arrange
             LogFactory logFactory = new LogFactory();
 
             //Act
-            BaseLogger invalidLogger = logFactory.CreateLogger("SillyLogger");
+            logFactory.ConfigureFileLogger("testfile.txt");
+            var fileLogger = logFactory.CreateLogger("FileLogger");
 
-            //Assert
-
+            Assert.AreEqual("FileLogger", fileLogger.ClassName);
         }
 
+        [TestMethod]
+        public void LogFactory_UnconfiguredFileLogger_ReturnsNull()
+        {
+            //Arrange
+            LogFactory logFactory = new LogFactory();
+
+            //Act
+            var fileLogger = logFactory.CreateLogger("FileLogger");
+
+            //Assert
+            Assert.IsNull(fileLogger);
+        }
 
     }
 }
