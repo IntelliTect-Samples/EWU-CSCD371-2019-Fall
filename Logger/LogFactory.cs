@@ -9,6 +9,7 @@ namespace Logger
         public BaseLogger CreateLogger(string className)
         {
             if (className.Equals("FileLogger"))
+            {
                 if (FilePath is null)
                 {
                     return null;
@@ -21,6 +22,7 @@ namespace Logger
                         ClassName = className
                     };
                 }
+            }
             else
             {
                 return null;
