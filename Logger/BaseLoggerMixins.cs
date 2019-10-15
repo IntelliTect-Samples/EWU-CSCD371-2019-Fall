@@ -4,7 +4,7 @@ namespace Logger
 {
     public static class BaseLoggerMixins
     {
-        public static void Error(this BaseLogger baseLogger, string message, params string[] args)
+        public static void Error(this BaseLogger baseLogger, string message, params int[] args)
         {
             if (baseLogger is null)
             {
@@ -16,7 +16,7 @@ namespace Logger
             }
         }
 
-        public static void Warning(this BaseLogger baseLogger, string message, params string[] args)
+        public static void Warning(this BaseLogger baseLogger, string message, params int[] args)
         {
             if (baseLogger is null)
             {
@@ -29,7 +29,7 @@ namespace Logger
             }
         }
 
-        public static void Information(this BaseLogger baseLogger, string message, params string[] args)
+        public static void Information(this BaseLogger baseLogger, string message, params int[] args)
         {
             if (baseLogger is null)
             {
@@ -42,7 +42,7 @@ namespace Logger
             }
         }
 
-        public static void Debug(this BaseLogger baseLogger, string message, params string[] args)
+        public static void Debug(this BaseLogger baseLogger, string message, params int[] args)
         {
             if (baseLogger is null)
             {

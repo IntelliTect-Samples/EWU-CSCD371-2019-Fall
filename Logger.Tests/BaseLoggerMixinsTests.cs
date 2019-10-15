@@ -14,7 +14,7 @@ namespace Logger.Tests
             // Arrange
 
             // Act
-            //BaseLoggerMixins.Error(null, "");
+            BaseLoggerMixins.Error(null, "");
 
             // Assert
         }
@@ -26,10 +26,10 @@ namespace Logger.Tests
             var logger = new TestLogger();
 
             // Act
-            //logger.Error("Message {0}", 42);
+            logger.Error("Message {0}", 42);
 
-            // Assert
-            Assert.AreEqual(1, logger.LoggedMessages.Count);
+			// Assert
+			Assert.AreEqual(1, logger.LoggedMessages.Count);
             Assert.AreEqual(LogLevel.Error, logger.LoggedMessages[0].LogLevel);
             Assert.AreEqual("Message 42", logger.LoggedMessages[0].Message);
         }

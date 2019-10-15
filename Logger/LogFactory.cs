@@ -1,4 +1,6 @@
-﻿namespace Logger
+﻿using System;
+
+namespace Logger
 {
     public class LogFactory
     {
@@ -22,7 +24,13 @@
 
         public void ConfigureFileLogger(string path)
         {
-            this.path = path;
+            if (path is null || path == "")
+            {
+                throw new ArgumentNullException();
+            } else
+            {
+                this.path = path;
+            }
         }
     }
 }

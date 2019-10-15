@@ -9,19 +9,19 @@ namespace Logger
 
         public FileLogger(string path)
         {
-            if (path is null)
-            {
-                throw new ArgumentNullException(path, "Path cannot be null");
-            }
-            else
-            {
-                _path = path;
-                if (!File.Exists(path))
-                {
-                    File.Create(path).Dispose();
-                }
-            }
-        }
+			if (!(path is null) && path != "")
+			{
+				_path = path;
+				if (!File.Exists(path))
+				{
+					File.Create(path).Dispose();
+				}
+			}
+			else
+			{
+				throw new ArgumentNullException(path, "Path cannot be null");
+			}
+		}
 
         public override void Log(LogLevel logLevel, string message)
         {
