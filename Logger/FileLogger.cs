@@ -14,6 +14,8 @@ namespace Logger
 
         public override void Log(LogLevel logLevel, string message)
         {
+            if (message is null) throw new ArgumentNullException(nameof(message));
+
             string logMessage = $"{DateTime.Now:f} - {ClassName} - {logLevel}: {message}\n";
             File.AppendAllText(FilePath, logMessage);
         }

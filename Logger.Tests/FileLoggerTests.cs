@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 
 namespace Logger.Tests
@@ -9,7 +10,7 @@ namespace Logger.Tests
         [TestMethod]
         public void FileLogger_Log_MessageIsCorrect()
         {
-            string logFile = "FileLogger_Log_MessageIsCorrect.log";
+            string logFile = $"{nameof(FileLogger_Log_MessageIsCorrect)}.log";
             string testMessage = "abcdefghijklmnopqrstuvwxyz";
 
             try
@@ -25,6 +26,30 @@ namespace Logger.Tests
 
                 Assert.AreEqual(1, logResults.Length);
                 Assert.IsTrue(logResults[0].Contains(testMessage));
+            }
+            finally
+            {
+                File.Delete(logFile);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FileLogger_Log_NullMessage()
+        {
+            string logFile = $"{nameof(FileLogger_Log_NullMessage)}.log";
+            string? testMessage = null;
+
+            try
+            {
+                FileLogger logger = new FileLogger(logFile)
+                {
+                    ClassName = nameof(FileLoggerTests)
+                };
+
+#nullable disable
+                logger.Log(LogLevel.Error, testMessage);
+#nullable enable
             }
             finally
             {
