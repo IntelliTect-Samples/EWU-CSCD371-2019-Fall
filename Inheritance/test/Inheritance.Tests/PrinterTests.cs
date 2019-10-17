@@ -7,10 +7,10 @@ using System.Text;
 namespace Inheritance.Tests
 {
     [TestClass]
-    public class PersonPrinterTests
+    public class PrinterTests
     {
         [TestMethod]
-        public void PersonGetsPrinted()
+        public void ItemGetsPrinted()
         {
             // Arrange
             var item = new TestItem { Name = "Test Item" };
@@ -38,5 +38,10 @@ namespace Inheritance.Tests
 
     public class TestItem : Item {
         public string Name { get; set; }
+
+        public override string PrintInfo()
+        {
+            return Name;
+        }
     }
 }
