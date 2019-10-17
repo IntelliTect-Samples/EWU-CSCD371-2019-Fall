@@ -1,0 +1,9 @@
+language: csharp
+mono: none
+dotnet: 3.0
+solution: Inheritance.sln
+script:
+    - cd Inheritance
+    - dotnet restore
+    - dotnet test
+    - dotnet run --project src/Inheritance/           
