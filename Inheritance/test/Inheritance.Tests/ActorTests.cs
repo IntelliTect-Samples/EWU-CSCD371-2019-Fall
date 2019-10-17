@@ -36,7 +36,7 @@ namespace Inheritance.Tests {
             string outPut = sheldon.Speak();
 
             //Assert
-            Assert.AreEqual("*Incoherent mumbles* *canned laughter*", outPut);
+            Assert.AreEqual("I really wish the programmer knew more about Big Bang Therory, so he could better make fun of me! *canned laughter*", outPut);
         }
 
         [TestMethod]

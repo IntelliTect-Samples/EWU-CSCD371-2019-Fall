@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Inheritance {
+﻿namespace Inheritance {
     public class Penny : Actor {
         public string Speak() {
-            return this.Speak();
+            return ActorExtention.Speak((Actor) this);
         }
     }
 }
