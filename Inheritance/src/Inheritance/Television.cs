@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Inheritance {
+﻿namespace Inheritance {
     public class Television : Item {
         public double Size { get; set; }
         public string Manufacturer { get; set; }
