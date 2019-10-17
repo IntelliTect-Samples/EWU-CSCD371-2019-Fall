@@ -38,5 +38,10 @@ namespace Inheritance.Tests
 
     public class TestItem : Item {
         public string Name { get; set; }
+
+        public override string PrintInfo()
+        {
+            return Name;
+        }
     }
 }
