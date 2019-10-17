@@ -16,6 +16,7 @@ namespace Inheritance
             }
         }
     }
+
     public static class Printer
     {
         public static void Print(Item item, TextWriter writer)
