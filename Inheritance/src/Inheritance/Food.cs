@@ -8,9 +8,6 @@ namespace Inheritance
     {
         public string Upc { get; set; }
         public string Brand { get; set; }
-        public override string PrintInfo()
-        {
-            return $"{Brand} - {Upc}";
-        }
+        public override string PrintInfo() => $"{Brand} - {Upc}";
     }
 }
