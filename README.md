@@ -22,4 +22,3 @@ For this assignment we are going to build a simple logging system. It will appen
 [System.IO.Path](https://docs.microsoft.com/en-us/dotnet/api/system.io.path?view=netcore-3.0) IF you find yourself using string operations to build up a file path, stop and look through the members of this static class.
 
 [System.IO.File](https://docs.microsoft.com/en-us/dotnet/api/system.io.file?view=netcore-3.0) A simple class that can handle simple file reads and writes.
-
