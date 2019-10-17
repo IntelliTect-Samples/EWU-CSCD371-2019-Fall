@@ -4,14 +4,14 @@ using System.Text;
 
 namespace Inheritance
 {
-    public class Food : Item
+    class Television : Item
     {
-        public string Upc { get; set; }
-        public string Brand { get; set; }
+        public string Manufacturer { get; set; }
+        public string Size { get; set; }
 
         public override string PrintInfo()
         {
-            return $"{Upc} - {Brand}";
+            return $"{Manufacturer} - {Size}";
         }
     }
 }
