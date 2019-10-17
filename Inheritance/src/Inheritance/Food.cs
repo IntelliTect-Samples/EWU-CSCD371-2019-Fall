@@ -11,7 +11,7 @@ namespace Inheritance
 
         public override string PrintInfo()
         {
-            return Upc + " - " + Brand;
+            return $"{Upc} - {Brand}";
         }
     }
 }
