@@ -78,7 +78,7 @@ namespace Inheritance.Tests {
         public string Name { get; set; }
 
         public override string PrintInfo() {
-            return this.PrintInfo();
+            return this.Name;
         }
     }
 }
