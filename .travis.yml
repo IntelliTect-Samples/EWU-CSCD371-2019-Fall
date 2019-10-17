@@ -1,8 +1,9 @@
 language: csharp
 solution: Inheritence/Inheritence.sln
 
-dotnet: latest
+mono: none
+dotnet: 3.0
 script:
-    - dotnet restore
+    - dotnet restore Inheritence/Inheritence.sln
     - dotnet test Inheritence/Inheritence.sln
     - dotnet run Inheritance/Inheritance.sln --project Inheritance/src/Inheritance/           
