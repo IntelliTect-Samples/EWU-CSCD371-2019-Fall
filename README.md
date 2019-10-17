@@ -1,5 +1,6 @@
 # EWU-CSCD371-2019-Fall
-## Assignment 3
+
+## Assignment 3 [![Build Status](https://travis-ci.org/ashermancinelli/EWU-CSCD371-2019-Fall.svg?branch=master)](https://travis-ci.org/ashermancinelli/EWU-CSCD371-2019-Fall)
 For this assignment we are going to unfortunately just do some academic exercises to make sure
 we understand polymorphism and pattern matching. Some initial code has already been provided
 (no, it does not compile, and that is expected).
