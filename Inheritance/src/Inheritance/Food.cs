@@ -9,6 +9,6 @@ namespace Inheritance
         public string Upc { get; set; }
         public string Brand { get; set; }
 
-        public override PrintInfo() => $"<{Upc}> - <{Brand}>";
+        public override string PrintInfo() => $"<{Upc}> - <{Brand}>";
     }
 }

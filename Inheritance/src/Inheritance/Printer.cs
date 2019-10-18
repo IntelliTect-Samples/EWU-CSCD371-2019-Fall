@@ -12,6 +12,7 @@ namespace Inheritance
             using (var sw = new StreamWriter(Console.OpenStandardOutput()))
             {
                 Printer.Print(new Food { Brand = "Frosted Mini Wheats", Upc = "123456789" }, sw);
+                Printer.Print(new Television { Manufacturer = "Samsung", Size = "40" }, sw);
                 sw.Flush();
             }
         }

@@ -6,10 +6,10 @@ namespace Inheritance
 {
     class Television:Item
     {
-        private string Manufacturor { get; set; }
+        public string Manufacturer { get; set; }
 
-        private string Size { get; set; }
+        public string Size { get; set; }
 
-        public override PrintInfo() => $"<{Manufacturor}> - <{Size}>";
+        public override string PrintInfo() => $"<{Manufacturer}> - <{Size}>";
     }
 }
