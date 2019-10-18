@@ -11,7 +11,7 @@ namespace Inheritance
 
         public override string PrintInfo()
         {
-            throw new NotImplementedException();
+            return $"{Upc} - {Brand}";
         }
     }
 }

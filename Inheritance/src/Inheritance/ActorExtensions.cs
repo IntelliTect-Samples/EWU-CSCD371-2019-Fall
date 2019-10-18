@@ -6,9 +6,10 @@ namespace Inheritance
 {
     public static class ActorExtensions
     {
-        public static void Speak(this Actor actor)
+        public static string Speak(this Actor actor, string script)
         {
-            
+            //return $"{actor.GetType()}: {script}";
+            return "ABC";
         }
     }
 }
