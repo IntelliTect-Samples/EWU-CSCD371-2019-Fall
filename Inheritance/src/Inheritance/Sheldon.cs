@@ -2,7 +2,7 @@
 
 namespace Inheritance
 {
-    public class Sheldon
+    public class Sheldon : Actor
     {
         public string Speak()
         {

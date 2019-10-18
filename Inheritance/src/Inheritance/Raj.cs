@@ -2,7 +2,7 @@
 
 namespace Inheritance
 {
-    public class Raj
+    public class Raj : Actor
     {
         public bool WomenArePresent { get; set; }
         public string SpeakWithWomenPresent()
