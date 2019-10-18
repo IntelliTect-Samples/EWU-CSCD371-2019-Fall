@@ -68,6 +68,92 @@ namespace Inheritance.Tests
         }
     }
 
+    [TestClass]
+    public class TelevisionPrinterTests
+    {
+        [TestMethod]
+        public void TelevisionGetsPrinted()
+        {
+            // Arrange
+            Television item = new Television { Manufacturer = "Sony", Size = 42 };
+
+            using (var stream = new MemoryStream())
+            {
+                using (var writer = new StreamWriter(stream))
+                {
+                    // Act
+                    Printer.Print(item, writer);
+                    writer.Flush();
+
+                    stream.Position = 0;
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    // Assert
+                    using (var reader = new StreamReader(stream))
+                    {
+                        var lineWritten = reader.ReadLine();
+                        Assert.AreEqual("Sony - 42", lineWritten);
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
+        public void TelevisionNullManufacturerGetsPrinted()
+        {
+            // Arrange
+            Television item = new Television { Manufacturer = null, Size = 42 };
+
+            using (var stream = new MemoryStream())
+            {
+                using (var writer = new StreamWriter(stream))
+                {
+                    // Act
+                    Printer.Print(item, writer);
+                    writer.Flush();
+
+                    stream.Position = 0;
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    // Assert
+                    using (var reader = new StreamReader(stream))
+                    {
+                        var lineWritten = reader.ReadLine();
+                        Assert.AreEqual(" - 42", lineWritten);
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
+        public void TelevisionNullSizeGetsPrinted()
+        {
+            // Arrange
+            Television item = new Television { Manufacturer = "Sony", Size = 0 };
+
+            using (var stream = new MemoryStream())
+            {
+                using (var writer = new StreamWriter(stream))
+                {
+                    // Act
+                    Printer.Print(item, writer);
+                    writer.Flush();
+
+                    stream.Position = 0;
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    // Assert
+                    using (var reader = new StreamReader(stream))
+                    {
+                        var lineWritten = reader.ReadLine();
+                        Assert.AreEqual("Sony", lineWritten);
+                    }
+                }
+            }
+        }
+
+    }
+
     public class TestItem : Item
     {
         public string Name { get; set; }
