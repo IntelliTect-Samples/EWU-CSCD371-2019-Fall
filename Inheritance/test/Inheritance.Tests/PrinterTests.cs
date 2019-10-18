@@ -126,10 +126,10 @@ namespace Inheritance.Tests
         }
 
         [TestMethod]
-        public void TelevisionNullSizeGetsPrinted()
+        public void TelevisionEmptySizeGetsPrinted()
         {
             // Arrange
-            Television item = new Television { Manufacturer = "Sony", Size = 0 };
+            Television item = new Television { Manufacturer = "Sony" };
 
             using (var stream = new MemoryStream())
             {
