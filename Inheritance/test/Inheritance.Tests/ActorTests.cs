@@ -10,7 +10,7 @@ namespace Inheritance.Tests
         {
             Sheldon testActor = new Sheldon { Script = "Bazinga" };
 
-            string sheldonScript = testActor.Speak(testActor.Script);
+            string sheldonScript = testActor.SayLine();
 
             Assert.AreEqual("Sheldon: Bazinga", sheldonScript);
         }
@@ -20,7 +20,7 @@ namespace Inheritance.Tests
         {
             Penny testActor = new Penny { Script = "I'm Penny" };
 
-            string pennyScript = testActor.Speak(testActor.Script);
+            string pennyScript = testActor.SayLine();
 
             Assert.AreEqual("Penny: I'm Penny", pennyScript);
         }
@@ -30,11 +30,10 @@ namespace Inheritance.Tests
         {
             Raj testActor = new Raj
             {
-                Script = "I'm afraid of women",
-                AreWomenPresent = true,
+                AreWomenPresent = true
             };
 
-            string rajScript = testActor.Speak(testActor.Script);
+            string rajScript = testActor.SayLine();
 
             Assert.AreEqual("Raj: mumble", rajScript);
         }
@@ -44,13 +43,12 @@ namespace Inheritance.Tests
         {
             Raj testActor = new Raj 
             {
-                Script = "I'm afraid of women",
-                AreWomenPresent = false,
+                AreWomenPresent = false
             };
 
-            string rajScript = testActor.Speak(testActor.Script);
+            string rajScript = testActor.SayLine();
 
-            Assert.AreEqual("Raj: mumble", rajScript);
+            Assert.AreEqual("Raj: I am afraid of women", rajScript);
         }
     }
 }

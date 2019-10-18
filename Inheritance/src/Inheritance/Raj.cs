@@ -10,9 +10,8 @@ namespace Inheritance
         {
             get 
             {
-                return AreWomenPresent ? "mumble" : Script;
+                return AreWomenPresent ? "mumble" : "I am afraid of women";
             }
-            set { Script = value; }
         }
         public bool AreWomenPresent { get; set; }
     }
