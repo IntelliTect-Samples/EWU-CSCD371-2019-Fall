@@ -6,8 +6,8 @@ namespace Inheritance.Tests
     public class ActorTests
     {
         [TestMethod]
-        public void SheldonSpeak()
-        {
+        public void SheldonSayLine() 
+        { 
             Sheldon testActor = new Sheldon { Script = "Bazinga" };
 
             string sheldonScript = testActor.SayLine();
@@ -16,7 +16,7 @@ namespace Inheritance.Tests
         }
 
         [TestMethod]
-        public void PennySpeak()
+        public void PennySayLine()
         {
             Penny testActor = new Penny { Script = "I'm Penny" };
 
@@ -26,7 +26,7 @@ namespace Inheritance.Tests
         }
 
         [TestMethod]
-        public void RajSpeak_AreWomenPresent_True()
+        public void RajSayLine_AreWomenPresent_True()
         {
             Raj testActor = new Raj{ AreWomenPresent = true };
 
@@ -36,7 +36,7 @@ namespace Inheritance.Tests
         }
 
         [TestMethod]
-        public void RajSpeak_AreWomenPresent_False()
+        public void RajSayLine_AreWomenPresent_False()
         {
             Raj testActor = new Raj { AreWomenPresent = false };
 
