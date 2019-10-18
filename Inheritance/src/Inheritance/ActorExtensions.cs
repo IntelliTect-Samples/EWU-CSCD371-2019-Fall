@@ -15,6 +15,5 @@ namespace Inheritance
             Raj raj when !raj.AreWomenPresent => $"{actor.GetType().Name}: {raj.Script}",
             { } => string.Empty
         };
-        
     }
 }

@@ -26,12 +26,9 @@ namespace Inheritance.Tests
         }
 
         [TestMethod]
-        public void RajSpeak_WomenPresentTrue()
+        public void RajSpeak_AreWomenPresent_True()
         {
-            Raj testActor = new Raj
-            {
-                AreWomenPresent = true
-            };
+            Raj testActor = new Raj{ AreWomenPresent = true };
 
             string rajScript = testActor.SayLine();
 
@@ -39,12 +36,9 @@ namespace Inheritance.Tests
         }
 
         [TestMethod]
-        public void RajSpeak_WomenPresentFalse()
+        public void RajSpeak_AreWomenPresent_False()
         {
-            Raj testActor = new Raj 
-            {
-                AreWomenPresent = false
-            };
+            Raj testActor = new Raj { AreWomenPresent = false };
 
             string rajScript = testActor.SayLine();
 
