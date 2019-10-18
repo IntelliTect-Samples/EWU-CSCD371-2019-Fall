@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Inheritance
 {
@@ -16,6 +14,7 @@ namespace Inheritance
             }
         }
     }
+
     public static class Printer
     {
         public static void Print(Item item, TextWriter writer)
