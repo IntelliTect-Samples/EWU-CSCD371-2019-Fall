@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Inheritance
 {
-    class Raj : Actor
+    public class Raj : Actor
     {
         public bool womenArePresent { get; set; }
 
