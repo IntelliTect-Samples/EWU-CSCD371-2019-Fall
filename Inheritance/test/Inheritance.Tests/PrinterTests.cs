@@ -13,9 +13,10 @@ namespace Inheritance.Tests
         public void PersonGetsPrinted()
         {
             // Arrange
-            var item = new TestItem { Name = "Test Item" };
+            var item = new TestItem {Name = "Test Item"};
 
-            using (var stream = new MemoryStream()) {
+            using (var stream = new MemoryStream())
+            {
                 using (var writer = new StreamWriter(stream))
                 {
                     // Act
@@ -36,7 +37,10 @@ namespace Inheritance.Tests
         }
     }
 
-    public class TestItem : Item {
+    public class TestItem : Item
+    {
         public string Name { get; set; }
+
+        public override string PrintInfo() => Name ?? "Empty Name";
     }
 }
