@@ -34,9 +34,47 @@ namespace Inheritance.Tests
                 }
             }
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void NullItem_ThrowsException()
+        {
+            //Arrange
+            TestItem item = null;
+
+            using (var stream = new MemoryStream())
+            {
+                using (var writer = new StreamWriter(stream))
+                {
+                    //Act
+                    Printer.Print(item, writer);
+                    writer.Flush();
+
+                    //Assert
+                }
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void NullPrintStream_ThrowsException()
+        {
+            //Arrange
+            TestItem item = new TestItem { Name = "Test Item" };
+
+            //Act
+            Printer.Print(item, null);
+
+            //Assert
+        }
     }
 
     public class TestItem : Item {
         public string Name { get; set; }
+
+        public override string PrintInfo()
+        {
+            return Name;
+        }
     }
 }

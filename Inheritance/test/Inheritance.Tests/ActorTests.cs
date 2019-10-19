@@ -15,7 +15,7 @@ namespace Inheritance.Tests
             string result = penny.Speak();
 
             //Assert
-            Assert.AreEqual("This is something Penny would say", result);
+            Assert.AreEqual("Penny: \"I love him, but if he's broken, let's not get a new one.\"", result);
         }
 
         [TestMethod]
@@ -27,7 +27,7 @@ namespace Inheritance.Tests
             string result = sheldon.Speak();
 
             //Assert
-            Assert.AreEqual("This is something Sheldon would say", result);
+            Assert.AreEqual("Sheldon: \"Bazinga!\"", result);
         }
 
         [TestMethod]
@@ -39,7 +39,7 @@ namespace Inheritance.Tests
             string result = raj.SpeakWithoutWomenPresent();
 
             //Assert
-            Assert.AreEqual("This is something Raj would say WITHOUT women present", result);
+            Assert.AreEqual("Raj: \"I've said it before and I'll say it again, Aquaman sucks!\"", result);
         }
 
         [TestMethod]
@@ -51,7 +51,7 @@ namespace Inheritance.Tests
             string result = raj.SpeakWithWomenPresent();
 
             //Assert
-            Assert.AreEqual("This is something Raj would say with women present", result);
+            Assert.AreEqual("Raj: \"*mumbles*\"", result);
         }
     }
 }

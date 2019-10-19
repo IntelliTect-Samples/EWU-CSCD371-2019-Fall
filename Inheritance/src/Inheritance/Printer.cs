@@ -20,6 +20,13 @@ namespace Inheritance
     {
         public static void Print(Item item, TextWriter writer)
         {
+            if (item is null)
+            {
+                throw new NullReferenceException("Item was null");
+            } else if (writer is null)
+            {
+                throw new NullReferenceException("StreamWriter is null");
+            }
             writer.WriteLine(item.PrintInfo());
         }
     }

@@ -6,7 +6,7 @@ namespace Inheritance
     {
         public string Speak()
         {
-            return "This is something Penny would say";
+            return "Penny: \"I love him, but if he's broken, let's not get a new one.\"";
         }
     }
 

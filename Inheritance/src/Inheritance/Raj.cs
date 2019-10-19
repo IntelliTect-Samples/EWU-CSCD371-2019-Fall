@@ -7,12 +7,12 @@ namespace Inheritance
         public bool WomenArePresent { get; set; }
         public string SpeakWithWomenPresent()
         {
-            return "This is something Raj would say with women present";
+            return "Raj: \"*mumbles*\"";
         }
 
         public string SpeakWithoutWomenPresent()
         {
-            return "This is something Raj would say WITHOUT women present";
+            return "Raj: \"I've said it before and I'll say it again, Aquaman sucks!\"";
         }
     }
 }
