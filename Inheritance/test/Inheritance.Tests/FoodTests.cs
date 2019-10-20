@@ -7,34 +7,17 @@ namespace Inheritance.Tests
     public class FoodTests
     {
         [TestMethod]
-        public void FoodGetsPrinted()
+        public void FoodPrintInfo()
         {
-            // Arrange
             var item = new Food
             {
                 Upc = "Test Upc",
                 Brand = "Test Brand"
             };
 
-            using (var stream = new MemoryStream())
-            {
-                using (var writer = new StreamWriter(stream))
-                {
-                    // Act
-                    Printer.Print(item, writer);
-                    writer.Flush();
+            string testPrintedInfo = item.PrintInfo();
 
-                    stream.Position = 0;
-                    stream.Seek(0, SeekOrigin.Begin);
-
-                    // Assert
-                    using (var reader = new StreamReader(stream))
-                    {
-                        var lineWritten = reader.ReadLine();
-                        Assert.AreEqual("<Test Upc> - <Test Brand>", lineWritten);
-                    }
-                }
-            }
+            Assert.AreEqual("<Test Upc> - <Test Brand>", testPrintedInfo);
         }
     }
 }

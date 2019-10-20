@@ -7,34 +7,17 @@ namespace Inheritance.Tests
     public class TelevisionTests
     {
         [TestMethod]
-        public void TelevisionGetsPrinted()
+        public void TelevisionPrintInfo()
         {
-            // Arrange
             var item = new Television
             {
                 Manufacturer = "Test Manufacturer",
                 Size = "Test Size"
             };
 
-            using (var stream = new MemoryStream())
-            {
-                using (var writer = new StreamWriter(stream))
-                {
-                    // Act
-                    Printer.Print(item, writer);
-                    writer.Flush();
+            string testPrintedInfo = item.PrintInfo();
 
-                    stream.Position = 0;
-                    stream.Seek(0, SeekOrigin.Begin);
-
-                    // Assert
-                    using (var reader = new StreamReader(stream))
-                    {
-                        var lineWritten = reader.ReadLine();
-                        Assert.AreEqual("<Test Manufacturer> - <Test Size>", lineWritten);
-                    }
-                }
-            }
+            Assert.AreEqual("<Test Manufacturer> - <Test Size>", testPrintedInfo);
         }
     }
 }
