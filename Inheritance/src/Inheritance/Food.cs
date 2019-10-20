@@ -11,7 +11,7 @@ namespace Inheritance
 
         public string PrintInfo()
         {
-            return $"{Brand} - {Upc}";
+            return $"{Upc} - {Brand}";
         }
     }
 }
