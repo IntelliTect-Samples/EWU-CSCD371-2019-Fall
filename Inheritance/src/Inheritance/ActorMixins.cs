@@ -6,7 +6,7 @@ namespace Inheritance
 {
     public static class ActorMixins
     {
-        public static string Speak(Actor actor) => actor switch
+        public static string Speak(this Actor actor) => actor switch
         {
             Penny penny => penny.Speak(),
             Sheldon sheldon => sheldon.Speak(),
