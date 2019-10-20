@@ -40,6 +40,7 @@ namespace Inheritance.Tests
         {
             //Arrange
             var foodItem = new Food { Brand = "McDonalds", Upc = "1004" };
+            string expectedResults = "1004 - McDonalds";
             using (var stream = new MemoryStream())
             {
                 using (var writer = new StreamWriter(stream))
@@ -55,7 +56,7 @@ namespace Inheritance.Tests
                     using (var reader = new StreamReader(stream))
                     {
                         var lineWritten = reader.ReadLine();
-                        Assert.AreEqual(foodItem.PrintInfo(), lineWritten);
+                        Assert.AreEqual(expectedResults, lineWritten);
                     }
                 }
             }
@@ -66,6 +67,7 @@ namespace Inheritance.Tests
         {
             //Arrange
             var tvItem = new Television { Manufacturer="Vizio", Size="15" };
+            string expectedResults = "Vizio - 15";
             using (var stream = new MemoryStream())
             {
                 using (var writer = new StreamWriter(stream))
@@ -81,7 +83,7 @@ namespace Inheritance.Tests
                     using (var reader = new StreamReader(stream))
                     {
                         var lineWritten = reader.ReadLine();
-                        Assert.AreEqual(tvItem.PrintInfo(), lineWritten);
+                        Assert.AreEqual(expectedResults, lineWritten);
                     }
                 }
             }
