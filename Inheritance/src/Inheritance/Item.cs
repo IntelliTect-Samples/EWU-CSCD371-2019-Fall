@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Inheritance
 {
-    public abstract class Item
+    public interface Item
     {
-        public abstract string PrintInfo();
+        string PrintInfo();
     }
 }

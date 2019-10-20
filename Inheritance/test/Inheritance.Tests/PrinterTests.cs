@@ -34,9 +34,40 @@ namespace Inheritance.Tests
                 }
             }
         }
+
+        [TestMethod]
+        public void FoodPrintInfo()
+        {
+            // Arrange
+            var foodItem = new Food { Brand = "Zips", Upc="1004" };
+
+            using (var stream = new MemoryStream())
+            {
+                using (var writer = new StreamWriter(stream))
+                {
+                    // Act
+                    Printer.Print(foodItem, writer);
+                    writer.Flush();
+
+                    stream.Position = 0;
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    // Assert
+                    using (var reader = new StreamReader(stream))
+                    {
+                        var lineWritten = reader.ReadLine();
+                        Assert.AreEqual(foodItem.PrintInfo(), lineWritten);
+                    }
+                }
+            }
+        }
     }
 
     public class TestItem : Item {
         public string Name { get; set; }
+        public string PrintInfo()
+        {
+            return Name;
+        }
     }
 }
