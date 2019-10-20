@@ -11,11 +11,17 @@ namespace Inheritance
         {
             using (var sw = new StreamWriter(Console.OpenStandardOutput()))
             {
-                Printer.Print(new Food { Brand = "Frosted Mini Wheats", Upc = "123456789" }, sw);
+                Food food = new Food("Frosted Mini Wheats", "123456789");
+                Printer.Print(food, sw);
+                sw.Flush();
+
+                Television television = new Television("60", "LG");
+                Printer.Print(television, sw);
                 sw.Flush();
             }
         }
     }
+
     public static class Printer
     {
         public static void Print(Item item, TextWriter writer)
