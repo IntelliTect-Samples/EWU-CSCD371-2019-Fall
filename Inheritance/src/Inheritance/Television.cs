@@ -9,6 +9,14 @@ namespace Inheritance
 
         public override string PrintInfo()
         {
+            if (Size is null || Size == "")
+            {
+                throw new ArgumentNullException("Size is missing or null", new ArgumentNullException());
+            }
+            else if (Manufacturer is null || Manufacturer == "")
+            {
+                throw new ArgumentNullException("Manufacturer is missing or null", new ArgumentNullException());
+            }
             return $"{Manufacturer} - {Size}";
         }
     }

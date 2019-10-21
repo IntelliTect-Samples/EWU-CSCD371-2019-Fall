@@ -11,9 +11,12 @@ namespace Inheritance
 
         public override string PrintInfo()
         {
-            if (Upc is null)
+            if (Upc is null || Upc == "")
             {
-                throw new ArgumentNullException("UPC is null", new ArgumentNullException());
+                throw new ArgumentNullException("UPC is missing or null", new ArgumentNullException());
+            } else if (Brand is null || Brand == "")
+            {
+                throw new ArgumentNullException("Brand is missing or null", new ArgumentNullException());
             }
             return $"{Upc} - {Brand}";
         }
