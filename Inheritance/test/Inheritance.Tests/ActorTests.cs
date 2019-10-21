@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Inheritance.Tests
 {
@@ -37,5 +38,13 @@ namespace Inheritance.Tests
             Assert.AreEqual("Bazinga", actor.Speak());
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(NotSupportedException))]
+        public void Speak_ThrowsNotSupportedException()
+        {
+            Actor actor = new Actor();
+
+            actor.Speak();
+        }
     }
 }
