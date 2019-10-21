@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Inheritance
 {
-    public interface Item
+    public interface IItem
     {
         string PrintInfo();
     }
