@@ -6,9 +6,11 @@ namespace Inheritance
 {
     public class Sheldon : Actor
     {
+        public string lastSaid { get; private set; }
         public void Speak()
         {
-            Console.WriteLine("Sheldon is speaking.");
+            lastSaid = "Sheldon is speaking.";
+            Console.WriteLine(lastSaid);
         }
     }
 }

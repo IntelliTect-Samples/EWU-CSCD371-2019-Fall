@@ -30,5 +30,30 @@ namespace Inheritance.Tests
             //Assert
             Assert.AreEqual(raj.lastSaid, "Raj is speaking.");
         }
+
+        [TestMethod]
+        public void Speak_Sheldon()
+        {
+            //Arrange
+            Sheldon shel = new Sheldon();
+            //Act
+            shel.Speak();
+
+            //Assert
+            Assert.AreEqual(shel.lastSaid, "Sheldon is speaking.");
+        }
+
+        [TestMethod]
+        public void Speak_Penny()
+        {
+            //Arrange
+            Penny penn = new Penny();
+
+            //Act
+            penn.Speak();
+
+            //Assert
+            Assert.AreEqual(penn.lastSaid, "Penny is speaking.");
+        }
     }
 }
