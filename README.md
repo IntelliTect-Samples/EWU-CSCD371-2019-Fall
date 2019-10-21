@@ -23,4 +23,6 @@ pattern matching to call each of the specific classes that inherit from Actor
 women are around, so make sure that he only says something when WomenArePresent is false. If
 WomenArePresent happens to be true, he can only "mumble" (logic should be expressed in the switch statement, not the method that takes care of what he says - meaning, there should be 2 methods that exist for Raj)
 
-### Extra Credit (TBD)
+### Extra Credit (TBD) - This will require to be submitted as a separate PR based on the original Assignment3 branch
+- Convert the Item class to be an interface instead of an abstract class
+- Implement all the same logic as Part 1, but using the interface instead of the abstract class. Since there wasn't any shared logic in the abstract class, this was probably how things should have been implemented in the first place.
