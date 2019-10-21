@@ -9,7 +9,7 @@ namespace Inheritance
         public string Manufacturer { get; set; }
         public double Size { get; set; }
 
-        public override string PrintInfo()
+        public override string ReturnInfo()
         {
             return $"{Manufacturer} - {Size}";
         }

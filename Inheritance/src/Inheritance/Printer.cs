@@ -21,7 +21,7 @@ namespace Inheritance
     {
         public static void Print(Item item, TextWriter writer)
         {
-            writer.WriteLine(item.PrintInfo());
+            writer.WriteLine(item.ReturnInfo());
         }
     }
 }
