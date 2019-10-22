@@ -2,6 +2,6 @@
 {
     public class Penny : Actor
     {
-        public string Speak() => "I love him, but if he's broken, let's not get a new one.";
+        public string Speak(string message) => message ?? "Isn't this when he says \"bazooka\" or something?";
     }
 }
