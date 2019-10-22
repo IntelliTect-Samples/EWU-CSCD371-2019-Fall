@@ -3,20 +3,14 @@ namespace Inheritance
 {
     public class Television : Item
     {
-        public string Size { get; }
-        public string Manufacturer { get; }
+        public string? Size { get; set; }
+        public string? Manufacturer { get; set; }
 
-        public Television(string size, string manufacturer)
+        public string PrintInfo() => (Manufacturer, Size) switch
         {
-            if (size is null) throw new ArgumentNullException(nameof(Size));
-            if (manufacturer is null) throw new ArgumentNullException(nameof(manufacturer));
-            Size = size;
-            Manufacturer = manufacturer;
-        }
-
-        public override string PrintInfo()
-        {
-            return $"<{Manufacturer}> - <{Size}>";
-        }
+            (null, _) => throw new ArgumentNullException(nameof(Manufacturer)),
+            (_, null) => throw new ArgumentNullException(nameof(Size)),
+            (_, _) => $"<{Manufacturer}> - <{Size}>"
+        };
     }
 }
