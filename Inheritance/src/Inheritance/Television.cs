@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Inheritance
 {
-    class Television:IItem
+    class Television:Item
     {
         public string Manufacturer { get; set; }
 
