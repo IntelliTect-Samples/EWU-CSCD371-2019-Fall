@@ -36,7 +36,8 @@ namespace Inheritance.Tests
         }
     }
 
-    public class TestItem : Item {
+    public class TestItem : IItem {
         public string Name { get; set; }
+        public string PrintInfo() => $"{Name}";
     }
 }
