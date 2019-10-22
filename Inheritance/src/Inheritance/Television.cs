@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Inheritance
 {
-    class Television:Item
+    class Television:IItem
     {
         public string Manufacturer { get; set; }
 
         public string Size { get; set; }
 
-        public override string PrintInfo() => $"<{Manufacturer}> - <{Size}>";
+        public  string PrintInfo() => $"<{Manufacturer}> - <{Size}>";
     }
 }

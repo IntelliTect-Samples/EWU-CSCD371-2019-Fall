@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Inheritance
 {
-    public class Food : Item
+    public class Food : IItem
     {
         public string Upc { get; set; }
         public string Brand { get; set; }
 
-        public override string PrintInfo() => $"<{Upc}> - <{Brand}>";
+        public  string PrintInfo() => $"<{Upc}> - <{Brand}>";
     }
 }
