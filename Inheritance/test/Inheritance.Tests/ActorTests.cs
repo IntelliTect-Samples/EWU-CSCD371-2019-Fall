@@ -46,5 +46,14 @@ namespace Inheritance.Tests
 
             actor.Speak();
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Speak_ArgumentNullException()
+        {
+            Actor actor = null;
+
+            actor.Speak();
+        }
     }
 }

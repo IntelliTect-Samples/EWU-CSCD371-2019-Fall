@@ -16,6 +16,8 @@ namespace Inheritance
                     return raj.RajMumbles();
                 case Raj raj when !raj.WomenArePresent:
                     return raj.RajSays();
+                case null:
+                    throw new ArgumentNullException("There cannot be a null actor");
                 default:
                     throw new NotSupportedException("There are no other characters implemented");
             }
