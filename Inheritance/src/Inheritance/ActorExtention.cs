@@ -2,7 +2,7 @@
 
 namespace Inheritance {
     public static class ActorExtention {
-        public static String Speak(Actor actor) {
+        public static String Speak(this Actor actor) {
             string result = "";
             switch (actor) {
                 case Sheldon sheldon:
