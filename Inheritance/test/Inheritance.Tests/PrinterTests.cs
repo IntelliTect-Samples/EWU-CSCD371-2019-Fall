@@ -34,9 +34,44 @@ namespace Inheritance.Tests
                 }
             }
         }
+
+        [TestMethod]
+        public void Test_ItemUpc()
+        {
+            Food burger = new Food();
+            burger.Upc = "111";
+            Assert.AreEqual("111",burger.Upc);
+        }
+        [TestMethod]
+        public void Test_ItemBrand()
+        {
+            Food burger = new Food();
+            burger.Brand = "McDonalds";
+            Assert.AreEqual("McDonalds", burger.Brand);
+        }
+        [TestMethod]
+        public void Test_TVManufacturer()
+        {
+            Television tv = new Television();
+            tv.manufacturer = "Sony";
+            Assert.AreEqual("Sony", tv.manufacturer);
+        }
+        [TestMethod]
+        public void Test_TVSize()
+        {
+            Television tv= new Television();
+            tv.size = "120in";
+            Assert.AreEqual("120in", tv.size);
+        }
     }
+    
 
     public class TestItem : Item {
         public string Name { get; set; }
+
+        public override string PrintInfo()
+        {
+            return Name;
+        }
     }
 }
