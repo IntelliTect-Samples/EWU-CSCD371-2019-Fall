@@ -51,7 +51,7 @@ namespace Configuration
             }
         }
 
-        public virtual bool SetConfigValue(string name, string? value)
+        public virtual bool SetConfigValue(string name, string value)
         {
             ConfigDict[name] = value;
             return true;
