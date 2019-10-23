@@ -7,7 +7,6 @@ namespace Configuration
     {
         public bool GetConfigValue(string name, out string? value);
 
-        // Notice that input value is not nullable anymore
-        public bool SetConfigValue(string name, string value);
+        public bool SetConfigValue(string name, string? value);
     }
 }

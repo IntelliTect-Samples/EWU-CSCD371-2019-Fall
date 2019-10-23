@@ -1,15 +1,26 @@
+using System;
+using System.IO;
+
 namespace Configuration
 {
-    public class FileConfig : IConfig
+    public class FileConfig : Config
     {
-        public bool GetConfigValue(string name, out string? value)
+        public string FileName { get; set; }
+
+        public override bool GetConfigValue(string name, out string? value)
         {
+            using (var sr = new StreamReader(Environment.CurrentDirectory + FileName))
+            {
+            }
             value = null;
             return true;
         }
 
-        public bool SetConfigValue(string name, string value)
+        public override bool SetConfigValue(string name, string? value)
         {
+            using (var sw = new StreamWriter(Environment.CurrentDirectory + FileName))
+            {
+            }
             return true;
         }
     }
