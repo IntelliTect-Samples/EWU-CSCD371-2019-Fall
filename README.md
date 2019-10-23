@@ -1,24 +1,42 @@
-# EWU-CSCD371-2019-Fall
-## Assignment 2
-For this assignment we are going to build a simple logging system. It will append items to a file. Some code for this assignment is already provided.
+# Assignment 4
 
+The purpose of this assignment is to focus on unit testing with the following concepts:
 
-- There is an existing `BaseLogger` class. It needs an **auto property** to hold the class name. This property should be set in the `LogFactory` using an **object initializer**.
-- Create a `FileLogger` that derives from `BaseLogger`. It should take in a path to a file to write the log message to. When its `Log` method is called, it should **append** messages on their own line in the file. The output should include all of the following:
-  - The current date/time
-  - The name of the class that created the logger
-  - The log level
-  - The message
-  - The format may vary, but an example might look like this "10/7/2019 12:38:59 AM FileLoggerTests Warning: Test message"
-- The `LogFactory` should be updated with a new method `ConfigureFileLogger`. This should take in a file path and store it in a **private member**. It should use this when instantiating a new `FileLogger` in its `CreateLogger` method. 
-- If the file logger has not be configured in the `LogFactory`, its `CreateLogger` method should return `null`.
-- Inside of `BaseLoggerMixins` implement **extension methods** on `BaseLogger` for `Error`, `Warning`, `Information`, and `Debug`. Each of these methods should take in a `string` for the message, as well as a **parameter array** of arguments for the message. Each of these extension methods is expected to be a shortcut for calling the `BaseLogger.Log` method, by automatically supplying the appropriate `LogLevel`. These methods should throw an exception if the `BaseLogger` parameter is null. There are a couple example unit tests to get you started. 
-- All of the above should be unit tested.
+- Leveraging a mock object rather than testing multiple units or IO
+- Working with data driven tests.
+- Working with code analysis
+- Nullable reference types
 
-### Extra Credit
-- Implement an additional logger. This logger must be unit tested. Some options to consider could be one that uses `System.Console` or `System.Diagnostics.Trace`.
+## Reading
 
-### Relevant APIs to know about
-[System.IO.Path](https://docs.microsoft.com/en-us/dotnet/api/system.io.path?view=netcore-3.0) IF you find yourself using string operations to build up a file path, stop and look through the members of this static class.
+Read through Chapter 11 by the week of Oct. 28.
+Read through information on [Nullability](https://intellitectsp-my.sharepoint.com/:w:/g/personal/mark_intellitect_com/EcaeQiQnpwpJpIh6-AjD_j4BoTlc6CLCBzYuXU-EHxHkWQ?e=0RWkzh). Feel free to comment or edit the content.  **Do not share** this document outside of class.
 
-[System.IO.File](https://docs.microsoft.com/en-us/dotnet/api/system.io.file?view=netcore-3.0) A simple class that can handle simple file reads and writes.
+## Instructions
+
+- Create a *`EnvironmentConfig`* configuration class that implements `IConfig` and settings using `Environment.SetEnvironment()` and `Environment.GetEnvironment()`
+- **Settings should not persist across process settings (if this occurs you will get a 0)**
+- Implement an `FileConfig` that reads/writes settings to a config.settings file in the same directory as the application.  Settings are stored as <name>=<value>.  (You can use String.Split to retrieve individual values).
+- Do not allow null, empty string, or names with spaces or '='.  Feel free to document other assumptions using unit tests.  
+- Choose simplicity over than complexity.
+- Implement **SampleApp** to print out all the configuration settings based on hard coded values for config (iterating over the values is not supported by the interface).
+- Have the **SampleApp** print out a hard coded list of settings to the console.  You do not need to unit test invocations of `System.Console` methods.
+- Unit test the **SampleApp** using a `MockConfig` class (implementing `IConfig`) that uses settings stored in memory (such as an array or a `List<T>`)
+- Use data driven testing to work with multiple values against the config API.
+- Add code analysis to **SampleApp** address all warnings.  It is okay to appropriately disable rules such as  localization/culture rules. **Note: This is true for projects in all assignments going forward.***
+- Nullablility should be enabled at the project level for all projects and all warnings should be handled without disabling them.  Also, be sure to check for null when appropriate.  **Note: This is true for all assignments going forward.***
+- Follow the test principles described in [Unit testing best practices with .NET Core and .NET Standard](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices)
+  - Where an assert is a logical assert rather than a statement assert
+  - Ensure tests will run whether or not config files already exits.
+  - Be sure to clean up after all tests have run and before a new test run starts.
+
+## Extra Credit
+
+The following are options for extra credit (you don't need to do them all):
+
+- Provide a means to iterate over all the settings on a provider rather than only pulling out specific ones by name.
+- Refactor the test classes that test through `IConfig` into a base class so that the same tests can be used to test multiple.
+- Create an IConfigGroup that returns a set of setting based on wildcard filters (rather than just a single setting)
+- Provide a mock instance for `System.Console`.  (You do not need to test method invocations of `System.Console`.)
+- Create and implement an `IConfigAsync` interface (we are unlikely to cover async this quarter).
+>>>>>>> a0fa0a726151c722d55ec3dbbcad9fa1b3307b30
