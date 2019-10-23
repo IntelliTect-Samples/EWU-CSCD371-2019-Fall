@@ -28,6 +28,31 @@ namespace Configuration.Tests
                 File.Delete(Environment.CurrentDirectory + fileName);
             }
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        [DataRow("SomeName", null)]
+        [DataRow("SomeName", "")]
+        [DataRow("", "SomeValue")]
+        [DataRow("SomeName", "Some Value")]
+        [DataRow("Some Name", "SomeValue")]
+        [DataRow("SomeName", "Some=Value")]
+        public void FileConfig_SanitizeConfig_ExceptionOnBadInput(string name, string value)
+        {
+            string fileName = "SomeFileName";
+            try
+            {
+                var sut = new FileConfig()
+                {
+                    FileName = fileName
+                };
+                sut.SetConfigValue(name, value);
+            }
+            finally
+            {
+                File.Delete(Environment.CurrentDirectory + fileName);
+            }
+        }
     }
 }
 
