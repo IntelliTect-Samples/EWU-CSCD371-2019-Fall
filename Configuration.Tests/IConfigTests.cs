@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace Configuration.Tests
 {
@@ -18,18 +19,27 @@ namespace Configuration.Tests
         [TestMethod]
         public void IConfig_GetConfigValue_GetsNotNull()
         {
-            var sut = new TestConfig() { ConfigValue = "SomeValue" };
-            string? config = null;
-            Assert.IsTrue(sut.GetConfigValue("SomeName", out config));
-            Assert.IsNotNull(config);
-            Assert.AreEqual("SomeValue", config);
+            string name = "SomeName", value = "SomeValue";
+            string? outValue = null;
+
+            var sut = new TestConfig()
+            {
+                ConfigValue = { { name, value } }
+            };
+
+            Assert.IsTrue(sut.GetConfigValue(name, out outValue));
+            Assert.IsNotNull(outValue);
+            Assert.AreEqual(value, outValue);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void IConfig_SetConfigValue_ThrowsErrorOnNullValue()
         {
-            var sut = new TestConfig() { ConfigValue = "SomeValue" };
+            var sut = new TestConfig()
+            { 
+                ConfigValue = new Dictionary<string, string?>()
+            };
             string? config = null;
             sut.SetConfigValue("SomeName", config);
         }
@@ -37,16 +47,19 @@ namespace Configuration.Tests
 
     public class TestConfig : IConfigTests
     {
-        public string? ConfigValue { get; set; }
+        public Dictionary<string, string?> ConfigValue;
+
+        public TestConfig() =>
+            ConfigValue = new Dictionary<string, string?>();
 
         public bool GetConfigValue(string name, out string? value)
         {
-            if (ConfigValue is null)
+            if (!ConfigValue.ContainsKey(name))
             {
                 value = null;
                 return false;
             } else {
-                value = ConfigValue;
+                value = ConfigValue[name];
                 return true;
             }
         }
@@ -54,7 +67,7 @@ namespace Configuration.Tests
         public bool SetConfigValue(string name, string value)
         {
             if (value is null) throw new ArgumentNullException();
-            ConfigValue = value;
+            ConfigValue[name] = value;
             return true;
         }
     }

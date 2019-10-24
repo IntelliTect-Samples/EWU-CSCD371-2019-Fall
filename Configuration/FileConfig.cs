@@ -16,7 +16,7 @@ namespace Configuration
                 while ((line = sr.ReadLine()) != null)
                 {
                     var (_name, _value) = ParseConfigString(line);
-                    if (name == name)
+                    if (name == _name)
                     {
                         value = _value;
                         return true;
@@ -55,9 +55,9 @@ namespace Configuration
 
         private static void SanitizeInput(string name, string? value)
         {
-            if ((name.Count(c => c == ' ') != 0) || (value.Count(c => c == ' ') != 0))
+            if ((name.Any(c => c == ' ')) || (value.Any(c => c == ' ')))
                 throw new ArgumentException("Input contains internal whitespace.");
-            else if ((name.Count(c => c == '=') != 0) || (value.Count(c => c == '=') != 0))
+            else if ((name.Any(c => c == '=')) || (value.Any(c => c == '=')))
                 throw new ArgumentException("Input does not contain exactly one '=' char.");
             else if (name == "" || value == "")
                 throw new ArgumentException("Input does not contain exactly one '=' char.");

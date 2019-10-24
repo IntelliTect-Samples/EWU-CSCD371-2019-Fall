@@ -9,7 +9,8 @@ namespace Configuration.Tests
         [TestMethod]
         public void EnvironmentConfig_GetEnvVar_IsNull()
         {
-            string name = "SomeName", value;
+            string name = "SomeName";
+            string? value;
             var sut = new EnvironmentConfig();
             Assert.IsFalse(sut.GetConfigValue(name, out value));
             Assert.IsNull(value);
@@ -18,7 +19,8 @@ namespace Configuration.Tests
         [TestMethod]
         public void EnvironmentConfig_GetEnvVar_IsNotNull()
         {
-            string name = "PATH", value;
+            string name = "PATH";
+            string? value;
             var sut = new EnvironmentConfig();
             Assert.IsTrue(sut.GetConfigValue(name, out value));
             Assert.IsNotNull(value);
@@ -27,7 +29,8 @@ namespace Configuration.Tests
         [TestMethod]
         public void EnvironmentConfig_SetEnvVar_ReturnsTrue()
         {
-            string name = "SomeName", value = "SomeValue", outValue;
+            string name = "SomeName", value = "SomeValue";
+            string? outValue;
             var sut = new EnvironmentConfig();
             Assert.IsTrue(sut.SetConfigValue(name, value));
             Assert.IsTrue(sut.GetConfigValue(name, out outValue));
@@ -38,7 +41,8 @@ namespace Configuration.Tests
         [TestMethod]
         public void EnvironmentConfig_AutoEnvVarCleanup()
         {
-            string name = "SomeName", value = "SomeValue", outValue;
+            string name = "SomeName", value = "SomeValue";
+            string? outValue;
             var sut = new EnvironmentConfig();
             // Check that env var is created
             Assert.IsTrue(sut.SetConfigValue(name, value));

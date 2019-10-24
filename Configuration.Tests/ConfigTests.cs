@@ -18,7 +18,8 @@ namespace Configuration.Tests
         public void Config_GetConfig_ReturnsFalseOnNoValue()
         {
             var sut = new Config();
-            string name="SomeName", value="SomeValue";
+            string name="SomeName";
+            string? value="SomeValue";
             Assert.IsFalse(sut.GetConfigValue(name, out value));
         }
     }
