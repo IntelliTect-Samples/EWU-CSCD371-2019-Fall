@@ -4,6 +4,9 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <NoWarn>
+      CA1707 <!-- Disable Identifiers should not contain underscores warning -->
+    </NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
