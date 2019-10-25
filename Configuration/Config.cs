@@ -6,7 +6,7 @@ namespace Configuration
 {
     public class Config : IConfig
     {
-        public Dictionary<string, string?> ConfigDict { get; set; }
+        private Dictionary<string, string?> ConfigDict { get; set; }
 
         public Config()
         {

@@ -10,7 +10,8 @@ namespace Mock.Tests
         [TestMethod]
         public void GetConfigValue_UnsetName_ReturnsNull()
         {
-            string name="SomeName", value;
+            string name="SomeName";
+            string? value;
             var sut = new MockConfig();
             Assert.IsFalse(sut.GetConfigValue(name, out value));
             Assert.IsNull(value);
@@ -21,7 +22,6 @@ namespace Mock.Tests
         [DataRow("SomeName", "Some Value")]
         [DataRow("SomeName", "Some=Value")]
         [DataRow("SomeName", "SomeValue ")]
-        [DataRow("SomeName", "")]
         public void SetConfigValue_BadConfigValue_ThrowsException(string name, string value)
         {
             var sut = new MockConfig();
@@ -30,10 +30,12 @@ namespace Mock.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void SetConfigValue_NullConfigValue_ThrowsException()
+        [DataRow("SomeName", "")]
+        [DataRow("SomeName", null)]
+        public void SetConfigValue_NullConfigValue_ThrowsException(string name, string? value)
         {
             var sut = new MockConfig();
-            sut.SetConfigValue("SomeValue", null);
+            sut.SetConfigValue(name, value);
         }
     }
 }

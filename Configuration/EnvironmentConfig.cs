@@ -27,6 +27,8 @@ namespace Configuration
         }
 
         // Using destructor for automatic cleanup
+        // Also using helper function if manual
+        // cleanup is desired.
         public void Cleanup()
         {
             foreach (string key in UsedKeys)

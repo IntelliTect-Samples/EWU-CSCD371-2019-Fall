@@ -6,13 +6,18 @@ namespace Configuration
 {
     public class FileConfig : Config
     {
-        public string FileName { get; set; }
+        public string FileName { get; set; } = "DefaultFileName.ini";
+
+        // ~FileConfig() => FileCleanup();
+
+        public void FileCleanup() =>
+            File.Delete(Environment.CurrentDirectory + FileName);
 
         public override bool GetConfigValue(string name, out string? value)
         {
             using (var sr = new StreamReader(Environment.CurrentDirectory + FileName))
             {
-                string line = "";
+                string? line = "";
                 while ((line = sr.ReadLine()) != null)
                 {
                     var (_name, _value) = ParseConfigString(line);
@@ -30,6 +35,7 @@ namespace Configuration
         public override bool SetConfigValue(string name, string? value)
         {
             if (value is null) throw new ArgumentException("Setting value cannot be null.");
+
             SanitizeInput(name, value);
             using (var sw = new StreamWriter(Environment.CurrentDirectory + FileName, append: true))
             {
@@ -43,6 +49,8 @@ namespace Configuration
 
         public static (string, string?) ParseConfigString(string input)
         {
+            if (input is null)
+                throw new ArgumentNullException($"{nameof(input)} parameter cannot be null.");
             string[] values = input.Split('=');
             if (values.Length != 2) throw new ArgumentException("Got multiple '=' characters.");
 
@@ -50,19 +58,19 @@ namespace Configuration
 
             SanitizeInput(name, value);
             
-            return (name: name, value: value);
+            return (name, value);
         }
 
         private static void SanitizeInput(string name, string? value)
         {
             if ((name.Any(c => c == ' ')) || (value.Any(c => c == ' ')))
-                throw new ArgumentException("Input contains internal whitespace.");
+                throw new ArgumentException($"{nameof(value)} contains internal whitespace.");
             else if ((name.Any(c => c == '=')) || (value.Any(c => c == '=')))
-                throw new ArgumentException("Input does not contain exactly one '=' char.");
-            else if (name == "" || value == "")
-                throw new ArgumentException("Input does not contain exactly one '=' char.");
-            else if (value is null)
-                throw new ArgumentException("Cannot take null values.");
+                throw new ArgumentException($"{nameof(value)} does not contain exactly one '=' char.");
+            else if (String.IsNullOrEmpty(value))
+                throw new ArgumentException($"Cannot take null or empty values for {nameof(value)}.");
+            else if (String.IsNullOrEmpty(name))
+                throw new ArgumentException($"Cannot take null or empty values for {nameof(name)}.");
         }
     }
 }

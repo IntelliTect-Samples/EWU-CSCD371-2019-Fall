@@ -30,14 +30,12 @@ namespace Mock
 
         public bool SetConfigValue(string name, string? value)
         {
-            if (value is null)
-                throw new ArgumentNullException("Cannot pass null config value.");
-            else if (value == "")
-                throw new ArgumentException("Cannot pass empty string to config.");
+            if (String.IsNullOrEmpty(value))
+                throw new ArgumentNullException($"Cannot pass null or empty value for {nameof(value)}.");
             else if (value.Contains('='))
-                throw new ArgumentException("Cannot pass config value with '=' char.");
+                throw new ArgumentException($"Cannot pass '=' char in {nameof(value)}.");
             else if (value.Contains(' '))
-                throw new ArgumentException("Cannot pass config value with whitespace.");
+                throw new ArgumentException($"Cannot pass whitespace in {nameof(value)}.");
             ConfigDict[name] = value;
             return true;
         }

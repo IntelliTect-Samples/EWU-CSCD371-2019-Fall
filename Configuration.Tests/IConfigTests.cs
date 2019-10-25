@@ -22,10 +22,8 @@ namespace Configuration.Tests
             string name = "SomeName", value = "SomeValue";
             string? outValue = null;
 
-            var sut = new TestConfig()
-            {
-                ConfigValue = { { name, value } }
-            };
+            var sut = new TestConfig();
+            sut.SetConfigValue(name, value);
 
             Assert.IsTrue(sut.GetConfigValue(name, out outValue));
             Assert.IsNotNull(outValue);
@@ -36,10 +34,8 @@ namespace Configuration.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void IConfig_SetConfigValue_ThrowsErrorOnNullValue()
         {
-            var sut = new TestConfig()
-            { 
-                ConfigValue = new Dictionary<string, string?>()
-            };
+            var sut = new TestConfig();
+
             string? config = null;
             sut.SetConfigValue("SomeName", config);
         }
@@ -47,7 +43,7 @@ namespace Configuration.Tests
 
     public class TestConfig : IConfigTests
     {
-        public Dictionary<string, string?> ConfigValue;
+        private Dictionary<string, string?> ConfigValue;
 
         public TestConfig() =>
             ConfigValue = new Dictionary<string, string?>();
@@ -64,9 +60,10 @@ namespace Configuration.Tests
             }
         }
 
-        public bool SetConfigValue(string name, string value)
+        public bool SetConfigValue(string name, string? value)
         {
-            if (value is null) throw new ArgumentNullException();
+            if (String.IsNullOrEmpty(value))
+                throw new ArgumentNullException($"Cannot pass null config for {nameof(value)}.");
             ConfigValue[name] = value;
             return true;
         }
