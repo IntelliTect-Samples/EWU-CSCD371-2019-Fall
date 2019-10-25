@@ -30,8 +30,10 @@ namespace SampleApp
             {
                 string? outValue;
                 Console.WriteLine(
-                    $"Getting value of {name} in {nameof(Config)} config.");
+                    $"Getting value of {name} in {nameof(Config)}.");
                 Config.GetConfigValue(name, out outValue);
+                if (outValue is null)
+                    throw new NullReferenceException($"Got null value from {nameof(Config)}");
                 Console.WriteLine($"Got value of {outValue}.");
             }
         }

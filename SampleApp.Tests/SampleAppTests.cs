@@ -84,10 +84,8 @@ namespace SampleApp.Tests
                 Config = new MockConfig()
             };
 
-            // act
+            sut.SetValues();
             sut.GetValues();
-
-            // assert
         }
 
         [TestMethod]
@@ -99,10 +97,8 @@ namespace SampleApp.Tests
                 Config = new EnvironmentConfig()
             };
 
-            // act
+            sut.SetValues();
             sut.GetValues();
-
-            // assert
         }
 
         [TestMethod]
@@ -114,10 +110,8 @@ namespace SampleApp.Tests
                 Config = new FileConfig()
             };
 
-            // act
+            sut.SetValues();
             sut.GetValues();
-
-            // assert
         }
 
         [TestMethod]
@@ -125,6 +119,18 @@ namespace SampleApp.Tests
         public void SampleApp_RunApp_ThrowsExceptionOnBadArg()
         {
             Program.RunApp("SomeUnsupportedConfigtype");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void SampleApp_GetValues_NullConfigThrowsException()
+        {
+            var sut = new Program()
+            {
+                Config = new MockConfig()
+            };
+
+            sut.GetValues();
         }
     }
 }

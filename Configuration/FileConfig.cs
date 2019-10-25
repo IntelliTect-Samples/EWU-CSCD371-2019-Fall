@@ -32,9 +32,10 @@ namespace Configuration
             }
         }
 
+        #pragma warning disable CA1303
         public override bool SetConfigValue(string name, string? value)
         {
-            if (value is null) throw new ArgumentException("Setting value cannot be null.");
+            if (value is null) throw new ArgumentException($"Setting {nameof(value)} cannot be null.");
 
             SanitizeInput(name, value);
             using (var sw = new StreamWriter(Environment.CurrentDirectory + FileName, append: true))
@@ -52,7 +53,8 @@ namespace Configuration
             if (input is null)
                 throw new ArgumentNullException($"{nameof(input)} parameter cannot be null.");
             string[] values = input.Split('=');
-            if (values.Length != 2) throw new ArgumentException("Got multiple '=' characters.");
+            if (values.Length != 2) 
+                throw new ArgumentException($"Got multiple '=' characters for {nameof(input)}.");
 
             string name = values[0], value = values[1];
 
@@ -72,6 +74,7 @@ namespace Configuration
             else if (String.IsNullOrEmpty(name))
                 throw new ArgumentException($"Cannot take null or empty values for {nameof(name)}.");
         }
+        #pragma warning restore
     }
 }
             
