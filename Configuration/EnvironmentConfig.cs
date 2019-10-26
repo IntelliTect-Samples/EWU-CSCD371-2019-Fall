@@ -10,7 +10,7 @@ namespace Configuration
             return !(value is null);
         }
 
-        public bool SetConfigValue(string name, string? value)
+        public bool SetConfigValue(string name, string value)
         {
             if (name is null) throw new ArgumentNullException(nameof(name));
             try
