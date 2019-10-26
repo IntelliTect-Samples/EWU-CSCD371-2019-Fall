@@ -10,11 +10,13 @@ namespace Configuration.Tests
         [DataRow("name", "value")]
         [DataRow("123", "456")]
         [DataRow("oiaersnotiearnt", "yunawufhaouvhyuawfv")]
-        [DataRow("+-\"/", " ")]
+        [DataRow("+-\"/", "!!")]
         public void SetConfigValue_ValidArgs_SetsEnvVar(string name, string value)
         {
             try
             {
+                Environment.SetEnvironmentVariable(name, null);
+
                 new EnvironmentConfig().SetConfigValue(name, value);
                 Assert.AreEqual(Environment.GetEnvironmentVariable(name), value);
             }
@@ -29,21 +31,63 @@ namespace Configuration.Tests
         public void SetConfigValue_NullName_ThrowsException()
         {
 #nullable disable
-            new EnvironmentConfig().SetConfigValue(null, null);
+            new EnvironmentConfig().SetConfigValue(null, "value");
 #nullable enable
         }
 
-        [TestMethod]
-        public void SetConfigValue_NullValue_DeletesVariable()
+        [DataTestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        [DataRow("")]
+        [DataRow(" ")]
+        [DataRow("1plus2=3")]
+        [DataRow("two words")]
+        [DataRow("three more words")]
+        public void SetConfigValue_InvalidName_ThrowsException(string name)
         {
-            const string name = "varName";
             try
             {
-                Environment.SetEnvironmentVariable(name, "value");
+                Environment.SetEnvironmentVariable(name, null);
 
+                new EnvironmentConfig().SetConfigValue(name, "value");
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable(name, null);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SetConfigValue_NullValue_ThrowsException()
+        {
+            string name = "name";
+            try
+            {
+#nullable disable
                 new EnvironmentConfig().SetConfigValue(name, null);
+#nullable enable
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable(name, null);
+            }
+        }
 
-                Assert.IsNull(Environment.GetEnvironmentVariable(name));
+        [DataTestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        [DataRow("")]
+        [DataRow(" ")]
+        [DataRow("1plus2=3")]
+        [DataRow("two words")]
+        [DataRow("three more words")]
+        public void SetConfigValue_InvalidValue_ThrowsException(string value)
+        {
+            string name = "name";
+            try
+            {
+                Environment.SetEnvironmentVariable(name, null);
+
+                new EnvironmentConfig().SetConfigValue(name, value);
             }
             finally
             {
@@ -61,10 +105,22 @@ namespace Configuration.Tests
         }
 
         [DataTestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        [DataRow("")]
+        [DataRow(" ")]
+        [DataRow("1plus2=3")]
+        [DataRow("two words")]
+        [DataRow("three more words")]
+        public void GetConfigValue_InvalidName_ThrowsException(string name)
+        {
+            new EnvironmentConfig().GetConfigValue(name, out _);
+        }
+
+        [DataTestMethod]
         [DataRow("name", "value")]
         [DataRow("123", "456")]
         [DataRow("oiaersnotiearnt", "yunawufhaouvhyuawfv")]
-        [DataRow("+-\"/", " ")]
+        [DataRow("+-\"/", "!!")]
         public void GetConfigValue_VariableExists_ReadsValue(string name, string value)
         {
             try
@@ -72,6 +128,7 @@ namespace Configuration.Tests
                 Environment.SetEnvironmentVariable(name, value);
 
                 bool success = new EnvironmentConfig().GetConfigValue(name, out var val);
+
                 Assert.IsTrue(success);
                 Assert.AreEqual(val, value);
             }
@@ -90,6 +147,7 @@ namespace Configuration.Tests
                 Environment.SetEnvironmentVariable(name, null);
 
                 bool success = new EnvironmentConfig().GetConfigValue(name, out var val);
+
                 Assert.IsFalse(success);
                 Assert.IsNull(val);
             }
