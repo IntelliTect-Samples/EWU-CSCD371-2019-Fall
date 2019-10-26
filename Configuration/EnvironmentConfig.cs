@@ -21,6 +21,8 @@ namespace Configuration
 
         public override bool SetConfigValue(string name, string? value)
         {
+            SanitizeValue(name);
+            SanitizeValue(value);
             Environment.SetEnvironmentVariable(name, value);
             UsedKeys.Add(name);
             return true;

@@ -20,7 +20,14 @@ namespace SampleApp
             {
                 Console.WriteLine(
                     $"Setting {name} to value {value} in {nameof(Config)} config.");
+
+                /*
+                 * Null/empty is checked in the setting function,
+                 * so we don't have to check here
+                 */
+                #pragma warning disable CS8602
                 Config.SetConfigValue(name, value);
+                #pragma warning restore
             }
         }
 
@@ -31,7 +38,16 @@ namespace SampleApp
                 string? outValue;
                 Console.WriteLine(
                     $"Getting value of {name} in {nameof(Config)}.");
+
+                /* 
+                 * SanitizeValue will do the null checks for us
+                 * here, so we can disable the warning and
+                 * restore immediately
+                 */
+                #pragma warning disable CS8602
+                MockConfig.SanitizeValue(name);
                 Config.GetConfigValue(name, out outValue);
+                #pragma warning restore
                 if (outValue is null)
                     throw new NullReferenceException($"Got null value from {nameof(Config)}");
                 Console.WriteLine($"Got value of {outValue}.");

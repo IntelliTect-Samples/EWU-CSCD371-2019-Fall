@@ -35,9 +35,8 @@ namespace Configuration
         #pragma warning disable CA1303
         public override bool SetConfigValue(string name, string? value)
         {
-            if (value is null) throw new ArgumentException($"Setting {nameof(value)} cannot be null.");
-
-            SanitizeInput(name, value);
+            SanitizeValue(name);
+            SanitizeValue(value);
             using (var sw = new StreamWriter(Environment.CurrentDirectory + FileName, append: true))
             {
                 sw.WriteLine(FormatConfig(name, value)); 

@@ -30,14 +30,20 @@ namespace Mock
 
         public bool SetConfigValue(string name, string? value)
         {
+            SanitizeValue(name);
+            SanitizeValue(value);
+            ConfigDict[name] = value;
+            return true;
+        }
+
+        public static void SanitizeValue(string? value)
+        {
             if (String.IsNullOrEmpty(value))
                 throw new ArgumentNullException($"Cannot pass null or empty value for {nameof(value)}.");
             else if (value.Contains('='))
                 throw new ArgumentException($"Cannot pass '=' char in {nameof(value)}.");
             else if (value.Contains(' '))
                 throw new ArgumentException($"Cannot pass whitespace in {nameof(value)}.");
-            ConfigDict[name] = value;
-            return true;
         }
     }
 }
