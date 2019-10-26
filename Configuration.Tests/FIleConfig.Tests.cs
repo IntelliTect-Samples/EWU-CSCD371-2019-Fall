@@ -31,27 +31,15 @@ namespace Configuration.Tests
             }
         }
 
-        public static IEnumerable<object[]> InvalidNameSettings
+        public static IEnumerable<object[]> InvalidStrings
         {
             get
             {
-                yield return new object[] { "", "value" };
-                yield return new object[] { "1plus2=3", "value" };
-                yield return new object[] { " ", "value" };
-                yield return new object[] { "two words", "value" };
-                yield return new object[] { "three more words", "value" };
-            }
-        }
-
-        public static IEnumerable<object[]> InvalidValueSettings
-        {
-            get
-            {
-                yield return new object[] { "name", "" };
-                yield return new object[] { "name", "1plus2=3" };
-                yield return new object[] { "name", " " };
-                yield return new object[] { "name", "two words" };
-                yield return new object[] { "name", "three more words" };
+                yield return new object[] { "" };
+                yield return new object[] { "1plus2=3" };
+                yield return new object[] { " " };
+                yield return new object[] { "two words" };
+                yield return new object[] { "three more words" };
             }
         }
 
@@ -102,15 +90,15 @@ namespace Configuration.Tests
         }
 
         [DataTestMethod]
-        [DynamicData(nameof(InvalidNameSettings))]
+        [DynamicData(nameof(InvalidStrings))]
         [ExpectedException(typeof(ArgumentException))]
-        public void SetConfigValue_InvalidNames_ThrowsException(string name, string value)
+        public void SetConfigValue_InvalidNames_ThrowsException(string name)
         {
             try
             {
                 File.Delete(Filename);
 
-                new FileConfig(Filename).SetConfigValue(name, value);
+                new FileConfig(Filename).SetConfigValue(name, "value");
             }
             finally
             {
@@ -119,15 +107,15 @@ namespace Configuration.Tests
         }
 
         [DataTestMethod]
-        [DynamicData(nameof(InvalidValueSettings))]
+        [DynamicData(nameof(InvalidStrings))]
         [ExpectedException(typeof(ArgumentException))]
-        public void SetConfigValue_InvalidValues_ThrowsException(string name, string value)
+        public void SetConfigValue_InvalidValues_ThrowsException(string value)
         {
             try
             {
                 File.Delete(Filename);
 
-                new FileConfig(Filename).SetConfigValue(name, value);
+                new FileConfig(Filename).SetConfigValue("name", value);
             }
             finally
             {
@@ -187,9 +175,9 @@ namespace Configuration.Tests
         }
 
         [DataTestMethod]
-        [DynamicData(nameof(InvalidNameSettings))]
+        [DynamicData(nameof(InvalidStrings))]
         [ExpectedException(typeof(ArgumentException))]
-        public void GetConfigValue_InvaldName_ThrowsException(string name, string value)
+        public void GetConfigValue_InvaldName_ThrowsException(string name)
         {
             try
             {
