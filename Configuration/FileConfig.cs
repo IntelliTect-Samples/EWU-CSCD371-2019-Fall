@@ -59,5 +59,5 @@ namespace Configuration
             File.WriteAllLines(Filename, settings.Select(item => $"{item.Key}={item.Value}"));
             return true;
         }
-}
+    }
 }
