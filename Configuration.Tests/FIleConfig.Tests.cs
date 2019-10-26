@@ -249,5 +249,14 @@ namespace Configuration.Tests
                 File.Delete(Filename);
             }
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Constructor_FilenameIsNull_ThrowsException()
+        {
+#nullable disable
+            new FileConfig(null);
+#nullable enable
+        }
     }
 }
