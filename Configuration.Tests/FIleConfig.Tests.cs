@@ -243,5 +243,23 @@ namespace Configuration.Tests
                 File.Delete(Filename);
             }
         }
+
+        [TestMethod]
+        public void GetConfigValue_FileDoesntExist_ReturnsNone()
+        {
+            try
+            {
+                File.Delete(Filename);
+
+                bool success = new FileConfig(Filename).GetConfigValue("name", out var val);
+
+                Assert.IsFalse(success);
+                Assert.IsNull(val);
+            }
+            finally
+            {
+                File.Delete(Filename);
+            }
+        }
     }
 }
