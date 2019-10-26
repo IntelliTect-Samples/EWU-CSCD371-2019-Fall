@@ -53,7 +53,5 @@ namespace Configuration
                 return true;
             }
         }
-
-        public 
     }
 }
