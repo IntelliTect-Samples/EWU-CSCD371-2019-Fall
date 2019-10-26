@@ -11,7 +11,7 @@ namespace Configuration
 
         public FileConfig(string filename)
         {
-            Filename = filename;
+            Filename = filename ?? throw new ArgumentNullException(nameof(filename));
         }
 
         public bool GetConfigValue(string name, out string? value)
