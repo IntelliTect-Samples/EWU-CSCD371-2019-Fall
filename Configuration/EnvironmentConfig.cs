@@ -11,6 +11,7 @@ namespace Configuration
             try
             {
                 value = Environment.GetEnvironmentVariable(name);
+                if (value is null) { throw new ArgumentNullException(name); }
             }
             catch (ArgumentNullException)
             {
