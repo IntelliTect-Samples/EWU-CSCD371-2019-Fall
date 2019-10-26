@@ -3,10 +3,10 @@ using System;
 
 namespace Configuration.Tests
 {
-	[TestClass]
+    [TestClass]
     public class EnvironmentConfigTests
     {
-        [TestMethod]
+        [DataTestMethod]
         [DataRow("name", "value")]
         [DataRow("123", "456")]
         [DataRow("oiaersnotiearnt", "yunawufhaouvhyuawfv")]
@@ -60,7 +60,7 @@ namespace Configuration.Tests
 #nullable enable
         }
 
-        [TestMethod]
+        [DataTestMethod]
         [DataRow("name", "value")]
         [DataRow("123", "456")]
         [DataRow("oiaersnotiearnt", "yunawufhaouvhyuawfv")]
