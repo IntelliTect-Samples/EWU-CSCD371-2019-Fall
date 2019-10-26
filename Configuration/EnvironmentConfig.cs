@@ -8,7 +8,7 @@ namespace Configuration
     {
         private List<string> ConfigNames = new List<string>();
 
-        public bool GetConfigValue(string name, string? value)
+        public bool GetConfigValue(string name, out string? value)
         {
             value = Environment.GetEnvironmentVariable(name);
             if(value is null)
