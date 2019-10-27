@@ -14,7 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp.Tests", "SampleApp.Tests\SampleApp.Tests.csproj", "{D5C9005C-28E1-463E-AF77-E71A4C1873CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockConfig.Tests", "SampleApp.Tests\MockConfig.Tests.csproj", "{D5C9005C-28E1-463E-AF77-E71A4C1873CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockConfig", "MockConfig\MockConfig.csproj", "{BF651DEF-099B-4F3D-9982-E39E4DF18078}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +76,18 @@ Global
 		{D5C9005C-28E1-463E-AF77-E71A4C1873CC}.Release|x64.Build.0 = Release|Any CPU
 		{D5C9005C-28E1-463E-AF77-E71A4C1873CC}.Release|x86.ActiveCfg = Release|Any CPU
 		{D5C9005C-28E1-463E-AF77-E71A4C1873CC}.Release|x86.Build.0 = Release|Any CPU
+		{BF651DEF-099B-4F3D-9982-E39E4DF18078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF651DEF-099B-4F3D-9982-E39E4DF18078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF651DEF-099B-4F3D-9982-E39E4DF18078}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BF651DEF-099B-4F3D-9982-E39E4DF18078}.Debug|x64.Build.0 = Debug|Any CPU
+		{BF651DEF-099B-4F3D-9982-E39E4DF18078}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BF651DEF-099B-4F3D-9982-E39E4DF18078}.Debug|x86.Build.0 = Debug|Any CPU
+		{BF651DEF-099B-4F3D-9982-E39E4DF18078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF651DEF-099B-4F3D-9982-E39E4DF18078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF651DEF-099B-4F3D-9982-E39E4DF18078}.Release|x64.ActiveCfg = Release|Any CPU
+		{BF651DEF-099B-4F3D-9982-E39E4DF18078}.Release|x64.Build.0 = Release|Any CPU
+		{BF651DEF-099B-4F3D-9982-E39E4DF18078}.Release|x86.ActiveCfg = Release|Any CPU
+		{BF651DEF-099B-4F3D-9982-E39E4DF18078}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
