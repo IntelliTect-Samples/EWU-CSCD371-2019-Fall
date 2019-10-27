@@ -103,5 +103,18 @@ namespace Configuration.Tests
             //Assert
             Assert.IsFalse(worked);
         }
+
+        [TestMethod]
+        public void GetConfigValue_GivenNullVariable_ReturnsFalse()
+        {
+            //Arrange
+            IConfig envConfig = new EnvironmentConfig();
+
+            //Act
+            bool worked = envConfig.GetConfigValue(null, out string? _);
+
+            //Assert
+            Assert.IsFalse(worked);
+        }
     }
 }
