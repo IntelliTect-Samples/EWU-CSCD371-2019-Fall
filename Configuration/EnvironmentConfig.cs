@@ -20,15 +20,19 @@ namespace Configuration
 
         public bool SetConfigValue(string name, string? value)
         {
-            if(value is null)
+            if (name is null || name is "" || name.Contains("=", 0) || name.Contains(" ", 0))
             {
+                value = null;
                 return false;
             }
-            else
+
+            if (value is null || value is "" || value.Contains("=", 0) || value.Contains(" ", 0))
             {
-                ConfigNames.Add(name);
-                Environment.SetEnvironmentVariable(name, value);
+                value = null;
+                return false;
             }
+            ConfigNames.Add(name);
+            Environment.SetEnvironmentVariable(name, value);
             return true;
         }
 
