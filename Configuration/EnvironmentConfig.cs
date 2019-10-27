@@ -1,19 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Configuration
 {
-    class EnvironmentConfig : IConfig
+    public class EnvironmentConfig : IConfig
     {
-        public bool GetConfigValue(string name, string? value)
+
+        private List<string> keys;
+
+        public EnvironmentConfig() {
+            keys = new List<string>();
+        }
+
+        public bool GetConfigValue(string name, out string? value)
         {
-            throw new NotImplementedException();
+            value = Environment.GetEnvironmentVariable(name);
+
+            return !(value is null);
         }
 
         public bool SetConfigValue(string name, string? value)
         {
-            throw new NotImplementedException();
+            Environment.SetEnvironmentVariable(name, value);
+            keys.Add(name);
+            return GetConfigValue(name, out _);
         }
     }
 }
