@@ -8,14 +8,14 @@ namespace Configuration
 
         private List<string> keys;
 
-        public EnvironmentConfig() {
+        public EnvironmentConfig() 
+        {
             keys = new List<string>();
         }
 
         public bool GetConfigValue(string name, out string? value)
         {
             value = Environment.GetEnvironmentVariable(name);
-
             return !(value is null);
         }
 

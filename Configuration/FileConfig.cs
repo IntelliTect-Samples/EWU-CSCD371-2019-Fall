@@ -9,6 +9,7 @@ namespace Configuration
     class FileConfig : IConfig
     {
         private string FileName;
+
         public FileConfig(string fileName) 
         {
             FileName = fileName;
@@ -44,9 +45,7 @@ namespace Configuration
                 sr.WriteLine($"{name}={value}");
             }
             return true;
-
         }
-
 
         private (string, string?) RetrieveValues(string input) 
         {
@@ -69,6 +68,5 @@ namespace Configuration
                 || value.Count(c=>c == '=') > 1)
                 throw new ArgumentException("Value contains invalid character or is empty");
         }
-
     }
 }
