@@ -5,56 +5,55 @@ using System.Text;
 
 namespace Configuration
 {
-    public class FileConfig : IConfig
+    public class FileConfig
     {
-        public bool GetConfigValue(string name, out string? value)
+        private string fileConfigPath;
+        public FileConfig()
         {
-            string filePath = Path.GetFullPath("config.settings");
-
-            if(!File.Exists(filePath))
-            {
-                value = null;
-                return false;
-            }
-            else
-            {
-                string[] configFile = File.ReadAllLines(filePath);
-
-                for(int i = 0; i < configFile.Length; i++)
-                {
-                    if(name == configFile[i].Split("=")[0])
-                    {
-                        value = configFile[i].Split("=")[1];
-                        return true;
-                    }
-                }
-
-                value = null;
-                return false;
-            }
+            this.fileConfigPath = Path.GetFullPath("config.settings");
         }
 
-        public bool SetConfigValue(string name, string? value)
+        public FileConfig(string filePath)
         {
-            if(isValidInput(name, value))
+            this.fileConfigPath = filePath;
+        }
+        public List<String> ReadConfig()
+        {
+            string[] lines = File.ReadAllLines(this.fileConfigPath);
+            List<String> configLines = new List<String>();
+
+            foreach(string line in lines)
             {
-                using (StreamWriter sr = new StreamWriter(Path.GetFullPath("config.settings")))
+                if(line.Split("=").Length != 2)
+                {
+                    throw new ArgumentException("Too many arguments on one line");
+                }
+
+                configLines.Add(line);
+            }
+
+            return configLines;
+        }
+
+        public void WriteConfig(string name, string? value)
+        {
+            if(IsValidInput(name, value))
+            {
+                using (StreamWriter sr = new StreamWriter(this.fileConfigPath))
                 {
                     sr.WriteLine($"{name}={value}");
                 }
-                return true;
             }
 
-            return false;
         }
 
-        private bool isValidInput(string name, string? value)
+        public static bool IsValidInput(string name, string? value)
         {
-            if(string.IsNullOrEmpty(name) || name.Contains(" ") || name.Contains("="))
+            if(string.IsNullOrEmpty(name) || name.Contains(' ') || name.Contains('='))
             {
                 return false;
             }
-            else if (string.IsNullOrEmpty(value) || value.Contains(" ") || name.Contains("="))
+            else if (string.IsNullOrEmpty(value) || value.Contains(' ') || value.Contains('='))
             {
                 return false;
             }

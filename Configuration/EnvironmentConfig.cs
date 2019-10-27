@@ -6,6 +6,8 @@ namespace Configuration
 {
     public class EnvironmentConfig : IConfig
     {
+        private List<String> EnvironmentNames = new List<String>();
+
         public bool GetConfigValue(string name, out string? value)
         {
             value =  Environment.GetEnvironmentVariable(name);
@@ -20,13 +22,38 @@ namespace Configuration
 
         public bool SetConfigValue(string name, string? value)
         {
-            if(value is null)
+            if(IsValidInput(name, value))
+            {
+                EnvironmentNames.Add(name);
+                Environment.SetEnvironmentVariable(name, value);
+                return true;
+            }
+        
+            return false;
+        }
+
+        public static bool IsValidInput(string name, string? value)
+        {
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(value))
             {
                 return false;
             }
+            else if (name.Contains(" ") || name.Contains("=") || value.Contains("="))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
-            Environment.SetEnvironmentVariable(name, value);
-            return true;
+        ~EnvironmentConfig()
+        {
+            foreach(string name in EnvironmentNames)
+            {
+                Environment.SetEnvironmentVariable(name, null);
+            }
         }
     }
 }
