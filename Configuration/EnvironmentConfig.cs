@@ -6,15 +6,16 @@ namespace Configuration
 {
     public class EnvironmentConfig : IConfig
     {
-        public bool GetConfigValue(string name, string? value)
+        public bool GetConfigValue(string name, out string? value)
         {
-            return value == Environment.GetEnvironmentVariable(name);
+            value = Environment.GetEnvironmentVariable(name);
+            return (value is string);
         }
 
         public bool SetConfigValue(string name, string? value)
         {
             Environment.SetEnvironmentVariable(name, value);
-            return GetConfigValue(name, value);
+            return GetConfigValue(name, out _);
         }
     }
 }

@@ -10,19 +10,35 @@ namespace Configuration.Tests
     {
         [TestMethod]
         [DataRow("ProgramData", "C:\\ProgramData")]
-        [DataRow("Invalid row", null)]
         [DataRow("Public", "C:\\Users\\Public")]
-        public void GetEnvironment_settingExists(string name, string? value)
+        public void GetEnvironment_settingExists(string name, string value)
         {
             //Organize
             IConfig environmentConfig = new EnvironmentConfig();
 
-
             //Act
-            bool environmentVariableExists = environmentConfig.GetConfigValue(name, value);
+            bool environmentVariableExists = environmentConfig.GetConfigValue(name, out string? outValue);
+
             //Assert
             Assert.IsTrue(environmentVariableExists);
+            Assert.IsNotNull(outValue);
+            Assert.AreEqual(outValue, value);
+        }
 
+        [TestMethod]
+        [DataRow("Invalid Row", null)]
+        public void GetEnvironment_InvalidSettingDoesNotExist(string name, string? value)
+        {
+            //Organize
+            IConfig environmentConfig = new EnvironmentConfig();
+
+            //Act
+            bool environmentVariableExists = environmentConfig.GetConfigValue(name, out string? outValue);
+
+            //Assert
+            Assert.IsFalse(environmentVariableExists);
+            Assert.IsNull(outValue);
+            Assert.AreEqual(outValue, value);
         }
 
         [TestMethod]
