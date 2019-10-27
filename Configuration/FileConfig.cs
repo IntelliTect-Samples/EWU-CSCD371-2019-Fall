@@ -39,7 +39,7 @@ namespace Configuration
         {
             if(IsValidInput(name, value))
             {
-                using (StreamWriter sr = new StreamWriter(this.fileConfigPath))
+                using (StreamWriter sr = new StreamWriter(this.fileConfigPath, true))
                 {
                     sr.WriteLine($"{name}={value}");
                 }
