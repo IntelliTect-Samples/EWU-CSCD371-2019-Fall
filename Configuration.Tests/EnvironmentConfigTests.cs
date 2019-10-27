@@ -9,7 +9,7 @@ namespace Configuration.Tests
     class EnvironmentConfigTests
     {
         [TestMethod]
-        public void EnvironmentConfig_AssignValue_ReturnTrue()
+        public void EnvironmentConfig_GetValue_ReturnTrue()
         {
             string nameTest = "test name";
             string valueTest = "test value";
@@ -22,5 +22,52 @@ namespace Configuration.Tests
             Assert.IsTrue(check);
 
         }
+
+        [TestMethod]
+        public void EnvironmentConfig_GetValue_ReturnFalse()
+        {
+            string nameTest = "test name";
+            string valueTest = "test value";
+            bool check;
+
+            EnvironmentConfig environmentConfig = new EnvironmentConfig();
+
+            check = environmentConfig.GetConfigValue(nameTest, valueTest);
+
+            Assert.IsFalse(check);
+
+        }
+
+        [TestMethod]
+        public void EnvironmentConfig_AssignValue_ReturnTrue()
+        {
+            string nameTest = "test name";
+            string valueTest = "test value";
+            bool check;
+
+            EnvironmentConfig environmentConfig = new EnvironmentConfig();
+
+            check = environmentConfig.SetConfigValue(nameTest, valueTest);
+
+            Assert.IsTrue(check);
+
+        }
+
+        [TestMethod]
+        public void EnvironmentConfig_AssignValue_ReturnFalse()
+        {
+            string nameTest = "test name";
+            string valueTest = "test value";
+            bool check;
+
+            EnvironmentConfig environmentConfig = new EnvironmentConfig();
+
+            check = environmentConfig.SetConfigValue(nameTest, valueTest);
+
+            Assert.IsFalse(check);
+
+        }
+
+
     }
 }
