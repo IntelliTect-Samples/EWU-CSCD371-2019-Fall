@@ -41,7 +41,7 @@ namespace Configuration
 
         public bool SetConfigValue(string name, string? value)
         {
-            if (!isValidName(name)) { return false; }
+            if (!isValidName(name) || value is null) { return false; }
 
             Hashtable settingsHashTable = new Hashtable();
 

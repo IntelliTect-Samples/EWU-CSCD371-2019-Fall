@@ -4,3 +4,4 @@
 // a specific target and scoped to a namespace, type, member, etc.
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "Allowed in test classes")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CS8625:Cannot convert null literal to non-nullable reference type.", Justification = "Testing null behavior")]

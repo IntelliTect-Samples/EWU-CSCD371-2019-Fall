@@ -88,5 +88,18 @@ namespace Configuration.Tests
             //Assert
             Assert.IsFalse(worked);
         }
+
+        [TestMethod]
+        public void GetConfigValue_GivenNullName_ReturnsFalse()
+        {
+            //Arrange
+            FileConfig fileConf = new Configuration.FileConfig();
+
+            //Act
+            bool worked = fileConf.GetConfigValue(null, out _);
+
+            //Assert
+            Assert.IsFalse(worked);
+        }
     }
 }
