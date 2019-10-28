@@ -6,6 +6,8 @@ namespace Configuration
 {
     public class EnvironmentConfig : BaseConfig
     {
+        // backing list of keys to make sure any env vars created can be easily removed
+        // dont care what the values are
         private List<string> _keys;
 
         public EnvironmentConfig()
@@ -43,16 +45,19 @@ namespace Configuration
         {
             if (IsInvalidKeyName(name)) return false;
 
+            // setting null value on env var deletes that key
+            Environment.SetEnvironmentVariable(name, value);
+
             if (value is null)
             {
                 _keys.Remove(name);
             }
-            else
+
+            if (!_keys.Exists(key => key.Equals(name)))
             {
                 _keys.Add(name);
             }
 
-            Environment.SetEnvironmentVariable(name, value);
             return true;
         }
     }
