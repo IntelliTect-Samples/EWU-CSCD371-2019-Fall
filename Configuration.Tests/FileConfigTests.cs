@@ -8,6 +8,10 @@ namespace Configuration.Tests
     [TestClass]
     public class FileConfigTests
     {
+        [TestMethod]
+        public void MyTestMethod()
+        {
 
+        }
     }
 }

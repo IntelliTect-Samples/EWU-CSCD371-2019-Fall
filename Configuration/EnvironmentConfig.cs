@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Configuration
 {
-    public class EnvironmentConfig : IConfig
+    public class EnvironmentConfig : BaseConfig
     {
         private List<string> _keys;
 
@@ -13,16 +13,16 @@ namespace Configuration
             _keys = new List<string>();
         }
 
-        ~EnvironmentConfig() => CleanUp();
+        ~EnvironmentConfig() => DeleteAllConfigs();
 
-        public void CleanUp()
+        public override void DeleteAllConfigs()
         {
             foreach (string key in _keys) Environment.SetEnvironmentVariable(key, null);
         }
 
-        public bool GetConfigValue(string name, out string? value)
+        public override bool GetConfigValue(string name, out string? value)
         {
-            if(this.IsInvalidKeyName(name))
+            if(IsInvalidKeyName(name))
             {
                 value = "";
                 return false;
@@ -39,9 +39,9 @@ namespace Configuration
             return true;
         }
 
-        public bool SetConfigValue(string name, string? value)
+        public override bool SetConfigValue(string name, string? value)
         {
-            if (this.IsInvalidKeyName(name)) return false;
+            if (IsInvalidKeyName(name)) return false;
 
             if (value is null)
             {

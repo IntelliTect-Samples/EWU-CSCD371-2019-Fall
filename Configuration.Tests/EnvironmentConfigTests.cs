@@ -17,7 +17,7 @@ namespace Configuration.Tests
 
             // Act
             sut.SetConfigValue(key, value);
-            sut.CleanUp();
+            sut.DeleteAllConfigs();
 
             string? envVar = Environment.GetEnvironmentVariable(key);
 
@@ -62,31 +62,6 @@ namespace Configuration.Tests
 
             // Assert
             Assert.AreEqual(sutValue, value);
-        }
-
-        [DataTestMethod]
-        [DataRow(null, DisplayName = "Null Key")]
-        [DataRow("", DisplayName = "Empty Key")]
-        [DataRow(" ", DisplayName = "White Space Key")]
-        [DataRow("1=2", DisplayName = "Malformed Key")]
-        public void GetAndSet_HandlesMalformedKey_ReturnsFalseAndEmptyString(string key)
-        {
-            // Arrange
-            var sut = new EnvironmentConfig();
-            const string VALUE = "irrelevant";
-            bool setSuccess, getSuccess;
-
-            // Act
-            setSuccess = sut.SetConfigValue(key, VALUE);
-            getSuccess = sut.GetConfigValue(key, out string? sutValue);
-
-            // Cleanup
-            sut.CleanUp();
-
-            // Assert
-            Assert.IsFalse(setSuccess);
-            Assert.IsFalse(getSuccess);
-            Assert.AreEqual(sutValue, "");
         }
     }
 }
