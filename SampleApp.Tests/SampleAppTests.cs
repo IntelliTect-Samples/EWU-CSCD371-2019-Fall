@@ -30,7 +30,7 @@ namespace SampleApp.Tests {
             return false;
         }
 
-        public bool SetConfigValue(string name, string value) {
+        public bool SetConfigValue(string? name, string? value) {
             if (name is null || value is null || name == "" || value == "") {
                 return false;
             }

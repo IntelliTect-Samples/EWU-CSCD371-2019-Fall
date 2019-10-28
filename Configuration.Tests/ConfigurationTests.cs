@@ -1,8 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using Configuration;
 using System.IO;
 using System.Linq;
 
@@ -20,9 +17,9 @@ namespace Configuration.Tests {
             for (int i = 0; i < configNames.Length; i++) {
                 config.SetConfigValue(configNames[i], values[i]);
             }
-            config.GetConfigValue(configNames[0], out string value1);
-            config.GetConfigValue(configNames[1], out string value2);
-            config.GetConfigValue(configNames[2], out string value3);
+            config.GetConfigValue(configNames[0], out string? value1);
+            config.GetConfigValue(configNames[1], out string? value2);
+            config.GetConfigValue(configNames[2], out string? value3);
 
             //Assert
             Assert.AreEqual("Monday", value1);
