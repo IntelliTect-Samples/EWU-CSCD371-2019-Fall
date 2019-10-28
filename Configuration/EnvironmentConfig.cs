@@ -44,11 +44,5 @@ namespace Configuration {
         private static bool InputIsValid(string? name, string? value) {
             return !(name is null || name is "" || value is null || value is "" || name.Contains("=") || name.Contains(" "));
         }
-
-        ~EnvironmentConfig() {
-            foreach (string name in names) {
-                Environment.SetEnvironmentVariable(name, null);
-            }
-        }
     }
 }

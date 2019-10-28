@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace Configuration {
-    class FileConfig {
+    public class FileConfig {
         private string path;
         public FileConfig(string path) {
             this.path = path;
@@ -25,6 +25,10 @@ namespace Configuration {
                 result.Add(line.Split("="));
             }
             return result;
+        }
+
+        public string getPath() {
+            return this.path;
         }
     }
 }
