@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Configuration {
-    class EnvironmentConfig : IConfig {
+    public class EnvironmentConfig : IConfig {
         private List<String> names;
+
+        public EnvironmentConfig() {
+            this.names = new List<string>();
+        }
 
         public bool GetConfigValue(string name, out string? value) {
             value = null;
