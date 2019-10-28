@@ -1,5 +1,4 @@
 ﻿using Configuration;
-using System;
 using System.Collections.Generic;
 
 namespace SampleApp {
