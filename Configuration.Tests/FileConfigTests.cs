@@ -17,10 +17,12 @@ namespace Configuration.Tests
             FileConfig sut = new FileConfig();
 
             // Act
-            bool result = sut.GetConfigValue(name, out string? _);
+            bool setResult = sut.SetConfigValue(name, "testValue");
+            bool getResult = sut.GetConfigValue(name, out string? _);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.IsTrue(setResult);
+            Assert.IsTrue(getResult);
         }
 
         [TestMethod]
