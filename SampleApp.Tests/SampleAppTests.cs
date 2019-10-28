@@ -1,15 +1,19 @@
 using Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using Assert = NUnit.Framework.Assert;
 
 namespace SampleApp.Tests {
+    [TestClass]
     public class Tests {
 
         [TestMethod]
-        public void SampleApp_() {
-            //Not Implemented
-            Assert.Pass();
+        public void SampleApp_Works() {
+            //Arrange
+
+            //Act
+
+            //Assert
+
         }
     }
 
