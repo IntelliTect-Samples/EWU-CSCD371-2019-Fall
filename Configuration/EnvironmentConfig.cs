@@ -14,6 +14,10 @@ namespace Configuration
 
         public bool GetConfigValue(string name, out string? value)
         {
+            if (name is null)
+            {
+                throw new ArgumentNullException("Name of variable cannot be null");
+            }
             value = Environment.GetEnvironmentVariable(name);
             if (value is null)
             {
@@ -26,6 +30,10 @@ namespace Configuration
 
         public bool SetConfigValue(string name, string? value)
         {
+            if (name is null)
+            {
+                throw new ArgumentNullException("Name of variable cannot be null");
+            }
             if (value is null)
             {
                 return false;
