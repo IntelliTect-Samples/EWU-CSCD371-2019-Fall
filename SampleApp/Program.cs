@@ -1,12 +1,23 @@
-﻿using System;
+﻿using iTextSharp.text;
+using System;
+using System.Collections.Generic;
+using Configuration;
 
 namespace SampleApp
 {
-    class Program
+    public class Program
     {
+        
         static void Main()
         {
-            Console.WriteLine("Hello World!");
+        }
+
+        public static void PrintList(List<MockConfig.MockSetting> list)
+        {
+            foreach(MockConfig.MockSetting item in list)
+            {
+                Console.WriteLine(item.name + " : " + item.value);
+            }
         }
     }
 }

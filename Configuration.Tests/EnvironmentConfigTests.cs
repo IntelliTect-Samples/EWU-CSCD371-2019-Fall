@@ -6,7 +6,7 @@ using System.Text;
 namespace Configuration.Tests
 {
     [TestClass]
-    class EnvironmentConfigTests
+    public class EnvironmentConfigTests
     {
         [TestMethod]
         public void GetConfig_WithNullName()

@@ -8,7 +8,7 @@ namespace Configuration
     {
         public bool GetConfigValue(string name, out string? value)
         {
-            if (name is null)
+            if (name is null || name.Length < 1 || name.Contains(" ") || name.Contains("="))
             {
                 value = null;
                 return false;
@@ -19,7 +19,7 @@ namespace Configuration
 
         public bool SetConfigValue(string name, string? value)
         {
-            if (name is null) return false;
+            if (name is null || name.Length < 1 || name.Contains(" ") || name.Contains("=")) return false;
             Environment.SetEnvironmentVariable(name, value);
             return true;
         }
