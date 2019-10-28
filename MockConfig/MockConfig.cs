@@ -10,17 +10,38 @@ namespace MockConfig
 
         public MockConfig()
         {
-            
+            ConfigNames.Add("nameA=valueA");
+            ConfigNames.Add("nameB=valueB");
+            ConfigNames.Add("nameC=valueC");
+
         }
 
         public bool GetConfigValue(string name, out string? value)
         {
-            throw new NotImplementedException();
+            value = Environment.GetEnvironmentVariable(name);
+            if (value is null)
+            {
+                return false;
+            }
+            return true;
         }
 
         public bool SetConfigValue(string name, string? value)
         {
-            throw new NotImplementedException();
+            if (name is null || name is "" || name.Contains("=", 0) || name.Contains(" ", 0))
+            {
+                value = null;
+                return false;
+            }
+
+            if (value is null || value is "" || value.Contains("=", 0) || value.Contains(" ", 0))
+            {
+                value = null;
+                return false;
+            }
+            ConfigNames.Add(name);
+            Environment.SetEnvironmentVariable(name, value);
+            return true;
         }
     }
 }
