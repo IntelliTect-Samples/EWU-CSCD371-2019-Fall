@@ -1,12 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using Configuration;
 
 namespace SampleApp
 {
-    class Program
+    public static class Program
     {
-        static void Main()
+        public static IConfig? Config { get; set; }
+        public static List<string>? SettingList { get; private set; }
+
+        public static void Main()
         {
-            Console.WriteLine("Hello World!");
+            PrintAllSettings();
+        }
+
+        private static void PrintAllSettings()
+        {
+            SettingList = Config?.GetAllConfigValues() ?? new List<string> { "Config not initialized!" };
+            if (SettingList.Count == 0)
+            {
+                SettingList.Add("No settings to display.");
+            }
+            foreach (string str in SettingList)
+            {
+                Console.WriteLine(str);
+            }
         }
     }
 }

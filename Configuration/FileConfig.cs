@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-#pragma warning disable CA1307/////////////////
+using System.Linq;
+
 namespace Configuration
 {
     public class FileConfig : IConfig
@@ -11,7 +12,7 @@ namespace Configuration
 
         public FileConfig(string? filePath)
         {
-            FilePath = filePath ?? "config.settings";
+            FilePath = filePath ?? Path.GetFullPath("config.settings");
         }
 
         public bool GetConfigValue(string name, out string? value)
@@ -41,27 +42,32 @@ namespace Configuration
             CheckValidText(name);
             CheckValidText(value);
 
-            if (!File.Exists(FilePath))
+            if (File.Exists(FilePath))
             {
-                File.AppendAllText(FilePath, $"{name}={value}{Environment.NewLine}");
-                return true;
-            }
-
-            string[] lines = File.ReadAllLines(FilePath);
-            foreach (string line in lines)
-            {
-                string[] nameAndValue = line.Split('=');
-                if (nameAndValue[0] == name)
+                string[] lines = File.ReadAllLines(FilePath);
+                foreach (string line in lines)
                 {
-                    string fileText = File.ReadAllText(FilePath);
-                    fileText = fileText.Replace("{name}={nameAndValue[1]}", "{name}={value}");
-                    File.WriteAllText(FilePath, fileText);
-                    return true;
+                    string[] nameAndValue = line.Split('=');
+                    if (nameAndValue[0].Equals(name))
+                    {
+                        string fileText = File.ReadAllText(FilePath);
+                        fileText = fileText.Replace($"{name}={nameAndValue[1]}", $"{name}={value}");
+                        File.WriteAllText(FilePath, fileText);
+                        return true;
+                    }
                 }
             }
-
+            //Reaches here if file does not exist or if name not found in settings
             File.AppendAllText(FilePath, $"{name}={value}{Environment.NewLine}");
             return true;
+        }
+
+        public List<string> GetAllConfigValues()
+        {
+#pragma warning disable CA1303
+            if (!File.Exists(FilePath)) throw new FileNotFoundException(nameof(FilePath));
+#pragma warning restore CA1303
+            return File.ReadAllLines(FilePath).ToList();
         }
 
         private void CheckValidText(string? text)

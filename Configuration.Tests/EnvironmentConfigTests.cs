@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-#pragma warning disable CA1707//////////////////
+
 namespace Configuration.Tests
 {
     [TestClass]
@@ -24,6 +24,17 @@ namespace Configuration.Tests
 
             Assert.IsFalse(validValue);
             Assert.IsNull(value);
+        }
+
+        [TestMethod]
+        public void GetConfigValue_ValueIsNotNull_ReturnsNotNull()
+        {
+            var sut = new EnvironmentConfig();
+            string name = "OS";
+            bool validValue = sut.GetConfigValue(name, out string? value);
+
+            Assert.IsTrue(validValue);
+            Assert.IsNotNull(value);
         }
 
         [TestMethod]

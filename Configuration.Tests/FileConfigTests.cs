@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
-#pragma warning disable CA1707///////////////
+
 namespace Configuration.Tests
 {
     [TestClass]
@@ -88,6 +88,14 @@ namespace Configuration.Tests
             {
                 File.Delete(filePath);
             }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(FileNotFoundException))]
+        public void GetAllConfigValues_FileNotFound_ThrowsException()
+        {
+            var sut = new FileConfig(null);
+            sut.GetAllConfigValues();
         }
     }
 }
