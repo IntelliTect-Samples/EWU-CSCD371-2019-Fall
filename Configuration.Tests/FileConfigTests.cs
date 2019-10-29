@@ -37,7 +37,13 @@ namespace Configuration.Tests
         public void GivenInvalidKey_Set_ThrowsException(string key)
         {
             var config = new FileConfig("test.settings");
-            config.SetConfigValue(key, "value");
+            try
+            {
+                config.SetConfigValue(key, "value");
+            } finally
+            {
+                config.Delete();
+            }
         }
 
         [DataTestMethod]
@@ -49,7 +55,13 @@ namespace Configuration.Tests
         public void GivenInvalidValue_Set_ThrowsException(string value)
         {
             var config = new FileConfig("test.settings");
-            config.SetConfigValue("key", value);
+            try
+            {
+                config.SetConfigValue("key", value);
+            } finally
+            {
+                config.Delete();
+            }
         }
 
         [DataTestMethod]
@@ -73,9 +85,11 @@ namespace Configuration.Tests
         [TestMethod]
         public void GivenKey_Get_ReturnsNullIfFileNotCreated()
         {
-            var config = new FileConfig("test.settings");
-            bool isSet = config.GetConfigValue("key", out string? value);
-            
+            var  config = new FileConfig("test.settings");
+            bool isSet  = config.GetConfigValue("key", out string? value);
+
+            config.Delete();
+
             Assert.IsFalse(isSet);
             Assert.IsNull(value);
         }
@@ -83,12 +97,14 @@ namespace Configuration.Tests
         [TestMethod]
         public void GivenKey_Get_ReturnsNullIfNotSet()
         {
-            var  config = new FileConfig("test.settings");
+            var config = new FileConfig("test.settings");
 
             config.SetConfigValue("key", "value");
+
+            bool isSet = config.GetConfigValue("another-key", out string? value);
             
-            bool isSet  = config.GetConfigValue("another-key", out string? value);
-            
+            config.Delete();
+
             Assert.IsFalse(isSet);
             Assert.IsNull(value);
         }

@@ -1,37 +1,20 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.RegularExpressions;
 
 namespace Configuration
 {
 
-    public class FileConfig : IConfig
+    public class MockConfig : IConfig
     {
 
-        public string FilePath { get; }
-
-        public FileConfig(string? path)
-        {
-            FilePath = Path.GetFullPath($"{path ?? "config.settings"}");
-        }
-
-        public FileConfig() : this(null)
-        {
-        }
+        private readonly Dictionary<string, string> _kvps = new Dictionary<string, string>();
 
         public bool GetConfigValue(string name, out string? value)
         {
-            if (File.Exists(FilePath))
+            if (_kvps.ContainsKey(name))
             {
-                string[] lines = File.ReadAllLines(FilePath);
-                foreach (var line in lines)
-                {
-                    string[] split = line.Split("=");
-                    if (split.Length != 2 || split[0] != name) continue;
-                    value = split[1];
-                    return true;
-                }
+                return _kvps.TryGetValue(name, out value);
             }
 
             value = null;
@@ -53,13 +36,8 @@ namespace Configuration
                 throw new ArgumentException("Invalid Value", nameof(value));
             }
 
-            File.AppendAllText(FilePath, $"{name}={value}\n");
+            _kvps.Add(name, value);
             return true;
-        }
-
-        public void Delete()
-        {
-            File.Delete(FilePath);
         }
 
     }
