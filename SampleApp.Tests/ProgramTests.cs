@@ -18,9 +18,9 @@ namespace SampleApp.Tests
         }
 
         [TestMethod]
-        public void Program_ConfigNotInitialized()
+        public void PrintAllSettings_ConfigNotInitialized()
         {
-            Program.Main();
+            Program.PrintAllSettings();
             string expectedResult = "Config not initialized!";
 
             Assert.AreEqual(expectedResult, Program.SettingList![0]);

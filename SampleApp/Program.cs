@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Configuration;
 
 namespace SampleApp
@@ -15,7 +14,7 @@ namespace SampleApp
             PrintAllSettings();
         }
 
-        private static void PrintAllSettings()
+        public static void PrintAllSettings()
         {
             SettingList = Config?.GetAllConfigValues() ?? new List<string> { "Config not initialized!" };
             if (SettingList.Count == 0)
