@@ -4,9 +4,18 @@ using System.Text;
 
 namespace Configuration.Tests
 {
-    class MockConfig : IConfig
+    public class MockConfig : IConfig
     {
-        private Dictionary<string, string?> keyValuePairs = new Dictionary<string, string?>();
+        private Dictionary<string, string?> keyValuePairs = new Dictionary<string, string?> 
+        {
+            {"USERPROFILE","test1"},
+            {"TEMP","test2"},
+            {"OS","test3"},
+            {"windir","test4"},
+            {"PATHEXT","test5"},
+            {"DriverData","test6"},
+            {"NUMBER_OF_PROCESSORS","test7"},
+        };
 
         public bool GetConfigValue(string name, out string? value)
         {

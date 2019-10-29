@@ -2,3 +2,9 @@
 
 # CS8604: Possible null reference argument.
 dotnet_diagnostic.CS8604.severity = silent
+
+# CA1307: Specify StringComparison
+dotnet_diagnostic.CA1307.severity = silent
+
+# CA1303: Do not pass literals as localized parameters
+dotnet_diagnostic.CA1303.severity = silent
