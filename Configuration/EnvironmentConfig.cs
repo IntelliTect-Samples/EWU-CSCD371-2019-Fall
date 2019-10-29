@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Configuration
 {
-    public class EnvironmentConfig : IConfig
+    public class EnvironmentConfig : IConfig, IEnumerable<(string name, string value)>
     {
         public bool GetConfigValue(string name, out string? value)
         {
@@ -36,5 +39,13 @@ namespace Configuration
                 return false;
             }
         }
+
+        public IEnumerator<(string name, string value)> GetEnumerator() =>
+            Environment.GetEnvironmentVariables()
+                       .Cast<DictionaryEntry>()
+                       .Select(kv => ((string)kv.Key, (string)kv.Value))
+                       .GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace Configuration
 {
-    public class FileConfig : IConfig
+    public class FileConfig : IConfig, IEnumerable<(string name, string value)>
     {
         private string Filename { get; }
 
         public FileConfig(string filename)
         {
             Filename = filename ?? throw new ArgumentNullException(nameof(filename));
-        }
+        } 
 
         public bool GetConfigValue(string name, out string? value)
         {
@@ -59,5 +60,12 @@ namespace Configuration
             File.WriteAllLines(Filename, settings.Select(item => $"{item.Key}={item.Value}"));
             return true;
         }
+
+        public IEnumerator<(string name, string value)> GetEnumerator() =>
+            (from line in File.ReadAllLines(Filename)
+             let split = line.Split('=')
+             select (split[0], split[1])).GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
