@@ -1,51 +1,110 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 
 namespace Configuration
 {
-    public class FileConfig
+    public class FileConfig : IConfig
     {
-        private string filePath;
+        static readonly string filePath = Environment.CurrentDirectory + "//config.settings";
 
-        public FileConfig(string newFilePath)
+        private const string EQUALS = "=";
+        private const string SPACE = " ";
+
+        public bool GetConfigValue(string name, out string? value)
         {
-            this.filePath = newFilePath;
-        }
+            value = "";
+            if (!nameCheck(name))
+                return false;
 
-        public List<string> ReadConfig()
-        {
-            string[] readFileLines = File.ReadAllLines(filePath);
+            string[] lines = File.ReadAllLines(filePath);
 
-            List<string> res = new List<string>();
-
-            foreach (string filePathComponent in readFileLines)
+            for (int i = 0; i < lines.Length; i++)
             {
-                if (filePathComponent.Split("=").Length != 2)
-                    throw new ArgumentException("must have two args");
+                string[] currentLine = lines[i].Split("=");
 
-                res.Add(filePathComponent);
-            }
-
-            return res;
-        }
-
-#pragma warning disable CA1822 // Mark members as static
-        public void WriteConfig(string name, string? value)
-#pragma warning restore CA1822 // Mark members as static
-        {
-            if (name != null || value != null || !value.Contains(" ") || !value.Contains("=") || !name.Contains(" ") || !name.Contains("="))
-            {
-                using (StreamWriter streamWriter = new StreamWriter(filePath, true))
+#pragma warning disable CA1307 // Specify StringComparison. No Globalizaton Required
+                if (currentLine[0].Equals(name) && !string.IsNullOrEmpty(currentLine[1]))
+#pragma warning restore CA1307 // Specify StringComparison. No Globalizaton Required
                 {
-                    streamWriter.WriteLine($"{name}={value}");
+                    value = currentLine[1];
+                    break;
                 }
             }
 
-            else Console.WriteLine("error in writing path contents");
+            return !string.IsNullOrEmpty(value);
         }
 
+        public bool SetConfigValue(string name, string? value)
+        {
+            if (!nameCheck(name) || !valueCheck(value))
+                return false;
 
+            if (!File.Exists(filePath))
+                File.AppendAllText(filePath, "");
+
+            List<string> lines = new List<string>(File.ReadAllLines(filePath));
+
+            for (int walker = 0; walker < lines.Count; walker++)
+            {
+#pragma warning disable CA1307 // Specify StringComparison. No Globalizaton Required
+                if (lines[walker].StartsWith(name + EQUALS))
+#pragma warning restore CA1307 // Specify StringComparison. No Globalizaton Required
+                {
+                    string[] currentLine = lines[walker].Split(EQUALS);
+#pragma warning disable CS8601 // null reference
+                    currentLine[1] = value;
+#pragma warning restore CS8601 // null reference
+
+                    lines[walker] = $"{currentLine[0]}={currentLine[1]}{Environment.NewLine}";
+                    File.WriteAllLines(filePath, lines);
+                    return true;
+                }
+            }
+
+            File.AppendAllText(filePath, $"{name}={value}{Environment.NewLine}");
+            return true;
+        }
+
+        public static void DeleteFile()
+        {
+            if (File.Exists(filePath))
+                File.Delete(filePath);
+        }
+
+        private static bool nameCheck(string? name)
+        {
+            if (name is null)
+                throw new ArgumentException($"The name: {name} is null!");
+
+            else if (string.IsNullOrEmpty(name))
+                throw new ArgumentException($"The name: {name} is empty and therefore invalid.");
+
+            else if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException($"The name: {name} is just whitespace and therefore invalid.");
+
+#pragma warning disable CA1307 // StringComparison
+            else if (name.Contains(SPACE))
+#pragma warning restore CA1307 // StringComparison
+                throw new ArgumentException($"The name: {name} contains spaces and this is not allowed.");
+
+#pragma warning disable CA1307
+            else if (name.Contains(EQUALS))
+#pragma warning restore CA1307
+                throw new ArgumentException($"The name: {name} cannot contain \'=\'.");
+
+            return true;
+        }
+
+        private static bool valueCheck(string? value)
+        {
+            if (value is null)
+                throw new ArgumentException($"The value: {value} is null!");
+
+            else if (string.IsNullOrEmpty(value))
+                throw new ArgumentException($"The value: {value} is empty and therefore invalid.");
+
+            return true;
+        }
     }
 }

@@ -4,7 +4,7 @@ using System;
 namespace Configuration.Tests
 {
     [TestClass]
-    public class EnvironmentConfigTests
+    public class MockConfigTests
     {
         [DataTestMethod]
         [DataRow("")]
@@ -15,11 +15,11 @@ namespace Configuration.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void Get_Invalid_Name_Thrown_Exception(string name)
         {
-            IConfig environment = new EnvironmentConfig();
-            SetValidDataForConfig(environment);
+            IConfig mock = new MockConfig();
+            SetValidDataForConfig(mock);
 
             string? value = "";
-            environment.GetConfigValue(name, out value);
+            mock.GetConfigValue(name, out value);
         }
 
         [DataTestMethod]
@@ -31,10 +31,10 @@ namespace Configuration.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void Set_Invalid_Name_Thrown_Exception(string name, string value)
         {
-            IConfig environment = new EnvironmentConfig();
-            SetValidDataForConfig(environment);
+            IConfig mock = new MockConfig();
+            SetValidDataForConfig(mock);
 
-            environment.SetConfigValue(name, value);
+            mock.SetConfigValue(name, value);
         }
 
         [DataTestMethod]
@@ -43,10 +43,10 @@ namespace Configuration.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void Set_Invalid_Value_Thrown_Exception(string name, string value)
         {
-            IConfig environment = new EnvironmentConfig();
-            SetValidDataForConfig(environment);
+            IConfig mock = new MockConfig();
+            SetValidDataForConfig(mock);
 
-            environment.SetConfigValue(name, value);
+            mock.SetConfigValue(name, value);
         }
 
         [DataTestMethod]
@@ -57,68 +57,68 @@ namespace Configuration.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void Set_Invalid_Name_And_Value_Thrown_Exception(string name, string value)
         {
-            IConfig environment = new EnvironmentConfig();
-            SetValidDataForConfig(environment);
+            IConfig mock = new MockConfig();
+            SetValidDataForConfig(mock);
 
-            environment.SetConfigValue(name, value);
+            mock.SetConfigValue(name, value);
         }
 
         [TestMethod]
         public void Get_Correct_Value()
         {
-            IConfig environment = new EnvironmentConfig();
-            SetValidDataForConfig(environment);
+            IConfig mock = new MockConfig();
+            SetValidDataForConfig(mock);
 
             string? value = "";
-            environment.GetConfigValue("Example0", out value);
+            mock.GetConfigValue("Example0", out value);
             Assert.AreEqual("0", value);
 
-            environment.GetConfigValue("Example1", out value);
+            mock.GetConfigValue("Example1", out value);
             Assert.AreEqual("1", value);
 
-            environment.GetConfigValue("Example2", out value);
+            mock.GetConfigValue("Example2", out value);
             Assert.AreEqual("2", value);
         }
 
         [TestMethod]
         public void Get_Correct_Return()
         {
-            IConfig environment = new EnvironmentConfig();
-            SetValidDataForConfig(environment);
+            IConfig mock = new MockConfig();
+            SetValidDataForConfig(mock);
 
             string? value = "";
-            Assert.IsTrue(environment.GetConfigValue("Example0", out value));
-            Assert.IsTrue(environment.GetConfigValue("Example1", out value));
-            Assert.IsTrue(environment.GetConfigValue("Example2", out value));
+            Assert.IsTrue(mock.GetConfigValue("Example0", out value));
+            Assert.IsTrue(mock.GetConfigValue("Example1", out value));
+            Assert.IsTrue(mock.GetConfigValue("Example2", out value));
         }
 
         [TestMethod]
         public void Get_Incorrect_Value()
         {
-            IConfig environment = new EnvironmentConfig();
-            SetValidDataForConfig(environment);
+            IConfig mock = new MockConfig();
+            SetValidDataForConfig(mock);
 
             string? value = "";
-            environment.GetConfigValue("Example3", out value);
-            Assert.IsNull(value);
+            mock.GetConfigValue("Example3", out value);
+            Assert.AreEqual("", value);
 
-            environment.GetConfigValue("Example6", out value);
-            Assert.IsNull(value);
+            mock.GetConfigValue("Example6", out value);
+            Assert.AreEqual("", value);
 
-            environment.GetConfigValue("E", out value);
-            Assert.IsNull(value);
+            mock.GetConfigValue("E", out value);
+            Assert.AreEqual("", value);
         }
 
         [TestMethod]
         public void Get_Incorrect_Return()
         {
-            IConfig environment = new EnvironmentConfig();
-            SetValidDataForConfig(environment);
+            IConfig mock = new MockConfig();
+            SetValidDataForConfig(mock);
 
             string? value = "";
-            Assert.IsFalse(environment.GetConfigValue("Example7", out value));
-            Assert.IsFalse(environment.GetConfigValue("Exam", out value));
-            Assert.IsFalse(environment.GetConfigValue("test", out value));
+            Assert.IsFalse(mock.GetConfigValue("Example7", out value));
+            Assert.IsFalse(mock.GetConfigValue("Exam", out value));
+            Assert.IsFalse(mock.GetConfigValue("test", out value));
         }
 
         private void SetValidDataForConfig(IConfig config)
