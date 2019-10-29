@@ -10,6 +10,7 @@ namespace SampleApp.Tests
         [TestMethod]
         public void PrintAllSettings_ConfigNotInitialized()
         {
+            Program.Config = null;
             Program.PrintAllSettings();
             string expectedResult = "Config not initialized!";
 
