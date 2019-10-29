@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Configuration;
 
 namespace SampleApp
 {
 
-    static class Program
+    internal static class Program
     {
 
         static void Main()
@@ -47,10 +46,10 @@ namespace SampleApp
             }
 
             Console.WriteLine("FileConfig Variables:");
-            foreach (var kvp in kvps)
+            foreach (var (key, _) in kvps)
             {
-                fileConfig.GetConfigValue(kvp.Key, out string? value);
-                Console.WriteLine($"{kvp.Key}={value}");
+                fileConfig.GetConfigValue(key, out string? value);
+                Console.WriteLine($"{key}={value}");
             }
 
             fileConfig.Delete();

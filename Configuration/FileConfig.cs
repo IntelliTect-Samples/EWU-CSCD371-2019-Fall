@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -24,10 +23,10 @@ namespace Configuration
         {
             if (File.Exists(FilePath))
             {
-                string[] lines = File.ReadAllLines(FilePath);
+                var lines = File.ReadAllLines(FilePath);
                 foreach (var line in lines)
                 {
-                    string[] split = line.Split("=");
+                    var split = line.Split("=");
                     if (split.Length != 2 || split[0] != name) continue;
                     value = split[1];
                     return true;
