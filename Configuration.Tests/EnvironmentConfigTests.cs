@@ -10,7 +10,7 @@ namespace Configuration.Tests
     {
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void GetConfigValue_NullName_ThrowsException()
+        public void GetConfigValueNullNameThrowsException()
         {
             //Arrange
             EnvironmentConfig config = new EnvironmentConfig();
@@ -22,7 +22,7 @@ namespace Configuration.Tests
         }
 
         [TestMethod]
-        public void GetConfigValue_GoodName_NullValue()
+        public void GetConfigValueGoodNameNullValue()
         {
             //Arrange
             EnvironmentConfig config = new EnvironmentConfig();
@@ -36,7 +36,7 @@ namespace Configuration.Tests
         }
 
         [TestMethod]
-        public void GetConfigValue_GoodParameters()
+        public void GetConfigValueGoodParameters()
         {
             //Arrange
             EnvironmentConfig config = new EnvironmentConfig();
@@ -53,7 +53,7 @@ namespace Configuration.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void SetConfigValue_NullName_ThrowsException()
+        public void SetConfigValueNullNameThrowsException()
         {
             //Arrange
             EnvironmentConfig config = new EnvironmentConfig();
@@ -64,6 +64,30 @@ namespace Configuration.Tests
             //Assert
         }
 
+        [TestMethod]
+        public void SetConfigValueGoodName()
+        {
+            //Arrange
+            EnvironmentConfig config = new EnvironmentConfig();
 
+            //Act
+
+            //Assert
+            Assert.IsTrue(config.SetConfigValue("Name", "Value"));
+         }
+
+        [TestMethod]
+        public void SetConfigGoodParameters()
+        {
+            //Arrange
+            EnvironmentConfig config = new EnvironmentConfig();
+            string? value;
+
+            //Act
+            config.SetConfigValue("Name", "Value");
+
+            //Assert
+            Assert.IsTrue(config.GetConfigValue("Name", out value));
+        }
     }
 }

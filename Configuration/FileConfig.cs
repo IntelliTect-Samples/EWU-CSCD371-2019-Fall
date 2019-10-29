@@ -11,17 +11,29 @@ namespace Configuration
 
         public FileConfig(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
             this.path = path;
+        }
+
+        public string GetPath()
+        {
+            return this.path;
         }
 
         public void WriteConfig(string name, string? value)
         {
-            if (name is null || value is null)
+            if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException("Name or value cannot be null");
+                throw new ArgumentNullException(nameof(name));
+            } else if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(nameof(value));
             } else if (!CheckValidArguments(name, value))
             {
-                throw new ArgumentException("Invalid argument passed in");
+                throw new ArgumentException("Value invalid", nameof(value));
             }
 
             using (StreamWriter sw = new StreamWriter(path, true))
@@ -43,14 +55,15 @@ namespace Configuration
             return tuples;
         }
 
-        private bool CheckValidArguments(string name, string value)
+        private static bool CheckValidArguments(string name, string value)
         {
-            if (name.Contains('=') || name.Contains(' ') || value.Contains('=') || value.Contains(' ') || name.Length == 0 || value.Length == 0)
-            {
-                return false;
-            } else
+            if (!name.Contains('=') && !name.Contains(' ') && !value.Contains('=') && !value.Contains(' ') && name.Length != 0 && value.Length != 0)
             {
                 return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
