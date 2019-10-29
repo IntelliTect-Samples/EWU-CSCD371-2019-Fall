@@ -1,12 +1,27 @@
-﻿using System;
+﻿using Configuration;
+using System;
+using System.Collections.Generic;
 
 namespace SampleApp
 {
-    class Program
+    public static class Program
     {
-        static void Main()
+        public static void Main()
         {
-            Console.WriteLine("Hello World!");
+            List<string> valueNames = new List<string>
+            {
+                "windir",
+                "SystemRoot",
+                "UserName"
+            };
+
+            IConfig config = new EnvironmentConfig();
+
+            foreach (string valueName in valueNames)
+            {
+                config.GetConfigValue(valueName, out string? value);
+                Console.WriteLine($"{valueName}={value}");
+            }
         }
     }
 }
