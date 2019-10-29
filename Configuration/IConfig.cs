@@ -8,5 +8,7 @@ namespace Configuration
         public bool GetConfigValue(string name, out string? value);
 
         public bool SetConfigValue(string name, string? value);
+
+        public List<string> GetAllConfigValues();
     }
 }
