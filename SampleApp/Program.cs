@@ -4,29 +4,31 @@ using System.Collections.Generic;
 
 namespace SampleApp
 {
-    public class Program
+    public static class Program
     {
-        private static MockLogger mockLogger = new MockLogger();
+        private static MockConfig mockConfig = new MockConfig();
 
         static void Main()
         {
-            mockLogger.SetConfigValue("Var0", "yes");
-            mockLogger.SetConfigValue("Var1", "no");
-            mockLogger.SetConfigValue("Var2", "maybe");
+            mockConfig.SetConfigValue("Var0", "yes");
+            mockConfig.SetConfigValue("Var1", "no");
+            mockConfig.SetConfigValue("Var2", "maybe");
 
             string? toPrint;
 
-            mockLogger.GetConfigValue("Var0", out toPrint);
+            mockConfig.GetConfigValue("Var0", out toPrint);
             Console.WriteLine(toPrint);
 
-            mockLogger.GetConfigValue("Var1", out toPrint);
+            mockConfig.GetConfigValue("Var1", out toPrint);
             Console.WriteLine(toPrint);
 
-            mockLogger.GetConfigValue("Var2", out toPrint);
+            mockConfig.GetConfigValue("Var2", out toPrint);
             Console.WriteLine(toPrint);
         }
 
-        public class MockLogger : IConfig
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1034:Nested types should not be visible", 
+            Justification = "This is required in order to Unit Test according to instructions without circular dependency")]
+        public class MockConfig : IConfig
         {
             private List<string> settingsList = new List<string>();
 
