@@ -35,7 +35,7 @@ namespace Configuration
 
         public bool SetConfigValue(string name, string? value)
         {
-            if (String.IsNullOrWhiteSpace(name) || name.Contains("=") || name.Contains(" "))
+            if (String.IsNullOrWhiteSpace(name) || name.Contains("=") || name.Contains(" ") || name is null)
             {
                 return false;
             }
