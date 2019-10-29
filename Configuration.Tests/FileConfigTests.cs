@@ -74,20 +74,18 @@ namespace Configuration.Tests
             //Assert
         }
 
-        [DataTestMethod]
-        [DataRow]
-        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void WriteConfigAllBadParameters()
         {
             //Arrange
             FileConfig fileConfig = new FileConfig("Path");
-            string name = "name";
             string value = "value";
 
             //Act
+            fileConfig.WriteConfig("", value);
 
             //Assert
-            Assert.IsFalse(fileConfig.WriteConfig("", value);
         }
     }
 }

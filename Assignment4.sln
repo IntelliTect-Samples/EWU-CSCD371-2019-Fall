@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationTests1", "ConfigurationTests1\ConfigurationTests1.csproj", "{BFEF0E50-DCB7-4358-A1CA-7C5E5C58A1A0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,18 +60,6 @@ Global
 		{7240282B-6C4B-4E96-830A-A79D622C8893}.Release|x64.Build.0 = Release|Any CPU
 		{7240282B-6C4B-4E96-830A-A79D622C8893}.Release|x86.ActiveCfg = Release|Any CPU
 		{7240282B-6C4B-4E96-830A-A79D622C8893}.Release|x86.Build.0 = Release|Any CPU
-		{BFEF0E50-DCB7-4358-A1CA-7C5E5C58A1A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BFEF0E50-DCB7-4358-A1CA-7C5E5C58A1A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BFEF0E50-DCB7-4358-A1CA-7C5E5C58A1A0}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{BFEF0E50-DCB7-4358-A1CA-7C5E5C58A1A0}.Debug|x64.Build.0 = Debug|Any CPU
-		{BFEF0E50-DCB7-4358-A1CA-7C5E5C58A1A0}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{BFEF0E50-DCB7-4358-A1CA-7C5E5C58A1A0}.Debug|x86.Build.0 = Debug|Any CPU
-		{BFEF0E50-DCB7-4358-A1CA-7C5E5C58A1A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BFEF0E50-DCB7-4358-A1CA-7C5E5C58A1A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BFEF0E50-DCB7-4358-A1CA-7C5E5C58A1A0}.Release|x64.ActiveCfg = Release|Any CPU
-		{BFEF0E50-DCB7-4358-A1CA-7C5E5C58A1A0}.Release|x64.Build.0 = Release|Any CPU
-		{BFEF0E50-DCB7-4358-A1CA-7C5E5C58A1A0}.Release|x86.ActiveCfg = Release|Any CPU
-		{BFEF0E50-DCB7-4358-A1CA-7C5E5C58A1A0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
