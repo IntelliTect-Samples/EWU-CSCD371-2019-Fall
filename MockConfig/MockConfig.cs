@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MockConfig
+namespace Mock
 {
     public class MockConfig : IConfig
     {
@@ -40,8 +40,16 @@ namespace MockConfig
                 return false;
             }
             ConfigNames.Add(name);
-            Environment.SetEnvironmentVariable(name, value);
+            Environment.SetEnvironmentVariable(name, value, EnvironmentVariableTarget.Process);
             return true;
+        }
+
+        ~MockConfig()
+        {
+            foreach (string name in ConfigNames)
+            {
+                Environment.SetEnvironmentVariable(name, null);
+            }
         }
     }
 }

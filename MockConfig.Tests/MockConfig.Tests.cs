@@ -1,10 +1,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MockConfig;
+using Mock;
 
 
-#pragma warning disable CS8632 
+#pragma warning disable CS8632
+#pragma warning disable CA1707
 
-namespace MockConfig.Tests
+namespace Mock.Tests
 {
     [TestClass]
     public class MockConfigTests

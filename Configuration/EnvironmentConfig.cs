@@ -32,7 +32,7 @@ namespace Configuration
                 return false;
             }
             ConfigNames.Add(name);
-            Environment.SetEnvironmentVariable(name, value);
+            Environment.SetEnvironmentVariable(name, value, EnvironmentVariableTarget.Process);
             return true;
         }
 

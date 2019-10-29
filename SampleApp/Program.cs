@@ -1,4 +1,5 @@
 ﻿using Configuration;
+using Mock;
 using System;
 
 namespace SampleApp
@@ -10,7 +11,7 @@ namespace SampleApp
             string[] names = { "nameA", "nameB", "nameC" };
             string[] values = { "valueA", "valueB", "valueC" };
 
-            IConfig config = new EnvironmentConfig();
+            MockConfig config = new MockConfig();
 
             for(int i = 0; i < names.Length; i++)
             {
