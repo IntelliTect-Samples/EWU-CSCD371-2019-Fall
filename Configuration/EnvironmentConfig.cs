@@ -9,14 +9,17 @@ namespace Configuration
         public bool GetConfigValue(string name, string? value)
         {
             value = Environment.GetEnvironmentVariable(name);
-
             return (value != null);
         }
 
         public bool SetConfigValue(string name, string? value)
         {
-            Environment.SetEnvironmentVariable(name, value);
-            return true;
+            if (name != null && name != "" && value != null && value != "")
+            {
+                Environment.SetEnvironmentVariable(name, value);
+                return true;
+            }
+            return false;
         }
     }
 }

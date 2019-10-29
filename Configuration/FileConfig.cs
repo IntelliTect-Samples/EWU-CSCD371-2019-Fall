@@ -31,6 +31,7 @@ namespace Configuration
 
                 map.Add(br[0], br[1]);
             }
+            reader.Close();
             return map;
         }
 
@@ -40,17 +41,19 @@ namespace Configuration
 
             if (type == null || type == "" || type.Contains("=") || type.Contains(" "))
             {
+                writer.Close();
                 return false;
             }
 
-            if (value != null && value != "" && value.Contains("=") && value.Contains(" "))
+            if (value == null || value == "" || value.Contains("=") || value.Contains(" "))
             {
+                writer.Close();
                 return false;
             }
 
             writer.WriteLine($"{type}={value}");
 
-
+            writer.Close();
             return true;
         }
     }
