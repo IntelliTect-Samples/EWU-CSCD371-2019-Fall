@@ -32,5 +32,23 @@ namespace Configuration.Tests
             //Assert
             Assert.IsTrue(settingWasSet);
         }
+
+        [TestMethod]
+        [DataRow(null)]
+        [DataRow("something=else")]
+        [DataRow("hey you")]
+        [DataRow("")]
+        public void FileConfig_GetConfigValue_InvalidValueReturnsFalse(string ConfigName)
+        {
+            //Organize
+            FileConfig fileconfig = new FileConfig();
+            //Act
+            bool settingWasSet = fileconfig.SetConfigValue("Testing", "Hello");
+            bool settingExists = fileconfig.GetConfigValue(ConfigName, out string? settingValue);
+
+            //Assert
+            Assert.IsFalse(settingExists);
+            Assert.IsNull(settingValue);
+        }
     }
 }

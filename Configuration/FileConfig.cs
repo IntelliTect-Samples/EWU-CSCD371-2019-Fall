@@ -19,14 +19,11 @@ namespace Configuration
 
             string[] fileContents = System.IO.File.ReadAllLines(this.ConfigFileName);
 
-            int fileLine = 0;
-
             for(int i = 0; i < fileContents.Length; i++)
             {
                 if (fileContents[i].Contains(name))
                 {
-                    string[] lineArray = fileContents[i].Split("=");
-                    value = lineArray[1];
+                    value =  fileContents[i].Split("=")[1];
                     return true;
                 }
                 continue;
