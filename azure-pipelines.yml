@@ -21,6 +21,10 @@ steps:
     versionSpec: '5.x'
     checkLatest: true
 
+inputs:
+     versionSpec: '5.x'
+     checkLatest: true
+
 - task: NuGetCommand@2
   displayName: 'NuGet Restore'
   inputs:

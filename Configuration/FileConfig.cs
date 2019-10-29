@@ -1,4 +1,5 @@
 ﻿using System;
+<<<<<<< HEAD
 using System.IO;
 using System.Linq;
 
@@ -60,3 +61,14 @@ namespace Configuration
         }
     }
 }
+=======
+namespace Configuration
+{
+    public class FileConfig
+    {
+        public FileConfig()
+        {
+        }
+    }
+}
+>>>>>>> Assignment4
