@@ -8,6 +8,15 @@ namespace SampleApp.Tests
     public class ProgramTests
     {
         [TestMethod]
+        public void PrintAllSettings_ConfigNotInitialized()
+        {
+            Program.PrintAllSettings();
+            string expectedResult = "Config not initialized!";
+
+            Assert.AreEqual(expectedResult, Program.SettingList![0]);
+        }
+
+        [TestMethod]
         public void Program_RetrievesCorrectAmountOfSettings()
         {
             var mc = new MockConfig();
@@ -15,15 +24,6 @@ namespace SampleApp.Tests
             Program.Main();
 
             Assert.AreEqual(Program.SettingList!.Count, mc.Settings.Count);
-        }
-
-        [TestMethod]
-        public void PrintAllSettings_ConfigNotInitialized()
-        {
-            Program.PrintAllSettings();
-            string expectedResult = "Config not initialized!";
-
-            Assert.AreEqual(expectedResult, Program.SettingList![0]);
         }
 
         [TestMethod]
