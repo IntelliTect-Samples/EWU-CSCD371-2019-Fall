@@ -5,8 +5,9 @@ namespace Configuration
 {
     public interface IConfig
     {
-        public bool GetConfigValue(string name, out string? value);
 
-        public bool SetConfigValue(string name, string? value);
+        bool GetConfigValue(string name, out string? value);
+
+        bool SetConfigValue(string name, string? value);
     }
 }
