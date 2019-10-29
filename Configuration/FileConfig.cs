@@ -62,9 +62,13 @@ namespace Configuration
         }
 
         public IEnumerator<(string name, string value)> GetEnumerator() =>
-            (from line in File.ReadAllLines(Filename)
-             let split = line.Split('=')
-             select (split[0], split[1])).GetEnumerator();
+            File.Exists(Filename) switch
+            {
+                true => (from line in File.ReadAllLines(Filename)
+                         let split = line.Split('=')
+                         select (split[0], split[1])).GetEnumerator(),
+                false => new List<(string, string)>().GetEnumerator()
+            };
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
