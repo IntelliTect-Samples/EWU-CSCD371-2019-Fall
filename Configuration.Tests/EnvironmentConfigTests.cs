@@ -22,17 +22,21 @@ namespace Configuration.Tests
         };
 
         [TestMethod]
-        public void ReadConfigValue_NonNullName_ReturnsTrue()
+        [DynamicData(nameof(ValidSettings))]
+        public void ReadConfigValue_NonNullName_ReturnsTrue(string name, string value)
         {
-            //Arrange
-            EnvironmentConfig config = new EnvironmentConfig();
+            try
+            {
+                Environment.SetEnvironmentVariable(name, value);
 
-            //Act
-            string name = "HOME";
-
-            //Assert
-            Assert.IsTrue(config.ReadConfigValue(name, out string? value));
-            Assert.AreEqual(Environment.GetEnvironmentVariable(name), value);
+                bool success = new EnvironmentConfig().ReadConfigValue(name, out var val);
+                Assert.IsTrue(success);
+                Assert.AreEqual(val, value);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable(name, null);
+            }
         }
 
         [TestMethod]
