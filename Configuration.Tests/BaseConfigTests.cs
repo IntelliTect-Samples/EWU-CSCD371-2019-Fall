@@ -10,7 +10,7 @@ namespace Configuration.Tests
     public class BaseConfigTests
     {
         [DataTestMethod]
-        [DataRow(null, true)]
+        [DataRow(null, true, DisplayName = "Null String")]
         [DataRow("", true, DisplayName = "Empty String")]
         [DataRow(" ", true, DisplayName = "White Space")]
         [DataRow("a =b", true, DisplayName = "White Space and Equals Sign")]
@@ -20,7 +20,7 @@ namespace Configuration.Tests
             // Arrange
 
             // Act
-            bool sutResult = BaseConfig.IsInvalidKeyName(key);
+            bool sutResult = BaseConfig.IsInvalidString(key);
 
             // Cleanup
 
@@ -92,60 +92,6 @@ namespace Configuration.Tests
             if (config is null) throw new ArgumentException($"[{nameof(ConfigFactory)}] Unrecognized target class: {type}");
 
             return config;
-        }
-    }
-
-    public class MockConfig : BaseConfig
-    {
-        private List<KeyValuePair<string, string>> _kvPairs;
-
-        public MockConfig() => _kvPairs = new List<KeyValuePair<string, string>>();
-
-        public override void DeleteAllConfigs() => _kvPairs.Clear();
-
-        public override bool GetConfigValue(string name, out string? value)
-        {
-            if (IsInvalidKeyName(name))
-            {
-                value = "";
-                return false;
-            }
-
-            KeyValuePair<string, string> kv = _kvPairs.Find(kv => kv.Key.Equals(name));
-
-            // check keys match to make sure we found it (a failed find returns default values)
-            if (string.Equals(kv.Key, name))
-            {
-                value = kv.Value;
-                return true;
-            }
-
-            value = "";
-            return false;
-        }
-
-        public override bool SetConfigValue(string name, string? value)
-        {
-            if (IsInvalidKeyName(name)) return false;
-
-            // remove any existing matching keys
-            int removed = _kvPairs.RemoveAll(kv => kv.Key.Equals(name));
-
-            if (value != null)
-            {
-                // if it wasn't deletion by setting value null, add new/updated config
-                _kvPairs.Add(new KeyValuePair<string, string>(name, value));
-
-                return true;
-            }
-            else if (removed > 0)
-            {
-                // deleted a key by passing null value
-                return true;
-            }
-
-            // nothing was added or removed
-            return false;
         }
     }
 }
