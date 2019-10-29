@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Configuration
 {
-    class FileConfig : IConfig
+    public class FileConfig : IConfig
     {
         private string FileName;
 
@@ -17,7 +17,7 @@ namespace Configuration
 
         public bool GetConfigValue(string name, out string? value)
         {
-            using (var sr = new StreamReader(Environment.CurrentDirectory + FileName)) 
+            using (var sr = new StreamReader(FileName)) 
             {
                 while (!sr.EndOfStream) 
                 {
@@ -39,34 +39,23 @@ namespace Configuration
 
         public bool SetConfigValue(string name, string? value)
         {
-            ValidateInput(name, value);
-            using (var sr = new StreamWriter(Environment.CurrentDirectory + FileName)) 
+            this.ValidateInput(name, value);
+            using (var sr = new StreamWriter(FileName)) 
             {
                 sr.WriteLine($"{name}={value}");
             }
-            return true;
+            return GetConfigValue(name, out value);
         }
 
         private (string, string?) RetrieveValues(string input) 
         {
             var data = input.Split("=");
 
-            ValidateInput(data[0], data[1]);
+            this.ValidateInput(data[0], data[1]);
 
             return (data[0], data[1]);
         }
 
-        private void ValidateInput(string name, string? value) 
-        {
-            if (string.IsNullOrEmpty(name) 
-                || name.Contains(" ") 
-                || name.Count(c => c == '=') > 1)
-                throw new ArgumentException("Name contains invalid character or is empty");
 
-            if (string.IsNullOrEmpty(value)
-                || value.Contains(" ")
-                || value.Count(c=>c == '=') > 1)
-                throw new ArgumentException("Value contains invalid character or is empty");
-        }
     }
 }

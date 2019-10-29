@@ -5,14 +5,6 @@ namespace Configuration
 {
     public class EnvironmentConfig : IConfig
     {
-
-        private List<string> keys;
-
-        public EnvironmentConfig() 
-        {
-            keys = new List<string>();
-        }
-
         public bool GetConfigValue(string name, out string? value)
         {
             value = Environment.GetEnvironmentVariable(name);
@@ -21,8 +13,8 @@ namespace Configuration
 
         public bool SetConfigValue(string name, string? value)
         {
+            this.ValidateInput(name, value);
             Environment.SetEnvironmentVariable(name, value);
-            keys.Add(name);
             return GetConfigValue(name, out _);
         }
     }
