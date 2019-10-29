@@ -18,6 +18,7 @@ namespace Configuration.Tests
             Assert.IsTrue(environmentConfig.SetConfigValue(name, value));
         }
 
+        
         [DataTestMethod]
         [DataRow("myName", "value")]
         [DataRow("Name","ThisValue")]
