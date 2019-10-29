@@ -17,6 +17,9 @@ steps:
 
 - task: NuGetToolInstaller@0
   displayName: 'Use latest NuGet'
+  inputs:
+    versionSpec: '5.x'
+    checkLatest: true
 
 - task: NuGetCommand@2
   displayName: 'NuGet Restore'

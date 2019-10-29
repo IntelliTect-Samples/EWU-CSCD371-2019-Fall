@@ -12,9 +12,15 @@ The purpose of this assignment is to focus on unit testing with the following co
 Read through Chapter 11 by the week of Oct. 28.
 Read through information on [Nullability](https://intellitectsp-my.sharepoint.com/:w:/g/personal/mark_intellitect_com/EcaeQiQnpwpJpIh6-AjD_j4BoTlc6CLCBzYuXU-EHxHkWQ?e=0RWkzh). Feel free to comment or edit the content.  **Do not share** this document outside of class.
 
+# UPDATE
+
+In order to plug into our build system, please do one of the following:
+Option 1 (Easiest): Manually apply this change to your branch - IntelliTect-Samples/EWU-CSCD371-2019-Fall@8c2317f.
+Option 2: Rebase from Assignment 4. 
+
 ## Instructions
 
-- Create a *`EnvironmentConfig`* configuration class that implements `IConfig` and settings using `Environment.SetEnvironment()` and `Environment.GetEnvironment()`
+- Create a *`EnvironmentConfig`* configuration class that implements `IConfig` and settings using `Environment.SetEnvironmentVariable()` and `Environment.GetEnvironmentVariable()`
 - **Settings should not persist across process settings (if this occurs you will get a 0)**
 - Implement an `FileConfig` that reads/writes settings to a config.settings file in the same directory as the application.  Settings are stored as <name>=<value>.  (You can use String.Split to retrieve individual values).
 - Do not allow null, empty string, or names with spaces or '='.  Feel free to document other assumptions using unit tests.  
