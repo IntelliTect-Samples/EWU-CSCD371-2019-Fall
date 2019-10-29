@@ -26,7 +26,7 @@ namespace Configuration
         {
             try
             {
-                if (name is null || name.Contains(' ', 0)) { throw new ArgumentException(name); }
+                if (name is null || value is null || name.Contains(' ', 0)) { throw new ArgumentException(name); }
                 Environment.SetEnvironmentVariable(name, value);
             }
             catch (ArgumentException)

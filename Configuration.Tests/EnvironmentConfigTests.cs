@@ -38,7 +38,7 @@ namespace Configuration.Tests
         }
 
         [TestMethod]
-        public void SetConfigValue_GivenNullValue_ReturnsTrue()
+        public void SetConfigValue_GivenNullValue_ReturnsFalse()
         {
             //Arrange
             IConfig envConfig = new EnvironmentConfig();
@@ -47,7 +47,7 @@ namespace Configuration.Tests
             bool worked = envConfig.SetConfigValue("Custom", null);
 
             //Assert
-            Assert.IsTrue(worked);
+            Assert.IsFalse(worked);
         }
 
         [TestMethod]
