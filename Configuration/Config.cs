@@ -33,7 +33,7 @@ namespace Configuration
             return true;
         }
 
-        public void SanitizeValue(string? value)
+        public static void SanitizeValue(string? value)
         {
             if (String.IsNullOrEmpty(value))
                 throw new ArgumentNullException($"Cannot pass null or empty value for {nameof(value)}.");

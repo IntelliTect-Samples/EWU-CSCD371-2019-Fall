@@ -11,7 +11,7 @@ namespace SampleApp
 
         public Program()
         {
-            if (Config is null) Config = new MockConfig();
+            Config = new MockConfig();
         }
 
         public void SetValues()
@@ -25,9 +25,9 @@ namespace SampleApp
                  * Null/empty is checked in the setting function,
                  * so we don't have to check here
                  */
-                #pragma warning disable CS8602
+                #nullable disable
                 Config.SetConfigValue(name, value);
-                #pragma warning restore
+                #nullable enable
             }
         }
 
@@ -49,7 +49,7 @@ namespace SampleApp
                 Config.GetConfigValue(name, out outValue);
                 #pragma warning restore
                 if (outValue is null)
-                    throw new NullReferenceException($"Got null value from {nameof(Config)}");
+                    throw new ArgumentException($"Got null value from {nameof(Config)}");
                 Console.WriteLine($"Got value of {outValue}.");
             }
         }

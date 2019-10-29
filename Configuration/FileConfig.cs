@@ -6,7 +6,8 @@ namespace Configuration
 {
     public class FileConfig : Config
     {
-        public string FileName { get; set; } = "DefaultFileName.ini";
+        public string? FileName { get; set; }
+        private static string DefaultFileName = "DefaultFileName.ini";
 
         // ~FileConfig() => FileCleanup();
 
@@ -15,6 +16,7 @@ namespace Configuration
 
         public override bool GetConfigValue(string name, out string? value)
         {
+            if (FileName is null) FileName = DefaultFileName;
             using (var sr = new StreamReader(Environment.CurrentDirectory + FileName))
             {
                 string? line = "";
@@ -37,9 +39,12 @@ namespace Configuration
         {
             SanitizeValue(name);
             SanitizeValue(value);
+            if (FileName is null) FileName = DefaultFileName;
             using (var sw = new StreamWriter(Environment.CurrentDirectory + FileName, append: true))
             {
+                #nullable disable
                 sw.WriteLine(FormatConfig(name, value)); 
+                #nullable enable
             }
             return true;
         }

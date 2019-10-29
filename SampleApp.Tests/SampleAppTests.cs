@@ -122,7 +122,7 @@ namespace SampleApp.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void SampleApp_GetValues_NullConfigThrowsException()
         {
             var sut = new Program()

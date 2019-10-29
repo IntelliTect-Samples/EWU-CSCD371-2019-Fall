@@ -19,21 +19,23 @@ namespace Mock.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        [DataRow("SomeName", "Some Value")]
-        [DataRow("SomeName", "Some=Value")]
-        [DataRow("SomeName", "SomeValue ")]
-        public void SetConfigValue_BadConfigValue_ThrowsException(string name, string value)
+        [DataRow("Some Value")]
+        [DataRow("Some=Value")]
+        [DataRow("SomeValue ")]
+        public void SetConfigValue_BadConfigValue_ThrowsException(string value)
         {
+            string name = "SomeName";
             var sut = new MockConfig();
             sut.SetConfigValue(name, value);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        [DataRow("SomeName", "")]
-        [DataRow("SomeName", null)]
-        public void SetConfigValue_NullConfigValue_ThrowsException(string name, string? value)
+        [DataRow("")]
+        [DataRow(null)]
+        public void SetConfigValue_NullConfigValue_ThrowsException(string? value)
         {
+            string name = "SomeName";
             var sut = new MockConfig();
             sut.SetConfigValue(name, value);
         }
