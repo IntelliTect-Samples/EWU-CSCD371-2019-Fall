@@ -24,7 +24,7 @@ namespace Configuration.Tests
 
 
             Assert.IsFalse(config.WriteConfigValue(name, value));
-
+#nullable disable
             Assert.IsFalse(config.WriteConfigValue(null, value));
 #nullable enable
         }
