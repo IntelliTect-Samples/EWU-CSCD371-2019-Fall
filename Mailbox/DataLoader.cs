@@ -7,6 +7,7 @@ namespace Mailbox
     {
         public DataLoader(Stream source)
         {
+
         }
 
         public List<Mailbox> Load()
