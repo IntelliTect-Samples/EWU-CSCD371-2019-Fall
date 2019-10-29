@@ -45,3 +45,4 @@ The following are options for extra credit (you don't need to do them all):
 - Create an IConfigGroup that returns a set of setting based on wildcard filters (rather than just a single setting)
 - Provide a mock instance for `System.Console`.  (You do not need to test method invocations of `System.Console`.)
 - Create and implement an `IConfigAsync` interface (we are unlikely to cover async this quarter).
+>>>>>>> a0fa0a726151c722d55ec3dbbcad9fa1b3307b30
