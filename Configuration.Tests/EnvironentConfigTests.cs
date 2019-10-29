@@ -44,15 +44,15 @@ namespace Configuration.Tests
         [TestMethod]
         [DataRow("Test", "hello")]
         [DataRow("ProgramData", "C:\\ProgramData2")]
-        [DataRow("Invalid row", null)]
         public void SetEnvironment_SetsNewVariable(string name, string? value)
         {
             //Organize
             IConfig environmentConfig = new EnvironmentConfig();
             //Act
-            environmentConfig.SetConfigValue(name, value);
+            bool environmentVariableSet = environmentConfig.SetConfigValue(name, value);
             //Assert
             Assert.AreEqual(value, Environment.GetEnvironmentVariable(name));
+            Assert.IsTrue(environmentVariableSet);
         }
     }
 }
