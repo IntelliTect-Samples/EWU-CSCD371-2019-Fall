@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MockConfig
+namespace Mocks
 {
     public class MockConfig : IConfig, IEnumerable<(string name, string value)>
     {

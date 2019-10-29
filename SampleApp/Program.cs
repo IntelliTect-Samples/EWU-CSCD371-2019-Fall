@@ -10,7 +10,7 @@ namespace SampleApp
     {
         public static readonly (string name, string value)[] Vars = new[] { ("var1", "val1"), ("var2", "val2"), ("var3", "val3") };
 
-        public static void Main() => Run(new MockConfig.MockConfig());
+        public static void Main() => Run(new Mocks.MockConfig());
 
         public static void Run(IConfig config)
         {

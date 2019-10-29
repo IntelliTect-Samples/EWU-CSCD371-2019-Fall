@@ -1,7 +1,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MockConfig.Tests
+namespace Mocks.Tests
 {
     [TestClass]
     public class MockConfigTests

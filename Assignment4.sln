@@ -18,9 +18,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp.Tests", "SampleApp.Tests\SampleApp.Tests.csproj", "{62489776-B2E0-47F7-82C3-FD55D95C9F3E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockConfig", "MockConfig\MockConfig.csproj", "{75E81D47-1B93-494E-B2D1-CE04DA486978}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mocks", "MockConfig\Mocks.csproj", "{75E81D47-1B93-494E-B2D1-CE04DA486978}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockConfig.Tests", "MockConfig.Tests\MockConfig.Tests.csproj", "{8AFB1F2F-BC89-4BCF-A6C3-03785C9845E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mocks.Tests", "MockConfig.Tests\Mocks.Tests.csproj", "{8AFB1F2F-BC89-4BCF-A6C3-03785C9845E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
