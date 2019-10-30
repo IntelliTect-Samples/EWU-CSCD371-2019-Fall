@@ -5,6 +5,20 @@ using System.IO;
 
 namespace Mailbox
 {
+    /*
+     * Implement GetOwnersDisplay.
+     * This method should return a distinct list of people who are owners on the mailboxes.
+     * Implement GetMailboxDetails.
+     * This method should return a string that contains all of the details of the 
+     * specified mailbox, or null if the mailbox cannot be found.
+     * Implement AddNewMailbox. 
+     * This method should find an unoccupied location in the Mailboxes and 
+     * return a new Mailbox instance if a location is found.
+     * A mailbox may not be placed adjacent to another mailbox that contains 
+     * a person with the same name. Adjacent is defined as orthogonal.
+     * There is a method on Mailboxes that should be helpful here.
+     * It should not modify the passed in mailboxes.
+     */
     class Program
     {
         private const int Width = 50;
