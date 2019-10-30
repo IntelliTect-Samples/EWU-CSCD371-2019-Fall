@@ -5,8 +5,8 @@ namespace Mailbox
 {
     public class Person : IEquatable<Person>
     {
-        private string LastName { get; set; }
-        private string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
 
         public Person(string lastName, string firstName)
         {
@@ -15,8 +15,8 @@ namespace Mailbox
                 throw new ArgumentNullException("The name can not be null");
             }
 
-            this.LastName = lastName;
-            this.FirstName = firstName;
+            LastName = lastName;
+            FirstName = firstName;
         }
 
         public override bool Equals(object obj)
