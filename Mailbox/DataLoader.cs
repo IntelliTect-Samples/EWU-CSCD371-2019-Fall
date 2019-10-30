@@ -11,6 +11,7 @@ namespace Mailbox
 
         public List<Mailbox> Load()
         {
+            return null;
         }
 
         public void Save(List<Mailbox> mailboxes)
