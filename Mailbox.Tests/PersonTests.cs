@@ -32,7 +32,7 @@ namespace Mailbox.Tests
             string lastName = "Grills";
             Person joeGrills = new Person(firstName, lastName);
             Person joeGrills2 = new Person(firstName, lastName);
-            Assert.AreEqual(joeGrills, joeGrills2);
+            Assert.IsTrue(joeGrills.Equals(joeGrills2));
         }
 
         [TestMethod]
@@ -44,7 +44,7 @@ namespace Mailbox.Tests
             string lastName2 = "Simpson";
             Person joeGrills = new Person(firstName, lastName);
             Person homerSimpson = new Person(firstName2, lastName2);
-            Assert.AreNotEqual(joeGrills, homerSimpson);
+            Assert.IsFalse(joeGrills.Equals(homerSimpson));
         }
 
         [TestMethod]
@@ -55,7 +55,7 @@ namespace Mailbox.Tests
             string lastName2 = "Simpson";
             Person joeGrills = new Person(firstName, lastName);
             Person joeSimpson = new Person(firstName, lastName2);
-            Assert.AreNotEqual(joeGrills, joeSimpson);
+            Assert.IsFalse(joeGrills.Equals(joeSimpson));
         }
 
         [TestMethod]
@@ -80,7 +80,7 @@ namespace Mailbox.Tests
         }
 
         [TestMethod]
-        public void GetHashcode_SamePersonSameHashCode_ReturnsTrue()
+        public void GetHashcode_SamePerson_ReturnsSameHashCodes()
         {
             Person homerSimpson = new Person("Homer", "Simpson");
             Person homerSimpson2 = new Person("Homer", "Simpson");
