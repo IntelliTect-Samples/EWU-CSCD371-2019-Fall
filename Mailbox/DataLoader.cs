@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System;
+
+using Newtonsoft.Json;
 
 namespace Mailbox
 {
@@ -32,19 +35,62 @@ namespace Mailbox
      * If this is thrown the method should gracefully return null.
      *
      */
-    public class DataLoader
+    public class DataLoader : IDisposable
     {
-        public DataLoader(Stream source)
+        private readonly Stream? Source;
+        
+        public void Dispose()
         {
+            Source.Dispose();
         }
 
-        public List<Mailbox> Load()
+        public DataLoader(Stream source)
         {
+            if (source is null)
+                throw new ArgumentNullException($"nameof(source) cannot be null.");
+            Source = source;
+        }
+
+        public List<Mailbox>? Load()
+        {
+            List<Mailbox> mailboxes = new List<Mailbox>();
+            Source.Position = 0;
+
+            try
+            {
+                using (var sr = new StreamReader(Source))
+                {
+                    string? line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        Mailbox mailbox = JsonConvert.DeserializeObject<Mailbox>(line);
+                        mailboxes.Add(mailbox);
+                    }
+                    return mailboxes;
+                }
+            }
+            catch (JsonReaderException)
+            {
+                return null;
+            }
+            catch (ArgumentNullException)
+            {
+                return null;
+            }
         }
 
         public void Save(List<Mailbox> mailboxes)
         {
-            
+            using (var sw = new StreamWriter(Source))
+            {
+                foreach (var mailbox in mailboxes)
+                {
+                    sw.WriteLine(JsonConvert.SerializeObject(mailbox));
+                }
+            }
         }
+
+        ~DataLoader() =>
+            Dispose();
     }
 }

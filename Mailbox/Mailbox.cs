@@ -12,11 +12,31 @@
     public class Mailbox
     {
         private Size? MailboxSize;
-        (int X, int Y)? Location;
-        private Person? Owner;
+        public (int X, int Y)? Location;
+        public Person? Owner;
 
         public override string ToString()
         {
+            NullCheck("ToString", MailboxSize);
+            NullCheck("ToString", Location);
+            NullCheck("ToString", Owner);
+
+            string s = "Size: ";
+            if (MailboxSize & Size.SizeMask == Size.Small)
+                s += "";
+            else if (MailboxSize & Size.SizeMask == Size.Medium)
+                s += "Medium ";
+            else if (MailboxSize & Size.SizeMask == Size.Large)
+                s += "Large ";
+
+            s += $"Location: X: {Location.X} Y: {Location.Y} ";
+            s += $"Owner: {Owner.ToString()}";
+        }
+
+        private void NullCheck(string methodName, object obj)
+        {
+            if (obj is null)
+                throw new InvalidOperationException($"Cannot call {methodName} method when {nameof(obj)} is uninitialized.");
         }
     }
 }

@@ -103,17 +103,23 @@ namespace Mailbox
 
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
-            
+            string displayStr = "";
+            if (mailboxes.Length == 0) return displayStr;
+            foreach (Mailbox mailbox in mailboxes)
+            {
+                displayStr += mailbox.Owner.ToString();
+            }
+            return displayStr;
         }
 
         public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
-            
+            return null; 
         }
 
         public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
-            
+            return null;            
         }
     }
 }
