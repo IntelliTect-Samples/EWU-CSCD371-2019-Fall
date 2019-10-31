@@ -1,4 +1,6 @@
-﻿namespace Mailbox
+﻿using System;
+
+namespace Mailbox
 {
     /*
      * Create a new Mailbox class
@@ -11,9 +13,19 @@
 
     public class Mailbox
     {
-        private Size? MailboxSize;
-        public (int X, int Y)? Location;
-        public Person? Owner;
+        private Size MailboxSize;
+        public ValueTuple<int, int> Location;
+        public Person Owner;
+
+        public Mailbox(Size size, ValueTuple<int, int> location, Person owner)
+        {
+            NullCheck("Mailbox Constructor", size);
+            NullCheck("Mailbox Constructor", location);
+            NullCheck("Mailbox Constructor", owner);
+            MailboxSize = size;
+            Location = location;
+            Owner = owner;
+        }
 
         public override string ToString()
         {
@@ -22,21 +34,23 @@
             NullCheck("ToString", Owner);
 
             string s = "Size: ";
-            if (MailboxSize & Size.SizeMask == Size.Small)
+            if ((MailboxSize & Size.SizeMask) == Size.Small)
                 s += "";
-            else if (MailboxSize & Size.SizeMask == Size.Medium)
+            else if ((MailboxSize & Size.SizeMask) == Size.Medium)
                 s += "Medium ";
-            else if (MailboxSize & Size.SizeMask == Size.Large)
+            else if ((MailboxSize & Size.SizeMask) == Size.Large)
                 s += "Large ";
 
-            s += $"Location: X: {Location.X} Y: {Location.Y} ";
+            var (X, Y) = Location;
+            s += $"Location: X: {X} Y: {Y} ";
             s += $"Owner: {Owner.ToString()}";
+            return s;
         }
 
         private void NullCheck(string methodName, object obj)
         {
             if (obj is null)
-                throw new InvalidOperationException($"Cannot call {methodName} method when {nameof(obj)} is uninitialized.");
+                throw new InvalidOperationException($"Cannot call {methodName} method when {nameof(obj)} is null.");
         }
     }
 }

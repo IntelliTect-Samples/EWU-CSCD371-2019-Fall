@@ -1,4 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
+using System.IO;
+using System.Linq;
+using System;
 
 namespace Mailbox.Tests
 {
@@ -10,10 +14,12 @@ namespace Mailbox.Tests
         {
             string fileName = Path.GetRandomFileName();
             Stream fileStream = File.Open(fileName, FileMode.Create);
-            var mailboxes = new List<Mailbox>()
+            List<Mailbox> mailboxes = new List<Mailbox>()
             {
                 new Mailbox(Size.Small, (1, 1), new Person("Asher", "Mancinelli")),
-            }
+                new Mailbox(Size.Small, (2, 1), new Person("John", "Doe")),
+                new Mailbox(Size.Small, (1, 2), new Person("Jake", "FakeName")),
+            };
         
             try
             {
@@ -23,9 +29,9 @@ namespace Mailbox.Tests
                 string[] lines = File.ReadLines(fileName).ToArray();
                 var testPairs = mailboxes.Zip(lines, (a, b) => (a, b));
 
-                foreach (var (box, line) in testPairs)
+                foreach (var pair in testPairs)
                 {
-                    Assert.AreEqual(JsonConvert.SerializeObject(box), line);
+                    Assert.AreEqual(JsonConvert.SerializeObject(pair[0]), pair[1]);
                 }
             }
             finally

@@ -104,7 +104,7 @@ namespace Mailbox
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
             string displayStr = "";
-            if (mailboxes.Length == 0) return displayStr;
+            if (mailboxes.Count == 0) return displayStr;
             foreach (Mailbox mailbox in mailboxes)
             {
                 displayStr += mailbox.Owner.ToString();

@@ -5,6 +5,9 @@ namespace Mailbox
 {
     public class Mailboxes : List<Mailbox>
     {
+        public int Width { get; }
+        public int Height { get; }
+
         public Mailboxes(IEnumerable<Mailbox> collection, int width, int height) 
             : base(collection)
         { 
@@ -19,9 +22,6 @@ namespace Mailbox
             Width = width;
             Height = height;
         }
-
-        public int Width { get; }
-        public int Height { get; }
 
         public bool GetAdjacentPeople(int x, int y, out HashSet<Person> adjacentPeople)
         {

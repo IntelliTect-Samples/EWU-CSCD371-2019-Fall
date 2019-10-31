@@ -17,9 +17,9 @@ namespace Mailbox
         public Person(string firstName, string lastName)
         {
             if (firstName is null)
-                throw new ArgumentNullExcpetion($"{nameof(firstName)} cannot be null.");
+                throw new ArgumentNullException($"{nameof(firstName)} cannot be null.");
             if (lastName is null)
-                throw new ArgumentNullExcpetion($"{nameof(lastName)} cannot be null.");
+                throw new ArgumentNullException($"{nameof(lastName)} cannot be null.");
 
             FirstName = firstName;
             LastName = lastName;
@@ -33,7 +33,7 @@ namespace Mailbox
         }
 
         public override int GetHashCode() =>
-            FirstName ^ LastName;
+            (FirstName, LastName).GetHashCode();
 
         public bool Equals(Person other) =>
             (this.FirstName==other.FirstName &&

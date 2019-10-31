@@ -12,14 +12,10 @@ namespace Mailbox
     [Flags]
     public enum Size
     {
-        Small 	= 1<<0,
-        Medium 	= 1<<1,
-        Large 	= 1<<2,
-        Premium = 1<<3,
-        /*
-         * Masks just the size bits from the 
-         * premium bit.
-         */
-        SizeMask = Size.Small | Size.Medium | Size.Premium
+        Small 	 = 1<<0,
+        Medium 	 = 1<<1,
+        Large 	 = 1<<2,
+        Premium  = 1<<3,
+        SizeMask = 0xF>>1,
     }
 }

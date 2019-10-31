@@ -9,7 +9,7 @@ namespace Mailbox.Tests
         [DataRow(Size.Small)]
         [DataRow(Size.Medium)]
         [DataRow(Size.Large)]
-        public void Size_PremiumFlagDoesNotConflict_Success(int size)
+        public void Size_PremiumFlagDoesNotConflict_Success(Size size)
         {
             var sut = Size.Premium | size;
             Assert.AreEqual(size, sut & Size.SizeMask);
