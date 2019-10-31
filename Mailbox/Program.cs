@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 
 namespace Mailbox
 {
-    class Program
+    internal class Program
     {
         private const int Width = 50;
         private const int Height = 10;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             //Main does not need to be unit tested.
             using var dataLoader = new DataLoader(File.Open("Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
@@ -59,13 +58,16 @@ namespace Mailbox
                         }
 
                         break;
+
                     case 2:
                         Console.WriteLine(GetOwnersDisplay(boxes));
                         break;
+
                     case 3:
                         dataLoader.Save(boxes);
                         Console.WriteLine("Saved");
                         break;
+
                     case 4:
                         Console.WriteLine("Enter box number as x,y");
                         string boxNumber = Console.ReadLine();
@@ -81,6 +83,7 @@ namespace Mailbox
                             Console.WriteLine("Invalid box number");
                         }
                         break;
+
                     default:
                         return;
                 }

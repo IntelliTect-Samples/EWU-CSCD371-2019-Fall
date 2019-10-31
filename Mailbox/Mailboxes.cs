@@ -5,9 +5,9 @@ namespace Mailbox
 {
     public class Mailboxes : List<Mailbox>
     {
-        public Mailboxes(IEnumerable<Mailbox> collection, int width, int height) 
+        public Mailboxes(IEnumerable<Mailbox> collection, int width, int height)
             : base(collection)
-        { 
+        {
             if (width < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(width));
@@ -28,7 +28,7 @@ namespace Mailbox
             adjacentPeople = new HashSet<Person>();
             bool isOccupied = false;
 
-            foreach(Mailbox mailbox in this)
+            foreach (Mailbox mailbox in this)
             {
                 //current
                 if (mailbox.Location == (x, y))

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System;
 
 namespace Mailbox
 {
@@ -22,7 +22,6 @@ namespace Mailbox
 
         public void Save(List<Mailbox> mailboxes)
         {
-            
         }
     }
 }
