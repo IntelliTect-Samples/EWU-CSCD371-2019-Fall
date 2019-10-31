@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System;
@@ -29,9 +30,9 @@ namespace Mailbox.Tests
                 string[] lines = File.ReadLines(fileName).ToArray();
                 var testPairs = mailboxes.Zip(lines, (a, b) => (a, b));
 
-                foreach (var pair in testPairs)
+                foreach (var (box, line) in testPairs)
                 {
-                    Assert.AreEqual(JsonConvert.SerializeObject(pair[0]), pair[1]);
+                    Assert.AreEqual(JsonConvert.SerializeObject(box), line);
                 }
             }
             finally
