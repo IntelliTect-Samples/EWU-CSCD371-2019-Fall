@@ -11,6 +11,47 @@ namespace Mailbox.Tests
     public class DataLoaderTests
     {
         [TestMethod]
+        public void DataLoader_LoadMailbox_Success()
+        {
+            string fileName = Path.GetRandomFileName();
+            Stream fileStream = File.Open(fileName, FileMode.Create);
+            List<Mailbox> mailboxes = new List<Mailbox>()
+            {
+                new Mailbox(Size.Small, (1, 1), new Person("Asher", "Mancinelli")),
+                new Mailbox(Size.Small, (2, 1), new Person("John", "Doe")),
+                new Mailbox(Size.Small, (1, 2), new Person("Jake", "FakeName")),
+            };
+
+            using (var sw = new StreamWriter(fileStream))
+            {
+                foreach (var box in mailboxes)
+                {
+                    sw.WriteLine(JsonConvert.SerializeObject(box));
+                }
+            }
+            
+            fileStream = File.Open(fileName, FileMode.Open);
+            var sut = new DataLoader(fileStream);
+
+            try
+            {
+                List<Mailbox>? loadedMailboxes = sut.Load();
+                var boxPairs = mailboxes.Zip(loadedMailboxes, (a, b) => (a, b));
+
+                Assert.IsNotNull(loadedMailboxes);
+                foreach (var (box, loadedBox) in boxPairs)
+                {
+                    Assert.AreEqual(box, loadedBox);
+                }
+            }
+            finally
+            {
+                File.Delete(fileName);
+                fileStream.Dispose();
+            }
+        }
+
+        [TestMethod]
         public void DataLoader_SaveMailbox_Success()
         {
             string fileName = Path.GetRandomFileName();

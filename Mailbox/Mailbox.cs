@@ -13,7 +13,7 @@ namespace Mailbox
 
     public class Mailbox
     {
-        private Size MailboxSize;
+        public Size MailboxSize;
         public ValueTuple<int, int> Location;
         public Person Owner;
 
@@ -46,6 +46,23 @@ namespace Mailbox
             s += $"Owner: {Owner.ToString()}";
             return s;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Mailbox) return this.Equals((Mailbox)obj);
+            return false;
+        }
+
+        public bool Equals(Mailbox other)
+        {
+            if (this.MailboxSize == other.MailboxSize &&
+                this.Location == other.Location &&
+                this.Owner == other.Owner)
+                return true;
+            return false;
+        }
+
+        public override int GetHashCode() => (MailboxSize, Location, Owner).GetHashCode();
 
         private void NullCheck(string methodName, object obj)
         {
