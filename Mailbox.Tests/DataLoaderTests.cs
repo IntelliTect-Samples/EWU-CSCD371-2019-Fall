@@ -82,5 +82,15 @@ namespace Mailbox.Tests
                 fileStream.Dispose();
             }
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void DataLoader_LoadWithNullSource_ThrowsException()
+        {
+            #nullable disable
+            var sut = new DataLoader(null);
+            #nullable enable
+            sut.Load();
+        }
     }
 }

@@ -41,7 +41,8 @@ namespace Mailbox
         
         public void Dispose()
         {
-            Source.Dispose();
+            if (!(Source is null))
+                Source.Dispose();
         }
 
         public DataLoader(Stream source)
@@ -53,6 +54,8 @@ namespace Mailbox
 
         public List<Mailbox>? Load()
         {
+            if (Source is null)
+                throw new InvalidOperationException($"{nameof(Source)} must be initialized to load data.");
             List<Mailbox> mailboxes = new List<Mailbox>();
             Source.Position = 0;
 
@@ -70,10 +73,6 @@ namespace Mailbox
                 }
             }
             catch (JsonReaderException)
-            {
-                return null;
-            }
-            catch (ArgumentNullException)
             {
                 return null;
             }
