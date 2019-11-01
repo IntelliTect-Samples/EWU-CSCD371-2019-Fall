@@ -6,19 +6,13 @@ namespace Mailbox {
 
         public Mailbox[,] _Mailboxes { get; }
 
-        public Mailboxes(List<Mailbox> mailboxes, int width, int height) {
-            if (width < 0) {
-                throw new ArgumentOutOfRangeException(nameof(width));
-            }
-            if (height < 0) {
-                throw new ArgumentOutOfRangeException(nameof(height));
-            }
-            _Mailboxes = new Mailbox[width, height];
+        public Mailboxes(Mailbox[,] mailboxes) {
+            _Mailboxes = mailboxes;
         }
 
         internal (int, int) findValidLocation(Person owner) {
-            for (int i = 0; i < _Mailboxes.Length; i++) {
-                for (int j = 0; j < _Mailboxes.GetLength(i); j++) {
+            for (int i = 0; i < _Mailboxes.GetLength(0); i++) {
+                for (int j = 0; j < _Mailboxes.GetLength(1); j++) {
                     if (canOwnBox(owner, i, j)) {
                         return (i, j);
                     }

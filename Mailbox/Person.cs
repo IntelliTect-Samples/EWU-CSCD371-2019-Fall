@@ -3,8 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Mailbox {
     public struct Person : IEquatable<Person> {
-        private string _FirstName { get; }
-        private string _LastName { get; }
+        public string _FirstName { get; }
+        public string _LastName { get; }
 
         public Person(string firstName, string lastName) {
             _FirstName = firstName;
