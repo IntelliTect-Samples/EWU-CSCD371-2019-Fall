@@ -17,11 +17,10 @@ namespace Mailbox {
             while (!sr.EndOfStream) {
                 result.Add(JsonConvert.DeserializeObject<Mailbox>(sr.ReadLine()));
             }
-            sr.Dispose();
             return result;
         }
 
-        public void Save(List<Mailbox> mailboxes) {
+        public void Save(Mailbox[,] mailboxes) {
             _Stream.Position = 0;
             StreamWriter sw = new StreamWriter(_Stream);
             sw.WriteLine(JsonConvert.SerializeObject(mailboxes));

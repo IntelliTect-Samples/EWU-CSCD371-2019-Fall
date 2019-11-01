@@ -12,7 +12,7 @@ namespace Mailbox {
         }
 
         public bool Equals([AllowNull] Person other) {
-            return _FirstName.Equals(other._FirstName) && _LastName.Equals(other._LastName);
+            return this.toString().Equals(other.toString());
         }
 
         public string toString() {
