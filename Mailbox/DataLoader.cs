@@ -1,20 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.IO;
 
-namespace Mailbox
-{
-    public class DataLoader
-    {
-        public DataLoader(Stream source)
-        {
+namespace Mailbox {
+    public class DataLoader {
+        private Stream _Stream;
+        public DataLoader(Stream source) {
+            _Stream = source ?? throw new ArgumentNullException("DataLoader Stream cannot be null");
         }
 
-        public List<Mailbox> Load()
-        {
+        public List<Mailbox> Load() {
+            List<Mailbox> result = new List<Mailbox>();
+            _Stream.Position = 0;
+            StreamReader sr = new StreamReader(_Stream);
+            while (!sr.EndOfStream) {
+                result.Add(JsonConvert.DeserializeObject<Mailbox>(sr.ReadLine()));
+            }
+            sr.Dispose();
+            return result;
         }
 
-        public void Save(List<Mailbox> mailboxes)
-        {
+        public void Save(List<Mailbox> mailboxes) {
+            _Stream.Position = 0;
+            StreamWriter sw = new StreamWriter(_Stream);
+            sw.WriteLine(JsonConvert.SerializeObject(mailboxes));
         }
     }
 }

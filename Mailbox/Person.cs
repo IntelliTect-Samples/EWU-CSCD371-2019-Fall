@@ -3,20 +3,20 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Mailbox {
     public struct Person : IEquatable<Person> {
-        private string FirstName;
-        private string LastName;
+        private string _FirstName { get; }
+        private string _LastName { get; }
 
         public Person(string firstName, string lastName) {
-            FirstName = firstName;
-            LastName = lastName;
+            _FirstName = firstName;
+            _LastName = lastName;
         }
 
         public bool Equals([AllowNull] Person other) {
-            return this.FirstName.Equals(other.FirstName) && this.LastName.Equals(other.LastName);
+            return _FirstName.Equals(other._FirstName) && _LastName.Equals(other._LastName);
         }
 
         public string toString() {
-            return $"{this.FirstName} {" "} {this.LastName}";
+            return $"{_FirstName} {" "} {_LastName}";
         }
     }
 }
