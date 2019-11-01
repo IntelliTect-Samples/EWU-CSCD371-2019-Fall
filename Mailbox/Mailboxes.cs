@@ -24,24 +24,24 @@ namespace Mailbox {
 
             foreach (Mailbox mailbox in this) {
                 //current
-                if (mailbox.Location == (x, y)) {
+                if (mailbox._Location == (x, y)) {
                     isOccupied = true;
                 }
                 //above
-                if (mailbox.Location == (x, y - 1)) {
-                    adjacentPeople.Add(mailbox.Owner);
+                if (mailbox._Location == (x, y - 1)) {
+                    adjacentPeople.Add(mailbox._Owner);
                 }
                 //right
-                if (mailbox.Location == (x + 1, y)) {
-                    adjacentPeople.Add(mailbox.Owner);
+                if (mailbox._Location == (x + 1, y)) {
+                    adjacentPeople.Add(mailbox._Owner);
                 }
                 //bottom
-                if (mailbox.Location == (x, y + 1)) {
-                    adjacentPeople.Add(mailbox.Owner);
+                if (mailbox._Location == (x, y + 1)) {
+                    adjacentPeople.Add(mailbox._Owner);
                 }
                 //left
-                if (mailbox.Location == (x - 1, y)) {
-                    adjacentPeople.Add(mailbox.Owner);
+                if (mailbox._Location == (x - 1, y)) {
+                    adjacentPeople.Add(mailbox._Owner);
                 }
             }
 
