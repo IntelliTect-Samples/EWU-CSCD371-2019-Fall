@@ -6,9 +6,9 @@ namespace Mailbox {
         public string _FirstName { get; }
         public string _LastName { get; }
 
-        public Person(string firstName, string lastName) {
-            _FirstName = firstName;
-            _LastName = lastName;
+        public Person(string _FirstName, string _LastName) {
+            this._FirstName = _FirstName;
+            this._LastName = _LastName;
         }
 
         public bool Equals([AllowNull] Person other) {

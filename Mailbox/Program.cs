@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Mailbox {
     class Program {
@@ -40,7 +38,7 @@ namespace Mailbox {
                         }
 
                         if (AddNewMailbox(boxes, firstName, lastName, size) is Mailbox mailbox) {
-                            boxes._Mailboxes[mailbox._Location.Item1, mailbox._Location.Item2] = mailbox;
+                            boxes.MailboxesArray[mailbox.Location.Item1, mailbox.Location.Item2] = mailbox;
                             Console.WriteLine("New mailbox added");
                         } else {
                             Console.WriteLine("No available location");
@@ -51,7 +49,7 @@ namespace Mailbox {
                         Console.WriteLine(GetOwnersDisplay(boxes));
                         break;
                     case 3:
-                        dataLoader.Save(boxes._Mailboxes);
+                        dataLoader.Save(boxes.MailboxesArray);
                         Console.WriteLine("Saved");
                         break;
                     case 4:
@@ -74,18 +72,20 @@ namespace Mailbox {
 
         public static string GetOwnersDisplay(Mailboxes mailboxes) {
             string result = "";
-            foreach (Mailbox mailbox in mailboxes._Mailboxes) {
+            foreach (Mailbox mailbox in mailboxes.MailboxesArray) {
                 if (mailbox is null) {
                     continue;
                 }
-                result += mailbox._Owner.toString() + "\n";
+                if (!result.Contains(mailbox.Owner.toString())) {
+                    result += mailbox.Owner.toString() + "\n";
+                }
             }
             return result;
         }
 
         public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y) {
             try {
-                return mailboxes._Mailboxes[x, y].toString();
+                return mailboxes.MailboxesArray[x, y].toString();
             } catch (NullReferenceException) {
                 return "Mailbox is unused.";
             }

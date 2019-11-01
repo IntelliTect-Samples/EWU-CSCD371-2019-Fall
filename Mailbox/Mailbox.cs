@@ -1,18 +1,16 @@
-﻿using System;
-
-namespace Mailbox {
+﻿namespace Mailbox {
     public class Mailbox {
-        public Sizes _Size { get; }
-        public (int, int) _Location { get; }
-        public Person _Owner { get; set; }
-        public Mailbox(Sizes size, (int, int) location, Person owner) {
-            _Size = size;
-            _Location = location;
-            _Owner = owner;
+        public Sizes Size { get; }
+        public (int, int) Location { get; }
+        public Person Owner { get; set; }
+        public Mailbox(Sizes Size, (int, int) Location, Person Owner) {
+            this.Size = Size;
+            this.Location = Location;
+            this.Owner = Owner;
         }
 
         public string toString() {
-            return $"{"Size: " + _Size + " Location: (" + _Location + ") Owner: " + _Owner.toString()}";
+            return $"{"Size: " + Size + " Location: (" + Location + ") Owner: " + Owner.toString()}";
         }
     }
 }
