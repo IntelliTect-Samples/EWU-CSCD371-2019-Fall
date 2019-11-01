@@ -10,7 +10,7 @@ namespace Mailbox
         private const int Width = 50;
         private const int Height = 10;
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             //Main does not need to be unit tested.
             using var dataLoader = new DataLoader(File.Open("Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
