@@ -6,10 +6,10 @@ namespace Mailbox
     public class Mailbox
     {
         public Person Owner { get; set; }
-        public Size BoxSize { get; set; }
+        public Sizes BoxSize { get; set; }
         public (int x, int y) Location { get; set; }
 
-        public Mailbox(Person owner, Size boxSize, (int x, int y) location)
+        public Mailbox(Person owner, Sizes boxSize, (int x, int y) location)
         {
             Owner = owner;
             BoxSize = boxSize;
@@ -18,18 +18,13 @@ namespace Mailbox
 
         public string toString()
         {
-            if (BoxSize == Size.Default)
+            if (BoxSize == Sizes.Default)
             {
                 return "";
             }
 
-            bool premium = false;
-            if (BoxSize == Size.Premium)
-            {
-                premium = true;
-            }
-
-            return premium ? "Premium " + BoxSize.ToString() : BoxSize.ToString();
+            //return premium ? $"Owner: {Owner.toString()}, Premium " + BoxSize.ToString() : $"Owner: {Owner.toString()}, " + BoxSize.ToString();
+            return $"Owner: {Owner.toString()}, " + BoxSize.ToString();
         }
     }
 }

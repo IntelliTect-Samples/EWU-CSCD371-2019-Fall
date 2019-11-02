@@ -6,8 +6,8 @@ namespace Mailbox
 
     public struct Person : IEquatable<Person>
     {
-        private string First { get; }
-        private string Last { get; }
+        public string First { get; }
+        public string Last { get; }
 
         public Person(string first, string last)
         {
@@ -32,9 +32,9 @@ namespace Mailbox
             return First == other.First && Last == other.Last;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            return Equals(obj as Person);
+            return Equals(obj as Person?);
         }
 
         public static bool operator ==(Person a, Person b)

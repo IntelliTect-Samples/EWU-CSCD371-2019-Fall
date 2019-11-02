@@ -43,9 +43,9 @@ namespace Mailbox
                         Console.WriteLine("Enter the last name");
                         string lastName = Console.ReadLine();
                         Console.WriteLine("What size?");
-                        if (!Enum.TryParse(Console.ReadLine(), out Size size))
+                        if (!Enum.TryParse(Console.ReadLine(), out Sizes size))
                         {
-                            size = Size.Small;
+                            size = Sizes.Small;
                         }
 
                         if (AddNewMailbox(boxes, firstName, lastName, size) is Mailbox mailbox)
@@ -89,17 +89,80 @@ namespace Mailbox
 
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
-            
+            if (mailboxes is null)
+            {
+                throw new ArgumentNullException(nameof(mailboxes));
+            }
+
+            string result = "";
+            foreach (Mailbox mailbox in mailboxes)
+            {
+                result += $"{mailbox.Owner.toString()}\n";
+            }
+
+            return result;
         }
 
-        public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
+        public static string? GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
-            
+            if (mailboxes is null)
+            {
+                throw new ArgumentNullException(nameof(mailboxes));
+            }
+
+            foreach (Mailbox mailbox in mailboxes)
+            {
+                if (mailbox.Location == (x,y))
+                {
+                    return mailbox.toString();
+                }
+            }
+
+            return null;
         }
 
-        public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
+        public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Sizes size)
         {
-            
+            if (mailboxes is null)
+            {
+                throw new ArgumentNullException(nameof(mailboxes));
+            }
+
+            if (firstName is null)
+            {
+                throw new ArgumentNullException(nameof(firstName));
+            }
+
+            if (lastName is null)
+            {
+                throw new ArgumentNullException(nameof(lastName));
+            }
+
+            List<(int, int)> locationList = new System.Collections.Generic.List<(int, int)>();
+            foreach(Mailbox mailbox in mailboxes)
+            {
+                locationList.Add(mailbox.Location);
+            }
+
+            Person owner = new Person(firstName, lastName);
+            for (int ix = 1; ix <= 10; ix++)
+            {
+                for (int iy = 1; iy < 30; iy++)
+                {
+                    if (!locationList.Contains((ix, iy)))
+                    {
+                        HashSet<Person> personHash = new HashSet<Person>();
+                        if (!mailboxes.GetAdjacentPeople(ix, iy, out personHash))
+                        {
+                            return new Mailbox(owner, size, (ix, iy));
+                        }
+
+                    }
+                }
+            }
+
+            Console.WriteLine("All boxes are taken already.");
+            return new Mailbox(owner, size, (0,0));
         }
     }
 }
