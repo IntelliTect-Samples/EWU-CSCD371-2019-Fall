@@ -22,7 +22,19 @@ namespace Mailbox
 
         public override string ToString()
         {
-            return $"{Owner.FirstName} {Owner.LastName}'s {Size} Mailbox is located at {Location.Item1} and {Location.Item2}";
+            string mySize; 
+
+            if(Size.Equals(0))
+            {
+                mySize = "";
+            }
+            else
+            {
+                mySize = Size.ToString();
+            }
+          
+
+            return $"{Owner.FirstName} {Owner.LastName}'s {mySize} Mailbox is located at {Location.Item1} and {Location.Item2}";
         }
     }
 }

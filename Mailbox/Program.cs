@@ -89,17 +89,51 @@ namespace Mailbox
 
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
-            
+            string listNames = "";
+
+            foreach(Mailbox mailbox in mailboxes)
+            {
+                listNames = listNames + " " + mailbox.Owner.ToString();
+            }
+
+            return listNames;
         }
 
         public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
             
+            foreach(Mailbox mailbox in mailboxes)
+            {
+                if (mailbox.Location.Equals(new ValueTuple<int,int>(x,y)))
+                {
+                    return mailbox.ToString();
+                }     
+            }
+
+            return null;
         }
 
         public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
-            
+            Mailbox newMailbox = null;
+            for(int xx = 1; xx <= 30; xx++)
+            {
+                for(int yy = 1; yy <= 10; yy++)
+                {
+                    
+                    bool isOccupied = mailboxes.GetAdjacentPeople(xx, yy, out HashSet<Person> adjacentPeople);
+
+                    if(!isOccupied && !adjacentPeople.Contains(new Person(lastName,firstName)))
+                    {
+                        newMailbox = new Mailbox(size, ValueTuple.Create(xx, yy), new Person(lastName, firstName));
+                        mailboxes.Add(newMailbox);
+                        return newMailbox;
+                    }
+
+                }
+            }
+
+            return newMailbox;
         }
     }
 }

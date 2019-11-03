@@ -45,7 +45,7 @@ namespace Mailbox
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Source.Dispose();
         }
     }
 }

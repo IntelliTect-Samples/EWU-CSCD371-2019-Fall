@@ -31,10 +31,7 @@ namespace Mailbox
 
         public bool Equals([AllowNull] Person other)
         {
-            if (ReferenceEquals(other, null)) return false;
-            if (ReferenceEquals(this, other)) return true;
-
-            return true;
+            return LastName.Equals(other.LastName) && FirstName.Equals(other.FirstName);
         }
 
         public static bool operator ==(Person a, Person b) => (a == b);
