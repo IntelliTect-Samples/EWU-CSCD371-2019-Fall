@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Mailbox {
     class Program {
@@ -7,7 +8,7 @@ namespace Mailbox {
 
         static void Main(string[] args) {
             //Main does not need to be unit tested.
-            var dataLoader = new DataLoader("Mailboxes.json");
+            using var dataLoader = new DataLoader(File.Open("Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
 
             Mailboxes boxes = new Mailboxes(dataLoader.Load() ?? new Mailbox[Width, Height]);
 

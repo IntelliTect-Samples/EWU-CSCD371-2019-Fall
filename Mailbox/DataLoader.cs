@@ -3,22 +3,20 @@ using System;
 using System.IO;
 
 namespace Mailbox {
-    public class DataLoader {
-        private String _FileName;
-        public DataLoader(String fileName) {
-            _FileName = fileName;
+    public class DataLoader : IDisposable {
+        bool disposed = false;
+
+        private readonly Stream _Source;
+        public DataLoader(Stream source) {
+            _Source = source ?? throw new ArgumentNullException(nameof(source));
         }
 
         public Mailbox[,] Load() {
+            _Source.Position = 0;
             Mailbox[,] result;
-            if (!File.Exists(_FileName)) {
-                return null;
-            }
-            using (StreamReader sr = new StreamReader(_FileName)) {
+            using (StreamReader sr = new StreamReader(_Source, leaveOpen: true)) {
                 try {
-                    string temp = sr.ReadLine();
-                    Console.WriteLine(temp);
-                    result = JsonConvert.DeserializeObject<Mailbox[,]>(temp);
+                    result = JsonConvert.DeserializeObject<Mailbox[,]>(sr.ReadLine());
                 } catch (JsonReaderException) {
                     return null;
                 }
@@ -27,9 +25,26 @@ namespace Mailbox {
         }
 
         public void Save(Mailbox[,] mailboxes) {
-            using (StreamWriter sw = new StreamWriter(_FileName)) {
+            _Source.Position = 0;
+            using (StreamWriter sw = new StreamWriter(_Source, leaveOpen: true)) {
                 sw.WriteLine(JsonConvert.SerializeObject(mailboxes));
             }
+        }
+
+        public void Dispose() {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing) {
+            if (disposed)
+                return;
+
+            if (disposing) {
+                _Source.Dispose();
+            }
+
+            disposed = true;
         }
     }
 }
