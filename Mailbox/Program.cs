@@ -93,7 +93,7 @@ namespace Mailbox
 
             foreach(Mailbox mailbox in mailboxes)
             {
-                listNames = listNames + " " + mailbox.Owner.ToString();
+                listNames += mailbox.Owner;
             }
 
             return listNames;
@@ -116,6 +116,8 @@ namespace Mailbox
         public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
             Mailbox newMailbox = null;
+            Person person = new Person(lastName, firstName);
+
             for(int xx = 1; xx <= 30; xx++)
             {
                 for(int yy = 1; yy <= 10; yy++)
@@ -123,13 +125,11 @@ namespace Mailbox
                     
                     bool isOccupied = mailboxes.GetAdjacentPeople(xx, yy, out HashSet<Person> adjacentPeople);
 
-                    if(!isOccupied && !adjacentPeople.Contains(new Person(lastName,firstName)))
+                    if(!isOccupied && !adjacentPeople.Contains(person))
                     {
-                        newMailbox = new Mailbox(size, ValueTuple.Create(xx, yy), new Person(lastName, firstName));
-                        mailboxes.Add(newMailbox);
+                        newMailbox = new Mailbox(size, ValueTuple.Create(xx, yy), person);
                         return newMailbox;
                     }
-
                 }
             }
 

@@ -8,6 +8,7 @@ namespace Mailbox
     public class DataLoader : IDisposable
     {
         private Stream Source { get; set; }
+        private bool StreamDisposed = false;
         public DataLoader(Stream source)
         {
             if(!source.Equals(null))
@@ -22,30 +23,68 @@ namespace Mailbox
 
         public List<Mailbox> Load()
         {
+            Source.Position = 0;
             List<Mailbox> mailboxes = new List<Mailbox>();
-            //Source.Seek
 
-            using (StreamReader sr = new StreamReader(Source))
+            try
             {
-                //Check if JSON
+                using (StreamReader sr = new StreamReader(Source))
+                {
+                    while(!sr.EndOfStream)
+                    {
+                       string? line = sr.ReadLine();
+                       Mailbox newMailbox = JsonConvert.DeserializeObject<Mailbox>(line);
+                       mailboxes.Add(newMailbox);
+                    }
 
-                
-            };
-
-            return mailboxes;
+                    return mailboxes;
+                };
+            } 
+            catch(JsonReaderException)
+            {
+                return null;
+            }
         }
 
         public void Save(List<Mailbox> mailboxes)
         {
-            using (StreamWriter sw = new StreamWriter(Source))
-            {
+            Source.Position = 0;
 
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(Source))
+                {
+                    foreach(Mailbox mailbox in mailboxes)
+                    {
+                        sw.WriteLine(JsonConvert.SerializeObject(mailbox));
+                    }
+                }
+            }
+            catch (JsonReaderException)
+            {
+                return;
             }
         }
 
         public void Dispose()
         {
-            Source.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if(!StreamDisposed)
+            {
+                Source.Dispose();
+            }
+
+            StreamDisposed = true;
+        }
+
+        ~DataLoader()
+        {
+            Dispose(false);
         }
     }
 }

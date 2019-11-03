@@ -31,7 +31,12 @@ namespace Mailbox
 
         public bool Equals([AllowNull] Person other)
         {
-            return LastName.Equals(other.LastName) && FirstName.Equals(other.FirstName);
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+
+            return FirstName == other.FirstName && LastName == other.LastName;
         }
 
         public static bool operator ==(Person a, Person b) => (a == b);
@@ -41,7 +46,7 @@ namespace Mailbox
 
         public override string ToString()
         {
-            return $"{FirstName} {LastName}";
+            return $"{FirstName} {LastName} ";
         }
     }
 }
