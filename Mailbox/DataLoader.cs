@@ -1,24 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace Mailbox
 {
     public class DataLoader : IDisposable
     {
-        public DataLoader(Stream source)
-        {
+        private Stream Source { get; set; }
 
-        }
+        public DataLoader(Stream source) => Source = source ?? throw new ArgumentNullException(nameof(source));
 
-        public List<Mailbox> Load()
+        public List<Mailbox>? Load()
         {
-            throw new NotImplementedException();
+            Source.Seek(0, SeekOrigin.Begin);
+            using StreamReader reader = new StreamReader(Source, leaveOpen: true);
+
+            List<Mailbox> ret;
+            try
+            {
+                ret = JsonConvert.DeserializeObject<List<Mailbox>>( reader.ReadToEnd() );
+            }
+            catch(JsonReaderException)
+            {
+                return null;
+            }
+
+            return ret;
         }
 
         public void Save(List<Mailbox> mailboxes)
         {
-            
+            Source.Seek(0, SeekOrigin.Begin);
+            using StreamWriter writer = new StreamWriter(Source, leaveOpen: true); //, encoding: System.Text.Encoding.
+
+            writer.Write(JsonConvert.SerializeObject(mailboxes));
         }
 
         #region IDisposable Support
@@ -31,7 +47,7 @@ namespace Mailbox
                 if (disposing)
                 {
                     // TODO: dispose managed state (managed objects).
-                    // call dispose on stream or other disposables
+                    Source.Dispose();
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.

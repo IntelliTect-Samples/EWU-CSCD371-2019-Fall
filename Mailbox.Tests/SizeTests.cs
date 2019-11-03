@@ -11,7 +11,7 @@ namespace Mailbox.Tests
     {
         [DataTestMethod]
         [DataRow(Sizes.None, "", DisplayName = "None")]
-        [DataRow(Sizes.Premium, "", DisplayName = "Premium Only")]
+        [DataRow(Sizes.Premium, "Premium", DisplayName = "Premium Only")]
         [DataRow(Sizes.Small, "Small", DisplayName = "Small")]
         [DataRow(Sizes.Large|Sizes.Premium, "Large Premium", DisplayName = "Large Premium")]
         public void GetString_FormatsStringProperly_MatchesExpectedResult(Sizes size, string expected)
