@@ -15,7 +15,7 @@ namespace Mailbox
             //Main does not need to be unit tested.
             using var dataLoader = new DataLoader(File.Open("Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
 
-            Mailboxes boxes = new Mailboxes(dataLoader.Load() ?? new List<Mailbox>(), Width, Height);
+            MailboxCollection boxes = new MailboxCollection(dataLoader.Load() ?? new List<Mailbox>(), Width, Height);
 
             while (true)
             {
@@ -87,17 +87,17 @@ namespace Mailbox
             }
         }
 
-        public static string GetOwnersDisplay(Mailboxes mailboxes)
+        public static string GetOwnersDisplay(MailboxCollection mailboxes)
         {
             throw new NotImplementedException();
         }
 
-        public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
+        public static string GetMailboxDetails(MailboxCollection mailboxes, int x, int y)
         {
             throw new NotImplementedException();
         }
 
-        public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Sizes size)
+        public static Mailbox AddNewMailbox(MailboxCollection mailboxes, string firstName, string lastName, Sizes size)
         {
             throw new NotImplementedException();
         }

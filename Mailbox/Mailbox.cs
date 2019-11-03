@@ -12,7 +12,8 @@ namespace Mailbox
         {
             Owner = owner;
             Location = location;
-            MailboxSize = mailboxSize;
+            MailboxSize = mailboxSize.IsValid() ? mailboxSize : throw new ArgumentOutOfRangeException(nameof(mailboxSize));
+
         }
 
         public override string ToString()

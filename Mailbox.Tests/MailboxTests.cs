@@ -25,5 +25,15 @@ namespace Mailbox.Tests
 
             Assert.AreEqual<string>(expected, result);
         }
+
+        [DataTestMethod]
+        [DataRow(Sizes.None)]
+        [DataRow(Sizes.Premium)]
+        [DataRow(Sizes.Small|Sizes.Medium)]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Constructor_InvalidSize_Throws(Sizes test)
+        {
+            _ = new Mailbox(new Person("", ""), default, test);
+        }
     }
 }

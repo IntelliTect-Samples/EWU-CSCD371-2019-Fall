@@ -22,24 +22,25 @@ namespace Mailbox
             return size.ToString().Replace(",", null);
         }
 
-        // removes extraneous flags that dont make sense together
-        // prioritizes largest size, strips off smaller sizes, preserves premium state
-        public static Sizes Verify(this Sizes size)
+        public static bool IsValid(this Sizes size)
         {
+            // automatically invalid if none or only premium
+            if (size == Sizes.None || size == Sizes.Premium) return false;
+
+            // dont care what premium is beyond this point
             if (size.HasFlag(Sizes.Large))
             {
-                return size & (Sizes.Large | Sizes.Premium);
+                // valid if large doesn't contain medium or small flags
+                return !(size.HasFlag(Sizes.Medium)||size.HasFlag(Sizes.Small));
             }
             else if (size.HasFlag(Sizes.Medium))
             {
-                return size & (Sizes.Medium | Sizes.Premium);
-            }
-            else if (size.HasFlag(Sizes.Small))
-            {
-                return size & (Sizes.Small | Sizes.Premium);
+                // already checked if it has the large flag; medium valid if doesn't have small
+                return !size.HasFlag(Sizes.Small);
             }
 
-            return Sizes.None;
+            // only small flag, automatically acceptable
+            return true;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Mailbox.Tests
                 new Mailbox(new Person("F1", "L1"), (1, 1), Sizes.Small),
                 new Mailbox(new Person("F2", "L2"), (2, 1), Sizes.Small)
             };
-            Mailboxes mailboxes = new Mailboxes(expected, 2, 1);
+            MailboxCollection mailboxes = new MailboxCollection(expected, 2, 1);
 
             sut.Save(mailboxes);
             List<Mailbox>? result = sut.Load();

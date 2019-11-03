@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Mailbox
 {
-    public class Mailboxes : List<Mailbox>
+    public class MailboxCollection : List<Mailbox>
     {
-        public Mailboxes(IEnumerable<Mailbox> collection, int width, int height) 
+        public MailboxCollection(IEnumerable<Mailbox> collection, int width, int height) 
             : base(collection)
         { 
             if (width < 0)

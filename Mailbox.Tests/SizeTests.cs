@@ -22,23 +22,17 @@ namespace Mailbox.Tests
         }
 
         [DataTestMethod]
-        [DataRow(Sizes.Small | Sizes.Medium,  Sizes.Medium,  DisplayName = "Sm|Med -> Med")]
-        [DataRow(Sizes.Large | Sizes.Medium | Sizes.Premium,  Sizes.Large | Sizes.Premium,  DisplayName = "Lg|Med|Prem -> Lg|Prem")]
-        public void Verify_CorrectsInvalidCombinations_MatchesExpectedCombination(Sizes test, Sizes expected)
+        [DataRow(Sizes.Small, true, DisplayName = "Small, valid")]
+        [DataRow(Sizes.Medium | Sizes.Premium, true, DisplayName = "Medium Premium, valid")]
+        [DataRow(Sizes.Medium | Sizes.Large, false, DisplayName = "Medium Large, invalid")]
+        [DataRow(Sizes.Medium | Sizes.Small, false, DisplayName = "Medium Small, invalid")]
+        [DataRow(Sizes.None, false, DisplayName = "None, invalid")]
+        [DataRow(Sizes.Premium, false, DisplayName = "Premium, invalid")]
+        public void IsValid_ChecksIfValidSizeFlagCombination_MatchesExpectedBooleanResult(Sizes test, bool expected)
         {
-            Sizes result = test.Verify();
+            bool result = test.IsValid();
 
-            Assert.AreEqual<Sizes>(expected, result);
-        }
-
-        [DataTestMethod]
-        [DataRow(Sizes.Small, Sizes.Small, DisplayName = "Small")]
-        [DataRow(Sizes.Medium | Sizes.Premium, Sizes.Medium | Sizes.Premium, DisplayName = "Medium Premium")]
-        public void Verify_ValidCombinations_ReturnsUnchangedCombination(Sizes test, Sizes expected)
-        {
-            Sizes result = test.Verify();
-
-            Assert.AreEqual<Sizes>(expected, result);
+            Assert.AreEqual<bool>(expected, result);
         }
     }
 }
