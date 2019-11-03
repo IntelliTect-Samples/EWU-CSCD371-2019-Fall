@@ -8,38 +8,42 @@ namespace Mailbox.Tests
     [TestClass]
     public class MailboxTests
     {
-        [DataTestMethod]
-        [DataRow(-1)]
-        [DataRow(31)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Mailbox_Row_RowOutOfBounds(int row)
-        {
-            Size size = Size.Small;
-            ValueTuple<int, int> loc = new ValueTuple<int, int>(row, 1);
-            Person person = new Person("Jimmy", "John");
-            new Mailbox(size, loc, person);
-        }
-
-        [DataTestMethod]
-        [DataRow(-1)]
-        [DataRow(11)]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Mailbox_Column_ColumnOutOfBounds(int column)
-        {
-            Size size = Size.Small;
-            ValueTuple<int, int> loc = new ValueTuple<int, int>(1, column);
-            Person person = new Person("Jimmy", "John");
-            new Mailbox(size, loc, person);
-        }
-
         [TestMethod]
-        public void MailboxToString()
+        public void Mailbox_ToString()
         {
-            Size size = Size.Small;
+            Size size = Size.PremiumLarge;
             ValueTuple<int, int> loc = new ValueTuple<int, int>(1, 1);
             Person person = new Person("Jimmy", "John");
             Mailbox mb = new Mailbox(size, loc, person);
-            Console.WriteLine(mb.ToString());
+            Assert.AreEqual(mb.ToString(), "Owner: John, Jimmy, Location: 1, 1, Size: PremiumLarge");
         }
+
+        [DataTestMethod]
+        [DataRow(Size.Small)]
+        [DataRow(Size.Medium)]
+        [DataRow(Size.Large)]
+        [DataRow(Size.PremiumSmall)]
+        [DataRow(Size.PremiumMedium)]
+        [DataRow(Size.PremiumLarge)]
+        public void Mailbox_Sizes_WorkingSizes(Size size)
+        {
+            Person theDude = new Person("The", "Dude");
+            ValueTuple <int, int> location = new ValueTuple<int, int>(1, 1);
+            Mailbox mailbox = new Mailbox(size, location, theDude);
+            Assert.AreEqual(mailbox.ToString(), "Owner: Dude, The, Location: 1, 1, Size: " + size.ToString());
+        }
+
+        [DataTestMethod]
+        [DataRow(Size.Unset)]
+        [DataRow(Size.Premium)]
+        public void Mailbox_Sizes_EmptyStringWithBadSizes(Size size)
+        {
+            Person theDude = new Person("The", "Dude");
+            ValueTuple<int, int> location = new ValueTuple<int, int>(1, 1);
+            Mailbox mailbox = new Mailbox(size, location, theDude);
+            Assert.AreEqual(mailbox.ToString(), "Owner: Dude, The, Location: 1, 1");
+            
+        }
+
     }
 }

@@ -10,7 +10,7 @@ namespace Mailbox
         private const int Width = 50;
         private const int Height = 10;
 
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
             //Main does not need to be unit tested.
             using var dataLoader = new DataLoader(File.Open("Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
@@ -116,7 +116,7 @@ namespace Mailbox
                 throw new ArgumentNullException(nameof(mailboxes));
             }
 
-            Person newPerson = new Person(lastName, firstName);
+            Person newPerson = new Person(firstName, lastName);
             for (int i = 1; i < 30; i++)
             {
                 for(int j = 1; j < 10; j++)

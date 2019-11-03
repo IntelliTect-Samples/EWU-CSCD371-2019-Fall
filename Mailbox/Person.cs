@@ -1,5 +1,7 @@
-﻿    using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
+
+#pragma warning disable CS8610
 
 namespace Mailbox
 {

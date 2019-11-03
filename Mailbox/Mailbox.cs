@@ -11,14 +11,6 @@ namespace Mailbox
 
         public Mailbox(Size boxSize, ValueTuple<int, int> loc, Person newOwner)
         {
-            if (loc.Item1 < 1 || loc.Item1 > 30)
-            {
-                throw new ArgumentOutOfRangeException("Mailbox row is out of bounds.");
-            }
-            if (loc.Item2 < 1 || loc.Item2 > 10)
-            {
-                throw new ArgumentOutOfRangeException("Mailbox column is out of bounds.");
-            }
             Size = boxSize;
             Location = loc;
             Owner = newOwner;
@@ -28,9 +20,8 @@ namespace Mailbox
         {
             string output = $"Owner: {Owner.ToString()}, Location: {Location.Item1}, {Location.Item2}";
 
-            if(Size.ToString() != "Unset")
+            if(Size != Size.Unset && Size != Size.Premium)
             {
-
                 output += $", Size: {Size.ToString()}";
             }
 
