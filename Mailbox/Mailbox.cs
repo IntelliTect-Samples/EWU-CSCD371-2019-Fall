@@ -1,6 +1,8 @@
 ﻿using System;
 
-namespace Mailbox
+// renamed mailbox namespace to avoid compiler warnings of overlapping namespace and class
+// I would have preferred to rename this class but I couldn't think of anything that made sense
+namespace MailRoom
 {
     public class Mailbox
     {

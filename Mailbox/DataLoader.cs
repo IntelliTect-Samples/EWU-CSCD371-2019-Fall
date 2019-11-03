@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace Mailbox
+namespace MailRoom
 {
     public class DataLoader : IDisposable
     {

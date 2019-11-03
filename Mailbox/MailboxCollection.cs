@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Mailbox
+namespace MailRoom
 {
     public class MailboxCollection : List<Mailbox>
     {

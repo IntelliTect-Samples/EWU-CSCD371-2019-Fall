@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Mailbox;
+using MailRoom;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-namespace Mailbox.Tests
+namespace MailRoom.Tests
 {
     [TestClass]
     public class DataLoaderTests

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Mailbox
+namespace MailRoom
 {
     public readonly struct Person : IEquatable<Person>
     {

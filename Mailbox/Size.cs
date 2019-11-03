@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mailbox
+namespace MailRoom
 {
     [Flags]
     public enum Sizes
