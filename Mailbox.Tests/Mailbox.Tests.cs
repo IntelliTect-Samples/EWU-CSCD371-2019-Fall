@@ -31,5 +31,15 @@ namespace Mailbox.Tests
             Person person = new Person("Jimmy", "John");
             new Mailbox(size, loc, person);
         }
+
+        [TestMethod]
+        public void MailboxToString()
+        {
+            Size size = Size.Small;
+            ValueTuple<int, int> loc = new ValueTuple<int, int>(1, 1);
+            Person person = new Person("Jimmy", "John");
+            Mailbox mb = new Mailbox(size, loc, person);
+            Console.WriteLine(mb.ToString());
+        }
     }
 }

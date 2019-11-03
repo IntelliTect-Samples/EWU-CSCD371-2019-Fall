@@ -31,29 +31,29 @@ namespace Mailbox
             foreach(Mailbox mailbox in this)
             {
                 //current
-                if (mailbox._Location == (x, y))
+                if (mailbox.Location == (x, y))
                 {
                     isOccupied = true;
                 }
                 //above
-                if (mailbox._Location == (x, y - 1))
+                if (mailbox.Location == (x, y - 1))
                 {
-                    adjacentPeople.Add(mailbox._Owner);
+                    adjacentPeople.Add(mailbox.Owner);
                 }
                 //right
-                if (mailbox._Location == (x + 1, y))
+                if (mailbox.Location == (x + 1, y))
                 {
-                    adjacentPeople.Add(mailbox._Owner);
+                    adjacentPeople.Add(mailbox.Owner);
                 }
                 //bottom
-                if (mailbox._Location == (x, y + 1))
+                if (mailbox.Location == (x, y + 1))
                 {
-                    adjacentPeople.Add(mailbox._Owner);
+                    adjacentPeople.Add(mailbox.Owner);
                 }
                 //left
-                if (mailbox._Location == (x - 1, y))
+                if (mailbox.Location == (x - 1, y))
                 {
-                    adjacentPeople.Add(mailbox._Owner);
+                    adjacentPeople.Add(mailbox.Owner);
                 }
             }
 

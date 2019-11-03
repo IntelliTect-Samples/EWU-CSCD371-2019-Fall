@@ -5,21 +5,21 @@ namespace Mailbox
 {
     public struct Person : IEquatable<Person>
     {
-        string _FirstName;
-        string _LastName;
+        public string FirstName;
+        public string LastName;
 
         public Person(string fname, string lname)
         {
             if(fname is null)
             {
-                throw new ArgumentNullException(nameof(_FirstName));
+                throw new ArgumentNullException(nameof(FirstName));
             }
             if(lname is null)
             {
-                throw new ArgumentNullException(nameof(_LastName));
+                throw new ArgumentNullException(nameof(LastName));
             }
-            _FirstName = fname;
-            _LastName = lname;
+            FirstName = fname;
+            LastName = lname;
         }
 
         public bool Equals([AllowNull] Person other)
@@ -29,12 +29,12 @@ namespace Mailbox
                 return false;
             }
 
-            return _FirstName == other._FirstName && _LastName == other._LastName;
+            return FirstName == other.FirstName && LastName == other.LastName;
         }
 
         public override string ToString()
         {
-            return $"{_LastName}, {_FirstName}";
+            return $"{LastName}, {FirstName}";
         }
     }
 

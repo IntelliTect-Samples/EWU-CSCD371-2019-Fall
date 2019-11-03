@@ -5,9 +5,9 @@ namespace Mailbox
 
     public class Mailbox
     {
-        public Size _Size { get; set; }
-        public (int Row, int Column) _Location { get; set; }
-        public Person _Owner { get; set; }
+        public Size Size { get; set; }
+        public (int Row, int Column) Location { get; set; }
+        public Person Owner { get; set; }
 
         public Mailbox(Size boxSize, ValueTuple<int, int> loc, Person newOwner)
         {
@@ -19,18 +19,22 @@ namespace Mailbox
             {
                 throw new ArgumentOutOfRangeException("Mailbox column is out of bounds.");
             }
-            _Size = boxSize;
-            _Location = loc;
-            _Owner = newOwner;
+            Size = boxSize;
+            Location = loc;
+            Owner = newOwner;
         }
 
         public override string ToString()
         {
-            /*string output = 
+            string output = $"Owner: {Owner.ToString()}, Location: {Location.Item1}, {Location.Item2}";
+
+            if(Size.ToString() != "Unset")
+            {
+
+                output += $", Size: {Size.ToString()}";
+            }
+
             return output;
-                
-                $"Owner: {_Owner}, Location: {_Location.Item1}, {_Location.Item2}, Size: {_Size.ToString()}"; */
-            return null;
         }
 
     }
