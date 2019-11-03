@@ -7,22 +7,22 @@ namespace Mailbox
 {
     public class DataLoader : IDisposable
     {
-        private readonly Stream _Stream;
-        private bool _StreamDisposed = false;
+        private readonly Stream Stream;
+        private bool StreamDisposed = false;
 
         public DataLoader(Stream source)
         {
-            _Stream = source ?? throw new ArgumentNullException(nameof(source));
+            Stream = source ?? throw new ArgumentNullException(nameof(source));
         }
 
         public List<Mailbox>? Load()
         {
             List<Mailbox> mailboxes = new List<Mailbox>();
-            _Stream.Position = 0;
+            Stream.Position = 0;
 
             try
             {
-                using (StreamReader reader = new StreamReader(_Stream))
+                using (StreamReader reader = new StreamReader(Stream))
                 {
                     while (!reader.EndOfStream)
                     {
@@ -42,9 +42,9 @@ namespace Mailbox
 
         public void Save(List<Mailbox> mailboxes)
         {
-            _Stream.Position = 0;
+            Stream.Position = 0;
 
-            using (StreamWriter writer = new StreamWriter(_Stream))
+            using (StreamWriter writer = new StreamWriter(Stream))
             {
                 foreach(Mailbox mailbox in mailboxes)
                 {
@@ -61,11 +61,11 @@ namespace Mailbox
 
         protected virtual void Dispose (bool disposing)
         {
-            if(!_StreamDisposed)
+            if(!StreamDisposed)
             {
-                _Stream.Dispose();
+                Stream.Dispose();
             }
-            _StreamDisposed = true;
+            StreamDisposed = true;
         }
 
         ~DataLoader()

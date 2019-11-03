@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Mailbox
@@ -27,9 +27,18 @@ namespace Mailbox
             if(ReferenceEquals(other, null))
             {
                 return false;
-            }
-
+            }            
             return FirstName == other.FirstName && LastName == other.LastName;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (FirstName, LastName).GetHashCode();
         }
 
         public override string ToString()

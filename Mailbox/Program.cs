@@ -115,21 +115,20 @@ namespace Mailbox
             {
                 throw new ArgumentNullException(nameof(mailboxes));
             }
-            Person newPerson = new Person(firstName, lastName);
+
+            Person newPerson = new Person(lastName, firstName);
             for (int i = 1; i < 30; i++)
             {
                 for(int j = 1; j < 10; j++)
                 {
-                    foreach (Mailbox mailbox in mailboxes)
+                    bool occupied = mailboxes.GetAdjacentPeople(i, j, out HashSet<Person> adjacentPeople);
+                   if (!occupied && !adjacentPeople.Contains(newPerson))
                     {
-                        HashSet<Person> adjacentPeople = new HashSet<Person>();
-                        bool goodSpot = mailboxes.GetAdjacentPeople(mailbox.Location.Column, mailbox.Location.Row, out adjacentPeople);
-                        if (!goodSpot  && !adjacentPeople.Contains(newPerson))
-                        {
+
                             ValueTuple<int, int> newLocation = new ValueTuple<int, int>(i, j);
                             Mailbox newMailbox = new Mailbox(size, newLocation, newPerson);
                             return newMailbox;
-                        }
+                        
                     }
                 }
             }
