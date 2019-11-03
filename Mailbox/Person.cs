@@ -21,12 +21,12 @@ namespace Mailbox
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj);// Change
+            return obj is Person && Equals((Person)obj);
         }
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return (FirstName,LastName).GetHashCode();
         }
 
         public bool Equals([AllowNull] Person other)
