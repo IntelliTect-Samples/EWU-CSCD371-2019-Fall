@@ -21,14 +21,16 @@ namespace Mailbox
                 && name.lastName == other.getName().last;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object other)
         {
-            return base.Equals(obj); //TODO
+            if (other is null) { return false; }
+
+            return Equals((Person)other);
         }
 
         public override int GetHashCode()
         {
-            return base.GetHashCode(); //TODO
+            return name.GetHashCode();
         }
 
         public (string first, string last) getName()
