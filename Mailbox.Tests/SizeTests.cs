@@ -10,8 +10,10 @@ namespace Mailbox.Tests
     public class SizeTests
     {
         [DataTestMethod]
-        [DataRow(Sizes.Small, "Small")]
-        [DataRow(Sizes.Large|Sizes.Premium, "Large Premium")]
+        [DataRow(Sizes.None, "", DisplayName = "None")]
+        [DataRow(Sizes.Premium, "", DisplayName = "Premium Only")]
+        [DataRow(Sizes.Small, "Small", DisplayName = "Small")]
+        [DataRow(Sizes.Large|Sizes.Premium, "Large Premium", DisplayName = "Large Premium")]
         public void GetString_FormatsStringProperly_MatchesExpectedResult(Sizes size, string expected)
         {
             string result = size.GetString();
@@ -20,8 +22,8 @@ namespace Mailbox.Tests
         }
 
         [DataTestMethod]
-        [DataRow(Sizes.Small | Sizes.Medium,  Sizes.Medium,  DisplayName = "SM + MD -> MD")]
-        [DataRow(Sizes.Large | Sizes.Medium | Sizes.Premium,  Sizes.Large | Sizes.Premium,  DisplayName = "LG + MD + PR -> LG + PR")]
+        [DataRow(Sizes.Small | Sizes.Medium,  Sizes.Medium,  DisplayName = "Sm|Med -> Med")]
+        [DataRow(Sizes.Large | Sizes.Medium | Sizes.Premium,  Sizes.Large | Sizes.Premium,  DisplayName = "Lg|Med|Prem -> Lg|Prem")]
         public void Verify_CorrectsInvalidCombinations_MatchesExpectedCombination(Sizes test, Sizes expected)
         {
             Sizes result = test.Verify();

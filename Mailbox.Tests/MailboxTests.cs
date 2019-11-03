@@ -1,0 +1,29 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Mailbox;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Mailbox.Tests
+{
+    [TestClass]
+    public class MailboxTests
+    {
+        // just ensuring print works here, component tostrings are already tested in respective test classes
+        [TestMethod]
+        public void ToString_MailboxStringRepresentation_ReturnsConcatenatedStringsOfProperties()
+        {
+            Person testOwner = new Person("First", "Last");
+            (int, int) testLocation = (1, 2);
+            Sizes testSize = Sizes.Medium | Sizes.Premium;
+
+            string expected = $"Name: {testOwner}; Location: {testLocation}; Mailbox Size: {testSize.GetString()}";
+
+            Mailbox test = new Mailbox(testOwner, testLocation, testSize);
+
+            string result = test.ToString();
+
+            Assert.AreEqual<string>(expected, result);
+        }
+    }
+}

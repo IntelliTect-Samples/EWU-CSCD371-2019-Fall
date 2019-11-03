@@ -1,14 +1,23 @@
-﻿namespace Mailbox
+﻿using System;
+
+namespace Mailbox
 {
     public class Mailbox
     {
         public Person Owner { get; }
         public Sizes MailboxSize { get; }
-        public (int, int) Location { get; }
+        public (int X, int Y) Location { get; }
+
+        public Mailbox(Person owner, (int, int) location, Sizes mailboxSize)
+        {
+            Owner = owner;
+            Location = location;
+            MailboxSize = mailboxSize;
+        }
 
         public override string ToString()
         {
-            return "";
+            return $"Name: {Owner}; Location: {Location}; Mailbox Size: {MailboxSize.GetString()}";
         }
     }
 }

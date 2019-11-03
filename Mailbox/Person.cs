@@ -30,7 +30,7 @@ namespace Mailbox
 
         public static bool operator !=(Person leftSide, Person rightSide)
         {
-            return !(leftSide == rightSide);
+            return !(leftSide.Equals(rightSide));
         }
 
         public override int GetHashCode() => (FirstName, LastName).GetHashCode();

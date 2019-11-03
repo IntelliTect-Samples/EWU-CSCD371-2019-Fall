@@ -17,6 +17,8 @@ namespace Mailbox
     {
         public static string GetString(this Sizes size)
         {
+            if (size == Sizes.None) return "";
+
             return size.ToString().Replace(",", null);
         }
 
