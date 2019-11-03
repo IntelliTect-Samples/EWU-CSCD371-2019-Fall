@@ -5,20 +5,18 @@ namespace Mailbox
 {
     public struct Person : IEquatable<Person>
     {
-        public string firstName;
-        public string lastName;
+        public string FirstName;
+        public string LastName;
 
         public Person(string? firstName, string? lastName)
         {
-            if (firstName is null || lastName is null)
-                throw new ArgumentNullException($"{nameof(firstName)}, {nameof(lastName)}");
-            this.firstName = firstName;
-            this.lastName = lastName;
+            FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
+            LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
         }
 
-        public bool Equals([AllowNull] Person other)
+        public bool Equals(Person other)
         {
-            if (other.firstName.Equals(this.firstName) && other.lastName.Equals(this.lastName))
+            if (other.FirstName.Equals(FirstName) && other.LastName.Equals(LastName))
                 return true;
             return false;
         }
@@ -28,13 +26,13 @@ namespace Mailbox
             if (obj is null)
                 throw new ArgumentNullException(nameof(obj));
             if (obj is Person newPerson)
-                return (this.Equals(newPerson));
-            return true;
+                return (Equals(newPerson));
+            return false;
         }
 
         public override int GetHashCode()
         {
-            return (this.firstName, this.lastName).GetHashCode();
+            return (FirstName, LastName).GetHashCode();
         }
 
         public static bool operator ==(Person left, Person right)
@@ -49,7 +47,7 @@ namespace Mailbox
 
         public override string ToString()
         {
-            return $"{this.firstName} {this.lastName}";
+            return $"{this.FirstName} {this.LastName}";
         }
     }
 }

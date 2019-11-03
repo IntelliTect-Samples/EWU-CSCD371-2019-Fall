@@ -5,5 +5,6 @@ namespace Mailbox.Tests
     [TestClass]
     public class SizeTests
     {
+       
     }
 }

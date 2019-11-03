@@ -5,6 +5,16 @@ namespace Mailbox
     [Flags]
     public enum Size
     {
-        Small = 0
+        Default = 0,
+        Small = 1,
+        Medium = 2,
+        Large = 3,
+        Premium = 4,
+
+        SmallPremium = Small | Premium,
+        MediumPremium = Medium | Premium,
+        LargePremium = Large | Premium
+
+        
     }
 }
