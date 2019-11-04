@@ -108,7 +108,7 @@ namespace MailRoom
         {
             if (mailboxes is null || mailboxes.Count == 0) return null;
 
-            (int, int) location = (x, y);
+            (int, int) location = (x, y); // caching so we dont create a new tuple on every check
             Mailbox? target = mailboxes.Find(box => location == box.Location);
 
             return target?.ToString() ?? null;
@@ -127,8 +127,10 @@ namespace MailRoom
             HashSet<Person> currentOwners = GetAllOwners(mailboxes);
             bool checkAdjacent = currentOwners.Contains(newOwner);
 
-            // create an array indicating occupied spots
+            // cache an array of occupied spots, to quickly check if a spot is open
             // avoids searching the entire mailboxes array on each spot, to see if occupied
+            // ideally this would be in mailboxcollection as a backing array for location
+            //   so we dont have to recreate the array for each add call
             bool[,] occupied = new bool[mailboxes.Height, mailboxes.Width];
             foreach(Mailbox box in mailboxes) occupied[box.Location.Y, box.Location.X] = true;
 

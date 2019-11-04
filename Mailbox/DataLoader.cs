@@ -7,7 +7,7 @@ namespace MailRoom
 {
     public class DataLoader : IDisposable
     {
-        private Stream Source { get; set; }
+        private Stream Source { get; }
 
         public DataLoader(Stream source) => Source = source ?? throw new ArgumentNullException(nameof(source));
 
@@ -32,7 +32,7 @@ namespace MailRoom
         public void Save(List<Mailbox> mailboxes)
         {
             Source.Position = 0;
-            using StreamWriter writer = new StreamWriter(Source, leaveOpen: true); //, encoding: System.Text.Encoding.
+            using StreamWriter writer = new StreamWriter(Source, leaveOpen: true);
 
             writer.Write(JsonConvert.SerializeObject(mailboxes));
         }
@@ -44,32 +44,19 @@ namespace MailRoom
         {
             if (!disposedValue)
             {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects).
-                    Source.Dispose();
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
+                if (disposing) Source.Dispose();
 
                 disposedValue = true;
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        ~DataLoader()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(false);
-        }
+        // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        ~DataLoader() => Dispose(false);
 
-        // This code added to correctly implement the disposable pattern.
+        // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
             GC.SuppressFinalize(this);
         }
         #endregion

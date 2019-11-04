@@ -14,8 +14,6 @@ namespace MailRoom
             LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
         }
 
-        public bool Equals(Person other) => LastName.Equals(other.LastName) && FirstName.Equals(other.FirstName);
-
         public override bool Equals(object? obj)
         {
             if (obj is null) return false;
@@ -23,21 +21,17 @@ namespace MailRoom
             return Equals((Person) obj);
         }
 
+        public bool Equals(Person other)
+            => LastName.Equals(other.LastName) && FirstName.Equals(other.FirstName);
+
         public static bool operator ==(Person leftSide, Person rightSide)
-        {
-            return leftSide.Equals(rightSide);
-        }
+            => leftSide.Equals(rightSide);
 
         public static bool operator !=(Person leftSide, Person rightSide)
-        {
-            return !(leftSide.Equals(rightSide));
-        }
+            => !(leftSide.Equals(rightSide));
 
         public override int GetHashCode() => (FirstName, LastName).GetHashCode();
 
-        public override string ToString()
-        {
-            return $"{LastName}, {FirstName}";
-        }
+        public override string ToString() => $"{LastName}, {FirstName}";
     }
 }
