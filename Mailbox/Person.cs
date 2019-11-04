@@ -22,7 +22,7 @@ namespace Mailbox
             _LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
         }
 
-        public bool Equals([AllowNull] Person other)
+        public bool Equals(Person other)
         {
             return _FirstName == other._FirstName &&
                    _LastName == other._LastName;
