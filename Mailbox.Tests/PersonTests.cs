@@ -4,7 +4,7 @@ namespace Mailbox.Tests {
     [TestClass]
     public class PersonTests {
         [TestMethod]
-        public void Person_ToString_ReturnsAsExpected() {
+        public void ToString_ReturnsAsExpected() {
             //Arrange
             Person person = new Person("Joel", "Kalich");
 
@@ -15,7 +15,7 @@ namespace Mailbox.Tests {
         }
 
         [TestMethod]
-        public void Person_Equals_Works() {
+        public void Equals_Works() {
             //Arrange
             Person person1 = new Person("Joel", "Kalich");
             Person person2 = new Person("Joel", "Kalich");

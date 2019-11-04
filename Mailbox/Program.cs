@@ -93,7 +93,7 @@ namespace Mailbox {
         }
         public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Sizes size) {
             Person owner = new Person(firstName, lastName);
-            (int, int) location = mailboxes.findValidLocation(owner);
+            (int, int) location = mailboxes.FindValidLocation(owner);
             if (location.Equals((-1, -1))) {
                 return null;
             }
