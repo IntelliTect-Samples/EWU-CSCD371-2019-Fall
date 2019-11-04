@@ -12,11 +12,10 @@ namespace Mailbox.Tests
         }
 
         [TestMethod]
-
         public void ToString_ValidMailbox_ReturnsCorrectRepresentation()
         {
             Mailbox mailbox = new Mailbox(Size.Small, (0, 0), new Person("Homer", "Simpson"));
-            Assert.AreEqual("Size: Small, Location: 0 0, Owner: Homer Simpson",mailbox.ToString());
+            Assert.AreEqual("Size: Small, Location: 0 0, Owner: Homer Simpson", mailbox.ToString());
         }
 
         [TestMethod]

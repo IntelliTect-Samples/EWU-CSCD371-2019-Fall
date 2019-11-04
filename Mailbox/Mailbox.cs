@@ -1,4 +1,6 @@
-﻿namespace Mailbox
+﻿using Newtonsoft.Json;
+
+namespace Mailbox
 {
     public class Mailbox
     {
@@ -21,6 +23,11 @@
             else if ((int)Size > 4)
                 theSize = $"{Size - 4} Premium";
             return $"Size: {theSize}, Location: {Location.x} {Location.y}, Owner: {Owner.ToString()}";
+        }
+
+        public string GetJson()
+        {
+            return JsonConvert.SerializeObject(this);
         }
     }
 }
