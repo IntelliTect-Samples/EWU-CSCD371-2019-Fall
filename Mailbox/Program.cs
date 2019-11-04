@@ -65,7 +65,7 @@ namespace Mailbox {
                             Console.WriteLine("Invalid box number");
                         }
                         break;
-                    default:
+                    case 5:
                         return;
                 }
             }
