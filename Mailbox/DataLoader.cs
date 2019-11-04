@@ -13,7 +13,7 @@ namespace MailRoom
 
         public List<Mailbox>? Load()
         {
-            Source.Seek(0, SeekOrigin.Begin);
+            Source.Position = 0;
             using StreamReader reader = new StreamReader(Source, leaveOpen: true);
 
             List<Mailbox> ret;
@@ -31,7 +31,7 @@ namespace MailRoom
 
         public void Save(List<Mailbox> mailboxes)
         {
-            Source.Seek(0, SeekOrigin.Begin);
+            Source.Position = 0;
             using StreamWriter writer = new StreamWriter(Source, leaveOpen: true); //, encoding: System.Text.Encoding.
 
             writer.Write(JsonConvert.SerializeObject(mailboxes));
