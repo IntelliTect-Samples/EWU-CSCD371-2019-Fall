@@ -17,10 +17,17 @@ namespace Mailbox
         {
             Source.Position = 0;
             List<Mailbox> mailboxes = new List<Mailbox>();
-            using var reader = new StreamReader(Source);
-            while (!(reader.EndOfStream))
+            try
             {
-                mailboxes.Add(JsonConvert.DeserializeObject<Mailbox>(reader.ReadLine()));
+                using var reader = new StreamReader(Source);
+                while (!(reader.EndOfStream))
+                {
+                    mailboxes.Add(JsonConvert.DeserializeObject<Mailbox>(reader.ReadLine()));
+                }
+            }
+            catch (JsonReaderException)
+            {
+                return null;
             }
             return mailboxes;
         }

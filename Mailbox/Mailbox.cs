@@ -17,7 +17,21 @@ namespace Mailbox
 
         public override string ToString()
         {
-            return $"Size: {Size} Location: {Location} Owner: {Owner.ToString()}";
+            String size;
+            if(Size == Size.Default)
+            {
+                size = "";
+            }
+            else if(Size == Size.Premium)
+            {
+                size = Size.ToString() + "Premium";
+            }
+            else
+            {
+                size = Size.ToString();
+            }
+
+            return $"Size: {size} Location: {Location.ToString()} Owner: {Owner.ToString()}";
         }
     }
 }

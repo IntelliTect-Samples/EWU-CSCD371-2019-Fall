@@ -5,11 +5,19 @@ namespace Mailbox
 {
     public struct Person : IEquatable<Person>
     {
-        private string FirstName { get; set; }
-        private string LastName { get; set; }
+        private string? FirstName { get; set; }
+        private string? LastName { get; set; }
 
-        public Person(String firstName, String lastName)
+        public Person(String? firstName, String? lastName)
         {
+            if(firstName is null)
+            {
+                throw new ArgumentNullException(nameof(firstName));
+            }
+            else if(lastName is null)
+            {
+                throw new ArgumentNullException(nameof(lastName));
+            }
             FirstName = firstName;
             LastName = lastName;
         }
