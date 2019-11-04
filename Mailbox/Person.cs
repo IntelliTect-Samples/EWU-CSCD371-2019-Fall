@@ -21,7 +21,7 @@ namespace Mailbox
                 && name.lastName == other.getName().last;
         }
 
-        public override bool Equals(object other)
+        public override bool Equals(object? other)
         {
             if (other is null) { return false; }
 

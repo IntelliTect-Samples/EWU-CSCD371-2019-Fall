@@ -5,10 +5,10 @@ namespace Mailbox
     [Flags]
     public enum Sizes
     {
-        undefined = 0,
-        small = 1,
-        medium = 2,
-        large = 4,
-        premium = 8
+        Undefined = 0,
+        Premium = 1,
+        Small = 2,
+        Medium = 4,
+        Large = 8
     }
 }

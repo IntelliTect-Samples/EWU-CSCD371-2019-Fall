@@ -16,5 +16,19 @@ namespace Mailbox.Tests
             var _ = new Person(null, null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
+
+        [TestMethod]
+        public void EqualsGivenWrongObject_ReturnsFalse()
+        {
+            //Arrange
+            Person pers = new Person("First", "Last");
+            bool equal;
+
+            //Act
+            equal = pers.Equals("Test");
+
+            //Assert
+            Assert.IsFalse(equal);
+        }
     }
 }
