@@ -1,4 +1,6 @@
-﻿namespace Mailbox
+﻿using System;
+
+namespace Mailbox
 {
     public class Mailbox
     {
@@ -6,7 +8,7 @@
         public (int x, int y) Location { get; set; }
         public Person Owner { get; set; }
 
-        public Mailbox(Size size, (int x, int y) location, Person owner)
+        public Mailbox(Size size, ValueTuple<int,int> location, Person owner)
         {
             Size = size;
             Location = location;
