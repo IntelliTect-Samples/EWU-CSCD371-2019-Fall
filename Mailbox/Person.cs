@@ -8,6 +8,11 @@ namespace Mailbox
         public string fname;
         public string lname;
 
+        public Person(string f, string l)
+        {
+            fname = f; lname = l;
+        }
+
         public bool Equals(Person other)
         {
             if(other.lname.ToLower().Equals(lname.ToLower()) && other.fname.ToLower().Equals(fname.ToLower()))
