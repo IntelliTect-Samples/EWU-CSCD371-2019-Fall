@@ -5,8 +5,10 @@ namespace Mailbox
 {
     public class DataLoader
     {
+        Stream stream;
         public DataLoader(Stream source)
         {
+            stream = source;
         }
 
         public List<Mailbox> Load()
