@@ -45,7 +45,7 @@ namespace Mailbox.Tests
         public void ToString_ReturnsValidString(string firstName, string lastName)
         {
             Person person1 = new Person(firstName, lastName);
-            Assert.AreEqual(person1.ToString, "firstname lastname");
+            Assert.AreEqual(person1.ToString(), "firstname lastname");
         }
     }
 }

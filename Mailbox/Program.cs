@@ -99,7 +99,8 @@ namespace Mailbox
 
         public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
-            return new Mailbox();
+            Person person = new Person(firstName, lastName);
+            return new Mailbox(size, (0,0), person);
         }
     }
 }
