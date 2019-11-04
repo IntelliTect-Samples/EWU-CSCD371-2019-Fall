@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Mailbox
 {
     internal class Program
     {
-        private const int Width = 50;
-        private const int Height = 10;
+        private const int Width = 2;
+        private const int Height = 1;
 
         private static void Main(string[] args)
         {
@@ -92,16 +93,40 @@ namespace Mailbox
 
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach(Mailbox mailbox in mailboxes)
+            {
+                stringBuilder.Append($"{mailbox.Owner.ToString()}, ");
+            }
+            if(stringBuilder.Length > 2)
+                stringBuilder.Remove(stringBuilder.Length - 2, 2);
+            return stringBuilder.ToString();
+        }
+
+        public static string? GetMailboxDetails(Mailboxes mailboxes, int x, int y)
+        {
+            foreach(Mailbox mailbox in mailboxes)
+            {
+                if (mailbox.Location.x == x && mailbox.Location.y == y)
+                    return mailbox.ToString();
+            }
             return null;
         }
 
-        public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
+        public static Mailbox? AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
-            return null;
-        }
-
-        public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
-        {
+            Person personToAdd = new Person(firstName, lastName);
+            for(int x = 0; x < Width; x++)
+            {
+                for(int y = 0; y < Height; y++)
+                {
+                    bool isOccupied = mailboxes.GetAdjacentPeople(x, y, out HashSet<Person> adjecentPeople);
+                    if(!isOccupied && !adjecentPeople.Contains(personToAdd))
+                    {
+                        return new Mailbox(size, (x, y), personToAdd);
+                    }
+                }
+            }
             return null;
         }
     }

@@ -23,7 +23,7 @@ namespace Mailbox
             while (!(streamReader.EndOfStream))
             {
                 string mailboxString = streamReader.ReadLine() ?? "";
-                Mailbox mailbox = new Mailbox(Size.Default,(0,0),new Person("",""));
+                Mailbox mailbox = new Mailbox(Size.Default, (0, 0), new Person("", ""));
                 try
                 {
                     mailbox = JsonConvert.DeserializeObject<Mailbox>(mailboxString);
@@ -40,6 +40,8 @@ namespace Mailbox
 
         public void Save(List<Mailbox> mailboxes)
         {
+            if (mailboxes is null)
+                throw new ArgumentNullException(nameof(mailboxes));
             Source.Seek(0, SeekOrigin.Begin);
             using StreamWriter streamWriter = new StreamWriter(Source, new UTF8Encoding(), 1024, true);
             foreach (Mailbox mailbox in mailboxes)
@@ -50,7 +52,7 @@ namespace Mailbox
 
         #region IDisposable Support
 
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
         {
@@ -59,29 +61,21 @@ namespace Mailbox
                 if (disposing)
                 {
                 }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 Source.Dispose();
-                // TODO: set large fields to null.
-
                 disposedValue = true;
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~DataLoader()
-        // {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
+        ~DataLoader()
+        {
+            Dispose(false);
+        }
 
-        // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
+
+            GC.SuppressFinalize(this);
         }
 
         #endregion IDisposable Support
