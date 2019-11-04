@@ -3,16 +3,6 @@
 namespace Mailbox.Tests {
     [TestClass]
     public class PersonTests {
-        [TestMethod]
-        public void ToString_ReturnsAsExpected() {
-            //Arrange
-            Person person = new Person("Joel", "Kalich");
-
-            //Act
-
-            //Assert
-            Assert.AreEqual("Joel Kalich", person.toString());
-        }
 
         [TestMethod]
         public void Equals_Works() {
