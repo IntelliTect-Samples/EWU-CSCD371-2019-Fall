@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Text;
 
 namespace Mailbox
 {
@@ -43,9 +44,9 @@ namespace Mailbox
                         Console.WriteLine("Enter the last name");
                         string lastName = Console.ReadLine();
                         Console.WriteLine("What size?");
-                        if (!Enum.TryParse(Console.ReadLine(), out Size size))
+                        if (!Enum.TryParse(Console.ReadLine(), out Sizes size))
                         {
-                            size = Size.Small;
+                            size = Sizes.Small;
                         }
 
                         if (AddNewMailbox(boxes, firstName, lastName, size) is Mailbox mailbox)
@@ -69,7 +70,7 @@ namespace Mailbox
                     case 4:
                         Console.WriteLine("Enter box number as x,y");
                         string boxNumber = Console.ReadLine();
-                        string[] parts = boxNumber?.Split(',');
+                        string[]? parts = boxNumber?.Split(',');
                         if (parts?.Length == 2 &&
                             int.TryParse(parts[0], out int x) &&
                             int.TryParse(parts[1], out int y))
@@ -89,17 +90,57 @@ namespace Mailbox
 
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
-            
+            if (mailboxes is null) throw new ArgumentNullException(nameof(mailboxes));
+
+            var hs = new HashSet<Person>();
+            var sb = new StringBuilder();
+            foreach (Mailbox mb in mailboxes)
+            {
+                if (!hs.Contains(mb.Owner))
+                {
+                    sb.AppendLine(mb.Owner.ToString());
+                    hs.Add(mb.Owner);
+                }
+            }
+            return sb.ToString();
         }
 
-        public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
+        public static string? GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
-            
+            if (mailboxes is null) throw new ArgumentNullException(nameof(mailboxes));
+
+            foreach (Mailbox mb in mailboxes)
+            {
+                if (mb.Location == (x,y))
+                {
+                    return mb.ToString();
+                }
+            }
+
+            return null;
         }
 
-        public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
+        public static Mailbox? AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Sizes size)
         {
-            
+            if (mailboxes is null) throw new ArgumentNullException(nameof(mailboxes));
+
+            var owner = new Person(firstName, lastName);
+
+            for (int x = 0; x < mailboxes.Width; x++)
+            {
+                for (int y = 0; y < mailboxes.Height; y++)
+                {
+                    if (!mailboxes.GetAdjacentPeople(x, y, out HashSet<Person> adjacentPeople))
+                    {
+                        if (!adjacentPeople.Contains(owner))
+                        {
+                            return new Mailbox(size, (x,y), owner);
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
