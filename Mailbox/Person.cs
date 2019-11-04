@@ -51,6 +51,11 @@ namespace Mailbox
         {
             return $"{First} {Last}";
         }
+
+        public override int GetHashCode()
+        {
+            return First.GetHashCode() + Last.GetHashCode();
+        }
     }
 
 }

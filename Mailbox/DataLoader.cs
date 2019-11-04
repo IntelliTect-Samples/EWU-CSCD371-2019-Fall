@@ -32,7 +32,6 @@ namespace Mailbox
                 return mailboxes;
             } catch (ArgumentNullException)
             {
-                Console.WriteLine("Load failed - Null");
                 return null;
             } catch (JsonReaderException)
             {
@@ -74,6 +73,11 @@ namespace Mailbox
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        ~DataLoader()
+        {
+            Dispose(false);
         }
     }
 }
