@@ -89,17 +89,30 @@ namespace Mailbox
 
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
-            
+            string ownersDisplay = "";
+
+            foreach (Mailbox mailbox in mailboxes) 
+            {
+                ownersDisplay += $"{mailbox.Owner.ToString()}\n";
+            }
+
+            return ownersDisplay;
         }
 
         public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
-            
+            foreach (Mailbox mailbox in mailboxes) 
+            {
+                if (mailbox.Location == (x, y))
+                    return mailbox.ToString();
+            }
+
+            return "Mailbox not found";
         }
 
         public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
-            
+            return null;
         }
     }
 }

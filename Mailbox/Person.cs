@@ -16,9 +16,22 @@ namespace Mailbox
                 && lastName == other.lastName;
         }
 
+        public override bool Equals(Object obj) 
+        {
+            return obj is Person ? this.Equals((Person)obj) : false;
+        }
+
+        public static bool operator ==(Person person, Person other) => person.Equals(other);
+        public static bool operator !=(Person person, Person other) => person.Equals(other);
+
         public override string ToString()
         {
             return $"{firstName} {lastName}";
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(firstName, lastName);
         }
     }
 }
