@@ -1,4 +1,5 @@
-﻿namespace Mailbox
+﻿#pragma warning disable CA1724
+namespace Mailbox
 {
     public class Mailbox
     {

@@ -24,5 +24,15 @@ namespace Mailbox.Tests
             string correct = $"Size: Small Location: (0, 0) Owner: Test Person";
             Assert.AreEqual(correct, sut.ToString());
         }
+
+        [TestMethod]
+        public void ToString_CheckOutputWithPremiumSize()
+        {
+            var owner = new Person("Test", "Person");
+            var sut = new Mailbox(Sizes.SmallPremium, (0, 0), owner);
+
+            string correct = $"Size: SmallPremium Location: (0, 0) Owner: Test Person";
+            Assert.AreEqual(correct, sut.ToString());
+        }
     }
 }
