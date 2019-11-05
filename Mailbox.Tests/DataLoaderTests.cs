@@ -48,7 +48,6 @@ namespace Mailbox.Tests
                     sw.WriteLine(mailbox.ToString());
                 }
             }
-
             // Assert
             Assert.IsNull(sut.Load());
             sut.Dispose();

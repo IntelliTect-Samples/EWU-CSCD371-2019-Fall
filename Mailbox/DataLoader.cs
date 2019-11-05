@@ -15,14 +15,18 @@ namespace Mailbox
 
         public List<Mailbox>? Load()
         {
-            Source.Position = 0;
             List<Mailbox> mailboxes = new List<Mailbox>();
+            Source.Position = 0;
             try
             {
-                using var reader = new StreamReader(Source);
-                while (!(reader.EndOfStream))
+                using (var reader = new StreamReader(Source,leaveOpen:true))
                 {
-                    mailboxes.Add(JsonConvert.DeserializeObject<Mailbox>(reader.ReadLine()));
+                    string? line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        Mailbox mailbox = JsonConvert.DeserializeObject<Mailbox>(line);
+                        mailboxes.Add(mailbox);
+                    }
                 }
             }
             catch (JsonReaderException)
@@ -34,11 +38,12 @@ namespace Mailbox
 
         public void Save(List<Mailbox> mailboxes)
         {
-            Source.Position = 0;
-            using var writer = new StreamWriter(Source, leaveOpen:true);
-            foreach(Mailbox mailbox in mailboxes)
+            using (StreamWriter writer = new StreamWriter(Source, leaveOpen: true))
             {
-                writer.WriteLine(JsonConvert.SerializeObject(mailbox));
+                foreach (Mailbox mailbox in mailboxes)
+                {
+                    writer.WriteLine(JsonConvert.SerializeObject(mailbox));
+                }
             }
         }
 
