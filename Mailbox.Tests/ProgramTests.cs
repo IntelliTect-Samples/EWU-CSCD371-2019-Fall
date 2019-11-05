@@ -37,7 +37,7 @@ namespace Mailbox.Tests
             mailbox = Program.AddNewMailbox(mailboxes, "Josh", "Lini", Size.Small);
 
             //Assert
-            Assert.AreEqual(mailbox, null);
+            Assert.IsNull(mailbox);
         }
     }
 }
