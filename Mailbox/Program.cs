@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Mailbox
 {
-    class Program
+    public class Program
     {
         private const int Width = 50;
         private const int Height = 10;
@@ -87,9 +87,22 @@ namespace Mailbox
             }
         }
 
-        public static string GetOwnersDisplay(Mailboxes mailboxes)
+        public static string? GetOwnersDisplay(Mailboxes mailboxes)
         {
-            return "";//TODO
+            HashSet<Person> owners = new HashSet<Person>();
+
+            foreach(Mailbox mailbox in mailboxes)
+            {
+                owners.Add(mailbox.Owner);
+            }
+
+            string output = "";
+            foreach(Person owner in owners)
+            {
+                output += owner.ToString() + '\n';
+            }
+
+            return output;
         }
 
         public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
