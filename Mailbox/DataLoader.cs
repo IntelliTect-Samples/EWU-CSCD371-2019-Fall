@@ -37,7 +37,7 @@ namespace Mailbox
      */
     public class DataLoader : IDisposable
     {
-        private Stream? Source;
+        private Stream Source;
         
         public void Dispose()
         {
