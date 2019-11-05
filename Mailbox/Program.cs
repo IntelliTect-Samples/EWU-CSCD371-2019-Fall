@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
+using System.Linq;
+using static System.Linq.Enumerable;
 
 namespace Mailbox
 {
@@ -87,19 +88,31 @@ namespace Mailbox
             }
         }
 
-        public static string GetOwnersDisplay(Mailboxes mailboxes)
-        {
-            throw new NotImplementedException();
-        }
+        public static string GetOwnersDisplay(Mailboxes mailboxes) =>
+            string.Join(", ", new HashSet<Person>(mailboxes.Select(mb => mb.Owner))
+                                    .Select(p => $"{p.FirstName} {p.LastName}"));
 
-        public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
-        {
-            throw new NotImplementedException();
-        }
+        public static string? GetMailboxDetails(Mailboxes mailboxes, int x, int y) =>
+            mailboxes.FirstOrDefault(mb => mb.Location == (x, y))?.ToString();
 
-        public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Sizes size)
+        public static Mailbox? AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Sizes size)
         {
-            throw new NotImplementedException();
+            var person = new Person(firstName, lastName);
+            (int, int)? position = null;
+
+            for (int i = 0; position is null && i < mailboxes.Width; i++)
+                for (int j = 0; position is null && j < mailboxes.Height; j++)
+                {
+                    bool occupied = mailboxes.GetAdjacentPeople(i, j, out var people);
+
+                    if (!occupied && !people.Contains(person))
+                        position = (i, j);
+                }
+
+            if (position is (int x, int y))
+                return new Mailbox((x, y), person, size);
+
+            return null;
         }
     }
 }
