@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Mailbox.Tests
@@ -17,13 +18,14 @@ namespace Mailbox.Tests
             List<Mailbox> mailboxes = new List<Mailbox>()
             {
                 new Mailbox(Size.Small, 0, 0, new Person("Drew", "Bosco")),
-                new Mailbox(Size.Premium | Size.Small, 0, 0, new Person("Audrey", "Halfhill"))
+                new Mailbox(Size.Premium | Size.Small, 0, 1, new Person("Audrey", "Halfhill"))
             };
 
             dl.Save(mailboxes);
             List<Mailbox> retrieveBoxes = dl.Load();
 
             Assert.IsNotNull(retrieveBoxes);
+            Assert.IsTrue(mailboxes.Count == retrieveBoxes.Count);
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Mailbox
                         if (AddNewMailbox(boxes, firstName, lastName, size) is Mailbox mailbox)
                         {
                             boxes.Add(mailbox);
-                            Console.WriteLine("New mailbox added");
+                            Console.WriteLine("New mailbox added: " + mailbox);
                         }
                         else
                         {
@@ -89,17 +89,83 @@ namespace Mailbox
 
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
-            return "";
+            List<string> owners = new List<string>();
+            string s = "";
+            foreach(Mailbox m in mailboxes)
+            {
+                bool isValid = true;
+                if(owners.Count > 0)
+                {
+                    foreach(string name in owners) //check if name is distinct from previous names
+                    {
+                        if (name.ToLower().Equals(m.Owner.ToString().ToLower()))
+                        {
+                            isValid = false;
+                        }
+                    }
+                    if (isValid) //if it is distinct, then add it
+                    {
+                        owners.Add(m.Owner.ToString());
+                    }
+                }
+                else
+                {
+                    owners.Add(m.Owner.ToString());
+                }
+            }
+            if(owners.Count > 0)
+            {
+                foreach(string name in owners)
+                {
+                    s += (name + "\n");
+                }
+            }
+
+            return s;
         }
 
         public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
-            return "";
+            string s = null;
+            foreach(Mailbox m in mailboxes)
+            {
+                if(m.Location == (x, y))
+                {
+                    s = m.ToString();
+                }
+            }
+            return s;
         }
 
         public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
-            return new Mailbox(Size.Small, 0, 0, new Person());
+            int x=0, y = 0;
+            HashSet<Person> people;
+            Person newPerson = new Person(firstName, lastName);
+            Mailbox m = new Mailbox(size, 0, 0, newPerson);
+            for(y = 0; y < mailboxes.Height; y++)
+            {
+                for(x = 0; x < mailboxes.Width; x++)
+                {
+                    if (!mailboxes.GetAdjacentPeople(x, y, out people)) //If it's not occupied
+                    {
+                        bool isValid = true;
+                        foreach(Person p in people) //Look through each return person from GetAdjacentPeople
+                        {
+                            if (p.Equals(newPerson)) //Check if they are the same person
+                            {
+                                isValid = false;
+                            }
+                        }
+                        if (isValid) //If no adjacent person is the same owner as the new mailbox, return the mailbox
+                        {
+                            m.Location = (x, y);
+                            return m;
+                        }
+                    }
+                }
+            }
+            return null;
         }
     }
 }

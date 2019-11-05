@@ -30,7 +30,6 @@ namespace Mailbox
                     try
                     {
                         Mailbox m = JsonConvert.DeserializeObject<Mailbox>(line);
-                        Console.WriteLine(m);
                         mailboxes.Add(m);
                     }
                     catch (JsonReaderException e)
