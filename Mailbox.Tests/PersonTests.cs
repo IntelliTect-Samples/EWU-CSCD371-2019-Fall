@@ -26,7 +26,10 @@ namespace Mailbox.Tests
         public void PersonEqualsOperator_EqualsOperatorReflexive()
         {
             var sut = new Person("John", "Doe");
+            // Remove warning for comparing a variable to itself
+            #pragma warning disable CS1718
             Assert.IsTrue(sut == sut);
+            #pragma warning restore
         }
 
         [TestMethod]

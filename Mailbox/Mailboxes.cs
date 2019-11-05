@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Mailbox
@@ -11,14 +12,13 @@ namespace Mailbox
         public Mailboxes(IEnumerable<Mailbox> collection, int width, int height) 
             : base(collection)
         { 
-            if (width < 0)
-            {
+            if (width <= 0)
                 throw new ArgumentOutOfRangeException(nameof(width));
-            }
-            if (height < 0)
-            {
+            if (height <= 0)
                 throw new ArgumentOutOfRangeException(nameof(height));
-            }
+            if (collection.Count() > width*height)
+                throw new ArgumentOutOfRangeException(nameof(height));
+
             Width = width;
             Height = height;
         }
@@ -58,6 +58,31 @@ namespace Mailbox
             }
 
             return isOccupied;
+        }
+
+        public Mailbox? GetMailbox(int x, int y)
+        {
+            foreach (var mailbox in this)
+            {
+                if (mailbox.Location == (x, y))
+                    return mailbox;
+            }
+            return null;
+        }
+
+        public (int, int)? GetNextOpenLocation()
+        {
+            for (int i=0; i < Width; i++)
+            {
+                for (int j=0; j < Height; j++)
+                {
+                    if (GetMailbox(i, j) is null)
+                        return (i, j);
+                    else
+                        continue;
+                }
+            }
+            return null;
         }
     }
 }

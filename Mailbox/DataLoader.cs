@@ -37,7 +37,7 @@ namespace Mailbox
      */
     public class DataLoader : IDisposable
     {
-        private readonly Stream? Source;
+        private Stream? Source;
         
         public void Dispose()
         {
@@ -61,7 +61,7 @@ namespace Mailbox
 
             try
             {
-                using (var sr = new StreamReader(Source))
+                using (var sr = new StreamReader(Source, leaveOpen: true))
                 {
                     string? line;
                     while ((line = sr.ReadLine()) != null)
@@ -80,7 +80,7 @@ namespace Mailbox
 
         public void Save(List<Mailbox> mailboxes)
         {
-            using (var sw = new StreamWriter(Source))
+            using (var sw = new StreamWriter(Source, leaveOpen: true))
             {
                 foreach (var mailbox in mailboxes)
                 {
@@ -89,7 +89,6 @@ namespace Mailbox
             }
         }
 
-        ~DataLoader() =>
-            Dispose();
+        ~DataLoader() => Dispose();
     }
 }

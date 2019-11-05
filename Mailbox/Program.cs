@@ -21,7 +21,7 @@ namespace Mailbox
      */
     class Program
     {
-        private const int Width = 50;
+        private const int Width = 30;
         private const int Height = 10;
 
         static void Main(string[] args)
@@ -57,10 +57,7 @@ namespace Mailbox
                         Console.WriteLine("Enter the last name");
                         string lastName = Console.ReadLine();
                         Console.WriteLine("What size?");
-                        if (!Enum.TryParse(Console.ReadLine(), out Size size))
-                        {
-                            size = Size.Small;
-                        }
+                        Size size = SizeMixins.Parse(Console.ReadLine());
 
                         if (AddNewMailbox(boxes, firstName, lastName, size) is Mailbox mailbox)
                         {
@@ -68,9 +65,7 @@ namespace Mailbox
                             Console.WriteLine("New mailbox added");
                         }
                         else
-                        {
                             Console.WriteLine("No available location");
-                        }
 
                         break;
                     case 2:
@@ -88,7 +83,7 @@ namespace Mailbox
                             int.TryParse(parts[0], out int x) &&
                             int.TryParse(parts[1], out int y))
                         {
-                            Console.WriteLine(GetMailboxDetails(boxes, x, y));
+                            Console.Write(GetMailboxDetails(boxes, x, y));
                         }
                         else
                         {
@@ -104,22 +99,60 @@ namespace Mailbox
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
             string displayStr = "";
-            if (mailboxes.Count == 0) return displayStr;
             foreach (Mailbox mailbox in mailboxes)
             {
-                displayStr += mailbox.Owner.ToString();
+                displayStr += mailbox.ToString() + Environment.NewLine;
             }
             return displayStr;
         }
 
         public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
-            return null; 
+            Mailbox? box = mailboxes.GetMailbox(x, y);
+            if (box is null)
+                return "";
+            else
+                return box.ToString();
         }
 
-        public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
+        public static Mailbox? AddNewMailbox(
+                Mailboxes mailboxes,
+                string firstName,
+                string lastName,
+                Size size)
         {
-            return null;            
+            if (mailboxes is null)
+                throw new ArgumentNullException(nameof(mailboxes));
+            if (firstName is null)
+                throw new ArgumentNullException(nameof(firstName));
+            if (lastName is null)
+                throw new ArgumentNullException(nameof(lastName));
+
+            var owner = new Person(firstName, lastName);
+
+            var locations = new List<(int, int)>();
+            foreach (var box in mailboxes)
+                locations.Add(box.Location);
+
+            for (int i=0; i<10; i++)
+            {
+                for (int j=0; j<30; j++)
+                {
+                    if (!locations.Contains((i, j)))
+                    {
+                        if (!mailboxes.GetAdjacentPeople(i, j, out HashSet<Person> people))
+                        {
+                            if (!people.Contains(owner))
+                            {
+                                return new Mailbox(size, (i, j), owner);
+                            }
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine($"No available boxes for {owner.ToString()}");
+            return null;
         }
     }
 }

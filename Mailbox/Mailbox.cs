@@ -33,13 +33,16 @@ namespace Mailbox
             NullCheck("ToString", Location);
             NullCheck("ToString", Owner);
 
-            string s = "Size: ";
-            if ((MailboxSize & Size.SizeMask) == Size.Small)
-                s += "";
-            else if ((MailboxSize & Size.SizeMask) == Size.Medium)
-                s += "Medium ";
-            else if ((MailboxSize & Size.SizeMask) == Size.Large)
-                s += "Large ";
+            string s = $"Size: ";
+            s += MailboxSize switch
+            {
+                Size.Small => "Small ",
+                Size.Medium => "Medium ",
+                Size.Large => "Large ",
+                Size.SmallPremium => "Small Premium ",
+                Size.MediumPremium => "Medium Premium ",
+                Size.LargePremium => "Large Premium ",
+            };
 
             var (X, Y) = Location;
             s += $"Location: X: {X} Y: {Y} ";
