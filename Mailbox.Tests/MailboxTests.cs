@@ -16,7 +16,28 @@ namespace Mailbox.Tests
         {
             Person p = new Person() { FirstName = firstName, LastName = lastName };
             Mailbox mailbox = new Mailbox() { Owner = p, Size = mailBoxSize, Location = (x, y) };
-            Assert.AreEqual($"Owner: {firstName} {lastName} Location: ({x}, {y}) Size: {(mailBoxSize == Size.Default ? "" : mailBoxSize.ToString())}", mailbox.ToString());
+
+            string size;
+            switch (mailBoxSize)
+            {
+                case Size.Premium:
+                    size = "Premium";
+                    break;
+                case Size.SmallPremium:
+                    size = "Small Premium";
+                    break;
+                case Size.MediumPremium:
+                    size = "Medium Premium";
+                    break;
+                case Size.LargePremium:
+                    size = "Large Premium";
+                    break;
+                default:
+                    size = mailBoxSize.ToString();
+                    break;
+            }
+
+            Assert.AreEqual($"Owner: {firstName} {lastName} Location: ({x}, {y}) Size: {(mailBoxSize == Size.Default ? "" : size)}", mailbox.ToString());
         }
     }
 }
