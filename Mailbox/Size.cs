@@ -3,7 +3,7 @@
 namespace Mailbox
 {
     [Flags]
-    public enum Size
+    public enum Sizes
     {
         Undeclared = 0,
         Small = 1,
@@ -14,5 +14,14 @@ namespace Mailbox
         SmallPremium = Small | Premium,
         MediumPremium = Medium | Premium,
         LargePremium = Large | Premium
+
+    }
+    public static class SizeExtensions
+    {
+        public static bool IsValid(this Sizes sizes) =>
+            sizes == Sizes.Small ^ sizes == Sizes.Medium ^
+            sizes == Sizes.Large ^ sizes == Sizes.SmallPremium ^
+            sizes == Sizes.MediumPremium ^ sizes == Sizes.LargePremium ^
+            sizes == Sizes.Undeclared;
     }
 }

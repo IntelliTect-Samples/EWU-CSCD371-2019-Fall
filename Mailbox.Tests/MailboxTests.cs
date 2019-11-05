@@ -6,27 +6,51 @@ namespace Mailbox.Tests
     [TestClass]
     public class MailboxTests
     {
+        
         [TestMethod]
-        [DataRow(null, 2, 3, "first", "last")]
-        [DataRow(0, 2, 3, "first", "last")]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_NullParameters_ThowsException(Size size, int x, int y, string firstName, string lastName)
+        [ExpectedException(typeof(ArgumentException))]
+        public void Constructor_InvalidSize_ThowsException()
         {
-            Person TestPerson = new Person(firstName, lastName);
-            Mailbox mailbox = new Mailbox(size, (x,y), TestPerson);
+            _ = new MailBox((Sizes)3, (1, 2), new Person());
+        }
+        
+
+        [TestMethod]
+        public void Constructor_CorrectParameters_AreEqual()
+        {
+            var person = new Person();
+            MailBox mailbox = new MailBox(Sizes.Large, (1, 2), person);
+
+            Assert.AreEqual(Sizes.Large, mailbox.MailboxSize);
+            Assert.AreEqual((1,2), mailbox.Location);
+            Assert.AreEqual(person, mailbox.Owner);
         }
 
+        [TestMethod]
+        public void ToString_RegularSizes_CorrectlyDisplayed()
+        {
+            var person = new Person("fake", "name");
+            MailBox mailbox = new MailBox(Sizes.Large, (1, 2), person);
+
+            Assert.AreEqual(mailbox.ToString(), "Mailbox Owner: fake name, Location: x = 1, y = 2, Box size: Large");
+        }
 
         [TestMethod]
-        [DataRow("firstname", "lastname")]
-        [DataRow("first name", "Last-name")]
-        [DataRow("NotNull", "ALso not_null")]
-        public void Constructor_CorrectParameters_ReturnsPerson(string firstName, string lastName)
+        public void ToString_DefaultSize_CorrectlyDisplayed()
         {
-            Person person = new Person(firstName, lastName);
-            Assert.IsNotNull(person);
-            Assert.AreEqual(person._FirstName, firstName);
-            Assert.AreEqual(person._LastName, lastName);
+            var person = new Person("fake", "name");
+            MailBox mailbox = new MailBox(Sizes.Undeclared, (1, 2), person);
+
+            Assert.AreEqual(mailbox.ToString(), "Mailbox Owner: fake name, Location: x = 1, y = 2, Box size: ");
+        }
+
+        [TestMethod]
+        public void ToString_PremiumSize_CorrectlyDisplayed()
+        {
+            var person = new Person("fake", "name");
+            MailBox mailbox = new MailBox(Sizes.LargePremium, (1, 2), person);
+
+            Assert.AreEqual(mailbox.ToString(), "Mailbox Owner: fake name, Location: x = 1, y = 2, Box size: Premium Large");
         }
     }
 }

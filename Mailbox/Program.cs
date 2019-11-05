@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace Mailbox
 {
@@ -15,7 +16,7 @@ namespace Mailbox
             //Main does not need to be unit tested.
             using var dataLoader = new DataLoader(File.Open("Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
 
-            Mailboxes boxes = new Mailboxes(dataLoader.Load() ?? new List<Mailbox>(), Width, Height);
+            Mailboxes boxes = new Mailboxes(dataLoader.Load() ?? new List<MailBox>(), Width, Height);
 
             while (true)
             {
@@ -43,12 +44,12 @@ namespace Mailbox
                         Console.WriteLine("Enter the last name");
                         string lastName = Console.ReadLine();
                         Console.WriteLine("What size?");
-                        if (!Enum.TryParse(Console.ReadLine(), out Size size))
+                        if (!Enum.TryParse(Console.ReadLine(), out Sizes size))
                         {
-                            size = Size.Small;
+                            size = Sizes.Small;
                         }
 
-                        if (AddNewMailbox(boxes, firstName, lastName, size) is Mailbox mailbox)
+                        if (AddNewMailbox(boxes, firstName, lastName, size) is MailBox mailbox)
                         {
                             boxes.Add(mailbox);
                             Console.WriteLine("New mailbox added");
@@ -69,7 +70,7 @@ namespace Mailbox
                     case 4:
                         Console.WriteLine("Enter box number as x,y");
                         string boxNumber = Console.ReadLine();
-                        string[] parts = boxNumber?.Split(',');
+                        string[]? parts = boxNumber?.Split(',');
                         if (parts?.Length == 2 &&
                             int.TryParse(parts[0], out int x) &&
                             int.TryParse(parts[1], out int y))
@@ -89,18 +90,53 @@ namespace Mailbox
 
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
-            return "";
+            if (mailboxes is null) throw new ArgumentNullException(nameof(mailboxes));
+
+            string owners = "";
+            foreach (var item in mailboxes)
+            {
+                owners += item.Owner;
+            }
+            return owners;
         }
 
-        public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
+        public static string? GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
-            return "";
+            foreach (MailBox mailbox in mailboxes)
+            {
+                if (mailbox.Location == (x, y))
+                {
+                    return mailbox.ToString();
+                }
+            }
+
+            return null;
         }
 
-        public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
+        public static MailBox? AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Sizes size)
         {
             Person person = new Person(firstName, lastName);
-            return new Mailbox(size, (0,0), person);
+            for (int i = 0; i < mailboxes.Height; i++)
+            {
+                for (int j = 0; j < mailboxes.Width; j++)
+                {
+                    bool isOccupied = mailboxes.GetAdjacentPeople(i, j, out HashSet<Person> adjacentPeople);
+
+                    if (!adjacentPeople.Contains(person) && isOccupied == false)
+                    {
+                        return new MailBox(size, (i, j), person);
+                    }
+                }
+            }
+            return null;
         }
     }
 }
+/*
+ * The Main method has already been implemented for you. Unless you are doing the extra credit, you should not need to modify it. You will probably want to implement the other classes before implementing this class.
+- Implement GetOwnersDisplay. This method should return a **distinct** list of people who are owners on the mailboxes.
+- Implement GetMailboxDetails. This method should return a string that contains all of the details of the specified mailbox, or null if the mailbox cannot be found.
+- Implement AddNewMailbox. This method should find an unoccupied location in the Mailboxes and return a new `Mailbox` instance if a location is found.
+    A mailbox *may not be placed adjacent* to another mailbox that contains a person with the same name. Adjacent is defined as orthogonal.
+    There is a method on `Mailboxes` that should be helpful here. It should **not** modify the passed in `mailboxes`.
+*/

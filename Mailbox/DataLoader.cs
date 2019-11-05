@@ -30,52 +30,28 @@ namespace Mailbox
             _source = source ?? throw new ArgumentNullException(nameof(source));
         }
 
-
-        public void Dispose()
+        public List<MailBox>? Load()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        public List<Mailbox>? Load()
-        {
-            List<Mailbox> mailboxes = new List<Mailbox>();
             _source.Position = 0;
-
-            using (StreamReader sr = new StreamReader(_source, leaveOpen: true))
+            using var reader = new StreamReader(_source, leaveOpen: true);
+            try
             {
-                try
-                {
-                    string? jsonLine;
-                    while ((jsonLine = sr.ReadLine()) != null)
-                    {
-                        Mailbox mailbox = JsonConvert.DeserializeObject<Mailbox>(jsonLine);
-                        mailboxes.Add(mailbox);
-                    }
-                    sr.Dispose();
-                }
-                catch (JsonReaderException)
-                {
-                    return null;
-                }
+                return JsonConvert.DeserializeObject<List<MailBox>>(reader.ReadToEnd());
             }
-            return mailboxes;
-        }
-
-        public void Save(List<Mailbox> mailboxes)
-        {
-            _source.Position = 0;
-
-            string json = JsonConvert.SerializeObject(mailboxes);
-
-            using (StreamWriter sw = new StreamWriter(_source, leaveOpen: true))
+            catch (JsonReaderException)
             {
-                sw.WriteLine(json);
-                sw.Dispose();
+                return null;
             }
         }
 
-        private IDisposable? DisposableMember { get; }
+        public void Save(List<MailBox> mailboxes)
+        {
+            _source.Position = 0;
+
+            using var writer = new StreamWriter(_source, leaveOpen: true);
+            writer.WriteLine(JsonConvert.SerializeObject(mailboxes));
+            writer.Flush();
+        }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -86,12 +62,22 @@ namespace Mailbox
             {
                 if (disposing)
                 {
-                    DisposableMember?.Dispose();
+                    _source.Dispose();
                 }
                 disposedValue = true;
             }
         }
 
+        ~DataLoader()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
         #endregion
 
     }

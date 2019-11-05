@@ -16,7 +16,6 @@ namespace Mailbox.Tests
             Person _ = new Person(firstName, lastName);
         }
 
-
         [TestMethod]
         [DataRow("firstname", "lastname")]
         [DataRow("first name", "Last-name")]
@@ -33,11 +32,24 @@ namespace Mailbox.Tests
         [DataRow("firstname", "lastname")]
         [DataRow("first name", "Last-name")]
         [DataRow("NotNull", "ALso not_null")]
-        public void EqualsOverride_ReturnsTrue(string firstName, string lastName)
+        public void EqualsOverride_ReturnsTrue_NotEqualsOverride_ReturnsFalse(string firstName, string lastName)
         {
             Person person1 = new Person(firstName, lastName);
             Person person2 = new Person(firstName, lastName);
-            Assert.IsTrue(person1==person2);
+            Assert.IsTrue(person1 == person2);
+            Assert.IsFalse(person1 != person2);
+        }
+
+        [TestMethod]
+        [DataRow("test", "lastname")]
+        [DataRow("first name", "name")]
+        [DataRow("NotNull", "ALso not_null")]
+        public void NotEqualsOverride_ReturnsTrue_EqualsOverride_ReturnsFalse(string firstName, string lastName)
+        {
+            Person person1 = new Person(firstName, lastName);
+            Person person2 = new Person("test", "name");
+            Assert.IsTrue(person1 != person2);
+            Assert.IsFalse(person1 == person2);
         }
 
         [TestMethod]
@@ -47,5 +59,6 @@ namespace Mailbox.Tests
             Person person1 = new Person(firstName, lastName);
             Assert.AreEqual(person1.ToString(), "firstname lastname");
         }
+        
     }
 }
