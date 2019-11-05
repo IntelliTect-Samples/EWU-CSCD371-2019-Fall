@@ -11,7 +11,7 @@ namespace Mailbox
 
         public DataLoader(Stream source)
         {
-            Source = source;
+            Source = source ?? throw new ArgumentNullException($"Stream source cannot be null: {nameof(source)}");
         }
 
         public void Dispose()
@@ -23,16 +23,16 @@ namespace Mailbox
         public List<Mailbox> Load()
         {
             var mailboxes = new List<Mailbox>();
-            
-            using (var sr = new StreamReader(Source)) 
+
+            using (var sr = new StreamReader(Source))
             {
                 Source.Position = 0;
-                do 
+                do
                 {
                     string line = sr.ReadLine();
 
                     mailboxes.Add(JsonConvert.DeserializeObject<Mailbox>(line));
-                } 
+                }
                 while (sr.EndOfStream is false);
             }
 
@@ -43,7 +43,7 @@ namespace Mailbox
         {
             using (var sw = new StreamWriter(Source))
             {
-                foreach (Mailbox mailbox in mailboxes) 
+                foreach (Mailbox mailbox in mailboxes)
                 {
                     sw.WriteLine(JsonConvert.SerializeObject(mailbox));
                 }

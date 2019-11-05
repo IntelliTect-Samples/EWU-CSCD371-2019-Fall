@@ -6,10 +6,10 @@ namespace Mailbox
     public enum Size 
     {
         Default,
-        Small,
-        Medium2,
-        Large,
-        Premium
+        Small = 1,
+        Medium = 2,
+        Large = 4,
+        Premium = 8
     }
 
 }

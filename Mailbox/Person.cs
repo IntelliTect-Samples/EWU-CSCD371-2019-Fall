@@ -5,15 +5,21 @@ namespace Mailbox
 {
     public struct Person : IEquatable<Person>
     {
-        string firstName;
-        string lastName;
+        public string FirstName { get; }
+        public string LastName { get; }
+
+        public Person(string firstName, string lastName) 
+        {
+            FirstName = firstName ?? throw new ArgumentNullException($"First name cannot be null: {nameof(firstName)}");
+            LastName = lastName ?? throw new ArgumentNullException($"Last name cannot be null: {nameof(lastName)}");
+        }
         public bool Equals([AllowNull] Person other)
         {
             if (ReferenceEquals(other, null)) return false;
             if (ReferenceEquals(this, other)) return true;
 
-            return firstName == other.firstName
-                && lastName == other.lastName;
+            return FirstName == other.FirstName
+                && LastName == other.LastName;
         }
 
         public override bool Equals(Object obj) 
@@ -22,16 +28,16 @@ namespace Mailbox
         }
 
         public static bool operator ==(Person person, Person other) => person.Equals(other);
-        public static bool operator !=(Person person, Person other) => person.Equals(other);
+        public static bool operator !=(Person person, Person other) => !person.Equals(other);
 
         public override string ToString()
         {
-            return $"{firstName} {lastName}";
+            return $"{FirstName} {LastName}";
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(firstName, lastName);
+            return HashCode.Combine(FirstName, LastName);
         }
     }
 }

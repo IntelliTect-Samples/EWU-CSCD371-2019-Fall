@@ -112,6 +112,19 @@ namespace Mailbox
 
         public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
+            Person newOwner = new Person(firstName, lastName);
+
+            for (var h = 0; h < Height; h++) 
+            {
+                for (var w = 0; w < Width; w++) 
+                {
+                    bool hasAdjacentPeople = mailboxes.GetAdjacentPeople(h, w, out HashSet<Person> adjacentPeople);
+
+                    if (!hasAdjacentPeople && !adjacentPeople.Contains(newOwner))
+                        return new Mailbox((h, w), newOwner, size);
+                }
+            }
+
             return null;
         }
     }
