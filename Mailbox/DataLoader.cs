@@ -16,7 +16,11 @@ namespace Mailbox
 
         public List<Mailbox> Load()
         {
-            return new List<Mailbox>();
+            var mailboxList = new List<Mailbox>();
+
+            mailboxList.Add(new Mailbox());
+
+            return mailboxList;
         }
 
         public void Save(List<Mailbox> mailboxes)
@@ -26,9 +30,14 @@ namespace Mailbox
 
         protected virtual void Dispose(bool dispose)
         {
-            if (!_isDisposed && dispose)
+            if (!_isDisposed)
             {
-                Stream?.Dispose();
+                if(dispose)
+                {
+                    Stream?.Dispose();
+                }
+
+                _isDisposed = true;
             }
         }
         ~DataLoader()
