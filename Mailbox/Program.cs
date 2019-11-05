@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Mailbox
 {
-    class Program
+    public class Program
     {
         private const int Width = 50;
         private const int Height = 10;
@@ -89,17 +89,61 @@ namespace Mailbox
 
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
-            
+            if (mailboxes == null)
+                throw new ArgumentNullException("Mailboxes is null");
+
+            string list = "";
+            foreach(Mailbox mailbox in mailboxes)
+            {
+                list += mailbox.Owner.ToString()+"\n";
+            }
+            return list;
         }
 
         public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
-            
+            if (mailboxes == null)
+                throw new ArgumentNullException("Mailboxes is null");
+
+            foreach (Mailbox mailbox in mailboxes)
+            {
+                if (mailbox.Location == (x, y))
+                {
+                    return mailbox.ToString();
+                }
+            }
+            return null;
         }
 
         public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
-            
+            if (mailboxes == null)
+                throw new ArgumentNullException("Mailboxes is null");
+            if (firstName == null)
+                throw new ArgumentNullException("firstName is null");
+            if (lastName == null)
+                throw new ArgumentNullException("LastName is null");
+
+            Mailbox mailbox = new Mailbox(size, (0, 0), new Person(firstName, lastName));
+            if (mailboxes.Count == 0)
+                return mailbox;
+
+            for(int i = 0; i < mailboxes.Width; i++)
+            {
+                for(int q=0; q < mailboxes.Height; q++)
+                {
+                    bool occupied = mailboxes.GetAdjacentPeople(i,q, out HashSet<Person> adjacentPeople);
+                    foreach(Person person in adjacentPeople)
+                    {
+                        if(person.FirstName!=firstName && person.LastName!=lastName && occupied)
+                        {
+                            mailbox.Location = (i, q);
+                            return mailbox;
+                        }
+                    }
+                }
+            }
+            return null;
         }
     }
 }
