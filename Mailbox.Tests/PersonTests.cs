@@ -15,7 +15,7 @@ namespace Mailbox.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_GivenNullStrings_ThrowsException(string? firstName, string? lastName)
         {
-            new Person(firstName, lastName);
+            var person = new Person(firstName, lastName);
         }
 
         [DataTestMethod]
@@ -30,7 +30,7 @@ namespace Mailbox.Tests
             Assert.AreEqual(firstName, person.FirstName);
             Assert.AreEqual(lastName, person.LastName);
         }
-        
+
     }
 
 }

@@ -16,7 +16,6 @@ namespace Mailbox
         SmallPremium  = Small | Premium,
         MediumPremium = Medium | Premium,
         LargePremium  = Large | Premium
-
     }
 
 }

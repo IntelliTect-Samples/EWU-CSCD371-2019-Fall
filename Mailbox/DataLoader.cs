@@ -6,9 +6,10 @@ namespace Mailbox
 {
     public class DataLoader : IDisposable
     {
-        public DataLoader(Stream source)
-        {
-        }
+        
+        public Stream Stream { get; }
+
+        public DataLoader(Stream source) => Stream = source ?? throw new ArgumentNullException(nameof(source));
 
         public List<Mailbox> Load()
         {
