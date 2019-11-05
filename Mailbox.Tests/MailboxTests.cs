@@ -10,8 +10,8 @@ namespace Mailbox.Tests
 
         [DataTestMethod]
         [DataRow("John", "Price", Size.Default, 0, 0, "")]
-        [DataRow("Simon", "Riley", Size.Medium, 1, 2, "| Medium")]
-        [DataRow("Kyle", "Garrick", Size.MediumPremium, 3, 4, "| Medium Premium")]
+        [DataRow("Simon", "Riley", Size.Medium, 1, 2, " | Medium")]
+        [DataRow("Kyle", "Garrick", Size.MediumPremium, 3, 4, " | Medium Premium")]
         public void ToString_PrintsCorrectly(string firstName,
                                              string lastName,
                                              Size   size,
@@ -22,7 +22,7 @@ namespace Mailbox.Tests
             var owner = new Person(firstName, lastName);
             var box   = new Mailbox(owner, size, (x, y));
 
-            Assert.AreEqual($"{(x, y)} | {owner} {friendlySize}", box.ToString());
+            Assert.AreEqual($"{(x, y)} | {owner}{friendlySize}", box.ToString());
         }
 
         /*
@@ -44,7 +44,7 @@ namespace Mailbox.Tests
                 person = new Person(firstName, "LastName");
             } finally
             {
-                var box = new Mailbox(person, size, (0, 0));
+                var unused = new Mailbox(person, size, (0, 0));
             }
         }
 

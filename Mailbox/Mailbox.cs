@@ -20,7 +20,7 @@ namespace Mailbox
 
         public override string ToString()
         {
-            return $"{Location} | {Owner} {((int) Size > 4 ? "| " + Size.ToString().Substring(0, Size.ToString().Length - 7) + " Premium" : Size != Size.Default ? "| " + Size : "")}";
+            return $"{Location} | {Owner}{((int) Size > 4 ? " | " + Size.ToString().Substring(0, Size.ToString().Length - 7) + " Premium" : Size != Size.Default ? " | " + Size : "")}";
         }
 
     }

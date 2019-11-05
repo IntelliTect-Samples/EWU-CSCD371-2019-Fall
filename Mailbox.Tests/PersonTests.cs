@@ -15,7 +15,7 @@ namespace Mailbox.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_GivenNullStrings_ThrowsException(string? firstName, string? lastName)
         {
-            var person = new Person(firstName, lastName);
+            var unused = new Person(firstName, lastName);
         }
 
         [DataTestMethod]
@@ -31,6 +31,39 @@ namespace Mailbox.Tests
             Assert.AreEqual(lastName, person.LastName);
         }
 
+        [TestMethod]
+        public void Equals_ReturnsCorrectly()
+        {
+            var a = new Person("A", "B");
+            var b = new Person("A", "B");
+            var c = new Person("B", "A");
+            
+            Assert.IsTrue(a.Equals(b));
+            Assert.IsFalse(a.Equals(c));
+        }
+        
+        [TestMethod]
+        public void EqualsOperator_ReturnsCorrectly()
+        {
+            var a = new Person("A", "B");
+            var b = new Person("A", "B");
+            var c = new Person("B", "A");
+            
+            Assert.IsTrue(a == b);
+            Assert.IsFalse(a == c);
+        }
+        
+        [TestMethod]
+        public void DoesNotEqualsOperator_ReturnsCorrectly()
+        {
+            var a = new Person("A", "B");
+            var b = new Person("A", "B");
+            var c = new Person("B", "A");
+            
+            Assert.IsTrue(a != c);
+            Assert.IsFalse(a != b);
+        }
+        
     }
 
 }
