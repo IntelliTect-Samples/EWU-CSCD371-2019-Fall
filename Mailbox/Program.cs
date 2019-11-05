@@ -105,9 +105,17 @@ namespace Mailbox
             return output;
         }
 
-        public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
+        public static string? GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
-            return "";//TODO
+            foreach(Mailbox mailbox in mailboxes)
+            {
+                if(mailbox.Location == (x, y))
+                {
+                    return mailbox.ToString();
+                }
+            }
+
+            return null;
         }
 
         public static Mailbox? AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
