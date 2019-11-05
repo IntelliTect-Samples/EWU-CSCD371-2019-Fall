@@ -10,6 +10,7 @@ namespace Mailbox
         Stream stream;
         public DataLoader(System.IO.Stream source)
         {
+            if (source is null) throw new ArgumentNullException();
             stream = source;
         }
 

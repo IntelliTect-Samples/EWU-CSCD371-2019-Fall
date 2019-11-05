@@ -10,6 +10,7 @@ namespace Mailbox
 
         public Person(string f, string l)
         {
+            if (f is null || l is null) throw new ArgumentNullException();
             fname = f; lname = l;
         }
 
