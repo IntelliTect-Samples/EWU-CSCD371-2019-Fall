@@ -112,9 +112,12 @@ namespace Mailbox
 
         public static Mailbox? AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
-            for (int i = 0; i < mailboxes.Width; i++)
+            int width = mailboxes.Width;
+            int height = mailboxes.Height;
+
+            for (int i = 0; i < width; i++)
             {
-                for (int a = 0; a < mailboxes.Height; i++)
+                for (int a = 0; a < height; i++)
                 {
                     if (!mailboxes.GetAdjacentPeople(i, a, out HashSet<Person> personSet))
                     {
@@ -126,6 +129,11 @@ namespace Mailbox
                             {
                                 valid = false;
                             }
+                        }
+
+                        if (i > width-1 || a > height-1) //the program is auto-stepping-over my "for" tests
+                        {
+                            return null;
                         }
 
                         if (valid)
