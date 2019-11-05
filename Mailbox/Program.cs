@@ -10,7 +10,10 @@ namespace Mailbox
         private const int Width = 2;
         private const int Height = 1;
 
+#pragma warning disable IDE0060 // Remove unused parameter
+
         private static void Main(string[] args)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             //Main does not need to be unit tested.
             using var dataLoader = new DataLoader(File.Open("Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
@@ -43,9 +46,9 @@ namespace Mailbox
                         Console.WriteLine("Enter the last name");
                         string lastName = Console.ReadLine();
                         Console.WriteLine("What size?");
-                        if (!Enum.TryParse(Console.ReadLine(), out Size size))
+                        if (!Enum.TryParse(Console.ReadLine(), out Sizes size))
                         {
-                            size = Size.Small;
+                            size = Sizes.Small;
                         }
 
                         if (AddNewMailbox(boxes, firstName, lastName, size) is Mailbox mailbox)
@@ -72,7 +75,9 @@ namespace Mailbox
                     case 4:
                         Console.WriteLine("Enter box number as x,y");
                         string boxNumber = Console.ReadLine();
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                         string[] parts = boxNumber?.Split(',');
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                         if (parts?.Length == 2 &&
                             int.TryParse(parts[0], out int x) &&
                             int.TryParse(parts[1], out int y))
@@ -94,18 +99,18 @@ namespace Mailbox
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            foreach(Mailbox mailbox in mailboxes)
+            foreach (Mailbox mailbox in mailboxes)
             {
                 stringBuilder.Append($"{mailbox.Owner.ToString()}, ");
             }
-            if(stringBuilder.Length > 2)
+            if (stringBuilder.Length > 2)
                 stringBuilder.Remove(stringBuilder.Length - 2, 2);
             return stringBuilder.ToString();
         }
 
         public static string? GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
-            foreach(Mailbox mailbox in mailboxes)
+            foreach (Mailbox mailbox in mailboxes)
             {
                 if (mailbox.Location.x == x && mailbox.Location.y == y)
                     return mailbox.ToString();
@@ -113,15 +118,15 @@ namespace Mailbox
             return null;
         }
 
-        public static Mailbox? AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
+        public static Mailbox? AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Sizes size)
         {
             Person personToAdd = new Person(firstName, lastName);
-            for(int x = 0; x < Width; x++)
+            for (int x = 0; x < Width; x++)
             {
-                for(int y = 0; y < Height; y++)
+                for (int y = 0; y < Height; y++)
                 {
                     bool isOccupied = mailboxes.GetAdjacentPeople(x, y, out HashSet<Person> adjecentPeople);
-                    if(!isOccupied && !adjecentPeople.Contains(personToAdd))
+                    if (!isOccupied && !adjecentPeople.Contains(personToAdd))
                     {
                         return new Mailbox(size, (x, y), personToAdd);
                     }

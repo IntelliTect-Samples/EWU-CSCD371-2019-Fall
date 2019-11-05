@@ -23,7 +23,7 @@ namespace Mailbox
             while (!(streamReader.EndOfStream))
             {
                 string mailboxString = streamReader.ReadLine() ?? "";
-                Mailbox mailbox = new Mailbox(Size.Default, (0, 0), new Person("", ""));
+                Mailbox mailbox = new Mailbox(Sizes.Default, (0, 0), new Person("", ""));
                 try
                 {
                     mailbox = JsonConvert.DeserializeObject<Mailbox>(mailboxString);

@@ -12,7 +12,7 @@ namespace Mailbox.Tests
         public void Load_OneMailbox_ReturnsCorrectValue()
         {
             //Arrange
-            Mailbox mailbox = new Mailbox(Size.Small, (0, 0), new Person("Homer", "Simpson"));
+            Mailbox mailbox = new Mailbox(Sizes.Small, (0, 0), new Person("Homer", "Simpson"));
             MemoryStream memoryStream = new MemoryStream();
             using (StreamWriter streamWriter = new StreamWriter(memoryStream, new UTF8Encoding(), 1024, true))
             {
@@ -32,8 +32,8 @@ namespace Mailbox.Tests
         public void Load_MultipleMailboxes_ReturnsCorrectValue()
         {
             //Arrange
-            Mailbox homersMailbox = new Mailbox(Size.Small, (0, 0), new Person("Homer", "Simpson"));
-            Mailbox nedsMailbox = new Mailbox(Size.Medium, (1, 1), new Person("Ned", "Flanders"));
+            Mailbox homersMailbox = new Mailbox(Sizes.Small, (0, 0), new Person("Homer", "Simpson"));
+            Mailbox nedsMailbox = new Mailbox(Sizes.Medium, (1, 1), new Person("Ned", "Flanders"));
             MemoryStream memoryStream = new MemoryStream();
             using (StreamWriter streamWriter = new StreamWriter(memoryStream, new UTF8Encoding(), 1024, true))
             {
@@ -53,7 +53,7 @@ namespace Mailbox.Tests
         public void Load_PremiumMailbox_ReturnsCorrectValue()
         {
             //Arrange
-            Mailbox premiumMailbox = new Mailbox(Size.LargePremium, (2, 3), new Person("Homer", "Simpson"));
+            Mailbox premiumMailbox = new Mailbox(Sizes.LargePremium, (2, 3), new Person("Homer", "Simpson"));
             MemoryStream memoryStream = new MemoryStream();
             using (StreamWriter streamWriter = new StreamWriter(memoryStream, new UTF8Encoding(), 1024, true))
             {
@@ -73,9 +73,11 @@ namespace Mailbox.Tests
             //Arrange
             MemoryStream memoryStream = new MemoryStream();
             using DataLoader dataLoader = new DataLoader(memoryStream);
-            Mailbox homersMailbox = new Mailbox(Size.Small, (0, 0), new Person("Homer", "Simpson"));
-            List<Mailbox> mailboxes = new List<Mailbox>();
-            mailboxes.Add(homersMailbox);
+            Mailbox homersMailbox = new Mailbox(Sizes.Small, (0, 0), new Person("Homer", "Simpson"));
+            List<Mailbox> mailboxes = new List<Mailbox>
+            {
+                homersMailbox
+            };
             //Act
             dataLoader.Save(mailboxes);
             string readResult = "";
@@ -95,11 +97,13 @@ namespace Mailbox.Tests
             //Arrange
             MemoryStream memoryStream = new MemoryStream();
             using DataLoader dataLoader = new DataLoader(memoryStream);
-            Mailbox homersMailbox = new Mailbox(Size.Small, (0, 0), new Person("Homer", "Simpson"));
-            Mailbox nedsMailbox = new Mailbox(Size.MediumPremium, (1, 2), new Person("Ned", "Flanders"));
-            List<Mailbox> mailboxes = new List<Mailbox>();
-            mailboxes.Add(homersMailbox);
-            mailboxes.Add(nedsMailbox);
+            Mailbox homersMailbox = new Mailbox(Sizes.Small, (0, 0), new Person("Homer", "Simpson"));
+            Mailbox nedsMailbox = new Mailbox(Sizes.MediumPremium, (1, 2), new Person("Ned", "Flanders"));
+            List<Mailbox> mailboxes = new List<Mailbox>
+            {
+                homersMailbox,
+                nedsMailbox
+            };
             //Act
             dataLoader.Save(mailboxes);
             string homerReadResult = "";
