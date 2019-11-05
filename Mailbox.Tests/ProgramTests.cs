@@ -39,5 +39,50 @@ namespace Mailbox.Tests
             //Assert
             Assert.IsNull(mailbox);
         }
+
+        [TestMethod]
+        public void GetMailboxDetails_GivenValidLocation_ReturnsToString()
+        {
+            //Arrange
+            Mailboxes mailboxes = new Mailboxes(new List<Mailbox>(), 4, 4);
+            mailboxes.Add(new Mailbox(Size.Small, (0, 0), new Person("Josh", "Lini")));
+            string? output;
+
+            //Act
+            output = Program.GetMailboxDetails(mailboxes, 0, 0);
+
+            //Assert
+            Assert.AreEqual(output, "Mailbox: Location: (0,0) - Owner: Lini, Josh - Size: Small");
+        }
+
+        [TestMethod]
+        public void GetMailboxDetails_GivenNonValidLocation_ReturnsNull()
+        {
+            //Arrange
+            Mailboxes mailboxes = new Mailboxes(new List<Mailbox>(), 4, 4);
+            mailboxes.Add(new Mailbox(Size.Small, (0, 0), new Person("Josh", "Lini")));
+            string? output;
+
+            //Act
+            output = Program.GetMailboxDetails(mailboxes, 25, 0);
+
+            //Assert
+            Assert.IsNull(output);
+        }
+
+        [TestMethod]
+        public void GetMailboxDetails_GivenEmptyLocation_ReturnsNull()
+        {
+            //Arrange
+            Mailboxes mailboxes = new Mailboxes(new List<Mailbox>(), 4, 4);
+            mailboxes.Add(new Mailbox(Size.Small, (0, 0), new Person("Josh", "Lini")));
+            string? output;
+
+            //Act
+            output = Program.GetMailboxDetails(mailboxes, 1, 0);
+
+            //Assert
+            Assert.IsNull(output);
+        }
     }
 }
