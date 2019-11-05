@@ -7,11 +7,11 @@ namespace Mailbox
 {
     public class DataLoader : IDisposable
     {
-        private Stream Source { get; set; }
+        private readonly Stream Source;
         private bool StreamDisposed = false;
         public DataLoader(Stream source)
         {
-            if(!source.Equals(null))
+            if(!(source is null))
             {
                 Source = source;
             }
@@ -24,6 +24,7 @@ namespace Mailbox
         public List<Mailbox> Load()
         {
             Source.Position = 0;
+
             List<Mailbox> mailboxes = new List<Mailbox>();
 
             try
@@ -50,19 +51,12 @@ namespace Mailbox
         {
             Source.Position = 0;
 
-            try
+            using (StreamWriter sw = new StreamWriter(Source))
             {
-                using (StreamWriter sw = new StreamWriter(Source))
+                foreach(Mailbox mailbox in mailboxes)
                 {
-                    foreach(Mailbox mailbox in mailboxes)
-                    {
-                        sw.WriteLine(JsonConvert.SerializeObject(mailbox));
-                    }
+                    sw.WriteLine(JsonConvert.SerializeObject(mailbox));
                 }
-            }
-            catch (JsonReaderException)
-            {
-                return;
             }
         }
 

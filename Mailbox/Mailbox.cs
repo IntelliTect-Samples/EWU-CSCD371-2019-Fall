@@ -10,9 +10,9 @@ namespace Mailbox
 
         public Mailbox(Size size, ValueTuple<int, int> location, Person owner)
         {
-            if(owner.Equals(null) || size.Equals(null))
+            if(owner is null)
             {
-                throw new ArgumentNullException("The owner and size cannot be null");
+                throw new ArgumentNullException("The owner cannot be null");
             }
 
             Size = size;
@@ -24,17 +24,17 @@ namespace Mailbox
         {
             string mySize; 
 
-            if(Size.Equals(0))
+            if(Size == Size.Undeclared || Size == Size.Premium)
             {
                 mySize = "";
             }
             else
             {
-                mySize = Size.ToString();
+                mySize = Size.ToString() + " ";
             }
           
 
-            return $"{Owner.FirstName} {Owner.LastName}'s {mySize} Mailbox is located at {Location.Item1} and {Location.Item2}";
+            return $"{Owner.ToString()}'s {mySize}Mailbox is located at {Location.Item1} and {Location.Item2}";
         }
     }
 }

@@ -93,7 +93,7 @@ namespace Mailbox
 
             foreach(Mailbox mailbox in mailboxes)
             {
-                listNames += mailbox.Owner;
+                listNames += mailbox.Owner + ", ";
             }
 
             return listNames;
