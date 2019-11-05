@@ -36,10 +36,10 @@ namespace Mailbox
             string s = $"Size: ";
             s += MailboxSize switch
             {
-                Size.Small => "Small ",
+                Size.Small => "",
                 Size.Medium => "Medium ",
                 Size.Large => "Large ",
-                Size.SmallPremium => "Small Premium ",
+                Size.SmallPremium => "Premium ",
                 Size.MediumPremium => "Medium Premium ",
                 Size.LargePremium => "Large Premium ",
             };

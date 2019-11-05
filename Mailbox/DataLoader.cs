@@ -42,7 +42,9 @@ namespace Mailbox
         public void Dispose()
         {
             if (!(Source is null))
+            {
                 Source.Dispose();
+            }
         }
 
         public DataLoader(Stream source)
@@ -59,18 +61,17 @@ namespace Mailbox
             List<Mailbox> mailboxes = new List<Mailbox>();
             Source.Position = 0;
 
+            using var sr = new StreamReader(Source);
+
             try
             {
-                using (var sr = new StreamReader(Source, leaveOpen: true))
+                string? line;
+                while ((line = sr.ReadLine()) != null)
                 {
-                    string? line;
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                        Mailbox mailbox = JsonConvert.DeserializeObject<Mailbox>(line);
-                        mailboxes.Add(mailbox);
-                    }
-                    return mailboxes;
+                    Mailbox mailbox = JsonConvert.DeserializeObject<Mailbox>(line);
+                    mailboxes.Add(mailbox);
                 }
+                return mailboxes;
             }
             catch (JsonReaderException)
             {
@@ -80,12 +81,11 @@ namespace Mailbox
 
         public void Save(List<Mailbox> mailboxes)
         {
-            using (var sw = new StreamWriter(Source, leaveOpen: true))
+            using var sw = new StreamWriter(Source);
+
+            foreach (var mailbox in mailboxes)
             {
-                foreach (var mailbox in mailboxes)
-                {
-                    sw.WriteLine(JsonConvert.SerializeObject(mailbox));
-                }
+                sw.WriteLine(JsonConvert.SerializeObject(mailbox));
             }
         }
 
