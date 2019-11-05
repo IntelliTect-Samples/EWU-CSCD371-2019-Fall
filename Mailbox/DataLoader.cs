@@ -50,7 +50,7 @@ namespace Mailbox
         public DataLoader(Stream source)
         {
             if (source is null)
-                throw new ArgumentNullException($"nameof(source) cannot be null.");
+                throw new ArgumentNullException(nameof(source));
             Source = source;
         }
 
