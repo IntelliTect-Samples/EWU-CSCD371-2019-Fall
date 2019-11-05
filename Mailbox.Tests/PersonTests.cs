@@ -21,5 +21,33 @@ namespace Mailbox.Tests
             // Assert
             Assert.IsTrue(testPerson1.Equals(testPerson2));
         }
+
+        [TestMethod]
+        public void Person_ToString_ReturnsCorrectlyFormattedString()
+        {
+            // Arrange
+            Person testPerson1 = new Person("First", "Last");
+
+            // Act
+
+
+            // Assert
+            Assert.AreEqual(testPerson1.ToString(), "First Last");
+        }
+
+        [DataTestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        [DataRow(null, "last")]
+        [DataRow("first", null)]
+        public void Person_Constructor_ThrowsException(string firstName, string lastName)
+        {
+            // Arrange
+            Person sut = new Person(firstName, lastName);
+
+            // Act
+
+
+            // Assert
+        }
     }
 }

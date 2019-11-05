@@ -13,7 +13,7 @@ namespace Mailbox
             Source = source;
         }
 
-        public List<Mailbox> Load()
+        public List<Mailbox>? Load()
         {
             Source.Position = 0;
             List<Mailbox> mailboxes = new List<Mailbox>();

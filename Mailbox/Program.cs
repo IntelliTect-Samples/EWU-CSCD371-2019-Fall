@@ -69,7 +69,9 @@ namespace Mailbox
                     case 4:
                         Console.WriteLine("Enter box number as x,y");
                         string boxNumber = Console.ReadLine();
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                         string[] parts = boxNumber?.Split(',');
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                         if (parts?.Length == 2 &&
                             int.TryParse(parts[0], out int x) &&
                             int.TryParse(parts[1], out int y))
@@ -97,7 +99,7 @@ namespace Mailbox
             return owners;
         }
 
-        public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
+        public static string? GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
             foreach(Mailbox mailbox in mailboxes)
             {
@@ -109,7 +111,7 @@ namespace Mailbox
             return null;
         }
 
-        public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
+        public static Mailbox? AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
             Person owner = new Person(firstName, lastName);
             foreach(Mailbox mailbox in mailboxes)
