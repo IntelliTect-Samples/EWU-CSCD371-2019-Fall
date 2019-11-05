@@ -1,12 +1,13 @@
-﻿namespace Mailbox
+﻿
+namespace Mailbox
 {
     public class Mailbox
     {
-        public Sizes Size { get; }
+        public Size Size { get; }
         public (int X, int Y) Location { get; }
         public Person Owner { get; }
 
-        public Mailbox(Sizes size, (int X, int Y) location, Person owner)
+        public Mailbox(Size size, (int X, int Y) location, Person owner)
         {
             //None of the parameters could be null
             Size = size;
@@ -16,7 +17,7 @@
 
         public override string ToString()
         {
-            return base.ToString();//TODO
+            return $"Mailbox Location: X: {Location.X} Y: {Location.Y}, {Owner.ToString()}, Size: {Size.ToString()}";
         }
     }
 }

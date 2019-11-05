@@ -3,7 +3,7 @@
 namespace Mailbox
 {
     [Flags]
-    public enum Sizes
+    public enum Size
     {
         Undefined = 0,
         Premium = 1,

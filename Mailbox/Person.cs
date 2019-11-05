@@ -9,7 +9,7 @@ namespace Mailbox
 
         public Person(string firstName, string lastName)
         {
-            if(firstName is null) { throw new ArgumentNullException(firstName, nameof(firstName) + " may not be null"); }
+            if (firstName is null) { throw new ArgumentNullException(firstName, nameof(firstName) + " may not be null"); }
             if (lastName is null) { throw new ArgumentNullException(lastName, nameof(lastName) + " may not be null"); }
 
             name.firstName = firstName;
@@ -33,7 +33,7 @@ namespace Mailbox
             return name.GetHashCode();
         }
 
-        public (string first, string last) getName()
+        private (string first, string last) getName()
         {
             return name;
         }
