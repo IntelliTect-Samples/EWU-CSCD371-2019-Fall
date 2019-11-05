@@ -13,7 +13,7 @@ namespace Mailbox
         static void Main(string[] args)
         {
             //Main does not need to be unit tested.
-            using var dataLoader = new DataLoader(File.Open("Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
+            using DataLoader dataLoader = new DataLoader(File.Open("Mailboxes.json", FileMode.OpenOrCreate, FileAccess.ReadWrite));
 
             Mailboxes boxes = new Mailboxes(dataLoader.Load() ?? new List<Mailbox>(), Width, Height);
 
@@ -89,17 +89,17 @@ namespace Mailbox
 
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
-            
+            return "";
         }
 
         public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
-            
+            return "";
         }
 
         public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
-            
+            return new Mailbox(Size.Small, 0, 0, new Person());
         }
     }
 }

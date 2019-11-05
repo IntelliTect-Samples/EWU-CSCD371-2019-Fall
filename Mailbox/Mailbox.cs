@@ -17,7 +17,14 @@ namespace Mailbox
         public override string ToString()
         {
             string s = Enum.GetName(typeof(Size), MailboxSize);
-            
+            s = MailboxSize.ToString();
+            string[] split = s.Split(",");
+            if (split.Length > 1) //It is flagged
+            {
+                s = split[1].Trim() + " " + split[0].Trim();
+            }
+            else if (s.Equals("Default")) s = "";
+
             return "size: " + s + " location: " + Location + " owner: " + Owner;
         }
     }

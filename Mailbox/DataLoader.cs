@@ -1,44 +1,58 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System;
+using Newtonsoft.Json;
 
 namespace Mailbox
 {
-    public class DataLoader
+    public class DataLoader : IDisposable
     {
         Stream stream;
-        public DataLoader(Stream source)
+        public DataLoader(System.IO.Stream source)
         {
             stream = source;
         }
 
+        public void Dispose()
+        {
+            stream.Dispose();
+        }
+
         public List<Mailbox> Load()
         {
-            stream.Position = 0;
             List<Mailbox> mailboxes = new List<Mailbox>();
-            StreamReader reader = new StreamReader(stream);
-
-            while (!reader.EndOfStream)
+            stream.Position = 0;
+            using (StreamReader reader = new StreamReader(stream, System.Text.Encoding.UTF8, true, 1024, true))
             {
-                string line = reader.ReadLine();
-                string[] ls = line.Split(",");
-                string[] personSplit = ls[3].Split(" ");
-                Mailbox m = new Mailbox((Size)Enum.Parse(typeof(Size), ls[0]), int.Parse(ls[1]), int.Parse(ls[2]), new Person(personSplit[0], personSplit[1]));
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+                    try
+                    {
+                        Mailbox m = JsonConvert.DeserializeObject<Mailbox>(line);
+                        Console.WriteLine(m);
+                        mailboxes.Add(m);
+                    }
+                    catch (JsonReaderException e)
+                    {
+                        Console.WriteLine(e);
+                        return null;
+                    }
+                }
             }
-
-            reader.Dispose();
+            return mailboxes;
         }
 
         public void Save(List<Mailbox> mailboxes)
         {
-            stream.Position = 0;
-            StreamWriter writer = new StreamWriter(stream);
-            foreach(Mailbox m in mailboxes)
+            using(StreamWriter writer = new StreamWriter(stream, System.Text.Encoding.UTF8, 1024, true))
             {
-                writer.Write(m.MailboxSize + "," + m.Location.x + "," + m.Location.y + "," + m.Owner);
+                writer.BaseStream.Position = 0;
+                foreach(Mailbox m in mailboxes)
+                {
+                    writer.WriteLine(JsonConvert.SerializeObject(m));
+                }
             }
-
-            writer.Dispose();
         }
     }
 }
