@@ -18,8 +18,8 @@ namespace Mailbox
 
         public Person(string firstName, string lastName)
         {
-            FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
-            LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
+            FirstName = firstName;
+            LastName = lastName;
         }
 
         public override int GetHashCode() => (FirstName, LastName).GetHashCode();
