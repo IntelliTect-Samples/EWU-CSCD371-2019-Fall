@@ -7,16 +7,6 @@ namespace Mailbox.Tests
     public class PersonTests
     {
         [TestMethod]
-        [DataRow(null, "lastname")]
-        [DataRow("firstname", null)]
-        [DataRow(null, null)]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_NullParameters_ThowsException(string firstName, string lastName)
-        {
-            Person _ = new Person(firstName, lastName);
-        }
-
-        [TestMethod]
         [DataRow("firstname", "lastname")]
         [DataRow("first name", "Last-name")]
         [DataRow("NotNull", "ALso not_null")]
