@@ -6,7 +6,7 @@ using System.Text;
 namespace Mailbox.Tests
 {
     [TestClass]
-    class PersonTests
+    public class PersonTests
     {
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -29,6 +29,34 @@ namespace Mailbox.Tests
 
             //Assert
             Assert.IsFalse(equal);
+        }
+
+        [TestMethod]
+        public void EqualsGivenSamePerson_ReturnsTrue()
+        {
+            //Arrange
+            Person pers = new Person("First", "Last");
+            bool equal;
+
+            //Act
+            equal = pers.Equals(pers);
+
+            //Assert
+            Assert.IsTrue(equal);
+        }
+
+        [TestMethod]
+        public void EqualsGivenEqualButDifferentPerson_ReturnsTrue()
+        {
+            //Arrange
+            Person pers = new Person("First", "Last");
+            bool equal;
+
+            //Act
+            equal = pers.Equals(new Person("First", "Last"));
+
+            //Assert
+            Assert.IsTrue(equal);
         }
     }
 }

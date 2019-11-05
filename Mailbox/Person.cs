@@ -25,7 +25,7 @@ namespace Mailbox
         {
             if (other is null) { return false; }
 
-            return Equals((Person)other);
+            return Equals(other as Person?);
         }
 
         public override int GetHashCode()
