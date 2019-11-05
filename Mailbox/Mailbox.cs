@@ -14,7 +14,7 @@ namespace Mailbox
     public class Mailbox
     {
         public Size MailboxSize;
-        public ValueTuple<int, int> Location;
+        public (int X, int Y) Location;
         public Person Owner;
 
         public Mailbox(Size size, ValueTuple<int, int> location, Person owner)
