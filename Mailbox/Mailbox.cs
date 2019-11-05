@@ -9,10 +9,10 @@ namespace Mailbox
         public (int, int) Location { get; }
         public Person Owner { get; }
 
-        public MailBox(Sizes size, (int, int) location, Person owner)
+        public MailBox(Sizes mailboxSize, (int, int) location, Person owner)
         {
-            if (!size.IsValid()) throw new ArgumentException("Invalid size.", nameof(size));
-            MailboxSize = (Sizes)size;
+            if (!mailboxSize.IsValid()) throw new ArgumentException("Invalid size.", nameof(mailboxSize));
+            MailboxSize = (Sizes)mailboxSize;
             Location = location;
             Owner = owner;
         }

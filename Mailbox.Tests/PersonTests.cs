@@ -24,8 +24,8 @@ namespace Mailbox.Tests
         {
             Person person = new Person(firstName, lastName);
             Assert.IsNotNull(person);
-            Assert.AreEqual(person._FirstName, firstName);
-            Assert.AreEqual(person._LastName, lastName);
+            Assert.AreEqual(person.FirstName, firstName);
+            Assert.AreEqual(person.LastName, lastName);
         }
 
         [TestMethod]

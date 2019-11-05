@@ -58,10 +58,34 @@ namespace Mailbox.Tests
 
             var boxes = dataLoader.Load();
 
-                Assert.IsNotNull(boxes);
-                Assert.AreEqual(testBoxes.Count, boxes.Count);
-            
-        
+            Assert.IsNotNull(boxes);
+            Assert.AreEqual(testBoxes.Count, boxes.Count);
+        }
+
+        [TestMethod]
+        public void Save_WritesData()
+        {
+            List<MailBox> mailboxes = new List<MailBox>();
+            var memory = new MemoryStream();
+            DataLoader dataLoader = new DataLoader(memory);
+
+            try
+            {
+                dataLoader.Save(testBoxes);
+
+                memory.Position = 0;
+
+                mailboxes = dataLoader.Load();
+
+                Assert.AreEqual(mailboxes[0].ToString(), testBoxes[0].ToString());
+                Assert.AreEqual(mailboxes[1].ToString(), testBoxes[1].ToString());
+                Assert.AreEqual(mailboxes[2].ToString(), testBoxes[2].ToString());
+            }
+            finally
+            {
+                dataLoader.Dispose();
+            }
+
         }
     }
 }

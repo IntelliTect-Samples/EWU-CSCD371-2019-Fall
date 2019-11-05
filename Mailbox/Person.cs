@@ -13,16 +13,16 @@ namespace Mailbox
 {
     public struct Person : IEquatable<Person>
     {
-        public string _FirstName { get; }
-        public string _LastName { get; }
+        public string FirstName { get; }
+        public string LastName { get; }
 
         public Person(string firstName, string lastName)
         {
-            _FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
-            _LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
+            FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
+            LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
         }
 
-        public override int GetHashCode() => (_FirstName, _LastName).GetHashCode();
+        public override int GetHashCode() => (FirstName, LastName).GetHashCode();
 
         public override bool Equals(object? obj)
         {
@@ -32,8 +32,8 @@ namespace Mailbox
         }
 
         public bool Equals(Person other) =>
-             (this._FirstName == other._FirstName &&
-              this._LastName == other._LastName);
+             (this.FirstName == other.FirstName &&
+              this.LastName == other.LastName);
 
          public static bool operator ==(Person? a, Person? b) => a.Equals(b);
 
@@ -41,7 +41,7 @@ namespace Mailbox
 
         public override string ToString()
         {
-            return $"{_FirstName} {_LastName}";
+            return $"{FirstName} {LastName}";
         }
     }
 }

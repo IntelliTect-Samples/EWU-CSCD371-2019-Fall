@@ -28,20 +28,22 @@ namespace Mailbox
             }
 
         }
-        {
+
         public void Save(List<MailBox> mailboxes)
+        {
             _source.Position = 0;
 
             using var writer = new StreamWriter(_source, leaveOpen: true);
             writer.WriteLine(JsonConvert.SerializeObject(mailboxes));
             writer.Flush();
-        #region IDisposable Support
-
         }
+
+        #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
-        {
+
         protected virtual void Dispose(bool disposing)
+        {
             if (!disposedValue)
             {
                 if (disposing)
@@ -49,8 +51,8 @@ namespace Mailbox
                     _source.Dispose();
                 }
                 disposedValue = true;
-        }
             }
+        }
 
         ~DataLoader()
         {

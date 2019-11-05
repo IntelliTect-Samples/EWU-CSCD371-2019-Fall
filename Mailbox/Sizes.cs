@@ -19,9 +19,9 @@ namespace Mailbox
     public static class SizeExtensions
     {
         public static bool IsValid(this Sizes sizes) =>
-            sizes == Sizes.Small ^ sizes == Sizes.Medium ^
-            sizes == Sizes.Large ^ sizes == Sizes.SmallPremium ^
-            sizes == Sizes.MediumPremium ^ sizes == Sizes.LargePremium ^
+            sizes == Sizes.Small || sizes == Sizes.Medium ||
+            sizes == Sizes.Large || sizes == Sizes.SmallPremium ||
+            sizes == Sizes.MediumPremium || sizes == Sizes.LargePremium ||
             sizes == Sizes.Undeclared;
     }
 }
