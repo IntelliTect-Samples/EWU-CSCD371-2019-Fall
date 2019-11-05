@@ -23,6 +23,7 @@ namespace Mailbox {
                     Console.WriteLine(" 5. Quit");
 
                     if (!int.TryParse(Console.ReadLine(), out selection)) {
+                        Console.WriteLine("Make a valid selection!\n");
                         selection = 0;
                     }
                 } while (selection == 0);
@@ -67,6 +68,9 @@ namespace Mailbox {
                         break;
                     case 5:
                         return;
+                    default:
+                        Console.WriteLine("Make a valid selection!\n");
+                        break;
                 }
             }
         }
