@@ -10,8 +10,8 @@ namespace Mailbox
 
         public Person(string firstName, string lastName)
         {
-            FirstName = firstName;
-            LastName = lastName;
+            FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
+            LastName = lastName ?? throw new ArgumentNullException(nameof(lastName)); ;
         }
 
         public override bool Equals(object? obj) =>
