@@ -14,7 +14,7 @@ namespace MailRoom.Tests
         public void SaveAndLoad_SaveMailboxesAndLoadMailboxes_ReturnsMailboxesMatchingOriginal()
         {
             using MemoryStream fakeStream = new MemoryStream();
-            DataLoader sut = new DataLoader(fakeStream);
+            using DataLoader sut = new DataLoader(fakeStream);
             List<Mailbox> expected = new List<Mailbox>
             {
                 new Mailbox(new Person("F1", "L1"), (1, 1), Sizes.Small),
