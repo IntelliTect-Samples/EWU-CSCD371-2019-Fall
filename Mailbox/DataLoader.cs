@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -6,53 +7,51 @@ namespace Mailbox
 {
     public class DataLoader : IDisposable
     {
-        public DataLoader(Stream source)
-        {
-        }
+        private Stream Source { get; }
 
-        public List<Mailbox> Load()
+        public DataLoader(Stream source) =>
+            Source = source ?? throw new ArgumentNullException(nameof(source));
+
+        public List<Mailbox>? Load()
         {
-            throw new NotImplementedException();
+            Source.Position = 0;
+            using var reader = new StreamReader(Source, leaveOpen: true);
+            try
+            {
+                return JsonConvert.DeserializeObject<List<Mailbox>>(reader.ReadToEnd());
+            }
+            catch (JsonReaderException)
+            {
+                return null;
+            }
         }
 
         public void Save(List<Mailbox> mailboxes)
         {
-            
+            if (mailboxes is null) throw new ArgumentNullException(nameof(mailboxes));
+
+            Source.Position = 0;
+            using var writer = new StreamWriter(Source, leaveOpen: true);
+            writer.WriteLine(JsonConvert.SerializeObject(mailboxes));
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
             {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects).
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
+                if (disposing) Source.Dispose();
 
                 disposedValue = true;
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~DataLoader()
-        // {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
-
-        // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }
