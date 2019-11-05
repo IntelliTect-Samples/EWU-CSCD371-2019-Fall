@@ -19,9 +19,6 @@ namespace Mailbox
 
         public Mailbox(Size size, ValueTuple<int, int> location, Person owner)
         {
-            NullCheck("Mailbox Constructor", size);
-            NullCheck("Mailbox Constructor", location);
-            NullCheck("Mailbox Constructor", owner);
             MailboxSize = size;
             Location = location;
             Owner = owner;
@@ -29,10 +26,6 @@ namespace Mailbox
 
         public override string ToString()
         {
-            NullCheck("ToString", MailboxSize);
-            NullCheck("ToString", Location);
-            NullCheck("ToString", Owner);
-
             string s = $"Size: ";
             s += MailboxSize switch
             {
@@ -42,6 +35,7 @@ namespace Mailbox
                 Size.SmallPremium => "Premium ",
                 Size.MediumPremium => "Medium Premium ",
                 Size.LargePremium => "Large Premium ",
+                _ => ""
             };
 
             var (X, Y) = Location;
@@ -66,11 +60,5 @@ namespace Mailbox
         }
 
         public override int GetHashCode() => (MailboxSize, Location, Owner).GetHashCode();
-
-        private void NullCheck(string methodName, object obj)
-        {
-            if (obj is null)
-                throw new InvalidOperationException($"Cannot call {methodName} method when {nameof(obj)} is null.");
-        }
     }
 }

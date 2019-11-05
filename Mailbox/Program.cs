@@ -78,7 +78,7 @@ namespace Mailbox
                     case 4:
                         Console.WriteLine("Enter box number as x,y");
                         string boxNumber = Console.ReadLine();
-                        string[] parts = boxNumber?.Split(',');
+                        string[] parts = boxNumber?.Split(',') ?? new string[] {"0", "0"};
                         if (parts?.Length == 2 &&
                             int.TryParse(parts[0], out int x) &&
                             int.TryParse(parts[1], out int y))
@@ -101,19 +101,13 @@ namespace Mailbox
             string displayStr = "";
             foreach (Mailbox mailbox in mailboxes)
             {
-                displayStr += mailbox.ToString() + Environment.NewLine;
+                displayStr += mailbox.Owner.ToString() + Environment.NewLine;
             }
             return displayStr;
         }
 
-        public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
-        {
-            Mailbox? box = mailboxes.GetMailbox(x, y);
-            if (box is null)
-                return "";
-            else
-                return box.ToString();
-        }
+        public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y) =>
+            mailboxes.GetMailbox(x, y)?.ToString() ?? "";
 
         public static Mailbox? AddNewMailbox(
                 Mailboxes mailboxes,

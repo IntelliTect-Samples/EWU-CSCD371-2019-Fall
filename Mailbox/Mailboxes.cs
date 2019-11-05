@@ -60,15 +60,8 @@ namespace Mailbox
             return isOccupied;
         }
 
-        public Mailbox? GetMailbox(int x, int y)
-        {
-            foreach (var mailbox in this)
-            {
-                if (mailbox.Location == (x, y))
-                    return mailbox;
-            }
-            return null;
-        }
+        public Mailbox? GetMailbox(int x, int y) =>
+            this.FirstOrDefault(mailbox => mailbox.Location == (x, y));
 
         public (int, int)? GetNextOpenLocation()
         {

@@ -11,8 +11,8 @@ namespace Mailbox
      */
     public struct Person : IEquatable<Person>
     {
-        public string? FirstName;
-        public string? LastName;
+        public string FirstName;
+        public string LastName;
 
         public Person(string firstName, string lastName)
         {
@@ -27,8 +27,8 @@ namespace Mailbox
 
         public override bool Equals(object obj)
         {
-            if (obj is Person)
-                return this.Equals((Person)obj);
+            if (obj is Person p)
+                return this.Equals(p);
             return false;
         }
 
