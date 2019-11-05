@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Mailbox
 {
-    class Program
+    public class Program
     {
         private const int Width = 50;
         private const int Height = 10;
@@ -43,9 +43,9 @@ namespace Mailbox
                         Console.WriteLine("Enter the last name");
                         string lastName = Console.ReadLine();
                         Console.WriteLine("What size?");
-                        if (!Enum.TryParse(Console.ReadLine(), out Size size))
+                        if (!Enum.TryParse(Console.ReadLine(), out Sizes size))
                         {
-                            size = Size.Small;
+                            size = Sizes.Small;
                         }
 
                         if (AddNewMailbox(boxes, firstName, lastName, size) is Mailbox mailbox)
@@ -89,17 +89,73 @@ namespace Mailbox
 
         public static string GetOwnersDisplay(Mailboxes mailboxes)
         {
-            
+            if (mailboxes is null)
+                throw new ArgumentNullException($"{nameof(mailboxes)} was found to be null.");
+
+            List<Person> distinctOwners = new List<Person>();
+
+            foreach (Mailbox mail in mailboxes)
+            {
+                if (!distinctOwners.Contains(mail.Owner))
+                    distinctOwners.Add(mail.Owner);
+            }
+
+            string result = "";
+            foreach(Person owner in distinctOwners)
+                result += $"{owner.ToString()}{Environment.NewLine}";
+
+            return result;
         }
 
         public static string GetMailboxDetails(Mailboxes mailboxes, int x, int y)
         {
-            
+            if (mailboxes is null)
+                throw new ArgumentNullException($"{nameof(mailboxes)} was found to be null.");
+
+            else if (x <= 0 || y <= 0)
+                throw new ArgumentException($"{nameof(x)}: {x}, {nameof(y)}: y. They both must be more than 0.");
+
+            string result = "";
+
+            foreach(Mailbox mail in mailboxes)
+            {
+                if (mail.Location == (x, y))
+                    result += mail.ToString() + Environment.NewLine;
+            }
+
+            if (result.Length == 0)
+                return null;
+
+            return result;
         }
 
-        public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
+        public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Sizes size)
         {
-            
+            if (mailboxes is null)
+                throw new ArgumentNullException($"{nameof(mailboxes)} was found to be null.");
+
+            else if (firstName is null)
+                throw new ArgumentNullException($"{nameof(firstName)} was found to be null.");
+
+            else if (lastName is null)
+                throw new ArgumentNullException($"{nameof(lastName)} was found to be null.");
+
+            Person newPerson = new Person() { FirstName = firstName, LastName = lastName };
+
+            for(int x = 0; x < mailboxes.Width; x++)
+            {
+                for(int y = 0; y < mailboxes.Height; y++)
+                {
+                    HashSet<Person> neighbors;
+
+                    bool isOccupied = mailboxes.GetAdjacentPeople(x, y, out neighbors);
+
+                    if(!isOccupied && !neighbors.Contains(newPerson))
+                        return new Mailbox() { Location = (x, y), Owner = newPerson, Size = size };
+                }
+            }
+
+            return null;
         }
     }
 }
