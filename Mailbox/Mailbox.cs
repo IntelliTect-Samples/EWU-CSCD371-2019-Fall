@@ -17,7 +17,7 @@ namespace Mailbox
 
         public override string ToString()
         {
-            return $"Mailbox Location: X: {Location.X} Y: {Location.Y}, {Owner.ToString()}, Size: {Size.ToString()}";
+            return $"Mailbox: Location: ({Location.X},{Location.Y}) - Owner: {Owner.ToString()} - Size: {Size.ToString().Replace(",", "")}";
         }
     }
 }

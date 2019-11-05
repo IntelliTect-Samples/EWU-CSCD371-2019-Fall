@@ -6,9 +6,13 @@ namespace Mailbox
     public enum Size
     {
         Undefined = 0,
-        Premium = 1,
-        Small = 2,
-        Medium = 4,
-        Large = 8
+        Small = 1,
+        Medium = 2,
+        Large = 4,
+        Premium = 8,
+
+        SmallPremium = Small | Premium,
+        MediumPremium = Small | Premium,
+        LargePremium = Small | Premium
     }
 }

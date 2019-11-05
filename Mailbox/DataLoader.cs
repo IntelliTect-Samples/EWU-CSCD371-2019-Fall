@@ -17,12 +17,21 @@ namespace Mailbox
             this.source = source;
         }
 
-        public List<Mailbox> Load()
+        public List<Mailbox>? Load()
         {
             source.Position = 0;
             streamReader = new StreamReader(source);
+            List<Mailbox> mailboxList;
 
-            List<Mailbox> mailboxList = JsonConvert.DeserializeObject<List<Mailbox>>(streamReader.ReadToEnd());
+            try
+            {
+                mailboxList = JsonConvert.DeserializeObject<List<Mailbox>>(streamReader.ReadToEnd());
+            }
+            catch (JsonReaderException)
+            {
+                return null;
+            }
+            
 
             if(mailboxList == null)
             {

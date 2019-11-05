@@ -97,9 +97,33 @@ namespace Mailbox
             return "";//TODO
         }
 
-        public static Mailbox AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
+        public static Mailbox? AddNewMailbox(Mailboxes mailboxes, string firstName, string lastName, Size size)
         {
-            return new Mailbox(Size.Small, (0, 0), new Person("Josh", "Lini"));//TOOD
+            for (int i = 0; i < mailboxes.Width; i++)
+            {
+                for (int a = 0; a < mailboxes.Height; i++)
+                {
+                    if (!mailboxes.GetAdjacentPeople(i, a, out HashSet<Person> personSet))
+                    {
+                        Boolean valid = true;
+
+                        foreach (Person pers in personSet)
+                        {
+                            if (pers.Equals(new Person(firstName, lastName)))
+                            {
+                                valid = false;
+                            }
+                        }
+
+                        if (valid)
+                        {
+                            return new Mailbox(size, (i, a), new Person(firstName, lastName));
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
