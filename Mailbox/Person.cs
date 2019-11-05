@@ -17,7 +17,7 @@ namespace Mailbox
         public Person(string firstName, string lastName)
         {
             if (firstName is null)
-                throw new ArgumentNullException($"{nameof(firstName)} cannot be null.");
+                throw new ArgumentNullException(nameof(firstName));
             if (lastName is null)
                 throw new ArgumentNullException($"{nameof(lastName)} cannot be null.");
 
