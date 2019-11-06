@@ -359,3 +359,6 @@ MigrationBackup/
 .DS_Store
 
 *.sqlite
+*.swo
+*.swp
+*.o
