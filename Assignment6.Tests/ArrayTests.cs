@@ -39,5 +39,13 @@ namespace Assignment6.Tests
             var listSut = sut.ToList();
             Assert.IsInstanceOfType(listSut, typeof(List<int>));
         }
+
+        [TestMethod]
+        public void ArraySet_ToList_ListHasSameLength()
+        {
+            var sut = new Array<int>(1);
+            var listSut = sut.ToList();
+            Assert.AreEqual(listSut.Count, sut.Capacity);
+        }
     }
 }

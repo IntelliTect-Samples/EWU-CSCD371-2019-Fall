@@ -2,32 +2,42 @@
 
 namespace Assignment6
 {
-    public class Array<T>
+    public class Array<T> : ICollection<T>
     {
-        private int _Length = 0;
-        private T[]? Data;
+        private ICollection<T> Data;
 
         public Array()
         {
-            _Length = 0;
+            Data = new List<T>();
         }
 
         public Array(int size)
         {
             if (size < 0)
                 throw new System.ArgumentOutOfRangeException(nameof(size));
-            else
-                _Length = size;
+            Data = new List<T>(size);
         }
 
+        public Array(ICollection<T> collection) =>
+            Data = collection;
+
+        /*
+         * Note:
+         * Will lose data if resized to a smaller length and
+         * data is already set at end of array.
+         */
         public void Resize(int length)
         {
+            if (length < 0)
+                throw new System.ArgumentOutOfRangeException(nameof(length));
+            var tmp = new T[length];
+            for (int i = 0; i < length; i++)
+                tmp[i] = Data[i];
+            Data = tmp;
         }
 
-        public List<T> ToList()
-        {
-            return new List<T>();
-        }
+        public List<T> ToList() =>
+            new List<T>(Data);
 
         public T this[int key]
         {
@@ -48,11 +58,11 @@ namespace Assignment6
             }
         }
 
-        public int Length
+        public int Capacity
         {
             get
             {
-                return _Length;
+                return Data.Length;
             }
         }
     }
