@@ -6,15 +6,15 @@ namespace Assignment6
 {
     public class Array<T> : ICollection<T>
     {
-        public int Count => 0;
+        public int Count => MyArray.Count;
 
         public bool IsReadOnly => false;
 
-        private ICollection<T> MyArray;
+        private readonly ICollection<T> MyArray;
 
-        public Array()
+        public Array(int width)
         {
-            MyArray = new List<T>();
+            MyArray = new List<T>(width);
         }
 
         public void Add(T item)
