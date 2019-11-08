@@ -101,5 +101,9 @@ namespace Assignment6
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() =>
             GetEnumerator();
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2225:Operator overloads have named alternates", Justification = "Assignment specifies cast operator.")]
+        public static explicit operator List<T>(Array<T> array) =>
+            new List<T>(array);
     }
 }

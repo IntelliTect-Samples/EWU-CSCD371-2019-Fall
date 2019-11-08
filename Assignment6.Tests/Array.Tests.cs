@@ -263,5 +263,18 @@ namespace Assignment6.Tests
             foreach ((int expected, int actual) in zipped)
                 Assert.AreEqual<int>(expected, actual);
         }
+
+        [TestMethod]
+        public void ToList_ValidArray_CorrectElements()
+        {
+            var array = new Array<int?>(100);
+            foreach (int i in Enumerable.Range(0, 30)
+                      .Concat(Enumerable.Range(40, 30))
+                      .Concat(Enumerable.Range(80, 20)))
+                array[i] = i;
+            array[35] = null;
+
+            Assert.IsTrue(Enumerable.SequenceEqual(array, (List<int?>)array));
+        }
     }
 }
