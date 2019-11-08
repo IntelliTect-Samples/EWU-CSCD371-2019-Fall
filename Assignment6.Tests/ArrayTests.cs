@@ -131,5 +131,13 @@ namespace Assignment6.Tests
             for (int i=0; i<sut.Capacity; i++)
                 Assert.AreEqual(sut[i], destination[i]);
         }
+
+        [TestMethod]
+        public void Array_Add_ThrowsExceptionWhenOverCapacity()
+        {
+            var sut = new Array<int>(0);
+
+            Assert.ThrowsException<System.InvalidOperationException>(() => sut.Add(1));
+        }
     }
 }
