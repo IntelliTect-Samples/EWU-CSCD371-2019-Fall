@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Assignment6.Tests
@@ -58,6 +59,13 @@ namespace Assignment6.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Add_NoRoom_ThrowsException()
+        {
+            new Array<int>(0).Add(5);
+        }
+
+        [TestMethod]
         public void Clear_ValidArray_ClearsValues()
         {
             var array = new Array<int>(100) { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -66,17 +74,7 @@ namespace Assignment6.Tests
 
             Assert.AreEqual(0, array.Count);
             foreach (int i in Enumerable.Range(0, array.Capacity))
-            {
-                try
-                {
-                    _ = array[i];
-                    Assert.Fail();
-                }
-                catch (InvalidOperationException)
-                {
-                    // Exception indicates successful Clear()
-                }
-            }
+                Assert.ThrowsException<InvalidOperationException>(() => array[i]);
         }
 
         [DataTestMethod]
@@ -163,6 +161,107 @@ namespace Assignment6.Tests
             var array = new Array<int>(100) { [index] = value };
 
             Assert.AreEqual(value, array[index]);
+        }
+
+        [DataTestMethod]
+        [DataRow(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 0)]
+        [DataRow(new int[0], 65467)]
+        [DataRow(new[] { 1, 2, 3, 4, 5 }, 4654739)]
+        public void CopyTo_ValidArray_CopiesElements(int[] inputs, int start)
+        {
+            int[] outputs = new int[start + inputs.Length];
+            var array = new Array<int>(inputs.Length);
+            foreach (int element in inputs) array.Add(element);
+
+            array.CopyTo(outputs, start);
+
+            Assert.IsTrue(Enumerable.SequenceEqual(inputs, outputs[start..]));
+        }
+
+        [DataTestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        [DataRow(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 0, 1)]
+        [DataRow(new[] { 5, 6, 8, 3, 2134, 657, 2345, 674, 2345 }, 17, 5)]
+        [DataRow(new[] { 1, 2, 3, 4, 5 }, 765438, 3)]
+        public void CopyTo_ArrayTooShort_ThrowsException(int[] inputs, int start, int off)
+        {
+            int[] outputs = new int[start + inputs.Length - off];
+            var array = new Array<int>(inputs.Length);
+            foreach (int element in inputs) array.Add(element);
+
+            array.CopyTo(outputs, start);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void CopyTo_NullArray_ThrowsException()
+        {
+            var array = new Array<int>(5);
+
+            array.CopyTo(null!, 0);
+        }
+
+        [DataTestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [DataRow(-1)]
+        [DataRow(-5)]
+        [DataRow(-314159265)]
+        [DataRow(-94567)]
+        public void CopyTo_NegativeIndex_ThrowsException(int index)
+        {
+            new Array<int>(100).CopyTo(new int[200], index);
+        }
+
+        [DataTestMethod]
+        [DataRow(64830, 45)]
+        [DataRow(1234, 0)]
+        [DataRow(987654, 99)]
+        [DataRow(314159, 1)]
+        [DataRow(null, 15)]
+        public void Remove_ContainsItem_RemovesItem(int? value, int index)
+        {
+            var array = new Array<int?>(100);
+            foreach (int i in Enumerable.Range(0, 40).Concat(Enumerable.Range(60, 40)))
+                array[i] = i;
+            array[50] = null;
+            array[index] = value;
+
+            Assert.IsTrue(array.Remove(value));
+            Assert.ThrowsException<InvalidOperationException>(() => array[index]);
+        }
+
+        [DataTestMethod]
+        [DataRow(64830)]
+        [DataRow(1234)]
+        [DataRow(987654)]
+        [DataRow(314159)]
+        public void Remove_DoesNotContainItem_DoesntModifyArray(int value)
+        {
+            var range = Enumerable.Range(0, 100);
+            var array = new Array<int>(100);
+            foreach (int i in range) array.Add(i);
+
+            Assert.IsFalse(array.Remove(value));
+            foreach (int i in range) Assert.AreEqual<int>(i, array[i]);
+        }
+
+        [TestMethod]
+        public void GetEnumerator_ValidElements_IteratesCorrectly()
+        {
+            var ranges = Enumerable.Range(0, 30)
+                .Concat(Enumerable.Range(40, 30))
+                .Concat(Enumerable.Range(80, 20));
+            var array = new Array<int>(100);
+            foreach (int i in ranges) array[i] = i;
+            var list = new List<int>();
+
+            foreach (object? i in (System.Collections.IEnumerable)array)
+                list.Add((int)i!);
+
+            var zipped = ranges.Zip(list);
+            Assert.AreEqual<int>(ranges.Count(), zipped.Count());
+            foreach ((int expected, int actual) in zipped)
+                Assert.AreEqual<int>(expected, actual);
         }
     }
 }
