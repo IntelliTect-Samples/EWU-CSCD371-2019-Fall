@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Assignment6
 {
-    public class Array<T> : ICollection<T>
+    public class Array<T> : ICollection<T>, IReadOnlyArray<T>
     {
         public int Capacity => Values.Length;
 
