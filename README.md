@@ -1,4 +1,4 @@
-# Assignment 4
+# Assignment 6
 
 The purpose of this assignment is to write a class library with a generic collection class that supports a fixed number of items:
 
