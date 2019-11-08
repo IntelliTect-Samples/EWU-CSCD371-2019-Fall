@@ -89,6 +89,8 @@ namespace Assignment6
         {
             if (value is null) 
                 throw new System.ArgumentNullException(nameof(value));
+            else if (Data.Count == Capacity)
+                throw new System.InvalidOperationException(nameof(value));
             ((ICollection<T>)Data).Add(value);
         }
 
