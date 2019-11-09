@@ -6,45 +6,59 @@ namespace Assignment6
 {
     public class Array<T> : ICollection<T>
     {
-        public int Capacity { get; set; }
+        private int Capacity { get; set; }
+        private List<T>? Items { get; set; }
+        public int Count => Items.Count;
+        public bool IsReadOnly => false;
 
         public Array(int capacity)
         {
-            Capacity = capacity;
+            if(capacity < 0)
+            {
+                throw new ArgumentException("Capacity must be positive.", nameof(capacity));
+            }
+            else
+            {
+                Capacity = capacity;
+                Items = new List<T>(capacity); 
+            }
         }
 
-        int ICollection<T>.Count => throw new NotImplementedException();
+        public void Add(T item)
+        {
+            if (Items is null)
+                return;
 
-        bool ICollection<T>.IsReadOnly => throw new NotImplementedException();
+            Items.Add(item);
+        }
 
-        void ICollection<T>.Add(T item)
+        public void Clear()
         {
             throw new NotImplementedException();
         }
 
-        void ICollection<T>.Clear()
+        public bool Contains(T item)
         {
             throw new NotImplementedException();
         }
 
-        bool ICollection<T>.Contains(T item)
+        public void CopyTo(T[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
 
-        void ICollection<T>.CopyTo(T[] array, int arrayIndex)
+        public bool Remove(T item)
         {
             throw new NotImplementedException();
         }
 
-        bool ICollection<T>.Remove(T item)
+        public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
-        }
-
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            throw new NotImplementedException();
+            if(Items is null)
+            {
+                throw new ArgumentNullException("Items is null", nameof(Items));
+            }
+            return Items.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
