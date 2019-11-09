@@ -7,23 +7,34 @@ namespace Assignment6
     public class Array<T> : ICollection<T>
     {
         private ICollection<T> Data;
-        public readonly int Capacity = 0;
+        public int Capacity { get; }  = 0;
 
         public Array()
         {
             Data = new List<T>();
         }
 
-        public Array(int size)
+        public Array(int capacity)
         {
-            if (size < 0)
-                throw new System.ArgumentOutOfRangeException(nameof(size));
-            Data = new List<T>(size);
-            Capacity = size;
+            if (capacity < 0)
+                throw new System.ArgumentOutOfRangeException(nameof(capacity));
+            Data = new List<T>(capacity);
+            Capacity = capacity;
         }
 
-        public Array(ICollection<T> collection) =>
+        public Array(ICollection<T> collection)
+        {
+            Data = new List<T>(collection);
+            Capacity = collection.Count;
+        }
+
+        public Array(ICollection<T> collection, int capacity)
+        {
+            if (capacity < 0)
+                throw new System.ArgumentOutOfRangeException(nameof(capacity));
             Data = collection;
+            Capacity = capacity;
+        }
 
         /*
          * Note:
@@ -73,8 +84,13 @@ namespace Assignment6
             }
         }
 
-        public void Clear() =>
-            ((ICollection<T>)Data).Clear();
+        public void Clear()
+        {
+            for (int i=0; i<Count; i++)
+            {
+                Remove(this[0]);
+            }
+        }
 
         public bool Remove(T item) =>
             ((ICollection<T>)Data).Remove(item);

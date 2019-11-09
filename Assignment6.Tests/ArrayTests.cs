@@ -8,10 +8,11 @@ namespace Assignment6.Tests
     public class ArrayTests
     {
         [TestMethod]
-        [ExpectedException(typeof(System.ArgumentOutOfRangeException))]
         public void ArrayConstructor_BadSize_ThrowsException()
         {
-            var sut = new Array<int>(-1);
+            var data = new List<int>();
+            Assert.ThrowsException<System.ArgumentOutOfRangeException>(() => new Array<int>(-1));
+            Assert.ThrowsException<System.ArgumentOutOfRangeException>(() => new Array<int>(data, -1));
         }
 
         [DataTestMethod]
@@ -138,6 +139,27 @@ namespace Assignment6.Tests
             var sut = new Array<int>(0);
 
             Assert.ThrowsException<System.InvalidOperationException>(() => sut.Add(1));
+        }
+
+        [TestMethod]
+        public void Array_ClearEmptiesValues_Success()
+        {
+            var data = new int[3]
+            {
+                1,
+                2,
+                3,
+            };
+            
+            var sut = new Array<int>(data);
+
+            sut.Clear();
+
+            foreach (int value in data)
+                Assert.IsFalse(sut.Contains(value));
+
+            foreach (int value in data)
+                Assert.IsFalse(sut.Remove(value));
         }
     }
 }
