@@ -87,7 +87,5 @@ namespace Assignment6
             get { return _Data[index]; }
             set { _Data[index] = value; }
         }
-
-
     }
 }

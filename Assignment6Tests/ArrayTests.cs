@@ -136,7 +136,16 @@ namespace Assignment6.Tests
             Assert.AreEqual(intCol[0], 5);
         }
 
-
+        [TestMethod]
+        public void Array_IEnumerator_Qapla()
+        {
+            ArrayCollection<int> intCol = new ArrayCollection<int>(1);
+            intCol.Add(1);
+            foreach(int item in intCol)
+            {
+                Assert.AreEqual(item, 1);
+            }
+        }
 
     }
 }
