@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Configuration
 {
+    // MMM Comment: Why are you not implmenting IConfig here?
     public class FileConfig
     {
         private string fileConfigPath;
@@ -26,6 +27,7 @@ namespace Configuration
             {
                 if(line.Split("=").Length != 2)
                 {
+                    // MMM Comment: Or too few?
                     throw new ArgumentException("Too many arguments on one line");
                 }
 
@@ -47,6 +49,8 @@ namespace Configuration
 
         }
 
+        // MMM Comment: Storing the return in a variable for a single return would be preferable.
+        // MMM Comment: How do you comunicate which argument is invalid?
         public static bool IsValidInput(string name, string? value)
         {
             if(string.IsNullOrEmpty(name) || name.Contains(' ') || name.Contains('='))

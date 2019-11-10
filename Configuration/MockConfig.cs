@@ -6,6 +6,7 @@ namespace Configuration
 {
     public class MockConfig : IConfig   
     {
+        // MMM Comment: _MockNames (or _mockNames) to distinguish from local variable.
         private readonly List<String> mockNames = new List<String>();
         private readonly List<String> mockValues = new List<String>();
 
@@ -42,6 +43,7 @@ namespace Configuration
             return false;
         }
 
+        // MMM Comment: Seems like this should be refactored.
         public static bool IsValidInput(string name)
         {
             if (string.IsNullOrEmpty(name) || name.Contains(" ") || name.Contains("="))

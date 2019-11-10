@@ -12,6 +12,7 @@ namespace Configuration
         {
             value =  Environment.GetEnvironmentVariable(name);
 
+            // MMM Comment: Just return (value is object) or !(value is null)
             if (value is null)
             {
                 return false;
@@ -48,6 +49,7 @@ namespace Configuration
             }
         }
 
+        // MMM Comment: This is good to see but it needs IDisposable as well.
         ~EnvironmentConfig()
         {
             foreach(string name in EnvironmentNames)
