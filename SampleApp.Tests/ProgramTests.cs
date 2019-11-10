@@ -30,6 +30,7 @@ namespace SampleApp.Tests
         [TestMethod]
         public void Program_NoSettingsToRetrieve()
         {
+            // MMM Comment: Preferable not to use abbreviations IMO.
             var mc = new MockConfig();
             mc.ClearConfig();
             Program.Config = mc;

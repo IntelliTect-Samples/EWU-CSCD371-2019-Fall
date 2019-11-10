@@ -53,6 +53,7 @@ namespace Configuration.Tests
             var sut = new EnvironmentConfig();
             try
             {
+                // MMM Comment: Yes, test the set with the get.
                 _ = sut.SetConfigValue(name, "TestValue");
                 bool validValue = sut.GetConfigValue(name, out string? value);
 
@@ -62,6 +63,7 @@ namespace Configuration.Tests
             }
             finally
             {
+                // MMM Commet: Good use of finally here.
                 sut.SetConfigValue(name, null);
             }
         }

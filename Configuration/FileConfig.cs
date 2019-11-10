@@ -12,6 +12,7 @@ namespace Configuration
 
         public FileConfig(string? filePath)
         {
+            // MMM Comment: Yes... I like it.
             FilePath = filePath ?? Path.GetFullPath("config.settings");
         }
 
@@ -19,6 +20,7 @@ namespace Configuration
         {
             if (!File.Exists(FilePath))
             {
+                // MMM Comment: Yes, an exception is correct here.
                 throw new FileNotFoundException();
             }
 
@@ -64,12 +66,16 @@ namespace Configuration
 
         public List<string> GetAllConfigValues()
         {
+            // You should provide a justification when disabling warnings.
 #pragma warning disable CA1303
+            // The message should be clearere here.  Also (not sure you intended it), but
+            // parameter name is the second parameter on the exception constructor.
             if (!File.Exists(FilePath)) throw new FileNotFoundException(nameof(FilePath));
 #pragma warning restore CA1303
             return File.ReadAllLines(FilePath).ToList();
         }
 
+        // MMM Comment: Great refactoring here.
         private void CheckValidText(string? text)
         {
             if(string.IsNullOrEmpty(text)) throw new ArgumentNullException(nameof(text));
@@ -77,6 +83,7 @@ namespace Configuration
             {
                 string message = $"{nameof(text)} cannot contain white space or '='";
 #pragma warning disable CA1303
+                // You should povide the second parameter name argument here.
                 throw new ArgumentException(message);
 #pragma warning restore CA1303
             }

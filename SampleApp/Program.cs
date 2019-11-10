@@ -6,7 +6,10 @@ namespace SampleApp
 {
     public static class Program
     {
+        // MMM Comment... Yay... Finally, someone has the right implementation at last!!! :)
         public static IConfig? Config { get; set; }
+
+        // This is a clever way to enable mostly testing console output.
         public static List<string>? SettingList { get; private set; }
 
         public static void Main()

@@ -54,6 +54,8 @@ namespace SampleApp.Tests
             var list = new List<string>();
             foreach ((string name, string value) in Settings)
             {
+                // MMM Comment: Why not store them as a tuple so you
+                // don't have to parse them later?
                 list.Add($"{name}={value}");
             }
 
