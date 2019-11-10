@@ -51,6 +51,8 @@ namespace Configuration
             if (value.Contains(" ")) throw new ArgumentException($"{nameof(value)} cannot contain a space", nameof(value));
             if (value.Contains("=")) throw new ArgumentException($"{nameof(value)} cannot contain an equal sign", nameof(value));
 
+
+            // MMM Comment: Great to see the using!
             using (StreamWriter writer = File.AppendText(Filename))
             {
                 writer.WriteLine($"{name}={value}");

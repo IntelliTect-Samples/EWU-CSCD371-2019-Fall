@@ -9,6 +9,7 @@ namespace Configuration.Tests
     [TestClass]
     public class FileConfigTests
     {
+        // MMM Comment: Great to see yield return statements.
         private static IEnumerable<object[]> ValidSettings
         {
             get

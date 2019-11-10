@@ -17,6 +17,7 @@ namespace Configuration
                 Environment.SetEnvironmentVariable(name, value);
                 return true;
             }
+            // MMM Comment: I would have liked regactoring here.
             if (string.IsNullOrEmpty(name) || name.Contains(" ") || name.Contains("=") ||
                 value.Contains(" ") || value.Contains("=") || value.Equals(""))
             {

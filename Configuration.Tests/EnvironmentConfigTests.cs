@@ -21,6 +21,7 @@ namespace Configuration.Tests
         new object[] { "Name_3", "lastGoodValue"}
         };
 
+        // MMM Comment: Cool to see DynamicData here.
         [TestMethod]
         [DynamicData(nameof(ValidSettings))]
         public void ReadConfigValue_NonNullName_ReturnsTrue(string name, string value)
@@ -39,6 +40,8 @@ namespace Configuration.Tests
             }
         }
 
+        // MMM Comment: I would have expected to see WriteConfigValue with a 
+        // ReadConfigValue to verify.
         [TestMethod]
         public void ReadConfigValue_UnSetName_ReturnsFalse()
         {
@@ -61,6 +64,7 @@ namespace Configuration.Tests
 
            
             Assert.IsFalse(config.WriteConfigValue(name, value));
+            // MMM Comment: Don't disable, use the null forgiveness operator here.
 #nullable disable
             Assert.IsFalse(config.WriteConfigValue(null, value));
 #nullable enable

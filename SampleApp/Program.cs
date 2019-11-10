@@ -4,6 +4,7 @@ using Configuration.Tests;
 
 namespace SampleApp
 {
+    // MMM Comment: Why is SampleApp not tested?
     class SampleApp
     {
         static void Main()
