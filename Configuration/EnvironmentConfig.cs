@@ -40,6 +40,7 @@ namespace Configuration
             }
         }
 
+        /// MMM Comment: This pattern should also implement IDisposable
         ~EnvironmentConfig() => Cleanup();
     }
 }

@@ -34,6 +34,8 @@ namespace Configuration
             }
         }
 
+        // I would disable this at the project level in the project file
+        // or a suppression file.
         #pragma warning disable CA1303
         public override bool SetConfigValue(string name, string? value)
         {
@@ -60,12 +62,17 @@ namespace Configuration
             if (values.Length != 2) 
                 throw new ArgumentException($"Got multiple '=' characters for {nameof(input)}.");
 
+
+            // MMM Comment: While obviously legal, it is unusual to declare
+            // assign tow variables at the same time.  Consider separating
+            // into two different declarations.
             string name = values[0], value = values[1];
 
             SanitizeInput(name, value);
             
             return (name, value);
         }
+
 
         private static void SanitizeInput(string name, string? value)
         {

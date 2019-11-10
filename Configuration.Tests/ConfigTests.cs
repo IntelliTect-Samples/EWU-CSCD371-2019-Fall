@@ -12,6 +12,7 @@ namespace Configuration.Tests
             var sut = new Config();
             string name="SomeName", value="SomeValue";
             Assert.IsTrue(sut.SetConfigValue(name, value));
+            // MMM Comment: Call GetConfigValue() here and assert the result matches set.
         }
 
         [TestMethod]

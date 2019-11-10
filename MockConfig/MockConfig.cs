@@ -36,6 +36,8 @@ namespace Mock
             return true;
         }
 
+
+        // MMM Comment: This method appears more than once.  Refactor into one method.
         public static void SanitizeValue(string? value)
         {
             if (String.IsNullOrEmpty(value))

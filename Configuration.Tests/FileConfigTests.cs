@@ -23,6 +23,7 @@ namespace Configuration.Tests
 
                 Assert.IsTrue(File.Exists(Environment.CurrentDirectory + fileName));
             }
+            /// MMM Coment: Glad to see this.
             finally
             {
                 File.Delete(Environment.CurrentDirectory + fileName);
@@ -45,6 +46,7 @@ namespace Configuration.Tests
                 };
                 sut.SetConfigValue(name, value);
             }
+            // MMM Comment: Yes!!!
             finally
             {
                 File.Delete(Environment.CurrentDirectory + fileName);

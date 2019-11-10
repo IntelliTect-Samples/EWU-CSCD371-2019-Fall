@@ -4,6 +4,9 @@ using Configuration;
 
 namespace Mock.Tests
 {
+
+    // MMM Comment: Consider regactoring your tests... you seemingly have multiple
+    // that are the same with different IConfig implmentations.
     [TestClass]
     public class MockConfigTests
     {
