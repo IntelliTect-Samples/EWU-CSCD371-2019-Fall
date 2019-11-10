@@ -14,7 +14,7 @@ namespace Assignment6
         public int Count => _Data.Count;
         public bool IsReadOnly => false;
         public int Capacity { get; } 
-        private readonly ICollection<T> _Data;
+        private readonly List<T> _Data;
         public ArrayCollection(int cap)
         {
             if(cap < 0)
@@ -39,16 +39,11 @@ namespace Assignment6
             }
         }
 
-
         public void Add(T item)
         {
             if(Capacity == Count)
             {
                 throw new ArgumentException("Array at max capacity.", nameof(item));
-            }
-            if(item is null)
-            {
-                throw new ArgumentNullException("Item is null", nameof(item));
             }
             _Data.Add(item);
         }
@@ -60,19 +55,11 @@ namespace Assignment6
 
         public bool Contains(T item)
         {
-            if (item is null)
-            {
-                throw new ArgumentNullException("Item is null", nameof(item));
-            }
             return _Data.Contains(item);
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            if(array is null)
-            {
-                throw new ArgumentNullException("Array is null", nameof(array));
-            }
             if(arrayIndex < 0 || arrayIndex > Capacity)
             {
                 throw new ArgumentOutOfRangeException("Index is out of bounds of this array.", nameof(arrayIndex));
@@ -87,10 +74,6 @@ namespace Assignment6
 
         public bool Remove(T item)
         {
-            if (item is null)
-            {
-                throw new ArgumentNullException("Item is null", nameof(item));
-            }
             return _Data.Remove(item);
         }
 
@@ -98,6 +81,13 @@ namespace Assignment6
         {
             return _Data.GetEnumerator();
         }
+
+        public T this[int index]
+        {
+            get { return _Data[index]; }
+            set { _Data[index] = value; }
+        }
+
 
     }
 }
