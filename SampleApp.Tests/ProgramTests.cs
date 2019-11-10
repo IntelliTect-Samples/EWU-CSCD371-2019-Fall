@@ -6,6 +6,7 @@ namespace SampleApp.Tests
     [TestClass]
     public class ProgramTests
     {
+        // MMM Comment: Testing seems insufficient perhaps?
         [TestMethod]
         public void RunApp()
         {

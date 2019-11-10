@@ -11,6 +11,7 @@ namespace SampleApp
             RunApp(new EnvironmentConfig());
         }
 
+        // MMM Comment: I like the way you made the profider configurable.  Good job!
         public static bool RunApp(IConfig configToUse) 
         {
             IConfig config = configToUse;

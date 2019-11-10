@@ -64,6 +64,7 @@ namespace Configuration.Tests
         {
             IConfig sut = new EnvironmentConfig();
 
+            // MMM Comment: Pehaps use a discard here.
             bool isConfigured = sut.SetConfigValue(name, value);
         }
     }

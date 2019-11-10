@@ -47,6 +47,10 @@ namespace Configuration
             return GetConfigValue(name, out value);
         }
 
+
+        // MMM Comment: Seems presumptious that you don't check 
+        // there is an '=' charcter and something on both sides
+        // of it.
         private (string, string?) RetrieveValues(string input) 
         {
             var data = input.Split("=");

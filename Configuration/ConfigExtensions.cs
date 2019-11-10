@@ -5,6 +5,8 @@ using System.Text;
 
 namespace Configuration
 {
+    // MMM Comment: While clever, there is no need for IConfig.  I think a static class
+    // or putting these methods as static methods on IConfig would have been preferable.
     public static class ConfigExtensions
     {
         public static void ValidateInput(this IConfig config, string name, string value)
