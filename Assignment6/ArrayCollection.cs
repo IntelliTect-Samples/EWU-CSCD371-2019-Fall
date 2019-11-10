@@ -4,22 +4,40 @@ using System.Collections.Generic;
 
 namespace Assignment6
 {
-    public class ArrayCollection<T> : ICollection<T> // where T: struct // class // new()
-    {
-        private List<T> Data { get; }
-        private readonly int _Count; // preventing outside classes from modifying count
-        public int Count { get => _Count; } // public facing readonly count
-        public bool IsReadOnly { get; } // only allowed to read data from array
-        public int Capacity { get => Data.Capacity; }
+    /*
+     * I'm going to assume that inheriting from List<T> and using base class functionality to
+     * handle/bypass most of the assignment requirements isn't in the spirit of the assignment.
+     */
 
-        public ArrayCollection(int capacity, bool isReadOnly = false)
+    // fixed-length generic array
+    public class ArrayCollection<T> : ICollection<T>
+    {
+        private readonly List<T> _Data;
+        private int _Count;
+        public int Count { get => _Count; }
+        public int Capacity { get => _Data.Capacity; }
+        public bool IsReadOnly { get => false; } // readonly not implemented in this class (yet?)
+
+        public ArrayCollection(int capacity)
         {
+#warning do arg checks
             _Count = 0;
-            IsReadOnly = isReadOnly;
-            Data = new List<T>(capacity); // need to add a buffer to prevent cap increase?
+            _Data = new List<T>(capacity);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1065:Do not raise exceptions in unexpected locations", Justification = "just non-implementation while WIP")]
+        public T this[int index]
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
         public void Add(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(T item)
         {
             throw new NotImplementedException();
         }
@@ -40,11 +58,6 @@ namespace Assignment6
         }
 
         public IEnumerator<T> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Remove(T item)
         {
             throw new NotImplementedException();
         }
