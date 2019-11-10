@@ -27,6 +27,8 @@ namespace Configuration.Tests
             FileConfig fileConfig = new FileConfig(path);
             var config = fileConfig.Read();
             CollectionAssert.AreEqual(testList, config);
+            // MMM Comment: Ideally this would be in a finally block but I
+            // am glad to see you are at least cleaning up.
             File.Delete(path);
         }
 

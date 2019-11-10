@@ -6,6 +6,11 @@ namespace Mock
 {
     public class MockConfig : IConfig
     {
+        // MMM Coment: Preferably store as a tuple so you don't need
+        // to parse each time. (Even better, use a Dictionary<string, string> 
+        // but we hadn't covered that yet.)
+        // MMM Comment: It isn't clear why you need this since 
+        // you don't read from it in GetConfigValue?
         private List<string> ConfigNames = new List<string>();
 
         public MockConfig()
@@ -44,6 +49,7 @@ namespace Mock
             return true;
         }
 
+        // MMM Comment: Right idea!!! (You need to implement IDisposable as well though.)
         ~MockConfig()
         {
             foreach (string name in ConfigNames)
