@@ -30,6 +30,8 @@ namespace Configuration.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void SetConfigValue_NullName_ThrowsException()
         {
+            // MMM Comment: No, use a null forgiveness operator here instead.
+            // SetConfigValue(null!, "value");
 #nullable disable
             new EnvironmentConfig().SetConfigValue(null, "value");
 #nullable enable
@@ -104,6 +106,8 @@ namespace Configuration.Tests
 #nullable enable
         }
 
+
+        // MMM Comment: Nicely done!!
         [DataTestMethod]
         [ExpectedException(typeof(ArgumentException))]
         [DataRow("")]
@@ -113,6 +117,7 @@ namespace Configuration.Tests
         [DataRow("three more words")]
         public void GetConfigValue_InvalidName_ThrowsException(string name)
         {
+            // MMM Commet: Great use of discard here.
             new EnvironmentConfig().GetConfigValue(name, out _);
         }
 

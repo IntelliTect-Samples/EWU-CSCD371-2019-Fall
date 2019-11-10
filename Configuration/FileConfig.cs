@@ -22,6 +22,9 @@ namespace Configuration
             if (name.Contains(" ")) throw new ArgumentException($"{nameof(name)} cannot contain spaces.", nameof(name));
             if (name.Contains("=")) throw new ArgumentException($"{nameof(name)} cannot contain equal signs.", nameof(name));
 
+            // MMM Comment: Nice try at the switch expression.  Consider, however, 
+            // that it is convoluted and harder to read.  I think an if statement 
+            // would be a lot clearer.  
             value = File.Exists(Filename) switch
             {
                 true => (from line in File.ReadAllLines(Filename)
@@ -31,6 +34,7 @@ namespace Configuration
                 false => null
             };
 
+            // MMM Comment: Or (value is object);
             return !(value is null);
         }
 
@@ -61,6 +65,8 @@ namespace Configuration
             return true;
         }
 
+        // MMM Comment: Not that we covered it, but a yield return would
+        // be clearer here.
         public IEnumerator<(string name, string value)> GetEnumerator() =>
             File.Exists(Filename) switch
             {

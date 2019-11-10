@@ -7,6 +7,7 @@ namespace Configuration
 {
     public class EnvironmentConfig : IConfig, IEnumerable<(string name, string value)>
     {
+        // MMM Comment: Refactor commont code with SetConfigValue. 
         public bool GetConfigValue(string name, out string? value)
         {
             if (name is null) throw new ArgumentNullException(nameof(name));
@@ -40,12 +41,14 @@ namespace Configuration
             }
         }
 
+        // MMM Comment: Wow!  Great job with this.
         public IEnumerator<(string name, string value)> GetEnumerator() =>
             Environment.GetEnvironmentVariables()
                        .Cast<DictionaryEntry>()
                        .Select(kv => ((string)kv.Key, (string)kv.Value))
                        .GetEnumerator();
 
+        // MMM Comment: Great choice to make this an explicit implementation.
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

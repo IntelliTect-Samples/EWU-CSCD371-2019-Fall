@@ -9,6 +9,8 @@ namespace Configuration.Tests
     [TestClass]
     public class FileConfigTests
     {
+        // MMM Comment: The complexity of your expression implemented
+        // methods is questionable.
         private static (string name, string value)[] ParseFile(string filename) =>
             (from line in File.ReadAllLines(filename)
              let split = line.Split('=')
@@ -19,6 +21,8 @@ namespace Configuration.Tests
 
         private static string Filename { get; } = $"{nameof(FileConfigTests)}.conf";
 
+
+        // MMM Comment: Nice use of yield return.
         public static IEnumerable<object[]> ValidSettings
         {
             get
@@ -43,12 +47,14 @@ namespace Configuration.Tests
             }
         }
 
+        // MMM Comment: Using DynamicData - Cool!!!
         [DataTestMethod]
         [DynamicData(nameof(ValidSettings))]
         public void SetConfigValue_ValidArgs_AddsSettings((string name, string value)[] settings)
         {
             try
             {
+                // MMM Comment: Yes, delete both at start and end.
                 File.Delete(Filename);
 
                 var config = new FileConfig(Filename);

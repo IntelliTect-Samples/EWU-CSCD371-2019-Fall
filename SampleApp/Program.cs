@@ -8,8 +8,12 @@ namespace SampleApp
 {
     public static class Program
     {
+        // MMM Comment: Yes, Tuples!
         public static readonly (string name, string value)[] Vars = new[] { ("var1", "val1"), ("var2", "val2"), ("var3", "val3") };
 
+        // MMM Comment: My instructions were confusing! Why hardcode to use MockConfig?
+        // Shouldn't it hard code to use FileConfig/EnvironmentConfig and MockConfig 
+        // only for testing?
         public static void Main() => Run(new Mocks.MockConfig());
 
         public static void Run(IConfig config)
