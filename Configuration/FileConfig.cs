@@ -12,6 +12,7 @@ namespace Configuration
         {
             value = null;
 
+            // MMM Comment: use string (keyword) rather than String (Framework name).
             if (String.IsNullOrWhiteSpace(name) || name.Contains("=") || name.Contains(" "))
             {
                 return false;
@@ -23,9 +24,11 @@ namespace Configuration
             {
                 if (fileContents[i].Contains(name))
                 {
+                    // MMM Comment: What happens if there is not '='?
                     value =  fileContents[i].Split("=")[1];
                     return true;
                 }
+                // MMM Comment: What is the purpose of 'continue' here?  Can't it be deleted?
                 continue;
             }
 
@@ -44,7 +47,7 @@ namespace Configuration
                 return false;
             }
 
-
+            // MMM Comment: Good use of using statement
             using(StreamWriter configFile = new StreamWriter(path: ConfigFileName, append: true))
             {
                 configFile.WriteLine($"{name}={value}");
