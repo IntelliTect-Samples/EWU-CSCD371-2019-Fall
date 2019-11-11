@@ -7,18 +7,18 @@ namespace Assignment6 {
     public class MyArray<TData> : ICollection<TData> {
         private TData[] _Storage;
         public int Capacity { get; }
+        public int Count { get; set; }
 
         public MyArray(int capacity) {
             if (capacity <= 0) {
                 throw new ArgumentOutOfRangeException("capacity");
             }
+            Count = 0;
             Capacity = capacity;
             _Storage = new TData[capacity];
         }
 
         public bool IsReadOnly => _Storage.IsReadOnly;
-
-        public int Count => Capacity;
 
         public void Add(TData item) {
             if (item is null) {
@@ -30,6 +30,7 @@ namespace Assignment6 {
                 //Same with default being null, right??
                 if (_Storage[i].Equals(default(TData))) {
                     _Storage[i] = item;
+                    Count++;
                     return;
                 }
             }
@@ -38,6 +39,7 @@ namespace Assignment6 {
 
         public void Clear() {
             _Storage = new TData[Capacity];
+            Count = 0;
         }
 
         public bool Contains(TData item) {
@@ -69,6 +71,7 @@ namespace Assignment6 {
                 if (_Storage[i].Equals(item)) {
                     //It says data is non-nullable, but it's definetly able to set _Storage[i] to null...
                     _Storage[i] = default;
+                    Count--;
                     return true;
                 }
             }
