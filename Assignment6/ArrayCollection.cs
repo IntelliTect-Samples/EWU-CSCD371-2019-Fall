@@ -15,16 +15,15 @@ namespace Assignment6
         private T[] Data { get; }
         private int _Count;
         public int Count { get => _Count; }
-        private readonly int _Capacity;
-        public int Capacity { get => _Capacity; }
+        public int Capacity { get; }
         public bool IsReadOnly { get => false; } // readonly not implemented in this class (yet?)
 
         public ArrayCollection(int capacity)
         {
             if (capacity <= 0) throw new ArgumentOutOfRangeException(nameof(capacity));
 
-            _Capacity = capacity;
-            Data = new T[_Capacity];
+            Capacity = capacity;
+            Data = new T[Capacity];
         }
 
         // only allows indexing operations on existing elements, and assignment on next empty index
@@ -56,7 +55,7 @@ namespace Assignment6
 
         public void Add(T item)
         {
-            if (_Count >= _Capacity) throw new InvalidOperationException(message: "Array is full.");
+            if (_Count >= Capacity) throw new InvalidOperationException(message: "Array is full.");
 
             Data[_Count++] = item;
         }
@@ -93,7 +92,11 @@ namespace Assignment6
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            Array.Copy(Data, arrayIndex, array, arrayIndex, _Capacity - arrayIndex);
+            if (arrayIndex >= _Count) throw new ArgumentOutOfRangeException(nameof(arrayIndex));
+
+            if (array is null) throw new ArgumentNullException(nameof(array));
+
+            Array.Copy(Data, arrayIndex, array, arrayIndex, _Count - arrayIndex);
         }
 
         public IEnumerator<T> GetEnumerator() => ((IEnumerable<T>)Data).GetEnumerator();
