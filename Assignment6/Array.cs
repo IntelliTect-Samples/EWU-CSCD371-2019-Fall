@@ -58,18 +58,33 @@ namespace Assignment6
             throw new NotImplementedException();
         }
 
-        internal T Get(int index)
+        internal T GetValue(int index)
         {
-            if(index < 0 || index > Capacity - 1) { throw new ArgumentOutOfRangeException(nameof(index)); }
+            if (index < 0 || index > Capacity - 1) { throw new ArgumentOutOfRangeException(nameof(index)); }
 
-            return _InternalArray[index];
+            T temp = _InternalArray[index];
+
+            if (temp is null)
+            {
+                throw new ArgumentException("Value Doesn't Exist.", nameof(index));
+            }
+            else
+            {
+                return temp;
+            }
         }
 
-        //TODO index operator
+        internal void SetValue(int index, T value)
+        {
+            if (index < 0 || index > Capacity - 1) { throw new ArgumentOutOfRangeException(nameof(index)); }
+
+            _InternalArray[index] = value;
+        }
+
         public T this[int i]
         {
-            get { return Get(i); }
-
+            get => GetValue(i);
+            set => SetValue(i, value);
         }
     }
 
@@ -77,7 +92,6 @@ namespace Assignment6
     {
         private Array<T> _Array;
         private T Cur { get; set; }
-
         public T Current
         {
             get { return Cur; }
@@ -86,26 +100,37 @@ namespace Assignment6
         {
             get { return Current; }
         }
+        private int _CurIndex;
 
         public ArrayEnumerator(Array<T> array)
         {
             _Array = array;
-            Cur = array.Get(0);
+            Cur = array.GetValue(0);
+            _CurIndex = 0;
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //nothing needs to be disposed
         }
 
         public bool MoveNext()
         {
-            throw new NotImplementedException();
+            if(++_CurIndex >= _Array.Count)
+            {
+                return false;
+            }
+            else
+            {
+                Cur = _Array[_CurIndex];
+                return true;
+            }
         }
 
         public void Reset()
         {
-            throw new NotImplementedException();
+            Cur = _Array.GetValue(0);
+            _CurIndex = 0;
         }
     }
 }
