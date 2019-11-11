@@ -124,6 +124,9 @@ namespace Assignmnet6.tests {
             MyArray<int?> array = CreateIntMyArray(10, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
 
             //Act
+
+            //Not sure how else to test this, since Data[] array in the CopyTo method is non-nullable,
+            //do I even need to check for null array in CopyTo()?
             array.CopyTo(null, 1);
 
             //Assert
@@ -270,10 +273,11 @@ namespace Assignmnet6.tests {
             ArrayList list = new ArrayList();
 
             //Act
-            foreach (int item in array) {
+
+            foreach (int? item in array) {
                 list.Add(item);
             }
-            object[] b = list.ToArray();
+            object?[] b = list.ToArray();
 
             //Assert
             for (int i = 0; i < list.Count; i++) {

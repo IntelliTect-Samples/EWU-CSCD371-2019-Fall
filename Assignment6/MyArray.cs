@@ -24,8 +24,10 @@ namespace Assignment6 {
             if (item is null) {
                 throw new ArgumentNullException("item");
             }
-
             for (int i = 0; i < _Storage.Length; i++) {
+                //There's an error saying _Storage[i] could be null, but so what if it is?
+                //If _Storage[i] is null then it just won't be true, right??
+                //Same with default being null, right??
                 if (_Storage[i].Equals(default(Data))) {
                     _Storage[i] = item;
                     return;
@@ -62,7 +64,10 @@ namespace Assignment6 {
                 throw new ArgumentNullException("item");
             }
             for (int i = 0; i < _Storage.Length; i++) {
+                //There's an error saying _Storage[i] could be null, but so what if it is?
+                //If _Storage[i] is null then it just won't be true since I make sure item isn't null, right??
                 if (_Storage[i].Equals(item)) {
+                    //It says data is non-nullable, but it's definetly able to set _Storage[i] to null...
                     _Storage[i] = default;
                     return true;
                 }
