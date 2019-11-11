@@ -42,7 +42,7 @@ namespace Assignment6Tests
         public void ArrayIndexingFunctional(int index, string expected)
         {
             //Arrange
-            var array = new Array<string>(5)
+            Array<string> array = new Array<string>(5)
             {
                 //Act
                 [index] = "hi" + index
@@ -62,6 +62,57 @@ namespace Assignment6Tests
                 //Act
                 [6] = "test"
             };
+        }
+
+        [TestMethod]
+        public void ForeachFunctionalGivenFullArray()
+        {
+            //Arrange
+            Array<string> array = new Array<string>(5) { "A", "B", "C", "D", "E" }; //Warning tells me to use explicit, code analyzer tells me to use implicit (var)
+            string concat = "";
+
+            //Act
+            foreach (string str in array)
+            {
+                concat += str;
+            }
+
+            //Assert
+            Assert.AreEqual("ABCDE", concat);
+        }
+
+        [TestMethod]
+        public void ForeachFunctionalGivenPartiallyFullArray()
+        {
+            //Arrange
+            Array<string> array = new Array<string>(5) { "A" };
+            string concat = "";
+
+            //Act
+            foreach (string str in array)
+            {
+                concat += str;
+            }
+
+            //Assert
+            Assert.AreEqual("A", concat);
+        }
+
+        [TestMethod]
+        public void ForeachFunctionalWithEmptyArray()
+        {
+            //Arrange
+            Array<string> array = new Array<string>(5);
+            bool skipped = true;
+
+            //Act
+            foreach (string str in array)
+            {
+                skipped = false;
+            }
+
+            //Assert
+            Assert.IsTrue(skipped);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Assignment6
     {
         private T[] _InternalArray;
 
-        public int Count { get; }
+        public int Count { get; private set; }
         public int Capacity { get; }
         public bool IsReadOnly { get; }
 
@@ -25,7 +25,21 @@ namespace Assignment6
 
         public void Add(T item)
         {
-            throw new NotImplementedException();
+            int openIndex = 0;
+            while (_InternalArray[openIndex] is T)
+            {
+                if (openIndex > Capacity - 1)
+                {
+                    throw new ArgumentException("No Room For Item.", nameof(item));
+                }
+                else
+                {
+                    openIndex++;
+                }
+            }
+
+            _InternalArray[openIndex] = item;
+            Count++;
         }
 
         public void Clear()
@@ -79,6 +93,7 @@ namespace Assignment6
             if (index < 0 || index > Capacity - 1) { throw new ArgumentOutOfRangeException(nameof(index)); }
 
             _InternalArray[index] = value;
+            Count++;
         }
 
         public T this[int i]
@@ -105,8 +120,8 @@ namespace Assignment6
         public ArrayEnumerator(Array<T> array)
         {
             _Array = array;
-            Cur = array.GetValue(0);
-            CurIndex = 0;
+            Cur = default!;
+            CurIndex = -1;
         }
 
         public void Dispose()
@@ -129,8 +144,8 @@ namespace Assignment6
 
         public void Reset()
         {
-            Cur = _Array.GetValue(0);
-            CurIndex = 0;
+            Cur = default!;
+            CurIndex = -1;
         }
     }
 }
