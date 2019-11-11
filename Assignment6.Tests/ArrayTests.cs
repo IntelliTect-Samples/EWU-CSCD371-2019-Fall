@@ -7,11 +7,23 @@ namespace Assignment6.Tests
     [TestClass]
     public class ArrayTests
     {
+
+        [DataTestMethod]
+        [DataRow(0)]
+        [DataRow(-1)]
+        [DataRow(-10000)]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ArrayNegWidthThrowException(int width)
+        {
+            _ = new Array<int>(width);
+        }
+
+
         [DataTestMethod]
         [DataRow(1)]
         [DataRow(2)]
         [DataRow(3)]
-        public void Array_Add_Success(int item)
+        public void ArrayAddSuccess(int item)
         {
             Array<int> array = new Array<int>(3)
             {
@@ -21,8 +33,35 @@ namespace Assignment6.Tests
             Assert.IsTrue(array.Contains(item));
         }
 
+        [TestMethod]        
+        [ExpectedException(typeof(ArgumentException))]
+        public void ArrayAddCapacityIsFull()
+        {
+            Array<int> array = new Array<int>(3)
+            {
+                1,
+                2,
+                3
+            };
+
+            array.Add(0);
+        }
+
         [TestMethod]
-        public void Array_Clear_Success()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ArrayAddNullItem()
+        {
+            Array<String> array = new Array<String>(3)
+            {
+                "1",
+                "2"
+            };
+            string item = null;
+            array.Add(item);
+        }
+
+        [TestMethod]
+        public void ArrayClearSuccess()
         {
             Array<int> array = new Array<int>(2)
             {
@@ -40,7 +79,7 @@ namespace Assignment6.Tests
         [DataRow(3)]
         [DataRow(4)]
         [DataRow(5)]
-        public void Array_Contains_ReturnsItem(int item)
+        public void ArrayContainsReturnsItem(int item)
         {
             Array<int> array = new Array<int>(5)
             {
@@ -60,7 +99,7 @@ namespace Assignment6.Tests
         [DataRow(8)]
         [DataRow(9)]
         [DataRow(10)]
-        public void Array_Contains_DoesNotContain(int item)
+        public void ArrayContainsDoesNotContain(int item)
         {
             Array<int> array = new Array<int>(5)
             {
@@ -74,13 +113,69 @@ namespace Assignment6.Tests
             Assert.IsFalse(array.Contains(item));
         }
 
+        [TestMethod]
+        public void ArrayCopyToSuccess()
+        {
+            Array<int> arr = new Array<int>(3)
+            {
+                1
+            };
+
+            int[] intArray = new int[3];
+            arr.CopyTo(intArray, 0);
+
+            Assert.AreEqual(1, intArray[0]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ArrayCopyToThrowsException()
+        {
+            Array<int> arr = new Array<int>(3)
+            {
+                1
+            };
+
+            int[] intArray = null;
+            arr.CopyTo(intArray, 0);
+
+            Assert.AreEqual(1, intArray[0]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ArrayCopyToIndexOutOfBounds()
+        {
+            Array<int> arr = new Array<int>(3)
+            {
+                1
+            };
+
+            int[] intArray = new int[3];
+            arr.CopyTo(intArray, 4);
+
+            Assert.AreEqual(1, intArray[0]);
+        }
+
+        [TestMethod]
+        public void ArrayGetEnumeratorSuccess()
+        {
+            Array<int> arr = new Array<int>(3)
+            {
+                1,
+                2
+            };
+
+            Assert.IsNotNull(arr.GetEnumerator());
+        }
+
         [DataTestMethod]
         [DataRow(1)]
         [DataRow(2)]
         [DataRow(3)]
         [DataRow(4)]
         [DataRow(5)]
-        public void Array_Remove_Success(int item)
+        public void ArrayRemoveSuccess(int item)
         {
             Array<int> array = new Array<int>(5)
             {
@@ -100,7 +195,7 @@ namespace Assignment6.Tests
         [DataRow(8)]
         [DataRow(9)]
         [DataRow(10)]
-        public void Array_Removes_DoesNotContain(int item)
+        public void ArrayRemovesDoesNotContain(int item)
         {
             Array<int> array = new Array<int>(5)
             {
@@ -112,6 +207,18 @@ namespace Assignment6.Tests
             };
 
             Assert.IsFalse(array.Remove(item));
+        }
+
+        [TestMethod]
+        public void ArrayIEnumurableGetEnumeratorSuccess()
+        {
+            Array<int> arr = new Array<int>(3)
+            {
+                1,
+                2
+            };
+
+            Assert.IsNotNull(arr.GetEnumerator());
         }
     }
 }
