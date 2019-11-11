@@ -114,5 +114,58 @@ namespace Assignment6Tests
             //Assert
             Assert.IsTrue(skipped);
         }
+
+        [TestMethod]
+        public void ArrayClearWorks()
+        {
+            //Arrange
+            Array<string> array = new Array<string>(5) { "A", "B", "C", "D", "E" };
+            bool clear = true;
+
+            //Act
+            array.Clear();
+            foreach (string str in array)
+            {
+                clear = false;
+            }
+
+            //Assert
+            Assert.IsTrue(clear);
+            Assert.AreEqual(0, array.Count);
+        }
+
+        [TestMethod]
+        public void ArrayContainsWorks()
+        {
+            //Arrange
+            Array<string> array = new Array<string>(5) { "A", "B", "C", "D", "E" };
+            bool contains;
+            bool invalid;
+
+            //Act
+            contains = array.Contains("C");
+            invalid = array.Contains("Z");
+
+            //Assert
+            Assert.IsTrue(contains);
+            Assert.IsFalse(invalid);
+        }
+
+        [TestMethod]
+        public void ArrayAddWorks()
+        {
+            //Arrange
+#pragma warning disable IDE0028 // Simplify collection initialization. Makes test more obvious
+            Array<string> array = new Array<string>(5);
+#pragma warning restore IDE0028 // Simplify collection initialization
+
+            //Act
+            array.Add("Z");
+            array.Add("25");
+
+            //Assert
+            Assert.IsTrue(array.Contains("Z"));
+            Assert.IsTrue(array.Contains("25"));
+        }
     }
 }

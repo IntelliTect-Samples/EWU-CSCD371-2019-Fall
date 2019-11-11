@@ -44,12 +44,21 @@ namespace Assignment6
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _InternalArray = new T[Capacity];
+            Count = 0;
         }
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            foreach (T t in this)
+            {
+                if (t!.Equals(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
