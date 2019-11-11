@@ -25,6 +25,8 @@ namespace Assignment6
 
         public void Add(T item)
         {
+            if (item is null) { throw new ArgumentNullException(nameof(item)); }
+
             int openIndex = 0;
             while (_InternalArray[openIndex] is T)
             {
@@ -106,6 +108,7 @@ namespace Assignment6
 
         internal void SetValue(int index, T value)
         {
+            if (value is null) { throw new ArgumentNullException(nameof(value)); }
             if (index < 0 || index > Capacity - 1) { throw new ArgumentOutOfRangeException(nameof(index)); }
 
             _InternalArray[index] = value;
