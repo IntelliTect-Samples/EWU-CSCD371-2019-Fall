@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment6", "Assignment6\Assignment6.csproj", "{4C7EC39E-FDB6-4D15-89DF-15AB0BADF554}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignment6.Tests", "Assignment6.Tests\Assignment6.Tests.csproj", "{76544652-FDF7-4ED2-81C6-D4F994271877}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment6.Tests", "Assignment6.Tests\Assignment6.Tests.csproj", "{76544652-FDF7-4ED2-81C6-D4F994271877}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{42A8CBF5-B53E-4538-B2C8-C1F6E8CC5E7A}"
+	ProjectSection(SolutionItems) = preProject
+		GlobalSuppressions.cs = GlobalSuppressions.cs
+		TestSuppressions.cs = TestSuppressions.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -12,29 +12,53 @@ namespace Assignment6
     // fixed-length generic array
     public class ArrayCollection<T> : ICollection<T>
     {
-        private readonly List<T> _Data;
+        private T[] Data { get; }
         private int _Count;
         public int Count { get => _Count; }
-        public int Capacity { get => _Data.Capacity; }
+        private readonly int _Capacity;
+        public int Capacity { get => _Capacity; }
         public bool IsReadOnly { get => false; } // readonly not implemented in this class (yet?)
 
         public ArrayCollection(int capacity)
         {
-#warning do arg checks
-            _Count = 0;
-            _Data = new List<T>(capacity);
+            if (capacity <= 0) throw new ArgumentOutOfRangeException(nameof(capacity));
+
+            _Capacity = capacity;
+            Data = new T[_Capacity];
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1065:Do not raise exceptions in unexpected locations", Justification = "just non-implementation while WIP")]
+        // only allows indexing operations on existing elements, and assignment on next empty index
+#pragma warning disable CA1065 // It's expected that an indexing operation will throw on invalid index
         public T this[int index]
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get
+            {
+                if (index < 0 || index >= _Count) throw new IndexOutOfRangeException();
+
+                return Data[index];
+            }
+            set
+            {
+                if (index < 0 || index > _Count ) throw new IndexOutOfRangeException();
+
+                
+                if (index == _Count) // allowing insertion into next empty position
+                {
+                    Add(value); // let add function handle the logic of insertion
+                }
+                else
+                {
+                    Data[index] = value;
+                }
+            }
         }
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
 
         public void Add(T item)
         {
-            throw new NotImplementedException();
+            if (_Count >= _Capacity) throw new InvalidOperationException(message: "Array is full.");
+
+            Data[_Count++] = item;
         }
 
         public bool Remove(T item)
@@ -44,12 +68,20 @@ namespace Assignment6
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            //allowing possible null valuetypes, they cannot be accessed externally
+            for (int i = 0; i < _Count; Data[i++] = default!) ;
+
+            _Count = 0;
         }
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < _Count; i++)
+            {
+                if (Data[i]?.Equals(item) ?? false) return true;
+            }
+
+            return false;
         }
 
         public void CopyTo(T[] array, int arrayIndex)

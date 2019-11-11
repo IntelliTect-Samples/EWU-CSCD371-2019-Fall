@@ -20,6 +20,18 @@ namespace Assignment6.Tests
             Assert.AreEqual<int>(capacity, sut.Capacity);
         }
 
+        [DataTestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [DataRow(0, DisplayName = "Zero capacity")]
+        [DataRow(-5, DisplayName = "Negative capacity")]
+        public void Constructor_InvalidCapacity_Throws(int capacity)
+        {
+            _ = new ArrayCollection<int>(capacity);
+
+            // should throw exception above, so this shouldn't be executed
+            Assert.Fail();
+        }
+
         [TestMethod]
         public void Add_InsertsItem_ItemAddedToArray()
         {
