@@ -169,6 +169,19 @@ namespace Assignment6Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ArrayAddThrowsExceptionWhenNull()
+        {
+            //Arrange
+            Array<string> array = new Array<string>(5);
+
+            //Act
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type. Needed to test what happens when null
+            array.Add(null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [TestMethod]
         public void ArrayCopyToWorks()
         {
             //Arrange
