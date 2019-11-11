@@ -17,6 +17,8 @@ namespace Assignment6
             if(capacity < 1) { throw new ArgumentOutOfRangeException(nameof(capacity)); }
 
             Capacity = capacity;
+            Count = 0;
+            IsReadOnly = false;
 
             _InternalArray = new T[Capacity];
         }
