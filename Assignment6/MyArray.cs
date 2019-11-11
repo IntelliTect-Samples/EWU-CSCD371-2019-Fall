@@ -4,23 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Assignment6 {
-    public class MyArray<Data> : ICollection<Data> {
-        private Data[] _Storage;
-        public int Capacity { get; set; }
+    public class MyArray<TData> : ICollection<TData> {
+        private TData[] _Storage;
+        public int Capacity { get; }
 
         public MyArray(int capacity) {
             if (capacity <= 0) {
                 throw new ArgumentOutOfRangeException("capacity");
             }
             Capacity = capacity;
-            _Storage = new Data[capacity];
+            _Storage = new TData[capacity];
         }
 
         public bool IsReadOnly => _Storage.IsReadOnly;
 
         public int Count => Capacity;
 
-        public void Add(Data item) {
+        public void Add(TData item) {
             if (item is null) {
                 throw new ArgumentNullException("item");
             }
@@ -28,7 +28,7 @@ namespace Assignment6 {
                 //There's an error saying _Storage[i] could be null, but so what if it is?
                 //If _Storage[i] is null then it just won't be true, right??
                 //Same with default being null, right??
-                if (_Storage[i].Equals(default(Data))) {
+                if (_Storage[i].Equals(default(TData))) {
                     _Storage[i] = item;
                     return;
                 }
@@ -37,17 +37,17 @@ namespace Assignment6 {
         }
 
         public void Clear() {
-            _Storage = new Data[Capacity];
+            _Storage = new TData[Capacity];
         }
 
-        public bool Contains(Data item) {
+        public bool Contains(TData item) {
             if (item is null) {
                 throw new ArgumentNullException("item");
             }
             return _Storage.Contains(item);
         }
 
-        public void CopyTo(Data[] array, int arrayIndex) {
+        public void CopyTo(TData[] array, int arrayIndex) {
             if (arrayIndex < 0 || arrayIndex >= _Storage.Length) {
                 throw new IndexOutOfRangeException("Index passed into CoptTo is out of range!");
             }
@@ -59,7 +59,7 @@ namespace Assignment6 {
             }
         }
 
-        public bool Remove(Data item) {
+        public bool Remove(TData item) {
             if (item is null) {
                 throw new ArgumentNullException("item");
             }
@@ -75,7 +75,7 @@ namespace Assignment6 {
             return false;
         }
 
-        public Data GetData(int index) {
+        public TData GetData(int index) {
             if (index < 0 || index >= Capacity) {
                 throw new IndexOutOfRangeException("Index in GetData is out of bounds!");
             }
@@ -85,8 +85,8 @@ namespace Assignment6 {
             return _Storage[index];
         }
 
-        public IEnumerator<Data> GetEnumerator() {
-            foreach (Data d in _Storage) {
+        public IEnumerator<TData> GetEnumerator() {
+            foreach (TData d in _Storage) {
                 yield return d;
             }
         }
