@@ -281,6 +281,17 @@ namespace Assignmnet6.tests {
             }
         }
 
+        [TestMethod]
+        public void MyArray_CanContainDifferentDataTypes() {
+            //Arrange
+
+            //Act
+            MyArray<string> stringArray = new MyArray<string>(10);
+            MyArray<double> doubleArray = new MyArray<double>(10);
+
+            //Assert
+        }
+
         private MyArray<int?> CreateIntMyArray(int capacity, int[] values) {
             MyArray<int?> array = new MyArray<int?>(capacity);
 
