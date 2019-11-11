@@ -7,7 +7,15 @@ namespace Assignment6
     public class Array<T> : ICollection<T>
     {
         public int Count { get; }
+        public int Capacity { get; }
         public bool IsReadOnly { get; }
+
+        public Array(int capacity)
+        {
+            if(capacity < 1) { throw new ArgumentOutOfRangeException(nameof(capacity)); }
+
+            Capacity = capacity;
+        }
 
         public void Add(T item)
         {
@@ -42,6 +50,29 @@ namespace Assignment6
         IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
+        }
+
+        //TODO index operator
+
+        class ArrayEnumerator : IEnumerator<T>
+        {
+            public T Current => throw new NotImplementedException();
+            object IEnumerator.Current => throw new NotImplementedException();
+
+            public void Dispose()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool MoveNext()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Reset()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
