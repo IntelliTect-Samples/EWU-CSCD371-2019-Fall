@@ -7,7 +7,7 @@ namespace Assignment6
     public class Array<T> : ICollection<T>
     {
         private int Capacity { get; set; }
-        private List<T>? Items { get; set; }
+        private List<T> Items { get; set; }
         public int Count => Items.Count;
         public bool IsReadOnly => false;
 
@@ -26,44 +26,64 @@ namespace Assignment6
 
         public void Add(T item)
         {
-            if (Items is null)
-                return;
-
+            if(Capacity == Count)
+            {
+                throw new InvalidOperationException("Array is a at max capacity.");
+            }
             Items.Add(item);
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            Items.Clear();
         }
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            if (Items.Contains(item))
+            {
+                return true;
+            }
+            return false;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            if(array == null)
+            {
+                throw new ArgumentNullException(nameof(array), "Array can't be null");
+            }
+            if (arrayIndex < 0)
+            {
+                throw new ArgumentException("Index must be postive", nameof(arrayIndex));
+            }
+            for (int i = 0; i < Items.Count; i++)
+            {
+                array[i + arrayIndex] = Items[i];
+            }
         }
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            if(item is null)
+            {
+                throw new ArgumentNullException(nameof(item), "Item can't be null");
+            }
+            if (Items.Remove(item))
+            {
+                return true;
+            }
+            return false;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            if(Items is null)
-            {
-                throw new ArgumentNullException("Items is null", nameof(Items));
-            }
             return Items.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
     }
 }
