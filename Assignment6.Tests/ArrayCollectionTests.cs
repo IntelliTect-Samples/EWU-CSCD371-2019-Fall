@@ -1,8 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Assignment6;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Assignment6.Tests
 {
@@ -18,6 +15,29 @@ namespace Assignment6.Tests
             ArrayCollection<int> sut = new ArrayCollection<int>(capacity);
 
             Assert.AreEqual<int>(capacity, sut.Capacity);
+        }
+
+        [TestMethod]
+        public void Constructor_GivenExistingArray_CopiesArray()
+        {
+            int[] array = { 1, 2, 3 };
+            ArrayCollection<int> sut = new ArrayCollection<int>(array);
+
+            Assert.IsNotNull(sut);
+            for (int i = 0; i < array.Length; i++)
+            {
+                Assert.AreEqual<int>(array[i], sut[i]);
+            }
+        }
+
+        [TestMethod]
+        public void Constructor_GivenExistingArrayAndCapacity_CopiesArrayPartly()
+        {
+            int[] array = { 1, 2, 3 };
+            ArrayCollection<int> sut = new ArrayCollection<int>(array, 1);
+
+            Assert.IsNotNull(sut);
+            Assert.AreEqual<int>(array[0], sut[0]);
         }
 
         [DataTestMethod]
@@ -253,13 +273,41 @@ namespace Assignment6.Tests
         public void NonGenericGetEnumerator_AdvancesElement_EnumeratorItemMatchesIndexedItem()
         {
             ArrayCollection<int> sut = GetNewSUT();
-            System.Collections.IEnumerator enumerator = ((System.Collections.IEnumerable) sut).GetEnumerator();
+            System.Collections.IEnumerator enumerator = ((System.Collections.IEnumerable)sut).GetEnumerator();
 
             enumerator.MoveNext(); // starts at -1
             enumerator.MoveNext();
 
             Assert.IsNotNull(enumerator.Current); //returning object, make sure it exists
             Assert.AreEqual<int>(sut[1], (int)enumerator.Current!); // we checked it, cast and forgive null
+        }
+
+        [TestMethod]
+        public void CastingExplicit_CastingToArray_ReturnsRawArray()
+        {
+            ArrayCollection<int> sut = GetNewSUT();
+
+            int[] cast = (int[])sut!;
+
+            Assert.IsNotNull(cast);
+            for (int i = 0; i < sut.Count; i++)
+            {
+                Assert.AreEqual<int>(sut[i], cast[i]);
+            }
+        }
+
+        [TestMethod]
+        public void CastingExplicit_CastingFromArray_ReturnsArrayCollection()
+        {
+            int[] array = { 1, 2, 3 };
+
+            ArrayCollection<int> cast = (ArrayCollection<int>)array!;
+
+            Assert.IsNotNull(cast);
+            for (int i = 0; i < array.Length; i++)
+            {
+                Assert.AreEqual<int>(array[i], cast[i]);
+            }
         }
     }
 }
