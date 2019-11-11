@@ -82,12 +82,23 @@ namespace Assignment6
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            if (item is null) { throw new ArgumentNullException(nameof(item)); }
+
+            for (int i = 0; i < Count; i++)
+            {
+                if (_InternalArray[i] is T && _InternalArray[i]!.Equals(item))
+                {
+                    _InternalArray[i] = default!;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
 
         internal T GetValue(int index)

@@ -181,6 +181,36 @@ namespace Assignment6Tests
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
+
+        [TestMethod]
+        public void ArrayRemoveWorks()
+        {
+            //Arrange
+            Array<string> array = new Array<string>(5) { "A", "B", "C" };
+            bool removed;
+
+            //Act
+            removed = array.Remove("B");
+
+            //Assert
+            Assert.IsTrue(removed);
+            Assert.IsFalse(array.Contains("B"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ArrayRemoveThrowsExceptionWhenNull()
+        {
+            //Arrange
+            Array<string> array = new Array<string>(5);
+
+            //Act
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type. Needed to test what happens when null
+            array.Add(null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+
         [TestMethod]
         public void ArrayCopyToWorks()
         {
