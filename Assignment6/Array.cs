@@ -100,13 +100,13 @@ namespace Assignment6
         {
             get { return Current; }
         }
-        private int _CurIndex;
+        private int CurIndex { get; set; }
 
         public ArrayEnumerator(Array<T> array)
         {
             _Array = array;
             Cur = array.GetValue(0);
-            _CurIndex = 0;
+            CurIndex = 0;
         }
 
         public void Dispose()
@@ -116,13 +116,13 @@ namespace Assignment6
 
         public bool MoveNext()
         {
-            if(++_CurIndex >= _Array.Count)
+            if(++CurIndex >= _Array.Count)
             {
                 return false;
             }
             else
             {
-                Cur = _Array[_CurIndex];
+                Cur = _Array[CurIndex];
                 return true;
             }
         }
@@ -130,7 +130,7 @@ namespace Assignment6
         public void Reset()
         {
             Cur = _Array.GetValue(0);
-            _CurIndex = 0;
+            CurIndex = 0;
         }
     }
 }
