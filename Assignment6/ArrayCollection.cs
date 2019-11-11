@@ -63,40 +63,41 @@ namespace Assignment6
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            if (_Count == 0) return false;
+
+            for (int i = 0; i < _Count; i++)
+            {
+                if (EqualityComparer<T>.Default.Equals(Data[i], item))
+                {
+                    Array.Copy(Data, i + 1, Data, i, _Count - i - 1); // shift elements to fill hole
+                    _Count--;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void Clear()
         {
-            //allowing possible null valuetypes, they cannot be accessed externally
-            for (int i = 0; i < _Count; Data[i++] = default!) ;
+            // allowing possible null valuetypes, they cannot be accessed externally
+            Array.Fill<T>(Data, default!);
 
             _Count = 0;
         }
 
         public bool Contains(T item)
         {
-            for (int i = 0; i < _Count; i++)
-            {
-                if (Data[i]?.Equals(item) ?? false) return true;
-            }
-
-            return false;
+            return Array.Exists<T>(Data, element => EqualityComparer<T>.Default.Equals(element, item));
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            Array.Copy(Data, arrayIndex, array, arrayIndex, _Capacity - arrayIndex);
         }
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerator<T> GetEnumerator() => ((IEnumerable<T>)Data).GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => Data.GetEnumerator();
     }
 }

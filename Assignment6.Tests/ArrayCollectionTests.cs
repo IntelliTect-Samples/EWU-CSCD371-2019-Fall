@@ -222,11 +222,28 @@ namespace Assignment6.Tests
         }
 
         [TestMethod]
+        public void CopyTo_ValueCopiesSubset_ReturnsCloneOfSubset()
+        {
+            ArrayCollection<int> sut = GetNewSUT();
+            int[] clone = new int[sut.Count];
+            int startIndex = 1;
+
+            sut.CopyTo(clone, startIndex);
+
+            Assert.AreEqual<int>(sut.Count, clone.Length);
+            for (int i = startIndex; i < sut.Count; i++)
+            {
+                Assert.AreEqual<int>(sut[i], clone[i]);
+            }
+        }
+
+        [TestMethod]
         public void GenericGetEnumerator_AdvancesElement_EnumeratorItemMatchesIndexedItem()
         {
             ArrayCollection<int> sut = GetNewSUT();
             var enumerator = sut.GetEnumerator();
 
+            enumerator.MoveNext(); // starts at -1
             enumerator.MoveNext();
 
             Assert.AreEqual<int>(sut[1], enumerator.Current);
@@ -238,6 +255,7 @@ namespace Assignment6.Tests
             ArrayCollection<int> sut = GetNewSUT();
             System.Collections.IEnumerator enumerator = ((System.Collections.IEnumerable) sut).GetEnumerator();
 
+            enumerator.MoveNext(); // starts at -1
             enumerator.MoveNext();
 
             Assert.IsNotNull(enumerator.Current); //returning object, make sure it exists
