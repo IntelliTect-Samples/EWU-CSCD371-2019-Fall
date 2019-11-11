@@ -63,7 +63,14 @@ namespace Assignment6
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            if (array is null) { throw new ArgumentNullException(nameof(array)); }
+            if (arrayIndex < 0 || arrayIndex > Count - 1) { throw new ArgumentOutOfRangeException(nameof(arrayIndex)); }
+            if (array.Length < Count) { throw new ArgumentException("Passed in array is too small.", nameof(array)); }
+
+            for (int i = 0; i < Count + arrayIndex; i++)
+            {
+                array[i] = GetValue(i + arrayIndex);
+            }
         }
 
         public IEnumerator<T> GetEnumerator()

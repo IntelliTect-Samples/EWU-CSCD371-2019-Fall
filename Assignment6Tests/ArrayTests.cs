@@ -167,5 +167,31 @@ namespace Assignment6Tests
             Assert.IsTrue(array.Contains("Z"));
             Assert.IsTrue(array.Contains("25"));
         }
+
+        [TestMethod]
+        public void ArrayCopyToWorks()
+        {
+            //Arrange
+            Array<string> array = new Array<string>(5) { "A", "B", "C", "D", "E" };
+            string[] strArr = new string[5];
+            string collResult = "";
+            string arrayResult = "";
+
+            //Act
+            array.CopyTo(strArr, 0);
+
+            foreach (string str in array)
+            {
+                collResult += str;
+            }
+
+            foreach (string str in strArr)
+            {
+                arrayResult += str;
+            }
+
+            //Assert
+            Assert.AreEqual(collResult, arrayResult);
+        }
     }
 }
