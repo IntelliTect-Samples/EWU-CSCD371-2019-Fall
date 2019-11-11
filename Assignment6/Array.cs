@@ -11,8 +11,8 @@ namespace Assignment6
 {
     public class ArrayCollection<T> : ICollection<T>
     {
-        public int Count => _Data.Count;
-        public bool IsReadOnly => false;
+        public int Count { get => _Data.Count; }
+        public bool IsReadOnly { get => false; }
         public int Capacity { get; } 
         private readonly List<T> _Data;
         public ArrayCollection(int cap)
@@ -29,7 +29,7 @@ namespace Assignment6
         {
             if (collection is null)
             {
-                throw new ArgumentNullException("Collection is null", nameof(collection));
+                throw new ArgumentNullException(nameof(collection), "Collection is null");
             }
             _Data = new List<T>(collection.Count);
             Capacity = collection.Count;
@@ -60,9 +60,9 @@ namespace Assignment6
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            if(arrayIndex < 0 || arrayIndex > Capacity)
+            if (arrayIndex < 0 || arrayIndex >= Capacity)
             {
-                throw new ArgumentOutOfRangeException("Index is out of bounds of this array.", nameof(arrayIndex));
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex), "Index is out of bounds of this array.");
             }
             _Data.CopyTo(array, arrayIndex);
         }

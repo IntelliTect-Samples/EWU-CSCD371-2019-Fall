@@ -87,9 +87,11 @@ namespace Assignment6.Tests
         [TestMethod]
         public void Array_CopyTo_Qapla()
         {
-            ArrayCollection<int> intCol = new ArrayCollection<int>(4);
-            int[] intArray = new int[4];
-            intCol.CopyTo(intArray, 4);
+            ArrayCollection<int> intCol = new ArrayCollection<int>(1);
+            intCol.Add(5);
+            int[] intArray = new int[1];
+            intCol.CopyTo(intArray, 0);
+            Assert.AreEqual(intArray[0], 5);
         }
 
         [TestMethod]
