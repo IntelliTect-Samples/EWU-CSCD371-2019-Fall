@@ -30,7 +30,7 @@ namespace Assignment6Tests
             int cap = -1;
 
             //Act
-            var _ = new Array<string>(cap);
+            Array<string> _ = new Array<string>(cap);
         }
     }
 }

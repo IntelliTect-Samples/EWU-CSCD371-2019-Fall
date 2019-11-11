@@ -6,6 +6,8 @@ namespace Assignment6
 {
     public class Array<T> : ICollection<T>
     {
+        private T[] _InternalArray;
+
         public int Count { get; }
         public int Capacity { get; }
         public bool IsReadOnly { get; }
@@ -15,6 +17,8 @@ namespace Assignment6
             if(capacity < 1) { throw new ArgumentOutOfRangeException(nameof(capacity)); }
 
             Capacity = capacity;
+
+            _InternalArray = new T[Capacity];
         }
 
         public void Add(T item)
@@ -50,6 +54,12 @@ namespace Assignment6
         IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
+        }
+
+        public T this[int i]
+        {
+            get { return _InternalArray[i]; }
+
         }
 
         //TODO index operator
