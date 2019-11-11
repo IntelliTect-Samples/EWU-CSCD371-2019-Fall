@@ -45,7 +45,7 @@ namespace Assignment6
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return new ArrayEnumerator<T>(this);
         }
 
         public bool Remove(T item)
@@ -58,33 +58,54 @@ namespace Assignment6
             throw new NotImplementedException();
         }
 
-        public T this[int i]
+        internal T Get(int index)
         {
-            get { return _InternalArray[i]; }
+            if(index < 0 || index > Capacity - 1) { throw new ArgumentOutOfRangeException(nameof(index)); }
 
+            return _InternalArray[index];
         }
 
         //TODO index operator
-
-        class ArrayEnumerator : IEnumerator<T>
+        public T this[int i]
         {
-            public T Current => throw new NotImplementedException();
-            object IEnumerator.Current => throw new NotImplementedException();
+            get { return Get(i); }
 
-            public void Dispose()
-            {
-                throw new NotImplementedException();
-            }
+        }
+    }
 
-            public bool MoveNext()
-            {
-                throw new NotImplementedException();
-            }
+    internal class ArrayEnumerator<T> : IEnumerator<T>
+    {
+        private Array<T> _Array;
+        private T Cur { get; set; }
 
-            public void Reset()
-            {
-                throw new NotImplementedException();
-            }
+        public T Current
+        {
+            get { return Cur; }
+        }
+        object? IEnumerator.Current
+        {
+            get { return Current; }
+        }
+
+        public ArrayEnumerator(Array<T> array)
+        {
+            _Array = array;
+            Cur = array.Get(0);
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool MoveNext()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Reset()
+        {
+            throw new NotImplementedException();
         }
     }
 }
