@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -15,6 +15,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Assignment6\Assignment6.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IntelliTect.Analyzers" Version="0.1.3" />
   </ItemGroup>
 
 </Project>

@@ -7,8 +7,8 @@ namespace Assignment6
     public class Array<T> : ICollection<T>
     {
         private int Capacity { get; set; }
-        private List<T>? Items { get; set; }
-        public int Count => Items is null ? throw new NullReferenceException() : Items.Count;
+        private List<T>? Items { get; }
+        public int Count => Items is null ? 0 : Items.Count;
         public bool IsReadOnly => false;
 
         public Array(int capacity)
@@ -115,7 +115,7 @@ namespace Assignment6
         {
             get
             {
-                if (Items is null)
+                if(Items is null)
                 {
                     throw new NullReferenceException("Items is null");
                 }
