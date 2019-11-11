@@ -1,5 +1,6 @@
 using Assignment6;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Assignment6Tests
 {
@@ -19,6 +20,17 @@ namespace Assignment6Tests
 
             //Assert
             Assert.AreEqual(cap, returnedCap);
+        }
+
+        [TestMethod]
+		[ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void ArrayExceptsWithInvalidCapacity()
+        {
+            //Arrange
+            int cap = -1;
+
+            //Act
+            var _ = new Array<string>(cap);
         }
     }
 }
