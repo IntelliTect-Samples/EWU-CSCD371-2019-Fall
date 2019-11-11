@@ -7,6 +7,8 @@ namespace Assignment6Tests
     [TestClass]
     public class ArrayTests
     {
+        /* Array<T> Testing */
+
         [TestMethod]
         public void ArrayReturnsCorrectCapacity()
         {
@@ -256,6 +258,58 @@ namespace Assignment6Tests
 
             //Assert
             Assert.IsTrue(enumerator is System.Collections.Generic.IEnumerator<string>);
+        }
+
+        /* ArrayEnumerator<T> Testing */
+
+        [TestMethod]
+        public void ArrayEnumeratorValidBeforeMoveNext()
+        {
+            //Arrange
+            Array<string> array = new Array<string>(5) { "A", "B", "C", "D", "E" };
+            using ArrayEnumerator<string> enumerator = new ArrayEnumerator<string>(array);
+
+            //Act
+            string current = enumerator.Current;
+
+            //Assert
+            Assert.AreEqual(current, default);
+        }
+
+        [TestMethod]
+        public void ArrayEnumeratorMoveNextRetrievesFirstItem()
+        {
+            //Arrange
+            Array<string> array = new Array<string>(5) { "A", "B", "C", "D", "E" };
+            using ArrayEnumerator<string> enumerator = new ArrayEnumerator<string>(array);
+
+            //Act
+            enumerator.MoveNext();
+
+            //Assert
+            Assert.AreEqual(enumerator.Current, "A");
+        }
+
+        [TestMethod]
+        public void ArrayEnumeratorResetWorks()
+        {
+            //Arrange
+            Array<string> array = new Array<string>(5) { "A", "B", "C", "D", "E" };
+            using ArrayEnumerator<string> enumerator = new ArrayEnumerator<string>(array);
+            string first;
+            string second;
+
+            //Act
+            enumerator.MoveNext();
+            first = enumerator.Current;
+
+            enumerator.Reset();
+
+            enumerator.MoveNext();
+            second = enumerator.Current;
+
+            //Assert
+            Assert.AreEqual(first, second);
         }
     }
 }

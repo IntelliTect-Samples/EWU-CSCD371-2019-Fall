@@ -134,7 +134,8 @@ namespace Assignment6
         }
     }
 
-    internal class ArrayEnumerator<T> : IEnumerator<T>
+
+    public class ArrayEnumerator<T> : IEnumerator<T>
     {
         private Array<T> _Array;
         private T Cur { get; set; }
@@ -157,7 +158,13 @@ namespace Assignment6
 
         public void Dispose()
         {
-            //nothing needs to be disposed
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool v)
+        {
+            //nothing else to dispose
         }
 
         public bool MoveNext()
