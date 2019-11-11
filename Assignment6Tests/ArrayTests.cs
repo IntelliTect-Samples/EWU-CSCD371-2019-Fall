@@ -158,14 +158,18 @@ namespace Assignment6Tests
 #pragma warning disable IDE0028 // Simplify collection initialization. Makes test more obvious
             Array<string> array = new Array<string>(5);
 #pragma warning restore IDE0028 // Simplify collection initialization
+            int count = array.Count;
+            int countAfter;
 
             //Act
             array.Add("Z");
             array.Add("25");
+            countAfter = array.Count;
 
             //Assert
             Assert.IsTrue(array.Contains("Z"));
             Assert.IsTrue(array.Contains("25"));
+            Assert.AreEqual(countAfter, count + 2);
         }
 
         [TestMethod]
@@ -188,13 +192,17 @@ namespace Assignment6Tests
             //Arrange
             Array<string> array = new Array<string>(5) { "A", "B", "C" };
             bool removed;
+            int count = array.Count;
+            int countAfter;
 
             //Act
             removed = array.Remove("B");
+            countAfter = array.Count;
 
             //Assert
             Assert.IsTrue(removed);
             Assert.IsFalse(array.Contains("B"));
+            Assert.AreEqual(countAfter, count - 1);
         }
 
         [TestMethod]
@@ -206,7 +214,7 @@ namespace Assignment6Tests
 
             //Act
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type. Needed to test what happens when null
-            array.Add(null);
+            _ = array.Remove(null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
@@ -235,6 +243,19 @@ namespace Assignment6Tests
 
             //Assert
             Assert.AreEqual(collResult, arrayResult);
+        }
+
+        [TestMethod]
+        public void GetEnumeratorReturnsEnumerator()
+        {
+            //Arrange
+            Array<string> array = new Array<string>(5) { "A", "B", "C", "D", "E" };
+
+            //Act
+            var enumerator = array.GetEnumerator();
+
+            //Assert
+            Assert.IsTrue(enumerator is System.Collections.Generic.IEnumerator<string>);
         }
     }
 }

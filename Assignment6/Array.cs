@@ -89,6 +89,7 @@ namespace Assignment6
                 if (_InternalArray[i] is T && _InternalArray[i]!.Equals(item))
                 {
                     _InternalArray[i] = default!;
+                    Count--;
                     return true;
                 }
             }
@@ -167,7 +168,15 @@ namespace Assignment6
             }
             else
             {
-                Cur = _Array[CurIndex];
+                try
+                {
+                    Cur = _Array[CurIndex];
+                }
+                catch (ArgumentException e) when (e.Message.Equals("Value Doesn't Exist. (Parameter 'index')")) //skips over empty slots
+                {
+                    return MoveNext();
+                }
+                
                 return true;
             }
         }
