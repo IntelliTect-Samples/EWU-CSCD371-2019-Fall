@@ -19,18 +19,17 @@ namespace Assignment6.Tests
         {
             var array = new Array<int>(capacity);
 
-            Assert.AreEqual(capacity, array.Capacity);
+            Assert.AreEqual<int>(capacity, array.Capacity);
         }
 
         [DataTestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         [DataRow(-1)]
         [DataRow(-46)]
         [DataRow(-4567)]
         [DataRow(-386)]
         public void Constructor_InvalidCapacity_ThrowsException(int capacity)
         {
-            new Array<int>(capacity);
+            Assert.ThrowsException<ArgumentException>(() => new Array<int>(capacity));
         }
 
         [TestMethod]
@@ -42,7 +41,7 @@ namespace Assignment6.Tests
             foreach (int i in range) array.Add(i.ToString());
 
             foreach (var (expected, actual) in range.Select(i => (i.ToString(), array[i])))
-                Assert.AreEqual(expected, actual);
+                Assert.AreEqual<string>(expected, actual);
         }
 
         [TestMethod]
@@ -55,14 +54,15 @@ namespace Assignment6.Tests
 
             array.Add(val);
 
-            Assert.AreEqual(val, array[25]);
+            Assert.AreEqual<int>(val, array[25]);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void Add_NoRoom_ThrowsException()
         {
-            new Array<int>(0).Add(5);
+            var array = new Array<int>(0);
+
+            Assert.ThrowsException<InvalidOperationException>(() => array.Add(5));
         }
 
         [TestMethod]
@@ -72,7 +72,7 @@ namespace Assignment6.Tests
 
             array.Clear();
 
-            Assert.AreEqual(0, array.Count);
+            Assert.AreEqual<int>(0, array.Count);
             foreach (int i in Enumerable.Range(0, array.Capacity))
                 Assert.ThrowsException<InvalidOperationException>(() => array[i]);
         }
@@ -89,7 +89,7 @@ namespace Assignment6.Tests
             var array = new Array<int>(3 * count + 4);
             foreach (int i in Enumerable.Range(0, count)) array.Add(i);
 
-            Assert.AreEqual(count, array.Count);
+            Assert.AreEqual<int>(count, array.Count);
         }
 
         [TestMethod]
@@ -99,7 +99,6 @@ namespace Assignment6.Tests
         }
 
         [DataTestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
         [DataRow(-1)]
         [DataRow(-5)]
         [DataRow(100)]
@@ -108,14 +107,20 @@ namespace Assignment6.Tests
         {
             var array = new Array<int>(100);
 
-            _ = array[index];
+            Assert.ThrowsException<IndexOutOfRangeException>(() => array[index]);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void GetIndex_ElementDoesntExist_ThrowsException()
+        [DataTestMethod]
+        [DataRow(0)]
+        [DataRow(99)]
+        [DataRow(50)]
+        [DataRow(98)]
+        [DataRow(2)]
+        public void GetIndex_ElementDoesntExist_ThrowsException(int index)
         {
-            _ = new Array<int>(100)[50];
+            var array = new Array<int>(100);
+
+            Assert.ThrowsException<InvalidOperationException>(() => array[index]);
         }
 
         [DataTestMethod]
@@ -141,14 +146,15 @@ namespace Assignment6.Tests
         }
 
         [DataTestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
         [DataRow(-1)]
         [DataRow(-5)]
         [DataRow(100)]
         [DataRow(10000)]
         public void SetIndex_IndexOutOfRange_ThrowsException(int index)
         {
-            new Array<int>(100) { [index] = 0 };
+            var array = new Array<int>(100);
+
+            Assert.ThrowsException<IndexOutOfRangeException>(() => array[index] = 0);
         }
 
         [DataTestMethod]
@@ -160,7 +166,7 @@ namespace Assignment6.Tests
         {
             var array = new Array<int>(100) { [index] = value };
 
-            Assert.AreEqual(value, array[index]);
+            Assert.AreEqual<int>(value, array[index]);
         }
 
         [DataTestMethod]
@@ -179,7 +185,6 @@ namespace Assignment6.Tests
         }
 
         [DataTestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         [DataRow(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 0, 1)]
         [DataRow(new[] { 5, 6, 8, 3, 2134, 657, 2345, 674, 2345 }, 17, 5)]
         [DataRow(new[] { 1, 2, 3, 4, 5 }, 765438, 3)]
@@ -189,27 +194,27 @@ namespace Assignment6.Tests
             var array = new Array<int>(inputs.Length);
             foreach (int element in inputs) array.Add(element);
 
-            array.CopyTo(outputs, start);
+            Assert.ThrowsException<ArgumentException>(() => array.CopyTo(outputs, start));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void CopyTo_NullArray_ThrowsException()
         {
             var array = new Array<int>(5);
 
-            array.CopyTo(null!, 0);
+            Assert.ThrowsException<ArgumentNullException>(() => array.CopyTo(null!, 0));
         }
 
         [DataTestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
         [DataRow(-1)]
         [DataRow(-5)]
         [DataRow(-314159265)]
         [DataRow(-94567)]
         public void CopyTo_NegativeIndex_ThrowsException(int index)
         {
-            new Array<int>(100).CopyTo(new int[200], index);
+            var array = new Array<int>(100);
+
+            Assert.ThrowsException<IndexOutOfRangeException>(() => array.CopyTo(new int[200], index));
         }
 
         [DataTestMethod]
