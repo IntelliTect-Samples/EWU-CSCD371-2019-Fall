@@ -206,8 +206,8 @@ namespace Assignment6.Tests
         [DataTestMethod]
         [DataRow(-1)]
         [DataRow(3)]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
-        public void Get_IndexOutOfRange_Exception(int index)
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Get_ArgumentOutOfRange_Exception(int index)
         {
             Array<string> array = new Array<string>(6) { "1", "2", "3" };
             string num = array[index];
@@ -226,8 +226,8 @@ namespace Assignment6.Tests
         [DataTestMethod]
         [DataRow(-1)]
         [DataRow(3)]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
-        public void Set_IndexOutOfRange_Exception(int index)
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Set_ArgumentOutOfRange_Exception(int index)
         {
             Array<string> array = new Array<string>(3) { "1", "2", "3" };
             array[index] = "";

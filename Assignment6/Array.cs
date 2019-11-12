@@ -75,7 +75,7 @@ namespace Assignment6
                 throw new ArgumentOutOfRangeException(nameof(arrayIndex), "Index position is less than 0.");
 
             else if ((arrayIndex + Count) > array.Length)
-                throw new ArgumentException("There's  not enough space.", nameof(array));
+                throw new ArgumentException("The passed in array doesn't have enough space.", nameof(array));
 
             Items.CopyTo(array, arrayIndex);
         }
@@ -94,13 +94,6 @@ namespace Assignment6
         {
             get
             {
-                if (index < 0)
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations. This exception matches standard array behavior.
-                    throw new IndexOutOfRangeException("Index is less than 0.");
-
-                else if (index >= Count)
-                    throw new IndexOutOfRangeException("Index is greater than the size of the array.");
-
                 return Items[index];
             }
 
@@ -109,13 +102,10 @@ namespace Assignment6
                 if (value is null)
                     throw new ArgumentNullException(nameof(value), "The passed in value is null.");
 
-                else if (index < 0)
-                    throw new IndexOutOfRangeException("Index is less than 0.");
 
                 else if (index >= Capacity)
-                    throw new IndexOutOfRangeException("Index is greater than the maximum size of the array.");
+                    throw new ArgumentOutOfRangeException(nameof(index), "Index is greater than the maximum size of the array.");
 #pragma warning restore CA1303 // Do not pass literals as localized parameters
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
 
                 Items[index] = value;
             }
