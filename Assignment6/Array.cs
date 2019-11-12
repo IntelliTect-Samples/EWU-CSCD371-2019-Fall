@@ -10,27 +10,40 @@ namespace Assignment6
         private ICollection<T> _InternalCollection;
         public int Capacity { get; }
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        public bool IsReadOnly => false;
 
         public Array(int capacity)
         {
-            Capacity = capacity;
+            if (capacity < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(capacity));
+            }
             _InternalCollection = new List<T>(capacity);
+            Capacity = capacity;
         }
 
         public void Add(T item)
         {
-            throw new NotImplementedException();
+            if(Count < Capacity)
+            {
+                this._InternalCollection.Add(item);
+                this.Count++;
+            }
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _InternalCollection.Clear();
+            Count = 0;
         }
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            if(!_InternalCollection.Contains(item))
+            {
+                throw new ArgumentException("Array.Contains method item not found");
+            }
+            return true;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
@@ -40,7 +53,7 @@ namespace Assignment6
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return this._InternalCollection.GetEnumerator();
         }
 
         public bool Remove(T item)
@@ -51,6 +64,19 @@ namespace Assignment6
         IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
+        }
+
+        public T this[int index]
+        {
+            get
+            {
+                return ((List<T>)_InternalCollection)[index];
+            }
+
+            set
+            {
+                ((List<T>)_InternalCollection)[index] = value;
+            }
         }
     }
 }
