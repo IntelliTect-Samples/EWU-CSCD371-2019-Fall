@@ -280,7 +280,7 @@ namespace Assignment6.Tests
             List<int> array = new List<int>(1);
             array.Add(1);
             //Act
-             bool removed = array.Remove(1);
+            bool removed = array.Remove(1);
             //Assert
             Assert.IsTrue(removed);
         }
@@ -296,6 +296,7 @@ namespace Assignment6.Tests
             //Assert
             Assert.IsFalse(array.Contains(1));
         }
+
         [TestMethod]
         public void Remove_TwoSameItems_ArrayCountIsOne()
         {
@@ -334,6 +335,17 @@ namespace Assignment6.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Remove_ItemDoesntExist_ThrowsException()
+        {
+            //Arrange
+            Array<int> array = new Array<int>(0);
+            //Act
+            array.Remove(1);
+            //Assert
+        }
+
+        [TestMethod]
         public void ForEach_ArrayWithItems_CanIterate()
         {
             //Arrange
@@ -353,12 +365,53 @@ namespace Assignment6.Tests
         }
 
         [TestMethod]
-        public void Covariance_StringToObject_Success()
+        public void IndexOperator_OneItem_ReturnsCorrectItem()
         {
             //Arrange
-            Array<string> stringArray = new Array<string>(0);
+            Array<int> array = new Array<int>(1);
+            array.Add(1);
             //Act
-            //Array<object> objectArray = stringArray;
+            int result = array[0];
+            //Assert
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void IndexOperator_OneItem_SetsItemCorrectly()
+        {
+            //Arrange
+            Array<int> array = new Array<int>(1);
+            array.Add(1);
+            //Act
+            array[0] = 2;
+            //Assert
+            Assert.IsTrue(array.Contains(2));
+            Assert.IsTrue(array.Count == 1);
+        }
+
+        [DataTestMethod]
+        [DataRow(-1)]
+        [DataRow(1)]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void IndexOperator_GetInvalidIndex_ThrowsException(int invalidIndex)
+        {
+            //Arrange
+            Array<int> array = new Array<int>(0);
+            //Act
+            _ = array[invalidIndex];
+            //Assert
+        }
+
+        [DataTestMethod]
+        [DataRow(-1)]
+        [DataRow(1)]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void IndexOperator_SetInvalidIndex_ThrowsException(int invalidIndex)
+        {
+            //Arrange
+            Array<int> array = new Array<int>(0);
+            //Act
+            array[invalidIndex] = 1;
             //Assert
         }
     }
