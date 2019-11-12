@@ -18,7 +18,7 @@ namespace Assignment6.Tests
         public void Array_Constructor_SetsCount(int count)
         {
             //Organize
-            Array<int> testArray = new Array<int>(count);
+            ArrayCollection<int> testArray = new ArrayCollection<int>(count);
             //Act
 
             //Assert
@@ -34,17 +34,36 @@ namespace Assignment6.Tests
         public void Array_Constructor_CapacityLessThan1_ThrowsException(int count)
         {
             //Organize
-            _ = new Array<int>(count);
+            _ = new ArrayCollection<int>(count);
             //Act
 
             //Assert
         }
 
         [TestMethod]
+        public void Array_Constructor_CollectionInitializer()
+        {
+            //Organize
+            ArrayCollection<int> testArray = new ArrayCollection<int>(10)
+            {
+                3,
+                4,
+                5
+            };
+
+            //Act
+
+            //Assert
+            Assert.IsTrue(testArray.Contains(3));
+            Assert.IsTrue(testArray.Contains(4));
+            Assert.IsTrue(testArray.Contains(5));
+        }
+
+        [TestMethod]
         public void Array_Add_AddsValue_ToCollection()
         {
             //Organize
-            var testArray = new Array<string>(10);
+            var testArray = new ArrayCollection<string>(10);
             
             //Act
             testArray.Add("Test item");
@@ -57,7 +76,7 @@ namespace Assignment6.Tests
         public void Array_Add_AddsValue_IncrementsCount()
         {
             //Organize
-            var testArray = new Array<string>(10);
+            var testArray = new ArrayCollection<string>(10);
             int initialCount = testArray.Count;
 
             //Act
@@ -71,7 +90,7 @@ namespace Assignment6.Tests
         public void Array_Add_FullCapacity_DoesntAddItem()
         {
             //Organize
-            var testArray = new Array<string>(1);
+            var testArray = new ArrayCollection<string>(1);
 
             //Act
             testArray.Add("Test item");
@@ -84,7 +103,7 @@ namespace Assignment6.Tests
         public void Array_Contains_ItemExists_ReturnsTrue()
         {
             //Organize
-            var testArray = new Array<string>(10);
+            var testArray = new ArrayCollection<string>(10);
 
             //Act
             testArray.Add("Test item");
@@ -99,7 +118,7 @@ namespace Assignment6.Tests
         public void Array_Contains_ItemDoesntExist_ThrowsException()
         {
             //Organize
-            var testArray = new Array<string>(10);
+            var testArray = new ArrayCollection<string>(10);
 
             //Act
 
@@ -113,7 +132,7 @@ namespace Assignment6.Tests
         public void Array_Clear_Clears_Items()
         {
             //Organize
-            var testArray = new Array<string>(5);
+            var testArray = new ArrayCollection<string>(5);
 
             testArray.Add("test string");
             testArray.Add("test string");
@@ -132,7 +151,7 @@ namespace Assignment6.Tests
         public void Array_Clear_ResetsCount()
         {
             //Organize
-            var testArray = new Array<string>(5);
+            var testArray = new ArrayCollection<string>(5);
 
             testArray.Add("test string");
             testArray.Add("test string");
@@ -144,6 +163,93 @@ namespace Assignment6.Tests
             testArray.Clear();
             //Assert
             Assert.AreEqual(0, testArray.Count);
+        }
+
+        [TestMethod]
+        public void Array_CopyTo_CopiesToArray()
+        {
+            //Organize
+            ArrayCollection<int> testArray = new ArrayCollection<int>(6)
+            {
+                3,
+                4,
+                2,
+                7,
+                11,
+                18
+            };
+
+            var intArray = new int[6];
+
+            //Act
+            testArray.CopyTo(intArray, 0);
+
+            //Assert
+            Assert.AreEqual(7, intArray[3]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Array_Remove_RemoveItem_Contains_ThrowsException()
+        {
+            //Organize
+            ArrayCollection<int> testArray = new ArrayCollection<int>(6)
+            {
+                3,
+                4,
+                2,
+                7,
+                11,
+                18
+            };
+
+            //Act
+            testArray.Remove(3);
+
+            testArray.Contains(3);
+            //Assert
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Array_Remove_ItemDoesntExist_ThrowsException()
+        {
+            //Organize
+            ArrayCollection<int> testArray = new ArrayCollection<int>(6)
+            {
+                3,
+                4,
+                2,
+                7,
+                11,
+                18
+            };
+
+            //Act
+            testArray.Remove(22);
+            //Assert
+
+        }
+
+        [TestMethod]
+        public void Array_IndexOperator_ReturnsCorrectValue()
+        {
+            //Organize
+            ArrayCollection<int> testArray = new ArrayCollection<int>(6)
+            {
+                3,
+                4,
+                2,
+                7,
+                11,
+                18
+            };
+
+            //Act
+
+            //Assert
+            Assert.AreEqual(4, testArray[1]);
         }
     }
 }
