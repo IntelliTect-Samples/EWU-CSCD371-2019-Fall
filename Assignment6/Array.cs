@@ -1,58 +1,84 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assignment6
 {
-    public class Array<T> : ICollection<T>
+    public class Array<T> : ICollection<T>, IReadOnlyArray<T>
     {
-        public int Width { get; }
+        public int Capacity { get; }
 
-        public int Count => throw new NotImplementedException();
+        private List<T> _Value;
 
-        public bool IsReadOnly => throw new NotImplementedException();
-
-        private ICollection<T> Value { get; }
-
-        public Array(int width)
+        public Array(int capacity)
         {
-            Width = width;
-            Value = Width >= 0 ? new T[Width] : throw new ArgumentException("Width must be greater than 0", nameof(Width));
+            Capacity = capacity;
+            _Value = Capacity > 0 ? new List<T>(capacity) : throw new ArgumentOutOfRangeException(nameof(capacity));
         }
 
-        public IEnumerator GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        public int Count => _Value.Count;
+
+        public bool IsReadOnly => false;
+
+        private List<T> ValueCast => _Value.Cast<T>().ToList();
 
         public void Add(T item)
         {
-            throw new NotImplementedException();
+            if (item is null)
+                throw new ArgumentNullException(nameof(item));
+            if (Count >= Capacity)
+                throw new ArgumentOutOfRangeException(nameof(item), "Array capacity reached");
+
+            _Value.Add(item);
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _Value.Clear();
         }
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            return ValueCast.Contains(item);
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            if (array is null)
+                throw new ArgumentNullException(nameof(array));
+
+            if (arrayIndex > Capacity || arrayIndex < 0 || arrayIndex > array.Length)
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex));
+
+            _Value.CopyTo(array, arrayIndex);
         }
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            return _Value.Remove(item);
         }
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        public IEnumerator GetEnumerator() => ValueCast.GetEnumerator();
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => (IEnumerator<T>)GetEnumerator();
+
+        public T this[int key]
         {
-            throw new NotImplementedException();
+            get
+            {
+                if (key >= Capacity || key < 0)
+                    throw new ArgumentOutOfRangeException(nameof(key));
+                return _Value[key];
+            }
+            set
+            {
+                if (key >= Capacity || key < 0)
+                    throw new ArgumentOutOfRangeException(nameof(key));
+                var data = _Value.ToList();
+                data[key] = value;
+                _Value = data;
+            }
         }
     }
 }

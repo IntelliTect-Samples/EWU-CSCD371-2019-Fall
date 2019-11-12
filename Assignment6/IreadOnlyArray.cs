@@ -1,6 +1,11 @@
-﻿namespace Assignment6
+﻿using System.Collections.Generic;
+
+namespace Assignment6
 {
-    internal interface IreadOnlyArray
-    {
-    }
+        interface IReadOnlyArray<out T> : IEnumerable<T>
+        {
+            public int Count { get; }
+
+            public T this[int index] { get; }
+        }
 }
