@@ -256,21 +256,21 @@ namespace Assignment6.Tests
         public void Array_IndexOperator_SetsValue()
         {
             //Organize
-            ArrayCollection<int> testArray = new ArrayCollection<int>(6)
+            ArrayCollection<string> testArray = new ArrayCollection<string>(6)
             {
-                3,
-                4,
-                2,
-                7,
-                11,
-                18
+                "test",
+                "test",
+                "test",
+                "test",
+                "test",
+                "test"
             };
 
             //Act
-            testArray[2] = 22;
+            testArray[2] = "hello";
 
             //Assert
-            Assert.AreEqual(22, testArray[2]);
+            Assert.AreEqual("hello", testArray[2]);
         }
     }
 }
