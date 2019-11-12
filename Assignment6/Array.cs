@@ -7,20 +7,23 @@ namespace Assignment6
 {
     public class Array<T> : ICollection<T>
     {
-        public int Count => _collection.Count;
+        private int _size = 0;
 
-        public bool IsReadOnly => _collection.IsReadOnly;
+        public int Count => _Collection.Count;
 
-        private ICollection<T> _collection;
+        public bool IsReadOnly => _Collection.IsReadOnly;
+
+        private ICollection<T> _Collection;
 
         public Array()
         {
-            _collection = new List<T>();
+            _Collection = new List<T>();
         }
 
         public Array(int size)
         {
-            _collection = size < 0 ? new List<T>(size) : throw new ArgumentOutOfRangeException($"{nameof(size)} must be greater than zero.");
+            _Collection = size > 0 ? new List<T>(size) : throw new ArgumentOutOfRangeException($"{nameof(size)} must be greater than zero.");
+            _size = size;
         }
 
         public T this[int index]
@@ -29,41 +32,40 @@ namespace Assignment6
             get
             {
                 ValidateIndexIsInRange(index);
-                return _collection.AsEnumerable().ElementAt(index);
+                return _Collection.AsEnumerable().ElementAt(index);
             }
             set
             {
                 ValidateIndexIsInRange(index);
-                var temp = _collection.ToList();
-                temp[index] = value;
-                _collection = temp;
+                ((List<T>)_Collection)[index] = value;
             }
         }
 
         public void Add(T item)
         {
-            _collection.Add(item);
+            if (this._size == _Collection.Count)
+                throw new InvalidOperationException($"cannot add {nameof(item)}");
+            _Collection.Add(item);
         }
 
         public void Clear()
         {
-            _collection.Clear();
+            _Collection.Clear();
         }
 
-        public bool Contains(T item) => _collection.Contains(item);
+        public bool Contains(T item) => _Collection.Contains(item);
 
-        public void CopyTo(T[] array, int arrayIndex) => _collection.CopyTo(array, arrayIndex);
+        public void CopyTo(T[] array, int arrayIndex) => _Collection.CopyTo(array, arrayIndex);
         
+        public IEnumerator<T> GetEnumerator() => _Collection.GetEnumerator();
 
-        public IEnumerator<T> GetEnumerator() => _collection.GetEnumerator();
-
-        public bool Remove(T item) => _collection.Remove(item);
+        public bool Remove(T item) => _Collection.Remove(item);
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         private void ValidateIndexIsInRange(int index)
         {
-            if (index > _collection.Count || index < 0)
+            if (index > _Collection.Count || index < 0)
                 throw new IndexOutOfRangeException($"{nameof(index)} is out of range");
         }
     }
