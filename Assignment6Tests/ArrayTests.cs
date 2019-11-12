@@ -251,5 +251,26 @@ namespace Assignment6.Tests
             //Assert
             Assert.AreEqual(4, testArray[1]);
         }
+
+        [TestMethod]
+        public void Array_IndexOperator_SetsValue()
+        {
+            //Organize
+            ArrayCollection<int> testArray = new ArrayCollection<int>(6)
+            {
+                3,
+                4,
+                2,
+                7,
+                11,
+                18
+            };
+
+            //Act
+            testArray[2] = 22;
+
+            //Assert
+            Assert.AreEqual(22, testArray[2]);
+        }
     }
 }
