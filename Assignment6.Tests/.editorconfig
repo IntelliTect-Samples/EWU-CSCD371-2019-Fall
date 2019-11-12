@@ -1,4 +1,0 @@
-﻿[*.cs]
-
-# IDE0028: Simplify collection initialization
-dotnet_style_collection_initializer = true:none
