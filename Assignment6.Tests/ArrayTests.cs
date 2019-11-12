@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Assignment6;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Assignment6.Tests
 {
@@ -156,10 +157,9 @@ namespace Assignment6.Tests
             sut.Clear();
 
             foreach (int value in data)
+            {
                 Assert.IsFalse(sut.Contains(value));
-
-            foreach (int value in data)
-                Assert.IsFalse(sut.Remove(value));
+            }
         }
     }
 }

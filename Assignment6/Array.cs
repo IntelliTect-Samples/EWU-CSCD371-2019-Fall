@@ -6,25 +6,25 @@ namespace Assignment6
 {
     public class Array<T> : ICollection<T>
     {
-        private ICollection<T> Data;
+        private ICollection<T> _Data;
         public int Capacity { get; }  = 0;
 
         public Array()
         {
-            Data = new List<T>();
+            _Data = new List<T>();
         }
 
         public Array(int capacity)
         {
             if (capacity < 0)
                 throw new System.ArgumentOutOfRangeException(nameof(capacity));
-            Data = new List<T>(capacity);
+            _Data = new List<T>(capacity);
             Capacity = capacity;
         }
 
         public Array(ICollection<T> collection)
         {
-            Data = new List<T>(collection);
+            _Data = new List<T>(collection);
             Capacity = collection.Count;
         }
 
@@ -32,7 +32,9 @@ namespace Assignment6
         {
             if (capacity < 0)
                 throw new System.ArgumentOutOfRangeException(nameof(capacity));
-            Data = collection;
+            if (collection is null || !collection.Any())
+                throw new System.ArgumentNullException(nameof(collection));
+            _Data = collection;
             Capacity = capacity;
         }
 
@@ -46,14 +48,14 @@ namespace Assignment6
             if (length < 0)
                 throw new System.ArgumentOutOfRangeException(nameof(length));
             var tmp = new T[length];
-            var _Data = Data.ToList();
+            var __Data = _Data.ToList();
             for (int i = 0; i < length; i++)
-                tmp[i] = _Data[i];
-            Data = tmp as ICollection<T>;
+                tmp[i] = __Data[i];
+            _Data = tmp as ICollection<T>;
         }
 
         public List<T> ToList() =>
-            new List<T>(Data);
+            new List<T>(_Data);
 
         public T this[int key]
         {
@@ -61,7 +63,7 @@ namespace Assignment6
             {
                 if (key >= Capacity || key < 0)
                     throw new System.InvalidOperationException(nameof(key));
-                if (Data.AsEnumerable().ElementAt(key) is T data)
+                if (_Data.AsEnumerable().ElementAt(key) is T data)
                     return data;
                 else
                     throw new System.InvalidOperationException(nameof(key));
@@ -70,9 +72,9 @@ namespace Assignment6
             {
                 if (key >= Capacity || key < 0)
                     throw new System.InvalidOperationException(nameof(key));
-                var _Data = Data.ToList();
-                _Data[key] = value;
-                Data = (ICollection<T>)_Data;
+                var __Data = _Data.ToList();
+                __Data[key] = value;
+                _Data = (ICollection<T>)__Data;
             }
         }
 
@@ -80,41 +82,44 @@ namespace Assignment6
         {
             get
             {
-                return Capacity;
+                return _Data.Count;
             }
         }
 
-        public void Clear()
+
+        public void Clear() => _Data.Clear();
+
+        public bool Remove(T item)
         {
-            for (int i=0; i<Count; i++)
-            {
-                Remove(this[0]);
-            }
+            if (item is null)
+                throw new System.ArgumentNullException(nameof(item));
+            return ((ICollection<T>)_Data).Remove(item);
         }
 
-        public bool Remove(T item) =>
-            ((ICollection<T>)Data).Remove(item);
-
-        public bool Contains(T item) =>
-            ((ICollection<T>)Data).Contains(item);
+        public bool Contains(T item)
+        {
+            if (item is null)
+                throw new System.ArgumentNullException(nameof(item));
+            return _Data.Contains(item);
+        }
 
         public void CopyTo(T[] data, int index) =>
-            ((ICollection<T>)Data).CopyTo(data, index);
+            ((ICollection<T>)_Data).CopyTo(data, index);
 
         public void Add(T value)
         {
             if (value is null) 
                 throw new System.ArgumentNullException(nameof(value));
-            else if (Data.Count == Capacity)
+            else if (_Data.Count == Capacity)
                 throw new System.InvalidOperationException(nameof(value));
-            ((ICollection<T>)Data).Add(value);
+            ((ICollection<T>)_Data).Add(value);
         }
 
-        public bool IsReadOnly => Data.IsReadOnly;
+        public bool IsReadOnly => _Data.IsReadOnly;
 
         public IEnumerator<T> GetEnumerator()
         {
-            foreach (T element in Data)
+            foreach (T element in _Data)
             {
                 yield return element;
             }
