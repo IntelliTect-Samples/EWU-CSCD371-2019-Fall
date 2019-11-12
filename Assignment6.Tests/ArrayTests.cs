@@ -189,6 +189,13 @@ namespace Assignment6.Tests
             string[] strAra = new string[6] { "4", "5", "6", "", "", "" };
 
             array.CopyTo(strAra, 3);
+
+            Assert.AreEqual("4", strAra[0]);
+            Assert.AreEqual("5", strAra[1]);
+            Assert.AreEqual("6", strAra[2]);
+            Assert.AreEqual("1", strAra[3]);
+            Assert.AreEqual("2", strAra[4]);
+            Assert.AreEqual("3", strAra[5]);
         }
 
         [TestMethod]
