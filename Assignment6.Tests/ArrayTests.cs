@@ -38,7 +38,9 @@ namespace Assignment6.Tests
         public void Add_OneItem_ReturnsCorrectCount()
         {
             //Arrange
+#pragma warning disable IDE0028 // Testing add method, dont want to simplify in this case
             Array<int> array = new Array<int>(1);
+#pragma warning restore IDE0028 // Simplify collection initialization
             //Act
             array.Add(1);
             //Assert
@@ -49,7 +51,9 @@ namespace Assignment6.Tests
         public void Add_OneItem_ContainsItem()
         {
             //Arrange
+#pragma warning disable IDE0028 // Testing add method, dont want to simplify in this case
             Array<int> array = new Array<int>(1);
+#pragma warning restore IDE0028 // Simplify collection initialization
             //Act
             array.Add(1);
             //Assert
@@ -61,7 +65,9 @@ namespace Assignment6.Tests
         public void Add_MoreThanCapacity_ThrowsException()
         {
             //Arrange
+#pragma warning disable IDE0028 // Testing add method, dont want to simplify in this case
             Array<int> array = new Array<int>(0);
+#pragma warning restore IDE0028 // Simplify collection initialization
             //Act
             array.Add(1);
             //Assert
@@ -72,7 +78,9 @@ namespace Assignment6.Tests
         public void Add_NullParameter_ThrowsException()
         {
             //Arrange
+#pragma warning disable IDE0028 // Testing add method, dont want to simplify in this case
             Array<string?> array = new Array<string?>(0);
+#pragma warning restore IDE0028 // Simplify collection initialization
             //Act
             array.Add(null);
             //Assert
@@ -96,9 +104,11 @@ namespace Assignment6.Tests
         public void Contains_TwoItems_ReturnsTrue()
         {
             //Arrange
-            Array<int> array = new Array<int>(2);
-            array.Add(1);
-            array.Add(2);
+            Array<int> array = new Array<int>(2)
+            {
+                1,
+                2
+            };
             //Act
             bool containsOne = array.Contains(1);
             bool containsTwo = array.Contains(2);
@@ -122,8 +132,10 @@ namespace Assignment6.Tests
         public void Contains_OneItem_ReturnsFalse()
         {
             //Arrange
-            Array<int> array = new Array<int>(1);
-            array.Add(1);
+            Array<int> array = new Array<int>(1)
+            {
+                1
+            };
             //Act
             bool containsTwo = array.Contains(2);
             //Assert
@@ -145,8 +157,10 @@ namespace Assignment6.Tests
         public void Clear_OneItem_ReturnsCorrectCount()
         {
             //Arrange
-            Array<int> array = new Array<int>(1);
-            array.Add(1);
+            Array<int> array = new Array<int>(1)
+            {
+                1
+            };
             //Act
             array.Clear();
             //Assert
@@ -157,8 +171,10 @@ namespace Assignment6.Tests
         public void Clear_OneItem_ArrayDoesNotContainItem()
         {
             //Arrange
-            Array<int> array = new Array<int>(1);
-            array.Add(1);
+            Array<int> array = new Array<int>(1)
+            {
+                1
+            };
             //Act
             array.Clear();
             //Assert
@@ -169,9 +185,11 @@ namespace Assignment6.Tests
         public void Clear_TwoItems_ArrayDoesNotContainItems()
         {
             //Arrange
-            Array<int> array = new Array<int>(2);
-            array.Add(1);
-            array.Add(2);
+            Array<int> array = new Array<int>(2)
+            {
+                1,
+                2
+            };
             //Act
             array.Clear();
             //Assert
@@ -222,8 +240,10 @@ namespace Assignment6.Tests
         public void CopyTo_ArrayTooSmall_ThrowsException()
         {
             //Arrange
-            Array<int> array = new Array<int>(1);
-            array.Add(1);
+            Array<int> array = new Array<int>(1)
+            {
+                1
+            };
             int[] copiedArray = Array.Empty<int>();
             //Act
             array.CopyTo(copiedArray, 0);
@@ -234,8 +254,10 @@ namespace Assignment6.Tests
         public void CopyTo_OneItem_Success()
         {
             //Arrange
-            Array<int> array = new Array<int>(1);
-            array.Add(1);
+            Array<int> array = new Array<int>(1)
+            {
+                1
+            };
             int[] copiedArray = new int[1];
             //Act
             array.CopyTo(copiedArray, 0);
@@ -247,9 +269,11 @@ namespace Assignment6.Tests
         public void CopyTo_TwoItems_Success()
         {
             //Arrange
-            Array<int> array = new Array<int>(2);
-            array.Add(1);
-            array.Add(2);
+            Array<int> array = new Array<int>(2)
+            {
+                1,
+                2
+            };
             int[] copiedArray = new int[2];
             //Act
             array.CopyTo(copiedArray, 0);
@@ -262,9 +286,11 @@ namespace Assignment6.Tests
         public void CopyTo_IndexNotZero_Success()
         {
             //Arrange
-            Array<int> array = new Array<int>(2);
-            array.Add(1);
-            array.Add(2);
+            Array<int> array = new Array<int>(2)
+            {
+                1,
+                2
+            };
             int[] copiedArray = new int[3];
             //Act
             array.CopyTo(copiedArray, 1);
@@ -277,8 +303,10 @@ namespace Assignment6.Tests
         public void Remove_OneItem_ReturnsTrue()
         {
             //Arrange
-            List<int> array = new List<int>(1);
-            array.Add(1);
+            List<int> array = new List<int>(1)
+            {
+                1
+            };
             //Act
             bool removed = array.Remove(1);
             //Assert
@@ -289,8 +317,10 @@ namespace Assignment6.Tests
         public void Remove_OneItem_ArrayDoesNotContainItem()
         {
             //Arrange
-            List<int> array = new List<int>(1);
-            array.Add(1);
+            List<int> array = new List<int>(1)
+            {
+                1
+            };
             //Act
             array.Remove(1);
             //Assert
@@ -301,9 +331,11 @@ namespace Assignment6.Tests
         public void Remove_TwoSameItems_ArrayCountIsOne()
         {
             //Arrange
-            Array<int> array = new Array<int>(2);
-            array.Add(1);
-            array.Add(1);
+            Array<int> array = new Array<int>(2)
+            {
+                1,
+                1
+            };
             //Act
             array.Remove(1);
             //Assert
@@ -314,9 +346,11 @@ namespace Assignment6.Tests
         public void Remove_TwoSameItems_ArrayContainsOneOfTheItems()
         {
             //Arrange
-            Array<int> array = new Array<int>(2);
-            array.Add(1);
-            array.Add(1);
+            Array<int> array = new Array<int>(2)
+            {
+                1,
+                1
+            };
             //Act
             array.Remove(1);
             //Assert
@@ -349,9 +383,11 @@ namespace Assignment6.Tests
         public void ForEach_ArrayWithItems_CanIterate()
         {
             //Arrange
-            Array<int> array = new Array<int>(2);
-            array.Add(1);
-            array.Add(2);
+            Array<int> array = new Array<int>(2)
+            {
+                1,
+                2
+            };
             List<int> recievedData = new List<int>();
             //Act
             foreach (int i in array)
@@ -368,8 +404,10 @@ namespace Assignment6.Tests
         public void IndexOperator_OneItem_ReturnsCorrectItem()
         {
             //Arrange
-            Array<int> array = new Array<int>(1);
-            array.Add(1);
+            Array<int> array = new Array<int>(1)
+            {
+                1
+            };
             //Act
             int result = array[0];
             //Assert
@@ -380,8 +418,10 @@ namespace Assignment6.Tests
         public void IndexOperator_OneItem_SetsItemCorrectly()
         {
             //Arrange
-            Array<int> array = new Array<int>(1);
-            array.Add(1);
+            Array<int> array = new Array<int>(1)
+            {
+                1
+            };
             //Act
             array[0] = 2;
             //Assert
@@ -409,10 +449,22 @@ namespace Assignment6.Tests
         public void IndexOperator_SetInvalidIndex_ThrowsException(int invalidIndex)
         {
             //Arrange
+#pragma warning disable IDE0028 // Testing the indexoperator, dont want to simplify in this case
             Array<int> array = new Array<int>(0);
+#pragma warning restore IDE0028 // Simplify collection initialization
             //Act
             array[invalidIndex] = 1;
             //Assert
+        }
+
+        [TestMethod]
+        public void CollectionInitializer_SetAll_Success()
+        {
+            //Arrange
+            //Act
+            Array<int> array = new Array<int>(2) { 1, 2 };
+            //Assert
+            Assert.AreEqual(2, array.Count);
         }
     }
 }

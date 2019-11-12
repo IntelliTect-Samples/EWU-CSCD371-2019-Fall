@@ -4,24 +4,24 @@ using System.Collections.Generic;
 
 namespace Assignment6
 {
+#pragma warning disable CA1710 // This was the name given in the assignment
     public class Array<T> : ICollection<T>
+#pragma warning restore CA1710
     {
-        private int Width { get; }
 
         private int Capacity { get; }
 
         public int Count { get; private set; }
 
-        private List<T> _Collection; //I used a list under the hood, so I do not have to worry about null f or missing items
+        private List<T> Collection { get; } //I used a list under the hood, so I do not have to worry about null f or missing items
 
         public bool IsReadOnly { get; private set; }
 
-        public Array(int width)
+        public Array(int capacity)
         {
-            Width = width;
             Count = 0;
-            Capacity = width;
-            _Collection = new List<T>(width);
+            Capacity = capacity;
+            Collection = new List<T>(capacity);
             IsReadOnly = false;
         }
 
@@ -31,13 +31,13 @@ namespace Assignment6
                 throw new ArgumentNullException(nameof(item));
             if (Count == Capacity)
                 throw new InvalidOperationException($"Array is at maximum capacity {nameof(item)}");
-            _Collection.Add(item);
+            Collection.Add(item);
             Count++;
         }
 
         public void Clear()
         {
-            _Collection.Clear();
+            Collection.Clear();
             Count = 0;
         }
 
@@ -45,30 +45,30 @@ namespace Assignment6
         {
             if (item == null)
                 throw new ArgumentNullException(nameof(item));
-            if (_Collection.Contains(item))
+            if (Collection.Contains(item))
                 return true;
             return false;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            _Collection.CopyTo(array, arrayIndex);
+            Collection.CopyTo(array, arrayIndex);
         }
 
         public bool Remove(T item)
         {
             if (item is null)
                 throw new ArgumentNullException(nameof(item));
-            if (!_Collection.Contains(item))
+            if (!Collection.Contains(item))
                 throw new ArgumentException($"{nameof(item)} does not exist");
-            bool result = _Collection.Remove(item);
+            bool result = Collection.Remove(item);
             Count--;
             return result;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            return _Collection.GetEnumerator();
+            return Collection.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -87,12 +87,12 @@ namespace Assignment6
             get
             {
                 ValidateIndex(i);
-                return _Collection[i];
+                return Collection[i];
             }
             set
             {
                 ValidateIndex(i);
-                _Collection[i] = value;
+                Collection[i] = value;
             }
         }
     }
