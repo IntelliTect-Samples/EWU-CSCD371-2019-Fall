@@ -27,6 +27,8 @@ namespace Assignment6
 
         public void Add(T item)
         {
+            if (item is null)
+                throw new ArgumentNullException(nameof(item));
             if (Count == Capacity)
                 throw new InvalidOperationException($"Array is at maximum capacity {nameof(item)}");
             _Collection.Add(item);
@@ -41,6 +43,8 @@ namespace Assignment6
 
         public bool Contains(T item)
         {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
             if (_Collection.Contains(item))
                 return true;
             return false;
@@ -53,7 +57,11 @@ namespace Assignment6
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            if (item is null)
+                throw new ArgumentNullException(nameof(item));
+            bool result = _Collection.Remove(item);
+            Count--;
+            return result;
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -65,5 +73,6 @@ namespace Assignment6
         {
             throw new NotImplementedException();
         }
+
     }
 }

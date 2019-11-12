@@ -68,6 +68,17 @@ namespace Assignment6.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Add_NullParameter_ThrowsException()
+        {
+            //Arrange
+            Array<string?> array = new Array<string?>(0);
+            //Act
+            array.Add(null);
+            //Assert
+        }
+
+        [TestMethod]
         public void Contains_OneItem_ReturnsTrue()
         {
             //Arrange
@@ -117,6 +128,17 @@ namespace Assignment6.Tests
             bool containsTwo = array.Contains(2);
             //Assert
             Assert.IsFalse(containsTwo);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Contains_NullParameter_ThrowsException()
+        {
+            //Arrange
+            Array<string?> array = new Array<string?>(0);
+            //Act
+            array.Contains(null);
+            //Assert
         }
 
         [TestMethod]
@@ -252,6 +274,66 @@ namespace Assignment6.Tests
         }
 
         [TestMethod]
+        public void Remove_OneItem_ReturnsTrue()
+        {
+            //Arrange
+            List<int> array = new List<int>(1);
+            array.Add(1);
+            //Act
+             bool removed = array.Remove(1);
+            //Assert
+            Assert.IsTrue(removed);
+        }
+
+        [TestMethod]
+        public void Remove_OneItem_ArrayDoesNotContainItem()
+        {
+            //Arrange
+            List<int> array = new List<int>(1);
+            array.Add(1);
+            //Act
+            array.Remove(1);
+            //Assert
+            Assert.IsFalse(array.Contains(1));
+        }
+        [TestMethod]
+        public void Remove_TwoSameItems_ArrayCountIsOne()
+        {
+            //Arrange
+            Array<int> array = new Array<int>(2);
+            array.Add(1);
+            array.Add(1);
+            //Act
+            array.Remove(1);
+            //Assert
+            Assert.AreEqual(1, array.Count);
+        }
+
+        [TestMethod]
+        public void Remove_TwoSameItems_ArrayContainsOneOfTheItems()
+        {
+            //Arrange
+            Array<int> array = new Array<int>(2);
+            array.Add(1);
+            array.Add(1);
+            //Act
+            array.Remove(1);
+            //Assert
+            Assert.IsTrue(array.Contains(1));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Remove_NullParameter_ThrowsException()
+        {
+            //Arrange
+            Array<string?> array = new Array<string?>(0);
+            //Act
+            _ = array.Remove(null);
+            //Assert
+        }
+
+        [TestMethod]
         public void ForEach_ArrayWithItems_CanIterate()
         {
             //Arrange
@@ -268,6 +350,16 @@ namespace Assignment6.Tests
             Assert.IsTrue(recievedData.Contains(1));
             Assert.IsTrue(recievedData.Contains(2));
             Assert.IsTrue(recievedData.Count == 2);
+        }
+
+        [TestMethod]
+        public void Covariance_StringToObject_Success()
+        {
+            //Arrange
+            Array<string> stringArray = new Array<string>(0);
+            //Act
+            //Array<object> objectArray = stringArray;
+            //Assert
         }
     }
 }
