@@ -23,7 +23,7 @@ namespace Assignment6.Tests
         public void ArrayIndex_OutOfRange_ThrowsInvalidOperationException(int index)
         {
             var sut = new Array<int>();
-            var _ = sut[index];
+            _ = sut[index];
         }
 
         [TestMethod]
