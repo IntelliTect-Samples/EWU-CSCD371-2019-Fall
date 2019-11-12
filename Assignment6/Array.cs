@@ -5,10 +5,10 @@ using System.Collections.Generic;
 namespace Assignment6
 {
 #pragma warning disable CA1710 // This was the name given in the assignment
+
     public class Array<T> : ICollection<T>
 #pragma warning restore CA1710
     {
-
         private int Capacity { get; }
 
         public int Count { get; private set; }
