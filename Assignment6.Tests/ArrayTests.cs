@@ -22,6 +22,7 @@ namespace Assignment6.Tests
         [DataRow(10)]
         public void ArrayOperator_OperatesCorrectly(int value)
         {
+            // ReSharper disable once UseObjectOrCollectionInitializer
             var array = new ArrayCollection<int>(1);
             array[0] = value;
 
@@ -50,6 +51,7 @@ namespace Assignment6.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void Add_GivenNull_ThrowsException()
         {
+            // ReSharper disable once UseObjectOrCollectionInitializer
             var array = new ArrayCollection<string>(1);
             array.Add(null);
         }
@@ -65,6 +67,7 @@ namespace Assignment6.Tests
                 "d",
                 "e"
             };
+            // ReSharper disable once UseObjectOrCollectionInitializer
             var array = new ArrayCollection<string>(5);
             array[1] = "a";
             array[3] = "b";
@@ -92,7 +95,6 @@ namespace Assignment6.Tests
         public void CopyTo_GivenNullArray_ThrowsException()
         {
             var a = new ArrayCollection<string>(3) {"a", "b", "c"};
-            // ReSharper disable once AssignNullToNotNullAttribute
             a.CopyTo(null, 0);
         }
 
@@ -148,6 +150,7 @@ namespace Assignment6.Tests
         [ExpectedException(typeof(ReadOnlyException))]
         public void WhileReadOnly_Add_ThrowsException()
         {
+            // ReSharper disable once UseObjectOrCollectionInitializer
             var a = new ArrayCollection<string>(3, true) {"a", "b"};
 
             a.Add("c");

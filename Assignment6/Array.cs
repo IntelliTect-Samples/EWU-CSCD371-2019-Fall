@@ -10,7 +10,8 @@ namespace Assignment6
     public class ArrayCollection<T> : ICollection<T>
     {
 
-        private T[] _array;
+        // ReSharper disable once InconsistentNaming
+        private T[] _Array;
 
         public int  Capacity   { get; }
         public bool IsReadOnly { get; }
@@ -20,7 +21,7 @@ namespace Assignment6
         {
             if (capacity <= 0) throw new ArgumentException("must be > 0", nameof(capacity));
 
-            _array     = new T[capacity];
+            _Array     = new T[capacity];
             Capacity   = capacity;
             IsReadOnly = isReadOnly;
         }
@@ -33,7 +34,7 @@ namespace Assignment6
 
         public IEnumerator<T> GetEnumerator()
         {
-            return _array.Cast<T>().GetEnumerator();
+            return _Array.Cast<T>().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -45,7 +46,7 @@ namespace Assignment6
         {
             if (index >= Capacity || index < 0) throw new IndexOutOfRangeException();
 
-            var item = _array[index];
+            var item = _Array[index];
             if (item is null) throw new ArgumentException("No item at given index", nameof(index));
             return item;
         }
@@ -54,8 +55,8 @@ namespace Assignment6
         {
             if (Count == Capacity) throw new Exception("Array is full");
 
-            int index = 0;
-            while (_array[index] != null)
+            var index = 0;
+            while (_Array[index] != null)
             {
                 index++;
             }
@@ -69,24 +70,19 @@ namespace Assignment6
             if (item is null) throw new ArgumentNullException(nameof(index));
             if (IsReadOnly) throw new ReadOnlyException("Array is marked as Read Only");
 
-            _array[index] = item;
+            _Array[index] = item;
             Count++;
         }
 
         public void Clear()
         {
-            _array = new T[Capacity];
+            _Array = new T[Capacity];
             Count  = 0;
         }
 
         public bool Contains(T item)
         {
-            foreach (var obj in _array)
-            {
-                if (obj.Equals(item)) return true;
-            }
-
-            return false;
+            return _Array.Contains(item);
         }
 
         public void CopyTo(T[] array, int index)
@@ -96,9 +92,9 @@ namespace Assignment6
             if (Count > array.Length)
                 throw new ArgumentException("Current array contains more items than passed array can hold.",
                                             nameof(array));
-            for (int x = 0; x < Capacity; x++)
+            for (var x = 0; x < Capacity; x++)
             {
-                if (_array[x] != null) array[x + index] = _array[x];
+                if (_Array[x] != null) array[x + index] = _Array[x];
             }
         }
 
@@ -106,14 +102,12 @@ namespace Assignment6
         {
             if (item is null) throw new ArgumentNullException(nameof(item));
 
-            for (int x = 0; x < Capacity; x++)
+            for (var x = 0; x < Capacity; x++)
             {
-                if (_array[x]!.Equals(item))
-                {
-                    _array[x] = default;
-                    Count--;
-                    return true;
-                }
+                if (!_Array[x]!.Equals(item)) continue;
+                _Array[x] = default;
+                Count--;
+                return true;
             }
 
             return false;
@@ -121,7 +115,7 @@ namespace Assignment6
 
         public override string ToString()
         {
-            return _array.ToString();
+            return _Array.ToString();
         }
 
     }
