@@ -1,1 +1,0 @@
-When adding a new mailbox through program.cs, it always defaults to 'Small' even when no input occurred for that item.
