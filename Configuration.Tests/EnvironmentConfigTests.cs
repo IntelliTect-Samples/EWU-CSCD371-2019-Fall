@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Configuration.Tests
 {
+    // MMM Comment: Why didn't you derive from BaseConfig?  (You did such a great job with that...)
     [TestClass]
     public class EnvironmentConfigTests
     {

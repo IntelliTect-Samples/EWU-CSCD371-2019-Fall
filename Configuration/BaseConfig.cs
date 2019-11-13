@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Configuration
 {
+    // MMM Comment: Yes!!! You refactored.  Nice job!!!!
     public abstract class BaseConfig : IConfig
     {
         public abstract bool GetConfigValue(string name, out string? value);
@@ -15,6 +16,7 @@ namespace Configuration
         // lax: matches to 1 or more of '=' or whitespace
         public static bool IsInvalidString(string? name, bool strict = true)
         {
+            // MMM Config: Nice use of regex.
             return string.IsNullOrEmpty(name) || ( strict ? Regex.IsMatch(name, "[^\\d\\w\\-]+") : Regex.IsMatch(name, "[=\\s]+") );
         }
 

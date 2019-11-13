@@ -8,8 +8,10 @@ namespace SampleApp
     {
         public static void Main()
         {
+            // MMM Comment: IConfig would have been preferable.
             BaseConfig config = new FileConfig();
 
+            // MMM Comment: This too would have been a great place to use Tuples.
             string[] keys = new string[] { "K1", "K2", "K3" };
             string[] values = new string[] { "V1", "V2", "V3" };
 
@@ -28,6 +30,7 @@ namespace SampleApp
             }
         }
         
+        // MMM Comment: IMO, it think it would be a lot eaiser to work with tuples here.
         public static List<KeyValuePair<string,string>> IterateKVPairs(IConfig config, string[] keys)
         {
             List<KeyValuePair<string, string>> kvPairs = new List<KeyValuePair<string, string>>();
