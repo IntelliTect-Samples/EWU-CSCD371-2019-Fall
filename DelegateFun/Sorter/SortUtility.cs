@@ -1,10 +1,26 @@
-﻿using System;
-
-namespace Sorter
+﻿namespace Sorter
 {
-    public class SortUtility
+    public static class SortUtility
     {
-        // Sort method should be implemented here
-        // It should accept an int[] and a delegate you define that performs the actual comparison
+        public delegate bool Compare(int num1, int num2);
+
+        public static void Sort(int[] arr, Compare comparer)
+        {
+            if (arr is null)
+                return;
+            int n = arr.Length;
+
+            for (int i = 0; i < n - 1; i++)
+            {
+                int min_idx = i;
+                for (int j = i + 1; j < n; j++)
+                    if (comparer(arr[j], arr[min_idx]))
+                        min_idx = j;
+
+                int temp = arr[min_idx];
+                arr[min_idx] = arr[i];
+                arr[i] = temp;
+            }
+        }
     }
 }
