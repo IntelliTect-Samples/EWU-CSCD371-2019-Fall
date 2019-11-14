@@ -6,7 +6,7 @@ namespace Sorter
     {
         public delegate bool Compare(int num1, int num2);
 
-        public static void Sort(int[] arr, Compare comparer)
+        public static void Sort(int[]? arr, Compare comparer)
         {
             if (arr is null)
                 throw new ArgumentNullException(nameof(arr));

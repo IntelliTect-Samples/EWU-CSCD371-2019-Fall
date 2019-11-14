@@ -79,7 +79,7 @@ namespace Sorter.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void SortUtility_PassedArrayIsNull_ThrowsException()
         {
-            int[] items = null;
+            int[]? items = null;
 
             SortUtility.Sort(items, _Comparer);
         }
