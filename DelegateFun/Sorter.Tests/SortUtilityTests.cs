@@ -46,6 +46,7 @@ namespace Sorter.Tests
         {
             int[] items = GetArray();
             SortUtility.Sort(items, _Comparer);
+
             Assert.IsTrue(IsSorted(items, GreaterThan));
         }
 
@@ -70,7 +71,17 @@ namespace Sorter.Tests
                 {
                     return string.Compare(num1.ToString(), num2.ToString(), StringComparison.Ordinal) < 0;
                 });
+
             Assert.IsTrue(IsSorted(items, Alphabetical));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SortUtility_PassedArrayIsNull_ThrowsException()
+        {
+            int[] items = null;
+
+            SortUtility.Sort(items, _Comparer);
         }
     }
 }

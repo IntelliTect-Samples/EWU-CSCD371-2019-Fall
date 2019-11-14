@@ -1,4 +1,6 @@
-﻿namespace Sorter
+﻿using System;
+
+namespace Sorter
 {
     public static class SortUtility
     {
@@ -7,7 +9,7 @@
         public static void Sort(int[] arr, Compare comparer)
         {
             if (arr is null)
-                return;
+                throw new ArgumentNullException(nameof(arr));
             int n = arr.Length;
 
             for (int i = 0; i < n - 1; i++)
