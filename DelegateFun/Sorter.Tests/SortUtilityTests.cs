@@ -8,6 +8,19 @@ namespace Sorter.Tests
         [TestMethod]
         public void SortUtility_ShouldSortAscending_UsingAnAnonymousMethod()
         {
+
+        }
+
+        [TestMethod]
+        public void SortUtility_ShouldSortAscending_UsingALambdaExpression()
+        {
+
+        }
+
+        [TestMethod]
+        public void SortUtility_ShouldSortAscending_UsingALambdaStatement()
+        {
+
         }
     }
 }
