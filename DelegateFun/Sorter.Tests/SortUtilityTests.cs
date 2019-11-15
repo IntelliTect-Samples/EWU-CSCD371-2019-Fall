@@ -1,5 +1,4 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace Sorter.Tests
 {
@@ -10,7 +9,8 @@ namespace Sorter.Tests
         public void SortUtility_ShouldSortAscending_UsingAnAnonymousMethod()
         {
             //Organize
-            int[] intArr = { 3, 4, 5, 2, 4, 2, 1};
+            int[] intArr = { 3, 4, 5, 2, 4, 2, 1 };
+            int[] correctArr = { 1, 2, 2, 3, 4, 4, 5 };
             SortUtility sortUtil = new SortUtility();
 
             //Act
@@ -20,7 +20,7 @@ namespace Sorter.Tests
             });
 
             //Assert
-            Assert.AreEqual(1, intArr[0]);
+            CollectionAssert.AreEqual(correctArr, intArr);
         }
 
         [TestMethod]
@@ -28,6 +28,7 @@ namespace Sorter.Tests
         {
             //Organize
             int[] intArr = { 3, 4, 5, 2, 4, 2, 1 };
+            int[] correctArr = { 5, 4, 4, 3, 2, 2, 1 };
             SortUtility sortUtil = new SortUtility();
 
             //Act
@@ -37,7 +38,7 @@ namespace Sorter.Tests
             });
 
             //Assert
-            Assert.AreEqual(5, intArr[0]);
+            CollectionAssert.AreEqual(correctArr, intArr);
         }
 
         [TestMethod]
@@ -45,13 +46,14 @@ namespace Sorter.Tests
         {
             //Organize
             int[] intArr = { 3, 4, 5, 2, 4, 2, 111, 1111 };
+            int[] correctArr = { 111, 1111, 2, 2, 3, 4, 4, 5 };
             SortUtility sortUtil = new SortUtility();
 
             //Act
             intArr = sortUtil.Sort(intArr, (x, y) => x.ToString().CompareTo(y.ToString()) > 0);
 
             //Assert
-            Assert.AreEqual(111, intArr[0]);
+            CollectionAssert.AreEqual(correctArr, intArr);
 
         }
     }

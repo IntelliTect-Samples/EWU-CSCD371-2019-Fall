@@ -14,16 +14,15 @@ namespace Sorter
                 throw new ArgumentNullException(nameof(array));
             }
 
-            for (int i = array.Length - 1; i >= 0; i--)
+
+            //Insertion Sort
+            for (int i = 1; i < array.Length; i++)
             {
-                for (int j = 1; j <= i; j++)
+                for (int j = i; j > 0 && sortOrder(array[j-1], array[j]); j--)
                 {
-                    if (sortOrder(array[j - 1],array[j]))
-                    {
-                        var temp = array[j - 1];
-                        array[j - 1] = array[j];
-                        array[j] = temp;
-                    }
+                    var temp = array[j - 1];
+                    array[j - 1] = array[j];
+                    array[j] = temp;
                 }
             }
 
