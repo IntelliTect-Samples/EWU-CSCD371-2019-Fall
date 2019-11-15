@@ -36,12 +36,12 @@ namespace Sorter.Tests
         }
 
         [TestMethod]
-        public void SortUtility_ShouldSortDescending_UsingALambdaExpression()
+        public void SortUtility_ShouldSortIdkInSomeOrder_UsingALambdaExpression()
         {
             var list = new[] { 5, 2, 7, 8, 3, 6, 1, 9, 0, 4 };
-            var correct = new[] { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
+            var correct = new[] { 1, 0, 2, 3, 4, 5, 6, 9, 8, 7 };
 
-            int[] sorted = SortUtility.Sort(list, (i, j) => i > j);
+            int[] sorted = SortUtility.Sort(list, (i, j) => i/2 <= j/3);
 
             Assert.IsTrue(Enumerable.SequenceEqual(correct, sorted));
         }
