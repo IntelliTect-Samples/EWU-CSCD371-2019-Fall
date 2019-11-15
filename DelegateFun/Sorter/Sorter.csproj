@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ApplicationIcon />
+    <nulable>Enable</nulable>
     <OutputType>Library</OutputType>
     <StartupObject />
   </PropertyGroup>
