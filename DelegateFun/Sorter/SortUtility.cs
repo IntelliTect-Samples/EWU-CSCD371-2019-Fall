@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sorter
 {
-    public class SortUtility
+    public static class SortUtility
     {
         public delegate bool Compare(int i, int j);
 
