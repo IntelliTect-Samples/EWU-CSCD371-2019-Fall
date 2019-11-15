@@ -48,6 +48,13 @@ namespace Sorter.Tests {
             Assert.IsTrue(IsSortedNumberLengthInOrderReverseThenNumberValueInOrder(testArray));
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void SelectionSort_ThrowsArgumentNullExceptionForNullArray() {
+            //Act
+            SelectionSort(null,(int first,int second) => (first>second));
+        }
+
         public int[] CreateRandomArray(int length) {
             Random rand = new Random();
             int[] randomArray = new int[length];
