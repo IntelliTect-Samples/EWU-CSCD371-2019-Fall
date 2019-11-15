@@ -14,7 +14,7 @@ namespace Sorter.Tests {
             SelectionSort(testArray, delegate (int first, int second) { return first < second; });
 
             //Assert
-            Assert.IsTrue(IsSorted(testArray));
+            Assert.IsTrue(IsSortedNumberValueInOrder(testArray));
         }
 
         [TestMethod]
@@ -23,10 +23,10 @@ namespace Sorter.Tests {
             int[] testArray = CreateRandomArray(200);
 
             //Act
-            SelectionSort(testArray, (int first, int second) => first < second);
+            SelectionSort(testArray, (int first, int second) => first > second);
 
             //Assert
-            Assert.IsTrue(IsSorted(testArray));
+            Assert.IsTrue(IsSortedNumberValueInOrderReverse(testArray));
         }
 
         [TestMethod]
@@ -35,24 +35,49 @@ namespace Sorter.Tests {
             int[] testArray = CreateRandomArray(200);
 
             //Act
-            SelectionSort(testArray, (int first, int second) => { return first < second; });
-
+            SelectionSort(testArray, (int first, int second) =>
+            {
+                if (first.ToString().Length == second.ToString().Length) {
+                    return first < second;
+                } else {
+                    return first.ToString().Length > second.ToString().Length;
+                }
+            });
+            Console.WriteLine(string.Join(",", testArray));
             //Assert
-            Assert.IsTrue(IsSorted(testArray));
+            Assert.IsTrue(IsSortedNumberLengthInOrderReverseThenNumberValueInOrder(testArray));
         }
 
         public int[] CreateRandomArray(int length) {
             Random rand = new Random();
             int[] randomArray = new int[length];
             for (int i = 0; i < length; i++) {
-                randomArray[i] = rand.Next();
+                randomArray[i] = rand.Next(9999);
             }
             return randomArray;
         }
 
-        public bool IsSorted(int[] a) {
+        public bool IsSortedNumberValueInOrder(int[] a) {
             for (int i = 1; i < a.Length; i++) {
                 if (a[i] < a[i - 1]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool IsSortedNumberValueInOrderReverse(int[] a) {
+            for (int i = 1; i < a.Length; i++) {
+                if (a[i] > a[i - 1]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool IsSortedNumberLengthInOrderReverseThenNumberValueInOrder(int[] a) {
+            for (int i = 1; i < a.Length; i++) {
+                if (a[i].ToString().Length > a[i - 1].ToString().Length || (a[i].ToString().Length == a[i - 1].ToString().Length && a[i] < a[i - 1])) {
                     return false;
                 }
             }
