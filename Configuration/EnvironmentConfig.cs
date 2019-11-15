@@ -26,6 +26,7 @@ namespace Configuration
         public bool SetConfigValue(string name, string? value)
         {
             Environment.SetEnvironmentVariable(name, value);
+            // MMM Comment: "is null" preferable
             if (value == null)
             {
                 return false;
@@ -37,6 +38,8 @@ namespace Configuration
             }
         }
 
+        // MMM Comment: Great to see the finalizer. 
+        // MMM Commet: To do this correctly, it should be implemented with IDisposable.
         ~EnvironmentConfig()
         {
             foreach (string name in keyName)

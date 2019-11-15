@@ -5,8 +5,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Configuration.Tests
 {
+    // MMM Comment: Wait, this is private.  How did you ever run your tests?
     [TestClass]
-    class EnvironmentConfigTests
+    public class EnvironmentConfigTests
     {
         [TestMethod]
         public void EnvironmentConfig_GetValue_ReturnTrue()

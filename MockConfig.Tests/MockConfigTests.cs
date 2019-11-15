@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Mock.Tests
 {
     [TestClass]
-    class MockConfigTests
+    public class MockConfigTests
     {
         [TestMethod]
         public void MockConfig_GetValue_ReturnTrue()

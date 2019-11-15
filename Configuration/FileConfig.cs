@@ -31,6 +31,7 @@ namespace Configuration
             return res;
         }
 
+        // MMM Comment: Why not just make it static rather than disable warning?
 #pragma warning disable CA1822 // Mark members as static
         public void WriteConfig(string name, string? value)
 #pragma warning restore CA1822 // Mark members as static
@@ -43,6 +44,7 @@ namespace Configuration
                 }
             }
 
+            // MMM Comment: Throw exception... what if this app calling wasn't a console app?
             else Console.WriteLine("error to write the content");
         }
 
