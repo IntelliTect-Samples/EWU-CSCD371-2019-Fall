@@ -6,9 +6,16 @@ namespace Sorter.Tests
     [TestClass]
     public class SortUtilityTests
     {
-        private bool IsGreaterThan(int firstNumber, int secondNumber)
+        private static bool IsGreaterThan(int firstNumber, int secondNumber)
         {
             if (firstNumber > secondNumber)
+                return true;
+            return false;
+        }
+
+        public static bool IsLesserThan(int firstNumber, int secondNumber)
+        {
+            if (firstNumber < secondNumber)
                 return true;
             return false;
         }
@@ -17,11 +24,10 @@ namespace Sorter.Tests
         public void SortUtility_ShouldSortAscending_UsingAnAnonymousMethod()
         {
             //Arrange
-            SortUtility sortUtility = new SortUtility();
             int[] unsortedArray = { 5, 2, 4, 1, 3 };
             int[] sortedArray = { 1, 2, 3, 4, 5 };
             //Act
-            sortUtility.Sort(unsortedArray, IsGreaterThan);
+            SortUtility.Sort(unsortedArray, IsLesserThan);
             bool arrayIsSortedAscending = Enumerable.SequenceEqual(unsortedArray, sortedArray);
             //Assert
             Assert.IsTrue(arrayIsSortedAscending);
