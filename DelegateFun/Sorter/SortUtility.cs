@@ -11,6 +11,8 @@ namespace Sorter
         {
             if (items is null) throw new ArgumentNullException(nameof(items));
 
+            if (compare is null) throw new ArgumentNullException(nameof(compare));
+
             for (int i = 0; i < items.Length; i++)
             {
                 int target = i;
