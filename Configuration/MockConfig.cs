@@ -5,6 +5,7 @@ namespace Configuration
 {
     public class MockConfig : IConfig
     {
+        // MMM Comment: Prefix fields with underscore or, even better, us PascalCase with a property.
         private Dictionary<string, string> treeValuePairs;
 
         private const string EQUALS = "=";
@@ -36,12 +37,14 @@ namespace Configuration
                 return false;
 
             else if (treeValuePairs.ContainsKey(key))
+                // MMM Comment: Use null forgiveness operator here.
 #pragma warning disable CS8601 // null reference
                 treeValuePairs[key] = value;
 #pragma warning restore CS8601 // null reference
 
             else
-#pragma warning disable CS8604 
+#pragma warning disable CS8604
+                // MMM Comment: Use null forgiveness operator here.
                 treeValuePairs.Add(key, value);
 #pragma warning restore CS8604 
 
@@ -50,6 +53,7 @@ namespace Configuration
 
         private static bool nameCheck(string? key)
         {
+            // MMM Comment: Inculude parameter name parameter with nameof operator.
             if (key is null)
                 throw new ArgumentException($"The name: {key} is null!");
 
@@ -59,6 +63,7 @@ namespace Configuration
             else if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"The name: {key} is just whitespace and therefore invalid.");
 
+            // MMM Comment: Perhaps turn this off for the entire project?
 #pragma warning disable CA1307 // Specify StringComparison
             else if (key.Contains(SPACE))
 #pragma warning restore CA1307 // Specify StringComparison

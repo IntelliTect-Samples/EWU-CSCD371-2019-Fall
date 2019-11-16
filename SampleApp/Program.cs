@@ -19,8 +19,10 @@ namespace SampleApp
             
         }
 
+        // MMM Comment: Good job refactoring so that this can be tested.
         public static string FindSetting(IConfig config, string name)
         {
+            // MMM Comment: This code looks like a duplicate from elsewhere, why not reuse?
             if (config is null)
                 throw new ArgumentNullException("Config cannont be null");
 

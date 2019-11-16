@@ -27,9 +27,12 @@ namespace Configuration
             return true;
         }
 
+        // MMM Comment: Use Pascal Case for all members.
+        // MMM Comment: Good to see you refactored the parameter validation logic out.
         private static bool nameCheck(string? key)
         {
             if (key is null)
+                // MMM Comment: Throw ArgumentNullException here.
                 throw new ArgumentException($"The name: {key} is null!");
 
             else if (string.IsNullOrEmpty(key))

@@ -34,6 +34,7 @@ namespace SampleApp.Tests
         public void FindSettings_Null_Name_Thrown_Exception()
         {
             IConfig mock = new MockConfig();
+            // MMM Comment: use null forgiveness operator to suppress warning here.
             Program.FindSetting(mock, null);
         }
 

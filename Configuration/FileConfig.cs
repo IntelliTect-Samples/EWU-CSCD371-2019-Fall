@@ -72,6 +72,7 @@ namespace Configuration
                 File.Delete(filePath);
         }
 
+        // MMM Comment: Why not refactor EnvironmentConfig for this logic?
         private static bool nameCheck(string? name)
         {
             if (name is null)
