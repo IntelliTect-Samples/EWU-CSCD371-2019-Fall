@@ -6,11 +6,14 @@ using System.Text;
 
 namespace Configuration
 {
+    // MMM Comment: IConfig was not implemented?
     public class FileConfig
     {
-
+        // MMM Comment: What if file does not exist?
+        // MMM Comment: System.IO.Path.Combine() preferable.
         private string _FilePath = Environment.CurrentDirectory+Path.DirectorySeparatorChar+"config.settings";
 
+        // MMM Comment: An empty public default constructor is unnecessary as the compiler generates this.
         public FileConfig()
         {
 
@@ -27,6 +30,7 @@ namespace Configuration
                 {
                     break;
                 }
+                // MMM Comment: What if line is blank?
                 string[] br = line.Split("=");
 
                 map.Add(br[0], br[1]);
@@ -37,6 +41,7 @@ namespace Configuration
 
         public bool FileWrite(string type,string value)
         {
+            // MMM Comment:  Levearge using statement
             StreamWriter writer = new StreamWriter(_FilePath);
 
             if (type == null || type == "" || type.Contains("=") || type.Contains(" "))

@@ -8,6 +8,8 @@ namespace Configuration.Tests
     [TestClass]
     public class EnviromentConfigTests
     {
+
+        // MMM Comment: Use GetConfigValue to test SetConfigValue and vice-versa.
         [TestMethod]
         public void SetEnviromentVariable_Success()
         {

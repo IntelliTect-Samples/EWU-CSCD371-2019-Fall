@@ -4,10 +4,12 @@ using System.Text;
 
 namespace Configuration
 {
-    #nullable enable
-
+    // MMM Comment: Why enable here when it is enabled in the project file?
+#nullable enable
+    // MMM Comment: Preferable for this to be in a test project.
     public class MockConfig : IConfig
     {
+        // MMM Comment: Use underscore prefix for all filed names.
         private Dictionary<string, string> settings { get; set; }
 
         public MockConfig()
