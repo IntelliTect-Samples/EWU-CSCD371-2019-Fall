@@ -1,4 +1,6 @@
-﻿namespace Sorter
+﻿using System;
+
+namespace Sorter
 {
     public static class SortUtility
     {
@@ -8,6 +10,10 @@
         // It should accept an int[] and a delegate you define that performs the actual comparison
         public static void Sort(int[] unsortedArray, SortingFuntion sort)
         {
+            if (unsortedArray is null)
+                throw new ArgumentNullException(nameof(unsortedArray));
+            if (sort is null)
+                throw new ArgumentNullException(nameof(sort));
             //implement selection sort
             for (int firstIndex = 0; firstIndex < unsortedArray.Length - 1; firstIndex++)
             {
