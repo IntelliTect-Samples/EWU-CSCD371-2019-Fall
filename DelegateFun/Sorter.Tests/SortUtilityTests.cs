@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 using System;
+using System.Linq;
 
 namespace Sorter.Tests
 {
@@ -30,7 +30,7 @@ namespace Sorter.Tests
             int[] unsortedArray = { 5, 2, 4, 1, 3 };
             int[] sortedArray = { 5, 4, 3, 2, 1 };
             //Act
-            SortUtility.Sort(unsortedArray, delegate(int first, int second) 
+            SortUtility.Sort(unsortedArray, delegate (int first, int second)
                 {
                     return first > second;
                 });
@@ -43,14 +43,14 @@ namespace Sorter.Tests
         public void Sort_UsingAnAnonymousMethod_ShouldSortLexicographicly()
         {
             //Arrange
-            int[] unsortedArray = { 300, 7000, 20, 1000};
-            int[] sortedArray = { 1000, 20, 300, 7000};
+            int[] unsortedArray = { 300, 7000, 20, 1000 };
+            int[] sortedArray = { 1000, 20, 300, 7000 };
             //Act
             SortUtility.Sort(unsortedArray, delegate (int first, int second)
             {
                 string firstString = first.ToString();
                 string secondString = second.ToString();
-                int res = string.Compare(firstString,secondString);
+                int res = string.Compare(firstString, secondString);
                 if (res < 0)
                     return true;
                 return false;
@@ -71,8 +71,8 @@ namespace Sorter.Tests
             SortUtility.Sort(nullArray, delegate (int first, int second)
 #pragma warning restore CS8604 // Passing null for testing purposes
             {
-                    return false;
-                });
+                return false;
+            });
             //Assert
         }
 
