@@ -28,6 +28,7 @@ namespace SampleApp.Tests
         {
             if (ConfigUtils.IsValidName(name) && !(value is null))
             {
+                // MMM Comment: What if it already exists?
                 Settings.Add(new Setting(name, value));
                 return true;
             }

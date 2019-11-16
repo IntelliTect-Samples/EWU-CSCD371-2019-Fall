@@ -5,6 +5,7 @@ namespace SampleApp.Tests
     [TestClass]
     public class ProgramTests
     {
+        // MMM Comment: Thanks for the explanation!  Add a IConfig Config property to the program and then set it before calling main. :)
         [TestMethod]
         public void TestMethod1()
         {

@@ -5,6 +5,7 @@ namespace SampleApp.Tests
     [TestClass]
     public class MockConfigTests
     {
+        // MMM Comment: Use SetConfigValue and SetConfigValue from the same test so they test each other.
         [TestMethod]
         public void SetConfigValue_BadName_ReturnsFalse()
         {

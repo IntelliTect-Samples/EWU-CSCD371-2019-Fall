@@ -2,6 +2,7 @@
 
 namespace Configuration
 {
+    // MMM Comment: I like the refactoring here. :)
     public static class ConfigUtils
     {
         public static bool IsValidName(string? name)
