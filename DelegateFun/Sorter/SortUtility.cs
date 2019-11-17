@@ -9,6 +9,8 @@ namespace Sorter
 
         public static int[] Sort(int[] intArray, Compare compare) => intArray switch
         {
+            null => throw new ArgumentNullException(nameof(intArray)),
+            _ when compare is null => throw new ArgumentNullException(nameof(compare)),
             int[] list when list.Length <= 1 => list,
             int[] list => Merge(Sort(list[..(list.Length/2)], compare),
                                 Sort(list[(list.Length/2)..], compare),
@@ -23,10 +25,10 @@ namespace Sorter
             while (a < listA.Length && b < listB.Length)
                 list[i++] = compare(listA[a], listB[b]) ? listA[a++] : listB[b++];
 
-            while ( a < listA.Length)
+            while (a < listA.Length)
                 list[i++] = listA[a++];
 
-            while ( b < listB.Length)
+            while (b < listB.Length)
                 list[i++] = listB[b++];
 
             return list;
