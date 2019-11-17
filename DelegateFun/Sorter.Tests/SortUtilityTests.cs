@@ -20,7 +20,7 @@ namespace Sorter.Tests
             );
 
             //Assert
-
+            Assert.AreEqual("0, 2, 5, 25, 34", string.Join(", ", items));
         }
     }
 }
