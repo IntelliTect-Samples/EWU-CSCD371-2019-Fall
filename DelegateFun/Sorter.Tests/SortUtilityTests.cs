@@ -67,9 +67,7 @@ namespace Sorter.Tests
             //Arrange
             int[]? nullArray = null;
             //Act
-#pragma warning disable CS8604 // Possible null reference argument.
-            SortUtility.Sort(nullArray, delegate (int first, int second)
-#pragma warning restore CS8604 // Passing null for testing purposes
+            SortUtility.Sort(nullArray!, delegate (int first, int second)
             {
                 return false;
             });
