@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Sorter.Tests
 {
@@ -65,6 +66,42 @@ namespace Sorter.Tests
 
             //Assert
             Assert.AreEqual("0, 2, 234, 2345, 25, 2555, 34, 5", string.Join(", ", items));
+        }
+
+        [TestMethod]
+        public void SortUtility_ShouldIgnoreEmptyArray()
+        {
+            //Arrange
+            int[] items = Array.Empty<int>();
+
+            //Act
+            SortUtility.InsertionSort(items, (first, second) => first > second);
+
+            //Assert
+            Assert.AreEqual(Array.Empty<int>(), items);
+        }
+
+        [TestMethod]
+        public void SortUtility_ShouldIgnoreNullArray()
+        {
+            //Arrange
+            int[]? items = null;
+
+            //Act
+            SortUtility.InsertionSort(items!, (first, second) => first > second);
+
+            //Assert
+            Assert.AreEqual(null, items);
+        }
+
+        [TestMethod]
+        public void SortUtility_ShouldExcept_WithNullComparer()
+        {
+            //Arrange
+            int[]? items = null;
+
+            //Act & Assert
+            Assert.ThrowsException<ArgumentNullException>(() => SortUtility.InsertionSort(items!, null!));
         }
     }
 }
