@@ -2,7 +2,7 @@
 
 namespace Sorter
 {
-    public class SortUtility
+    public static class SortUtility
     {
         public delegate bool Comparer(int first, int second);
 
