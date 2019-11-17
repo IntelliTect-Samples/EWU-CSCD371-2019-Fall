@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sorter;
 
 namespace Sorter.Tests
 {
@@ -12,7 +13,12 @@ namespace Sorter.Tests
             int[] items = { 25, 34, 2, 5, 0 };
 
             //Act
-
+            SortUtility.InsertionSort(items, 
+                delegate(int first, int second)
+                {
+                    return first > second;
+                }
+            );
 
             //Assert
 
