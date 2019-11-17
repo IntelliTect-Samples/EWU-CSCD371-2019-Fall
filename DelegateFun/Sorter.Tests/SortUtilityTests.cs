@@ -40,7 +40,7 @@ namespace Sorter.Tests
         public void SortUtility_ShouldSortLexicographically_UsingLamdaStatement()
         {
             //Arrange
-            int[] items = { 25, 34, 2, 5, 0 };
+            int[] items = { 25, 34, 2, 5, 0 , 2345, 234, 2555};
 
             //Act
             SortUtility.InsertionSort(items,
@@ -50,25 +50,21 @@ namespace Sorter.Tests
                     string numFirst = first.ToString();
                     string numSecond = second.ToString();
 
-                    int compared = numFirst.ToCharArray()[0].CompareTo(numSecond.ToCharArray()[0]);
+                    int comp = 0;
+                    for (int i = 0; i < numFirst.Length && i < numSecond.Length; i++)
+                    {
+                        comp = numFirst.ToCharArray()[i].CompareTo(numSecond.ToCharArray()[i]);
 
-                    if(compared == 0)
-                    {
-                        return first > second;
+                        if (comp > 0) { return true; }
+                        if (comp < 0) { return false; }
                     }
-                    else if(compared > 0)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+
+                    return numFirst.Length > numSecond.Length;
                 }
             );
 
             //Assert
-            Assert.AreEqual("0, 2, 25, 34, 5", string.Join(", ", items));
+            Assert.AreEqual("0, 2, 234, 2345, 25, 2555, 34, 5", string.Join(", ", items));
         }
     }
 }
