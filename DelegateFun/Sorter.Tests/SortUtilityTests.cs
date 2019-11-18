@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 
 namespace Sorter.Tests
@@ -53,6 +54,36 @@ namespace Sorter.Tests
 
             // Assert
             CollectionAssert.AreEqual(test, expected);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SortUtility_ArrayIsNull_ThrowsArgumentNullException()
+        {
+            // Arrange
+
+            // Act
+            SortUtility.SelectionSort(null, (int first, int second) =>
+            {
+                return first.ToString().CompareTo(second.ToString()) > 0;
+            });
+
+            // Assert
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SortUtility_CompareIsNull_ThrowsArgumentNullException()
+        {
+            // Arrange
+            int[] test = { 1, 4, 2, 3 };
+
+            // Act
+            SortUtility.SelectionSort(test, null);
+
+            // Assert
 
         }
     }

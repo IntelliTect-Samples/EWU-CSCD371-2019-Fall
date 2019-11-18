@@ -9,8 +9,17 @@ namespace Sorter
         // Sort method should be implemented here
         // It should accept an int[] and a delegate you define that performs the actual comparison
 
-        public static int[] SelectionSort(int[] items, SortFunc compare)
+        public static int[] SelectionSort(int[]? items, SortFunc? compare)
         {
+            if(items is null)
+            {
+                throw new ArgumentNullException(nameof(items), "items is null");
+            }
+            if (compare is null)
+            {
+                throw new ArgumentNullException(nameof(compare), "compare is null");
+            }
+
             int smallest;
             for(int i = 0; i < items.Length; i++)
             {
