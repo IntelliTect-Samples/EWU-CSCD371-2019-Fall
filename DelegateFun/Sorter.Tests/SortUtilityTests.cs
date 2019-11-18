@@ -17,7 +17,7 @@ namespace Sorter.Tests
 
             Key key = delegate (int a, int b)
             {
-                return a > b;
+                return a < b;
             };
 
             sut.QuickSort(arr, key);
@@ -35,7 +35,7 @@ namespace Sorter.Tests
 
             Key key = delegate (int a, int b)
             {
-                return a < b;
+                return a > b;
             };
 
             sut.QuickSort(arr, key);
@@ -51,7 +51,7 @@ namespace Sorter.Tests
         {
             var sut = new SortUtility();
 
-            sut.QuickSort(arr, ((int a, int b) => a > b));
+            sut.QuickSort(arr, ((int a, int b) => a < b));
 
             CollectionAssert.AreEqual(expected, arr);
         }
@@ -64,7 +64,7 @@ namespace Sorter.Tests
         {
             var sut = new SortUtility();
 
-            sut.QuickSort(arr, ((int a, int b) => a < b));
+            sut.QuickSort(arr, ((int a, int b) => a > b));
 
             CollectionAssert.AreEqual(expected, arr);
         }
@@ -77,7 +77,7 @@ namespace Sorter.Tests
         {
             var sut = new SortUtility();
 
-            sut.QuickSort(arr, ((int a, int b) => { return a > b; }));
+            sut.QuickSort(arr, ((int a, int b) => { return a < b; }));
 
             CollectionAssert.AreEqual(expected, arr);
         }
@@ -90,7 +90,7 @@ namespace Sorter.Tests
         {
             var sut = new SortUtility();
 
-            sut.QuickSort(arr, ((int a, int b) => { return a < b; }));
+            sut.QuickSort(arr, ((int a, int b) => { return a > b; }));
 
             CollectionAssert.AreEqual(expected, arr);
         }
