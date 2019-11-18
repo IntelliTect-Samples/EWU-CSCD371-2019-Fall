@@ -11,29 +11,25 @@ namespace Sorter.Tests
     public class SortUtilityTests
     {
         [TestMethod]
-        public void SortUtility_SortAscending_UsingAnAnonymousMethod()
+        public void SortUtility_SortDescending_UsingAnAnonymousMethod()
         {
             int[] ints = { 0, 2, 1, 5, 19, 34, 5, 6 };
-            int[] intsOrdered = { 0, 1, 2, 5, 5, 6, 19, 34 };
+            int[] intsOrdered = { 34, 19, 6, 5, 5, 2, 1, 0 };
 
-            SortUtility sort = new SortUtility();
+            SortFunc sorter = delegate (int first, int second) { return first < second; };
 
-            SortFunc sorter = delegate (int first, int second) { return first > second; };
-
-            ints = sort.Sort(ints, sorter);
+            ints = SortUtility.Sort(ints, sorter);
 
             Assert.IsTrue(ints.SequenceEqual(intsOrdered));
         }
 
         [TestMethod]
-        public void SortUtility_SortAscending_UsingALambdaExpresion()
+        public void SortUtility_SortAlphabetically_UsingALambdaExpresion()
         {
             int[] ints = { 0, 2, 1, 5, 19, 34, 5, 6 };
             int[] intsOrdered = { 0, 1, 2, 5, 5, 6, 19, 34 };
 
-            SortUtility sort = new SortUtility();
-
-            ints = sort.Sort(ints, (first, second) => { return first > second; });
+            ints = SortUtility.Sort(ints, (first, second) => { return first > second; });
 
             Assert.IsTrue(ints.SequenceEqual(intsOrdered));
         }
@@ -44,9 +40,7 @@ namespace Sorter.Tests
             int[] ints = { 0, 2, 1, 5, 19, 34, 5, 6 };
             int[] intsOrdered = { 0, 1, 2, 5, 5, 6, 19, 34 };
 
-            SortUtility sort = new SortUtility();
-
-            ints = sort.Sort(ints, ((int first, int second) => { return first > second; }));
+            ints = SortUtility.Sort(ints, ((int first, int second) => { return first > second; }));
 
             Assert.IsTrue(ints.SequenceEqual(intsOrdered));
         }
@@ -55,8 +49,7 @@ namespace Sorter.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void SortUtility_SortAscending_PassingNull()
         {
-            SortUtility sort = new SortUtility();
-            sort.Sort(null, ((int num1, int num2) => num1 < num2));
+            SortUtility.Sort(null, ((int num1, int num2) => num1 < num2));
         }
 
 

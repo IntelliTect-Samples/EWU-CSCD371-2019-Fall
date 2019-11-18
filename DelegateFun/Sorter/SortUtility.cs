@@ -2,11 +2,11 @@
 
 namespace Sorter
 {
-    public class SortUtility
+    public static class SortUtility
     {
         public delegate bool SortFunc(int first, int second);
 
-        public int[] Sort(int[] ints, SortFunc sort)
+        public static int[] Sort(int[] ints, SortFunc sort)
         {
             if(ints is null) { throw new ArgumentNullException(nameof(ints)); }
 
