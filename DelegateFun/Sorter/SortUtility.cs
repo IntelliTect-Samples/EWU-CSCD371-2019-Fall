@@ -6,32 +6,17 @@ namespace Sorter
 
     public class SortUtility
     {
-        private Key? _Key; 
-
-        public static void Main(string[] args)
+        private static void QuickSort(int[] arr, int l, int r, Key key)
         {
-            var sorter = new SortUtility();
-
-            var arr = new int[]
-            {
-                3, 4, 2, 5, 1
-            };
-
-            Key k = (int a, int b) => a < b;
-
-            sorter.QuickSort(arr, k);
-            foreach (int i in arr)
-                Console.WriteLine($"Value: {i}");
-        }
-
-        private void QuickSort(int[] arr, int l, int r)
-        {
+            int piv;
             if (l < r)
             {
-                int piv = Partition(arr, l, r);
+                piv = Partition(arr, l, r, key);
 
-                QuickSort(arr, l, piv - 1);
-                QuickSort(arr, piv + 1, r);
+                if (piv > 1)
+                    QuickSort(arr, l, piv - 1, key);
+                if (piv + 1 < r)
+                    QuickSort(arr, piv + 1, r, key);
             }
         }
 
@@ -39,29 +24,27 @@ namespace Sorter
         {
             if (key is null)
                 throw new ArgumentNullException(nameof(key));
-            _Key = key;
-            QuickSort(arr, 0, arr.Length-1);
+            QuickSort(arr, 0, arr.Length-1, key);
         }
 
-        private int Partition(int[] arr, int l, int r)
+        private static int Partition(int[] arr, int l, int r, Key key)
         {
             int piv = arr[r],
-                i = l - 1,
-                temp;
+                i = l - 1;
 
-            for (int j = l; j < r; j++)
+            for (int j = l; j < r-1; j++)
             {
-                if (_Key(arr[j], piv))
+                if (key(arr[j], piv))
                 {
-                    temp = arr[++i];
+                    int temp1 = arr[i];
                     arr[i] = arr[j];
-                    arr[j] = temp;
+                    arr[j] = temp1;
                 }
             }
 
-            temp = arr[i+1];
+            int temp2 = arr[i+1];
             arr[i+1] = arr[r];
-            arr[r] = temp;
+            arr[r] = temp2;
             return i + 1;
         }
     }

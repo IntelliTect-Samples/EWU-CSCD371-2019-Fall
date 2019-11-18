@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Nullable>Enable</Nullable>
-    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
 </Project>
