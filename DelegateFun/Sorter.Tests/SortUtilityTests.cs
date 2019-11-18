@@ -8,7 +8,7 @@ namespace Sorter.Tests
     public class SortUtilityTests
     {
         [TestMethod]
-        public void SortUtility_ShouldSortAscending_UsingAnAnonymousMethod()
+        public void Sort_ShouldSortAscending_UsingAnAnonymousMethod()
         {
             var list = new[] { 5, 2, 7, 8, 3, 6, 1, 9, 0, 4 };
             var correct = new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -22,7 +22,7 @@ namespace Sorter.Tests
         }
 
         [TestMethod]
-        public void SortUtility_ShouldSortDescending_UsingALambdaStatement()
+        public void Sort_ShouldSortDescending_UsingALambdaStatement()
         {
             var list = new[] { 5, 2, 7, 8, 3, 6, 1, 9, 0, 4 };
             var correct = new[] { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
@@ -36,7 +36,7 @@ namespace Sorter.Tests
         }
 
         [TestMethod]
-        public void SortUtility_ShouldSortIdkInSomeOrder_UsingALambdaExpression()
+        public void Sort_ShouldSortIdkInSomeOrder_UsingALambdaExpression()
         {
             var list = new[] { 5, 2, 7, 8, 3, 6, 1, 9, 0, 4 };
             var correct = new[] { 1, 0, 2, 3, 4, 5, 6, 9, 8, 7 };
@@ -44,6 +44,20 @@ namespace Sorter.Tests
             int[] sorted = SortUtility.Sort(list, (i, j) => i/2 <= j/3);
 
             Assert.IsTrue(Enumerable.SequenceEqual(correct, sorted));
+        }
+
+        [TestMethod]
+        public void Sort_NullCompare_ThrowsException()
+        {
+            var list = new[] { 1, 2, 3 };
+
+            Assert.ThrowsException<ArgumentNullException>(() => SortUtility.Sort(list, null!));
+        }
+
+        [TestMethod]
+        public void Sort_NullList_ThrowsException()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => SortUtility.Sort(null!, (i, j) => false));
         }
     }
 }
