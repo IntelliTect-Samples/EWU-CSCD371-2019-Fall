@@ -11,17 +11,23 @@ namespace Sorter
 
         public static void Sort(int[] items, CompareNumbers compare)
         {
-            for (int ix = 0; ix < items.Length - 1; ix++)
+            int temp, i, j;
+
+            if (compare is null) { throw new ArgumentNullException(nameof(compare)); }
+
+            if (items is null) { throw new ArgumentNullException(nameof(items)); }
+
+            for (i = 1; i < items.Length; i++)
             {
-                for (int iy = 1; iy < items.Length - 2; iy++)
+                temp = items[i];
+                j = i - 1;
+
+                while (j >= 0 && compare(items[j], temp))
                 {
-                    if (compare(items[ix], items[iy]))
-                    {
-                        int temp = items[ix];
-                        items[ix] = items[iy];
-                        items[iy] = temp;
-                    }
+                    items[j + 1] = items[j];
+                    j -= 1;
                 }
+                items[j + 1] = temp;
             }
         }
     }

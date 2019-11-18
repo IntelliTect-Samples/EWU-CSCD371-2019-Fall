@@ -3,31 +3,99 @@ using System;
 
 namespace Sorter.Tests
 {
-    class SortUtilityTests
+    [TestClass()]
+    public class SortUtilityTests
     {
         [TestMethod]
-        public void SortUtilityTestAscending()
+        public void SortAscendingMethod()
         {
-            int[] items = new int[] { 2, 4, 2, 3, 7, 9, 2, 3 };
-            string expected = "";
-            foreach (int item in items)
-            {
-                expected += item + ",";
-            }
+            //Arrange
+            int[] items = generateArray();
 
-
-            SortUtility.Sort(items, delegate(int first, int second)
+            //Act
+            SortUtility.Sort(items, delegate (int first, int second)
             {
                 return first > second;
             });
 
-            string result = "";
-            foreach (int item in items)
+            //Assert
+            for (int ix = 0; ix < items.Length - 1; ix++)
             {
-                result += item + ",";
+                Assert.IsTrue(items[ix] <= items[ix + 1]);
+            }
+        }
+
+        [TestMethod]
+        public void SortAscendingLambdaStatement()
+        {
+            //Arrange
+            int[] items = generateArray();
+
+            //Act
+            SortUtility.Sort(items, (first, second) =>
+            {
+                return first > second;
+            });
+
+            //Assert
+            for (int ix = 0; ix < items.Length - 1; ix++)
+            {
+                Assert.IsTrue(items[ix] <= items[ix + 1]);
+            }
+        }
+
+        [TestMethod]
+        public void SortAscendingLambdaExpression()
+        {
+            //Arrange
+            int[] items = generateArray();
+
+            //Act
+            SortUtility.Sort(items, (first, second) => first > second);
+
+            //Assert
+            for (int ix = 0; ix < items.Length - 1; ix++)
+            {
+                Assert.IsTrue(items[ix] <= items[ix + 1]);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SortNullArrayThrowsException()
+        {
+            //Arrange
+
+            //Act
+            SortUtility.Sort(null, (first, second) => first > second);
+
+            //Assert
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void NullDelegateThrowsException()
+        {
+            //Arrange
+            int[] items = generateArray();
+
+            //Act
+            SortUtility.Sort(items, null);
+
+            //Assert
+        }
+
+        public int[] generateArray()
+        {
+            int[] result = new int[10];
+            Random random = new Random();
+
+            for (int ix = 0; ix < result.Length; ix++)
+            {
+                result[ix] = random.Next(1, 26);
             }
 
-            Assert.AreEqual(expected, result);
+            return result;
         }
     }
 }
