@@ -9,6 +9,8 @@ namespace Sorter
         {
             if (array is null) throw new ArgumentNullException(nameof(array));
 
+            if (compare is null) throw new ArgumentNullException(nameof(compare));
+
             if (array.Length <= 1) return;
 
             for (int i = 1; i < array.Length; i++)

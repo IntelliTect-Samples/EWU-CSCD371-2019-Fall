@@ -52,5 +52,14 @@ namespace Sorter.Tests
         {
             SortUtility.Sort(null!, (first, second) => first < second);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SortUtility_UsingNullDelegate_ThrowsException()
+        {
+            int[] array = { 5, 4, 21, 64, 7, 28, 0, 84, 123, 42 };
+
+            SortUtility.Sort(array, null!);
+        }
     }
 }
