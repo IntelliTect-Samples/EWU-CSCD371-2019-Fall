@@ -21,7 +21,6 @@ namespace Sorter.Tests
             };
 
             int[] expected = arr;
-            
             Array.Sort(expected);
 
             sut.QuickSort(arr, key);
@@ -43,7 +42,6 @@ namespace Sorter.Tests
             };
 
             int[] expected = arr;
-            
             Array.Sort(expected);
             Array.Reverse(expected);
 
@@ -58,6 +56,14 @@ namespace Sorter.Tests
         [DataRow(new int[] {1, 2, 3, 4, 5})]
         public void SortUtility_ShouldSortAscending_UsingLambdaExpression(int[] arr)
         {
+            var sut = new SortUtility();
+
+            int[] expected = arr;
+            Array.Sort(expected);
+
+            sut.QuickSort(arr, ((int a, int b) => a > b));
+
+            Assert.AreEqual(expected, arr);
         }
 
         [DataTestMethod]
@@ -66,6 +72,15 @@ namespace Sorter.Tests
         [DataRow(new int[] {1, 2, 3, 4, 5})]
         public void SortUtility_ShouldSortDescending_UsingLambdaExpression(int[] arr)
         {
+            var sut = new SortUtility();
+
+            int[] expected = arr;
+            Array.Sort(expected);
+            Array.Reverse(expected);
+
+            sut.QuickSort(arr, ((int a, int b) => a < b));
+
+            Assert.AreEqual(expected, arr);
         }
 
         [DataTestMethod]
@@ -74,6 +89,14 @@ namespace Sorter.Tests
         [DataRow(new int[] {1, 2, 3, 4, 5})]
         public void SortUtility_ShouldSortAscending_UsingLambdaStatement(int[] arr)
         {
+            var sut = new SortUtility();
+
+            int[] expected = arr;
+            Array.Sort(expected);
+
+            sut.QuickSort(arr, ((int a, int b) => { return a > b; }));
+
+            Assert.AreEqual(expected, arr);
         }
 
         [DataTestMethod]
@@ -82,6 +105,15 @@ namespace Sorter.Tests
         [DataRow(new int[] {1, 2, 3, 4, 5})]
         public void SortUtility_ShouldSortDescending_UsingLambdaStatement(int[] arr)
         {
+            var sut = new SortUtility();
+
+            int[] expected = arr;
+            Array.Sort(expected);
+            Array.Reverse(expected);
+
+            sut.QuickSort(arr, ((int a, int b) => { return a < b; }));
+
+            Assert.AreEqual(expected, arr);
         }
     }
 }
