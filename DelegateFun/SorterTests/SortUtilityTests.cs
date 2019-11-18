@@ -85,7 +85,7 @@ namespace Sorter.Tests
             //Assert
         }
 
-        public int[] generateArray()
+        public static int[] generateArray()
         {
             int[] result = new int[10];
             Random random = new Random();
