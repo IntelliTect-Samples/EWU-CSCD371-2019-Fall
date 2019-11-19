@@ -94,5 +94,24 @@ namespace Sorter.Tests
 
             CollectionAssert.AreEqual(expected, arr);
         }
+
+        [TestMethod]
+        public void SortUtility_ThrowsExceptionOnNullData()
+        {
+            var sut = new SortUtility();
+
+            Assert.ThrowsException<ArgumentNullException>(
+                    () => sut.QuickSort(null, ((int a, int b) => { return a > b; })));
+        }
+
+        [TestMethod]
+        public void SortUtility_ThrowsExceptionOnNullKey()
+        {
+            var sut = new SortUtility();
+            var data = new int[] { 1, 5, 4, 2 };
+
+            Assert.ThrowsException<ArgumentNullException>(
+                    () => sut.QuickSort(data, null));
+        }
     }
 }

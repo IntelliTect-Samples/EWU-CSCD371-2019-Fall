@@ -17,10 +17,12 @@ namespace Sorter
             }
         }
 
-        public void QuickSort(int[] arr, Key key)
+        public void QuickSort(int[]? arr, Key? key)
         {
             if (arr is null)
                 throw new ArgumentNullException(nameof(arr));
+            if (key is null)
+                throw new ArgumentNullException(nameof(key));
 
             QuickSort(arr, 0, arr.Length - 1, key);
         }
