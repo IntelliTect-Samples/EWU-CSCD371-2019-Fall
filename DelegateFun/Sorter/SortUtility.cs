@@ -6,46 +6,46 @@ namespace Sorter
 
     public class SortUtility
     {
-        private static void QuickSort(int[] arr, int l, int r, Key key)
+        public void QuickSort(int[] arr, int l, int r, Key key)
         {
-            int piv;
             if (l < r)
             {
-                piv = Partition(arr, l, r, key);
+                int part = Partition(arr, l, r, key);
 
-                if (piv > 1)
-                    QuickSort(arr, l, piv - 1, key);
-                if (piv + 1 < r)
-                    QuickSort(arr, piv + 1, r, key);
+                QuickSort(arr, l, part - 1, key);
+                QuickSort(arr, part + 1, r, key);
             }
         }
 
-        public void QuickSort(int[] arr, Key? key)
+        public void QuickSort(int[] arr, Key key)
         {
-            if (key is null)
-                throw new ArgumentNullException(nameof(key));
-            QuickSort(arr, 0, arr.Length-1, key);
+            if (arr is null)
+                throw new ArgumentNullException(nameof(arr));
+
+            QuickSort(arr, 0, arr.Length - 1, key);
         }
 
         private static int Partition(int[] arr, int l, int r, Key key)
         {
             int piv = arr[r],
-                i = l - 1;
+                i = l - 1,
+                temp;
 
-            for (int j = l; j < r-1; j++)
+            for (int j = l; j < r; j++)
             {
                 if (key(arr[j], piv))
                 {
-                    int temp1 = arr[i];
+                    temp = arr[++i];
                     arr[i] = arr[j];
-                    arr[j] = temp1;
+                    arr[j] = temp;
                 }
             }
 
-            int temp2 = arr[i+1];
+            temp = arr[i+1];
             arr[i+1] = arr[r];
-            arr[r] = temp2;
-            return i + 1;
+            arr[r] = temp;
+
+            return i+1;
         }
     }
 }
