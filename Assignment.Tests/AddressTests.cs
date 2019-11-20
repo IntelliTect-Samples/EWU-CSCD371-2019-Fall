@@ -18,7 +18,7 @@ namespace Assignment.Tests
             };
 
 #pragma warning disable CS8625
-            Assert.ThrowsException<InvalidOperationException>(() => sut.Equals(null));
+            Assert.ThrowsException<ArgumentNullException>(() => sut.Equals(null));
 #pragma warning restore
         }
 

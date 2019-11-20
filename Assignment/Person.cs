@@ -10,14 +10,14 @@ namespace Assignment
 
         public override bool Equals(object other)
         {
-            if (Address is null)
-                throw new InvalidOperationException($"Cannot compare before setting {nameof(Address)}");
-            if (other is Person p)
+            if (other is IPerson p)
                 return FirstName == p.FirstName &&
                     LastName == p.LastName &&
                     Address.Equals(p.Address);
+            else if (other is null)
+                throw new ArgumentNullException($"{nameof(other)} cannot be null", nameof(other));
             else
-                throw new InvalidOperationException(nameof(other));
+                throw new ArgumentException($"{nameof(other)} must implement {nameof(IPerson)}", nameof(other));
         }
 
         public override int GetHashCode()
