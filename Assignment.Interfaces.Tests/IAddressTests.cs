@@ -3,11 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Assignment.Interfaces.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class IAddressTests
     {
-        [TestMethod]
-        public void TestMethod1()
-        {
-        }
     }
 }

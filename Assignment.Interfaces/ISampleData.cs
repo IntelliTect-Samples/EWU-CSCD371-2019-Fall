@@ -7,7 +7,7 @@ namespace Assignment
     {
         // 1.
         IEnumerable<string> CsvRows { get; }
-        
+
         // 2.
         IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows();
 
@@ -22,6 +22,5 @@ namespace Assignment
 
         // 6.
         string GetAggregateListOfStatesGivenPeopleCollection(IEnumerable<IPerson> people);
-
     }
 }
