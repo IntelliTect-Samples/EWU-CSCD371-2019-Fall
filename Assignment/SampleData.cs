@@ -1,12 +1,33 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Assignment
 {
     public class SampleData : ISampleData
     {
+        private string? _FileName;
+
+        public SampleData(string? fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+                throw new ArgumentNullException(nameof(fileName));
+
+            _FileName = fileName;
+        }
+
         // 1.
-        public IEnumerable<string> CsvRows => throw new NotImplementedException();
+        public IEnumerable<string> CsvRows
+        {
+            get
+            {
+                using (var sr = new StreamReader(@_FileName))
+                {
+                    yield return sr.ReadLine();
+                }
+            }
+        }
 
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() 
