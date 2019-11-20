@@ -23,9 +23,7 @@ namespace Assignment
             get
             {
                 using (var sr = new StreamReader(@_FileName))
-                {
                     yield return sr.ReadLine();
-                }
             }
         }
 
@@ -47,5 +45,44 @@ namespace Assignment
         // 6.
         public string GetAggregateListOfStatesGivenPeopleCollection(
             IEnumerable<IPerson> people) => throw new NotImplementedException();
+
+        public static Person ParsePerson(string? csvRow)
+        {
+            if (string.IsNullOrEmpty(csvRow))
+                throw new ArgumentNullException(nameof(csvRow));
+
+            string[] data = csvRow.Split(',');
+
+            if (data.Length < 8)
+                throw new ArgumentException(nameof(csvRow));
+
+            // Take last 4 elements of csv
+            string[] addressData = data.Reverse().Take(4).Reverse().ToArray();
+
+            Address addr = ParseAddress(addressData);
+
+            return new Person()
+            {
+                FirstName=data[1],
+                LastName=data[2],
+                Address=addr
+            };
+        }
+
+        public static Address ParseAddress(string[]? data)
+        {
+            if (data is null)
+                throw new ArgumentNullException(nameof(data));
+            if (data.Length < 4)
+                throw new ArgumentException(nameof(data));
+
+            return new Address()
+            {
+                StreetAddress = data[0],
+                City = data[1],
+                State = data[2],
+                Zip = data[3]
+            };
+        }
     }
 }

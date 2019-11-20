@@ -8,9 +8,13 @@ namespace Assignment
     {
         string FirstName { get; }
         string LastName { get; }
+        IAddress Address { get; }
+
+        /*
         string StreetAddress { get; }
         string City { get; }
         string State { get; }
         string Zip { get; }
+        */
     }
 }
