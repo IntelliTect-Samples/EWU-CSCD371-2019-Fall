@@ -40,7 +40,18 @@ namespace Assignment
             => throw new NotImplementedException();
 
         // 4.
-        public IEnumerable<IPerson> People => throw new NotImplementedException();
+        public IEnumerable<IPerson> People
+        {
+            get
+            {
+                if (_FileName is null)
+                    throw new InvalidOperationException($"{nameof(_FileName)} cannot be null when accessing {nameof(People)}");
+                using (var sr = new StreamReader(@_FileName))
+                {
+                    yield return ParsePerson(sr.ReadLine());
+                }
+            }
+        }
 
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
@@ -63,13 +74,11 @@ namespace Assignment
             // Take last 4 elements of csv
             string[] addressData = data.Reverse().Take(4).Reverse().ToArray();
 
-            Address addr = ParseAddress(addressData);
-
             return new Person()
             {
                 FirstName=data[1],
                 LastName=data[2],
-                Address=addr
+                Address=ParseAddress(addressData)
             };
         }
 
