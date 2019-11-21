@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{95D7E82D-81D5-4EE3-ABD7-88BB80E86983}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
+		TestSuppressions.cs = TestSuppressions.cs
 	EndProjectSection
 EndProject
 Global
