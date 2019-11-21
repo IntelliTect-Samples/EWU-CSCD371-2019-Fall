@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 #pragma warning disable CA1062
+#pragma warning disable CA1707
 
 namespace Assignment.Tests
 {

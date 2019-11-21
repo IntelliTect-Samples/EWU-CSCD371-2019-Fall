@@ -42,11 +42,22 @@ namespace Assignment
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() 
         {
+            return CsvRows
+                .Select(row => ParsePerson(row))
+                .Select(p => p.Address.State)
+                .Distinct()
+                .OrderBy(s => s);
         }
 
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
         {
+            return CsvRows
+                .Select(row => ParsePerson(row))
+                .Select(p => p.Address.State)
+                .Distinct()
+                .OrderBy(s => s)
+                .Aggregate((a, b) => $"{a}, {b}");
         }
 
         // 4.

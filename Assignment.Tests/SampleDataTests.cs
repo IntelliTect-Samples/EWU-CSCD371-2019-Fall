@@ -4,7 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
+// For some reason, adding a nowarn property
+// to the csproj file does not stop the warnings...
 #pragma warning disable CA1062
+#pragma warning disable CA1707
 
 namespace Assignment.Tests
 {
@@ -13,7 +16,6 @@ namespace Assignment.Tests
     {
         public string FileName = string.Empty;
         public string[] Rows = new string[0];
-        public string[] States = new string[0];
 
         [TestInitialize]
         public void TestInitialize()
@@ -158,6 +160,7 @@ namespace Assignment.Tests
         public void GetAggregateListOfStatesGivenPeopleCollection_Success()
         {
             var sut = new SampleData(@FileName);
+
             Assert.AreEqual(
                 sut.GetAggregateListOfStatesGivenPeopleCollection(sut.People),
                 "GA, TX");
@@ -166,13 +169,28 @@ namespace Assignment.Tests
         [TestMethod]
         public void GetAggregateSortedListOfStatesUsingCsvRows_Success()
         {
-            Assert.IsTrue(false, "Test not completed yet.");
+            var sut = new SampleData(@FileName);
+
+            Assert.AreEqual(
+                sut.GetAggregateSortedListOfStatesUsingCsvRows(),
+                "GA, TX");
         }
 
         [TestMethod]
         public void GetUniqueSortedListOfStatesGivenCsvRows_Success()
         {
-            Assert.IsTrue(false, "Test not completed yet.");
+            var expected = new List<string>()
+            {
+                "GA", "TX"
+            };
+
+            var sut = new SampleData(@FileName);
+
+            var pairs = expected.Zip(sut.GetUniqueSortedListOfStatesGivenCsvRows(), (e, a) => (e, a));
+
+            foreach (var (e, a) in pairs)
+                Assert.IsTrue(e.Equals(a),
+                        $"E: {e.ToString()} A: {a.ToString()}");
         }
     }
 }

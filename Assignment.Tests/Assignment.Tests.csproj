@@ -8,6 +8,8 @@
     <NoWarn>CA1062</NoWarn>
     <NoWarn>CA1707</NoWarn>
     <NoWarn>CA1051</NoWarn>
+    <NoWarn>CA1305</NoWarn>
+    <NoWarn>CA1307</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
