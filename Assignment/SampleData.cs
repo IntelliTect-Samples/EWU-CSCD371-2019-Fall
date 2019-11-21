@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Assignment
@@ -7,7 +8,21 @@ namespace Assignment
     public class SampleData : ISampleData
     {
         // 1.
-        public IEnumerable<string> CsvRows => throw new NotImplementedException();
+        public IEnumerable<string> CsvRows
+        {
+            get
+            {
+                IEnumerable<string> result = new List<string>();
+                using (var fileReader = new StreamReader("C:\\Users\\me\\Documents\\repos\\EWU-CSCD371-2019-Fall\\Assignment\\People.csv"))
+                {
+                    for (string? s = fileReader.ReadLine(); !fileReader.EndOfStream; s = fileReader.ReadLine())
+                    {
+                        ((List<string>)result).Add(s!);
+                    }
+                }
+                return result;
+            }
+        }
 
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() 
