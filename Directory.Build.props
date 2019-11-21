@@ -1,0 +1,7 @@
+﻿<Project>
+ <PropertyGroup>
+   <Deterministic>true</Deterministic>
+   <TargetFramework>netcoreapp3.0</TargetFramework>
+   <Nullable>enable</Nullable>
+ </PropertyGroup>
+</Project>
