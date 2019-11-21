@@ -27,7 +27,15 @@ namespace Assignment
                 if (_FileName is null)
                     throw new InvalidOperationException($"{nameof(_FileName)} cannot be null when accessing {nameof(CsvRows)}");
                 using (var sr = new StreamReader(@_FileName))
-                    yield return sr.ReadLine();
+                {
+                    string line = "";
+                    sr.BaseStream.Position = 0;
+                    sr.ReadLine(); // skip column headers
+                    while (!((line = sr.ReadLine()) is null))
+                    {
+                        yield return line;
+                    }
+                }
             }
         }
 
@@ -44,22 +52,29 @@ namespace Assignment
         {
             get
             {
-                if (_FileName is null)
-                    throw new InvalidOperationException($"{nameof(_FileName)} cannot be null when accessing {nameof(People)}");
-                using (var sr = new StreamReader(@_FileName))
-                {
-                    yield return ParsePerson(sr.ReadLine());
-                }
+                return from line in CsvRows
+                    select ParsePerson(line);
             }
         }
 
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
-            Predicate<string> filter) => throw new NotImplementedException();
+            Predicate<string> filter)
+        {
+            return from person in People
+                where filter(person.Email)
+                select (person.FirstName, person.LastName);
+        }
 
         // 6.
         public string GetAggregateListOfStatesGivenPeopleCollection(
-            IEnumerable<IPerson> people) => throw new NotImplementedException();
+            IEnumerable<IPerson> people)
+        {
+            return (from person in people
+                    select person.Address.State)
+                .Distinct()
+                .Aggregate((a, b) => $"{a}, {b}");
+        }
 
         public static Person ParsePerson(string? csvRow)
         {
@@ -78,6 +93,7 @@ namespace Assignment
             {
                 FirstName=data[1],
                 LastName=data[2],
+                Email=data[3],
                 Address=ParseAddress(addressData)
             };
         }

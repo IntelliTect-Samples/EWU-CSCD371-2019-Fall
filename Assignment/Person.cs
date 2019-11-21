@@ -8,6 +8,7 @@ namespace Assignment
     {
         public string FirstName  { get; set; }  = string.Empty;
         public string LastName   { get; set; }  = string.Empty;
+        public string Email      { get; set; }  = string.Empty;
         public IAddress? Address { get; set; }
 
         public override bool Equals(object other)
@@ -24,10 +25,15 @@ namespace Assignment
         {
             return Address is null ?
                 FirstName.GetHashCode() ^
-                LastName.GetHashCode() :
+                LastName.GetHashCode() ^
+                Email.GetHashCode() :
                 FirstName.GetHashCode() ^
                 LastName.GetHashCode() ^
+                Email.GetHashCode() ^
                 Address.GetHashCode();
         }
+
+        public override string ToString() =>
+            $"{FirstName} {LastName} {Email}";
     }
 }

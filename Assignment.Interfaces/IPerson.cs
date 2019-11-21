@@ -8,6 +8,7 @@ namespace Assignment
     {
         string FirstName { get; }
         string LastName { get; }
+        string Email { get; }
         IAddress? Address { get; }
     }
 }

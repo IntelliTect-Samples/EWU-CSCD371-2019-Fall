@@ -11,33 +11,49 @@ namespace Assignment.Tests
     [TestClass]
     public class SampleDataTests
     {
+        public string FileName = string.Empty;
+        public string[] Rows = new string[0];
+        public string[] States = new string[0];
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            FileName = Path.GetTempFileName();
+            Rows = new string[]
+            {
+                "Id,FirstName,LastName,Email,StreetAddress,City,State,Zip",
+                "4,Fremont,Pallaske,fpallaske3@umich.edu,16958 Forster Crossing,Atlanta,GA,10687",
+                "5,Melisa,Kerslake,mkerslake4@dion.ne.jp,283 Pawling Parkway,Dallas,TX,88632",
+                "6,Darline,Brauner,dbrauner5@biglobe.ne.jp,33 Menomonie Trail,Atlanta,GA,10687",
+            };
+
+            using (var sw = new StreamWriter(@FileName))
+                foreach (string row in Rows)
+                    sw.WriteLine(row);
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            if (File.Exists(@FileName))
+                File.Delete(@FileName);
+        }
+
         [DataTestMethod]
         [DataRow(null)]
         [DataRow("")]
-        public void SampleDataConstructor_ThrowsExceptionOnNullOrEmptyFileName(string? fileName)
+        public void SampleDataConstructor_ThrowsExceptionOnNullOrEmptyFileName(string? FileName)
         {
             Assert.ThrowsException<ArgumentNullException>(
-                    () => new SampleData(fileName));
+                    () => new SampleData(FileName));
         }
 
         [TestMethod]
         public void SampleData_CsvRows_Enumerates()
         {
-            var rows = new string[]
-            {
-                "Row,number,one",
-                "Row,number,two",
-                "Row,number,three",
-            };
-            var fileName = Path.GetTempFileName();
+            var sut = new SampleData(FileName);
 
-            using (var sw = new StreamWriter(@fileName))
-                foreach (string row in rows)
-                    sw.WriteLine(row);
-
-            var sut = new SampleData(fileName);
-
-            var pairs = rows.Zip(sut.CsvRows, (row, sutRow) => (row, sutRow));
+            var pairs = Rows.Skip(1).Zip(sut.CsvRows, (row, sutRow) => (row, sutRow));
 
             foreach (var (expected, actual) in pairs)
                 Assert.AreEqual(expected, actual);
@@ -103,19 +119,48 @@ namespace Assignment.Tests
         [TestMethod]
         public void SampleDataPeople_ReturnsPeopleFromFile()
         {
-            Assert.IsTrue(false, "Test not implemented yet.");
+            var expectedPeople = new Person[]
+            {
+                SampleData.ParsePerson(Rows[1]),
+                SampleData.ParsePerson(Rows[2]),
+                SampleData.ParsePerson(Rows[3]),
+            };
+
+            var sut = new SampleData(FileName);
+
+            var pairs = expectedPeople.Zip(sut.People, (expected, person) => (expected, person));
+
+            foreach (var (expected, actual) in pairs)
+                Assert.IsTrue(expected.Equals(actual),
+                        $"E: {expected.ToString()} A: {actual.ToString()}");
         }
 
         [TestMethod]
         public void FilterByEmailAddress_GetsAllPeopleFromTautology()
         {
-            Assert.IsTrue(false, "Test not implemented yet.");
+            var expectedTuples = new (string, string)[]
+            {
+                ("Fremont", "Pallaske"),
+                ("Melisa", "Kerslake"),
+                ("Darline", "Brauner"),
+            };
+
+            var sut = new SampleData(FileName);
+
+            var pairs = expectedTuples.Zip(sut.FilterByEmailAddress((email) => true), (e, p) => (e, p));
+
+            foreach (var (expected, actual) in pairs)
+                Assert.IsTrue(expected.Equals(actual),
+                        $"E: {expected.ToString()} A: {actual.ToString()}");
         }
 
         [TestMethod]
         public void GetAggregateListOfStatesGivenPeopleCollection_Success()
         {
-            Assert.IsTrue(false, "Test not implemented yet.");
+            var sut = new SampleData(@FileName);
+            Assert.AreEqual(
+                sut.GetAggregateListOfStatesGivenPeopleCollection(sut.People),
+                "GA, TX");
         }
     }
 }
