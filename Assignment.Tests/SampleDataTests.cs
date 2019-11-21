@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
+#pragma warning disable CA1062
+
 namespace Assignment.Tests
 {
     [TestClass]

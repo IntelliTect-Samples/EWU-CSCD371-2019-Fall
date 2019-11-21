@@ -1,6 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
+#pragma warning disable CA1062
+
 namespace Assignment.Tests
 {
     [TestClass]

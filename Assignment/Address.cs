@@ -1,5 +1,7 @@
 ﻿using System;
 
+#pragma warning disable CA1307
+
 namespace Assignment
 {
     public class Address : IAddress

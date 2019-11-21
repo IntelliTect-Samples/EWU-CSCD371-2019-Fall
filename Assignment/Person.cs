@@ -1,5 +1,7 @@
 ﻿using System;
 
+#pragma warning disable CA1307
+
 namespace Assignment
 {
     public class Person : IPerson
@@ -10,7 +12,7 @@ namespace Assignment
 
         public override bool Equals(object other)
         {
-            if (other is IPerson p)
+            if (other is IPerson p && !(Address is null))
                 return FirstName == p.FirstName &&
                     LastName == p.LastName &&
                     Address.Equals(p.Address);
@@ -20,9 +22,10 @@ namespace Assignment
 
         public override int GetHashCode()
         {
-            if (Address is null)
-                throw new InvalidOperationException($"Cannot compare before setting {nameof(Address)}");
-            return FirstName.GetHashCode() ^
+            return Address is null ?
+                FirstName.GetHashCode() ^
+                LastName.GetHashCode() :
+                FirstName.GetHashCode() ^
                 LastName.GetHashCode() ^
                 Address.GetHashCode();
         }

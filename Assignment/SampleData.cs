@@ -24,6 +24,8 @@ namespace Assignment
         {
             get
             {
+                if (_FileName is null)
+                    throw new InvalidOperationException($"{nameof(_FileName)} cannot be null when accessing {nameof(CsvRows)}");
                 using (var sr = new StreamReader(@_FileName))
                     yield return sr.ReadLine();
             }

@@ -1,0 +1,5 @@
+<Project>
+    <PropertyGroup>
+        <NoWarn>AD0001</NoWarn>
+    </PropertyGroup>
+</Project>
