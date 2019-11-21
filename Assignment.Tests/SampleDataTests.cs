@@ -162,5 +162,17 @@ namespace Assignment.Tests
                 sut.GetAggregateListOfStatesGivenPeopleCollection(sut.People),
                 "GA, TX");
         }
+
+        [TestMethod]
+        public void GetAggregateSortedListOfStatesUsingCsvRows_Success()
+        {
+            Assert.IsTrue(false, "Test not completed yet.");
+        }
+
+        [TestMethod]
+        public void GetUniqueSortedListOfStatesGivenCsvRows_Success()
+        {
+            Assert.IsTrue(false, "Test not completed yet.");
+        }
     }
 }

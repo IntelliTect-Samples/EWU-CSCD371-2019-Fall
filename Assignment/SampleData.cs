@@ -41,11 +41,13 @@ namespace Assignment
 
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() 
-            => throw new NotImplementedException();
+        {
+        }
 
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
-            => throw new NotImplementedException();
+        {
+        }
 
         // 4.
         public IEnumerable<IPerson> People
