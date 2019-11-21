@@ -13,7 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Commenting out as all the warnings cloud out the actual
+         warnings I'm looking for - Not yet sure how to disable all the
+         exceptions seemingly thrown from inside the IntelliTect analyzer
     <PackageReference Include="IntelliTect.Analyzers" Version="0.1.3" />
+    -->
     <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.6">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

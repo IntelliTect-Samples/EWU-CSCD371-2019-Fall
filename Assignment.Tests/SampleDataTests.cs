@@ -99,5 +99,23 @@ namespace Assignment.Tests
             Assert.ThrowsException<ArgumentException>(
                     () => SampleData.ParseAddress(new string[] {"", "", ""}));
         }
+
+        [TestMethod]
+        public void SampleDataPeople_ReturnsPeopleFromFile()
+        {
+            Assert.IsTrue(false, "Test not implemented yet.");
+        }
+
+        [TestMethod]
+        public void FilterByEmailAddress_GetsAllPeopleFromTautology()
+        {
+            Assert.IsTrue(false, "Test not implemented yet.");
+        }
+
+        [TestMethod]
+        public void GetAggregateListOfStatesGivenPeopleCollection_Success()
+        {
+            Assert.IsTrue(false, "Test not implemented yet.");
+        }
     }
 }
