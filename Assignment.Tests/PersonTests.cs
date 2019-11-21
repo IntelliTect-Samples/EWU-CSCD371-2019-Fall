@@ -7,7 +7,7 @@ namespace Assignment.Tests
     public class PersonTests
     {
         [TestMethod]
-        public void PersonEquals_ThrowsExceptionOnNullOther()
+        public void PersonEquals_ReturnsFalseOnNullOther()
         {
             var sut = new Address()
             {
@@ -18,7 +18,7 @@ namespace Assignment.Tests
             };
 
 #pragma warning disable CS8625
-            Assert.ThrowsException<ArgumentNullException>(() => sut.Equals(null));
+            Assert.IsFalse(sut.Equals(null));
 #pragma warning restore
         }
 

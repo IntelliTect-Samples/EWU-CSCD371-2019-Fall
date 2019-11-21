@@ -16,10 +16,8 @@ namespace Assignment
                     City == addr.City &&
                     State == addr.State &&
                     Zip == addr.Zip;
-            else if (other is null)
-                throw new ArgumentNullException($"{nameof(other)} cannot be null", nameof(other));
             else
-                throw new ArgumentException($"{nameof(other)} must implement {nameof(IAddress)}", nameof(other));
+                return false;
         }
 
         public override int GetHashCode() =>

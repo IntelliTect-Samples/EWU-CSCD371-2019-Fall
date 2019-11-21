@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
+#pragma warning disable CA1065
+
 namespace Assignment
 {
     public class SampleData : ISampleData
@@ -12,7 +14,7 @@ namespace Assignment
         public SampleData(string? fileName)
         {
             if (string.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException(nameof(fileName));
+                throw new ArgumentNullException(nameof(fileName), $"{nameof(fileName)} cannot be null or empty.");
 
             _FileName = fileName;
         }
@@ -49,12 +51,12 @@ namespace Assignment
         public static Person ParsePerson(string? csvRow)
         {
             if (string.IsNullOrEmpty(csvRow))
-                throw new ArgumentNullException(nameof(csvRow));
+                throw new ArgumentNullException(nameof(csvRow), $"{nameof(csvRow)} may not be null or empty.");
 
             string[] data = csvRow.Split(',');
 
             if (data.Length < 8)
-                throw new ArgumentException(nameof(csvRow));
+                throw new ArgumentException($"{nameof(csvRow)} must have length >= 8.", nameof(csvRow));
 
             // Take last 4 elements of csv
             string[] addressData = data.Reverse().Take(4).Reverse().ToArray();
@@ -72,9 +74,9 @@ namespace Assignment
         public static Address ParseAddress(string[]? data)
         {
             if (data is null)
-                throw new ArgumentNullException(nameof(data));
+                throw new ArgumentNullException(nameof(data), $"{nameof(data)} may not be null.");
             if (data.Length < 4)
-                throw new ArgumentException(nameof(data));
+                throw new ArgumentException($"{nameof(data)} must have length >= 4.", nameof(data));
 
             return new Address()
             {
