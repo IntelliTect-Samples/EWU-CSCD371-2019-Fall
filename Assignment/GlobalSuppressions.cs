@@ -4,3 +4,5 @@
 // a specific target and scoped to a namespace, type, member, etc.
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>", Scope = "member", Target = "~M:Assignment.SampleData.GetUniqueSortedListOfStatesGivenCsvRows~System.Collections.Generic.IEnumerable{System.String}")]
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>", Scope = "member", Target = "~M:Assignment.SampleData.CreatePerson(System.String)~Assignment.Person")]
