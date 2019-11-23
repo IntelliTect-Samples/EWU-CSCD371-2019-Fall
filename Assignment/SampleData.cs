@@ -9,58 +9,39 @@ namespace Assignment
 {
     public class SampleData : ISampleData
     {
-        private string? _FileName;
+        private string _FileName { get; }
 
-        public SampleData(string? fileName)
+        public SampleData(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException(nameof(fileName), $"{nameof(fileName)} cannot be null or empty.");
-
+                throw new ArgumentNullException(nameof(fileName));
             _FileName = fileName;
         }
 
-        // 1.
         public IEnumerable<string> CsvRows
         {
             get
             {
-                if (_FileName is null)
-                    throw new InvalidOperationException($"{nameof(_FileName)} cannot be null when accessing {nameof(CsvRows)}");
-                using (var sr = new StreamReader(@_FileName))
-                {
-                    string line = "";
-                    sr.BaseStream.Position = 0;
-                    sr.ReadLine(); // skip column headers
-                    while (!((line = sr.ReadLine()) is null))
-                    {
-                        yield return line;
-                    }
-                }
+                foreach (var line in File.ReadAllLines(_FileName).Skip(1).ToArray())
+                    yield return line;
             }
         }
 
-        // 2.
-        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() 
-        {
-            return CsvRows
+        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() =>
+            CsvRows
                 .Select(row => ParsePerson(row))
                 .Select(p => p.Address.State)
                 .Distinct()
                 .OrderBy(s => s);
-        }
 
-        // 3.
-        public string GetAggregateSortedListOfStatesUsingCsvRows()
-        {
-            return CsvRows
+        public string GetAggregateSortedListOfStatesUsingCsvRows() =>
+            CsvRows
                 .Select(row => ParsePerson(row))
                 .Select(p => p.Address.State)
                 .Distinct()
                 .OrderBy(s => s)
                 .Aggregate((a, b) => $"{a}, {b}");
-        }
 
-        // 4.
         public IEnumerable<IPerson> People
         {
             get
@@ -70,24 +51,18 @@ namespace Assignment
             }
         }
 
-        // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
-            Predicate<string> filter)
-        {
-            return from person in People
+            Predicate<string> filter) =>
+            from person in People
                 where filter(person.Email)
                 select (person.FirstName, person.LastName);
-        }
 
-        // 6.
         public string GetAggregateListOfStatesGivenPeopleCollection(
-            IEnumerable<IPerson> people)
-        {
-            return (from person in people
-                    select person.Address.State)
+            IEnumerable<IPerson> people) =>
+            people
+                .Select(p => p.Address.State)
                 .Distinct()
                 .Aggregate((a, b) => $"{a}, {b}");
-        }
 
         public static Person ParsePerson(string? csvRow)
         {

@@ -41,13 +41,11 @@ namespace Assignment.Tests
                 File.Delete(@FileName);
         }
 
-        [DataTestMethod]
-        [DataRow(null)]
-        [DataRow("")]
-        public void SampleDataConstructor_ThrowsExceptionOnNullOrEmptyFileName(string? FileName)
+        [TestMethod]
+        public void SampleDataConstructor_ThrowsExceptionOnEmptyFileName()
         {
             Assert.ThrowsException<ArgumentNullException>(
-                    () => new SampleData(FileName));
+                    () => new SampleData(""));
         }
 
         [TestMethod]
