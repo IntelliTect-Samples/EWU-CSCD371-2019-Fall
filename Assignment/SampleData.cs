@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Assignment
 {
     public class SampleData : ISampleData
     {
+        enum Columns
+        {
+            Id, FirstName, LastName, Email, StreetAddress, City, State, Zip
+        }
+
         // 1.
         public IEnumerable<string> CsvRows => throw new NotImplementedException();
 
@@ -26,5 +33,6 @@ namespace Assignment
         // 6.
         public string GetAggregateListOfStatesGivenPeopleCollection(
             IEnumerable<IPerson> people) => throw new NotImplementedException();
+
     }
 }
