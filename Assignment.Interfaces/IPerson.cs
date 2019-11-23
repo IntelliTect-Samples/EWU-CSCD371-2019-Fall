@@ -4,9 +4,7 @@
     {
         string FirstName { get; }
         string LastName { get; }
-        string StreetAddress { get; }
-        string City { get; }
-        string State { get; }
-        string Zip { get; }
+        IAddress Address { get; }
+        string EmailAddress { get; }
     }
 }
