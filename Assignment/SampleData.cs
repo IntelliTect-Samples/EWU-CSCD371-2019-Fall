@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Assignment
 {
     public class SampleData : ISampleData
     {
+        private string _FilePath;
+
+        public SampleData(string filePath)
+        {
+            if (string.IsNullOrEmpty(filePath))
+                throw new ArgumentNullException(nameof(filePath));
+            _FilePath = filePath;
+        }
         // 1.
-        public IEnumerable<string> CsvRows => throw new NotImplementedException();
+        public IEnumerable<string> CsvRows => File.ReadLines(_FilePath).Skip(1);
 
         // 2.
-        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() 
+        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
             => throw new NotImplementedException();
 
         // 3.

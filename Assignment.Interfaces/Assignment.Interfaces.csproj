@@ -12,4 +12,7 @@
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(LibrariesPath)"></Copy>
   </Target>-->
 
+  <ItemGroup>
+    <PackageReference Include="IntelliTect.Analyzers" Version="0.1.3" />
+  </ItemGroup>
 </Project>
