@@ -20,7 +20,7 @@ namespace Assignment
             this.CsvRows = hardCodedCollection;
         }
 
-        private enum Information
+        public enum Information
         {
             Id, FirstName, LastName, Email, StreetAddress, City, State, Zip
         }

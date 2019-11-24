@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment.Interfaces", "As
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment.Tests", "Assignment.Tests\Assignment.Tests.csproj", "{32367E7C-1216-41E6-BCCF-47C537BC8E4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignment.Interfaces.Tests", "Assignment.Interfaces.Tests\Assignment.Interfaces.Tests.csproj", "{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment.Interfaces.Tests", "Assignment.Interfaces.Tests\Assignment.Interfaces.Tests.csproj", "{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
