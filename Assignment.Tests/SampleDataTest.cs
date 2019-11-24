@@ -27,7 +27,7 @@ namespace Assignment.Tests
         }
 
         [TestMethod]
-        public void GetUniqueSortedListOfStatesGivenCsvRows_ReturnsDistinctListOfStates()
+        public void GetUniqueSortedListOfStatesGivenCsvRows_ReturnsDistinctList()
         {
             //Arrange
             SampleData sData = new SampleData();
