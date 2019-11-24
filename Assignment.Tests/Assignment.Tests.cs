@@ -6,7 +6,7 @@ using System.Text;
 namespace Assignment.Tests
 {
     [TestClass]
-    class AssignmentTests
+    public class AssignmentTests
     {
     }
 }
