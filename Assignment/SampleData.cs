@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Assignment
 {
     public class SampleData : ISampleData
     {
         // 1.
-        public IEnumerable<string> CsvRows => throw new NotImplementedException();
+        public IEnumerable<string> CsvRows
+            => from line in File.ReadAllLines("People.csv")
+               where !line.StartsWith("Id")
+               select line;
 
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() 

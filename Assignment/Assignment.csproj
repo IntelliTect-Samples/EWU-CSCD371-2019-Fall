@@ -3,10 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <NoWarn>CA1065</NoWarn>
+    <Nullable>Enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Assignment.Interfaces\Assignment.Interfaces.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="People.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
