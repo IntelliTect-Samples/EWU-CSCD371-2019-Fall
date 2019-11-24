@@ -15,16 +15,31 @@ namespace Assignment
             CsvRows = File.ReadAllLines(csvFilePath).Skip(1);
         }
 
+        public SampleData(IEnumerable<string> hardCodedCollection)
+        {
+            this.CsvRows = hardCodedCollection;
+        }
+
+        private enum Information
+        {
+            Id, FirstName, LastName, Email, StreetAddress, City, State, Zip
+        }
+
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
-            => throw new NotImplementedException();
+        {
+            IEnumerable<string> data = CsvRows.Select(row => row.Split(',')[(int)Information.State]);
+            return data.Distinct().OrderBy(state => state);
+        }
 
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
-            => throw new NotImplementedException();
+        {
+            return GetUniqueSortedListOfStatesGivenCsvRows().Aggregate((StateOne,StateTwo) => StateOne + "," + StateTwo);
+        }
 
         // 4.
-        public IEnumerable<IPerson> People => throw new NotImplementedException();
+        public IEnumerable<IPerson> People { get; }
 
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(

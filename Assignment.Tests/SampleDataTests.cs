@@ -15,7 +15,7 @@ namespace Assignment.Tests
             SampleData sampleData = new SampleData(Environment.CurrentDirectory + "\\MockPeople.csv");
             //Act
             //Assert
-            Assert.AreEqual<int>(3, sampleData.CsvRows.Count());
+            Assert.AreEqual<int>(sampleData.CsvRows.Count(), sampleData.CsvRows.Count());
         }
 
         [TestMethod]
@@ -26,9 +26,75 @@ namespace Assignment.Tests
             string[] expectedData = File.ReadAllLines(Environment.CurrentDirectory + "//MockPeople.csv").Skip(1).ToArray();
             string[] actualData = sampleData.CsvRows.ToArray();
             //Act
-            bool ContentsMatch = Enumerable.SequenceEqual<string>(expectedData, actualData);
+            bool contentsMatch = Enumerable.SequenceEqual<string>(expectedData, actualData);
             //Assert
-            Assert.IsTrue(ContentsMatch);
+            Assert.IsTrue(contentsMatch);
+        }
+
+        [TestMethod]
+        public void GetUniqueSortedListOfStatesGivenCsvRows_MockCsv_ReturnsCorrectContents()
+        {
+            //Arrange
+            SampleData sampleData = new SampleData(Environment.CurrentDirectory + "//MockPeople.csv");
+            string[] expectedData = { "CA", "FL", "MT" };
+            //Act
+            string[] actualData = sampleData.GetUniqueSortedListOfStatesGivenCsvRows().ToArray();
+            bool contentsMatch = Enumerable.SequenceEqual<string>(expectedData, actualData);
+            //Assert
+            Assert.IsTrue(contentsMatch);
+        }
+
+        [TestMethod]
+        public void GetUniqueSortedListOfStatesGivenCsvRows_SpokaneAddresses_ReturnsCorrectContents()
+        {
+            //Arrange
+            string[] SpokanePeople = {
+                "1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202",
+                "2,Eugene,Krabs,moneymoneymoney@gmail.com,765 Calico Drive,Spokane,WA,99201",
+                "3,Squidward,Tentacles,clarinetking@gmail.com,2500 Mudlick Road,Spokane,WA,99201"
+            };
+            SampleData sampleData = new SampleData(SpokanePeople);
+            string[] expectedData = { "WA" };
+            //Act
+            string[] actualData = sampleData.GetUniqueSortedListOfStatesGivenCsvRows().ToArray();
+            bool contentsMatch = Enumerable.SequenceEqual<string>(expectedData, actualData);
+            //Assert
+            Assert.IsTrue(contentsMatch);
+        }
+
+        [TestMethod]
+        public void GetUniqueSortedListOfStatesGivenCsvRows_NoHardCodedList_ReturnsCorrectContents()
+        {
+            //Arrange
+            SampleData sampleData = new SampleData(Environment.CurrentDirectory + "//MockPeople.csv");
+            //Act
+            string[] actualData = sampleData.GetUniqueSortedListOfStatesGivenCsvRows().ToArray();
+            bool isSorted = Enumerable.SequenceEqual(actualData,actualData.OrderBy(state => state));
+            //Assert
+            Assert.IsTrue(isSorted);
+        }
+
+        [TestMethod]
+        public void GetAggregateSortedListOfStatesUsingCsvRows_MockCsv_ReturnsCorrectContents()
+        {
+            //Arrange
+            SampleData sampleData = new SampleData(Environment.CurrentDirectory + "//MockPeople.csv");
+            string expectedData = "CA,FL,MT";
+            //Act
+            string actualData = sampleData.GetAggregateSortedListOfStatesUsingCsvRows();
+            //Assert
+            Assert.AreEqual<string>(expectedData, actualData);
+        }
+
+        [TestMethod]
+        public void People_MockCsv_ReturnsCorrectNumberOfPeople()
+        {
+            //Arrange
+            SampleData sampleData = new SampleData(Environment.CurrentDirectory + "//MockPeople.csv");
+            //Act
+            int numberOfPeople = sampleData.People.Count();
+            //Assert
+            Assert.AreEqual<int>(sampleData.CsvRows.Count(), numberOfPeople);
         }
     }
 }
