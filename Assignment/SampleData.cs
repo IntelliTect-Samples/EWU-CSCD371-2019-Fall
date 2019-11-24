@@ -14,8 +14,15 @@ namespace Assignment
                select line;
 
         // 2.
-        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() 
-            => throw new NotImplementedException();
+        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
+        {
+            IEnumerable<string> query = from rows in CsvRows
+                                        from items in rows.Split(',')
+                                        where items == rows.Split(',')[6]
+                                        let states = items.Distinct()
+                                        from state in states
+                                        select state;
+        }
 
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
