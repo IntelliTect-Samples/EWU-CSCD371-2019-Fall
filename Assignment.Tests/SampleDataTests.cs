@@ -11,16 +11,17 @@ namespace Assignment.Tests
     public class SampleDataTests
     {
         [TestMethod]
-        [DataRow("C:\\Users\\me\\Documents\\repos\\EWU-CSCD371-2019-Fall\\Assignment\\People.csv")]
+        [DataRow(@".\People.csv")]
         public void SampleData_CsvRows_ReturnsCollection(string fileName)
         {
             //Organize
             SampleData sampleData = new SampleData();
             List<String> testList = new List<String>();
+
             //Act
             IEnumerable<string> result = sampleData.CsvRows;
 
-            using (var fileReader = new StreamReader(fileName))
+            using (var fileReader = new StreamReader(@"..\..\..\..\Assignment\People.csv"))
             {
                 for(string? s = fileReader.ReadLine(); !fileReader.EndOfStream; s = fileReader.ReadLine())
                 {

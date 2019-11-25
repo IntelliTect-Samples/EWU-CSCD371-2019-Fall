@@ -13,7 +13,7 @@ namespace Assignment
             get
             {
                 IEnumerable<string> result = new List<string>();
-                using (var fileReader = new StreamReader("C:\\Users\\me\\Documents\\repos\\EWU-CSCD371-2019-Fall\\Assignment\\People.csv"))
+                using (var fileReader = new StreamReader(@$"..\..\..\People.csv"))
                 {
                     for (string? s = fileReader.ReadLine(); !fileReader.EndOfStream; s = fileReader.ReadLine())
                     {
