@@ -7,7 +7,7 @@ namespace Assignment
 {
     public class SampleData : ISampleData
     {
-        public enum CsvColumn { Id, FirstName, LastName, Email, StreetAddress, City, State, Zip }
+        public enum CsvColumn { Id, FirstName, LastName, EmailAddress, StreetAddress, City, State, Zip }
         private const string _CSV_FILENAME = "People.csv";
 
         // 1.
@@ -26,7 +26,7 @@ namespace Assignment
         {
             List<string> states =
                 // transform the line into tuple of states extracted from split strings
-                ( from line in CsvRows select line.Split(',')[(int) CsvColumn.State] )
+                ( from row in CsvRows select row.Split(',')[(int) CsvColumn.State] )
                 .Distinct() // remove duplicates
                 .OrderBy((string state) => state) // compare by state string
                 .ToList(); // force query to execute
@@ -39,7 +39,36 @@ namespace Assignment
             => string.Join(',', GetUniqueSortedListOfStatesGivenCsvRows());
 
         // 4.
-        public IEnumerable<IPerson> People => throw new NotImplementedException();
+        public IEnumerable<IPerson> People
+        {
+            get
+            {
+                List<Person> people = (
+                    from row in CsvRows
+                    select row.Split(',')
+                    into row
+                    orderby
+                        row[(int) CsvColumn.State],
+                        row[(int) CsvColumn.City],
+                        row[(int) CsvColumn.Zip]
+                    select new Person()
+                    {
+                        FirstName = row[(int) CsvColumn.FirstName],
+                        LastName = row[(int) CsvColumn.LastName],
+                        EmailAddress = row[(int) CsvColumn.EmailAddress],
+                        Address = new Address()
+                        {
+                            State = row[(int) CsvColumn.State],
+                            City = row[(int) CsvColumn.City],
+                            Zip = row[(int) CsvColumn.Zip],
+                            StreetAddress = row[(int) CsvColumn.StreetAddress]
+                        }
+                    }
+                    ).ToList();
+
+                return people;
+            }
+        }
 
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
