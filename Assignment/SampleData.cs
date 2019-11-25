@@ -11,32 +11,32 @@ namespace Assignment
         private const string _CSV_FILENAME = "People.csv";
 
         // 1.
-        // returning a copy of the cached csv data, ensuring immutable list
-        public IEnumerable<string> CsvRows { get => new List<string>(CsvData); }
-
-        // uses cached csv data from people.csv by default
         private static readonly IEnumerable<string> _CsvDefault = File.ReadAllLines(_CSV_FILENAME).Skip(1).ToList();
-        private IEnumerable<string> _CsvData = _CsvDefault; // allow use of custom data without destroying cached default
-        public IEnumerable<string> CsvData { get => _CsvData; set => _CsvData = value ?? _CsvData; } // make sure it's never null
+        private IEnumerable<string> _CsvRows = _CsvDefault;
+        public IEnumerable<string> CsvRows
+        {
+            get => new List<string>(_CsvRows); // ensuring immutable list
+            set => _CsvRows = value is IEnumerable<string> ? new List<string>(value) : _CsvRows; // avoiding nulls
+        }
 
-        public void UseDefaultCsvData() => _CsvData = _CsvDefault;
+        public void UseDefaultCsvData() => _CsvRows = _CsvDefault;
 
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
         {
-            // just some notes to future me here, don't mind them
-            List<string> states = (
-                from line in CsvRows
-                select line.Split(',')[(int)CsvColumn.State]) // transform the line into split strings
+            List<string> states =
+                // transform the line into tuple of states extracted from split strings
+                ( from line in CsvRows select line.Split(',')[(int) CsvColumn.State] )
                 .Distinct() // remove duplicates
                 .OrderBy((string state) => state) // compare by state string
                 .ToList(); // force query to execute
+
             return states;
         }
 
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
-            => throw new NotImplementedException();
+            => string.Join(',', GetUniqueSortedListOfStatesGivenCsvRows());
 
         // 4.
         public IEnumerable<IPerson> People => throw new NotImplementedException();

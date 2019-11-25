@@ -1,9 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Assignment;
-using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace Assignment.Tests
@@ -14,6 +11,14 @@ namespace Assignment.Tests
 
         // caching SUT so we don't need to constantly re-read csv by re-instantiating it
         private static ISampleData Sut { get; } = new SampleData();
+
+        private bool HasDuplicates(IEnumerable<string> items)
+        {
+            return items
+                .Where(item1 => items.Count(item2 => item1 == item2) > 1)
+                .ToList()
+                .Any();
+        }
 
         [TestMethod]
         public void CsvRows_GetsAllCSVData_ReturnsEachRowAsStringInCollection()
@@ -35,11 +40,9 @@ namespace Assignment.Tests
             // linq verification without hardcoded list
             IEnumerable<string> sutData = Sut.GetUniqueSortedListOfStatesGivenCsvRows();
 
-            IEnumerable<string> duplicates = sutData
-                .Where(state => sutData.Count(item => item == state) > 1 )
-                .ToList();
+            bool hasDuplicates = HasDuplicates(sutData);
 
-            Assert.IsFalse(duplicates.Any(), message: "Duplicates found.");
+            Assert.IsFalse(hasDuplicates, message: "Duplicates found.");
         }
 
         [TestMethod]
@@ -50,7 +53,7 @@ namespace Assignment.Tests
             bool hasDescending = sutData
                 .Where((string state, int i) => i < sutData.Count - 1) // ignore last element which would cause index OoB
                 .Select((string state, int i) => (state, sutData[i + 1])) // pair up elements sequentially
-                .Select(((string First, string Second) pair) => // compare pairs of elements to check ascending order
+                .Select(((string First, string Second) pair) => // compare elements of pair to check ascending order
                         string.CompareOrdinal(pair.First, pair.Second) < 0
                 ).Any(isAscending => isAscending == false); // find any result that indicates descending order
 
@@ -61,7 +64,7 @@ namespace Assignment.Tests
         public void GetUniqueSortedListOfStatesGivenCsvRows_HardcodedList_ReturnsSortedUniqueStates()
         {
             // use custom, hardcoded csv data
-            ((SampleData) Sut).CsvData = new List<string>()
+            ((SampleData) Sut).CsvRows = new List<string>()
             {
                 "8,Joly,Scneider,jscneider7@pagesperso-orange.fr,53 Grim Point,Spokane,WA,99022",
                 "15,Phillida,Chastagnier,pchastagniere@reference.com,1 Rutledge Point,Spokane,WA,99021",
@@ -78,7 +81,11 @@ namespace Assignment.Tests
         [TestMethod]
         public void GetAggregateSortedListOfStatesUsingCsvRows_ReturnsFormattedString_StringContainsUniqueCommaSeparatedStates()
         {
-            Assert.Inconclusive();
+            string sutData = Sut.GetAggregateSortedListOfStatesUsingCsvRows();
+
+            bool hasDuplicates = HasDuplicates(sutData.Split(','));
+
+            Assert.IsFalse(hasDuplicates, message: "Duplicates found.");
         }
 
         [TestMethod]
