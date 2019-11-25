@@ -20,7 +20,7 @@ namespace Assignment
         public bool Equals(IAddress other) =>
             (StreetAddress, City, State, Zip) == (other.StreetAddress, other.City, other.State, other.Zip);
 
-        public override bool Equals(object obj) =>
+        public override bool Equals(object? obj) =>
             obj is IAddress address && Equals(address);
 
         public override int GetHashCode() =>
