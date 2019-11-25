@@ -8,10 +8,10 @@ namespace Assignment
     public class SampleData : ISampleData
     {
         public enum CsvColumn { Id, FirstName, LastName, EmailAddress, StreetAddress, City, State, Zip }
-        private const string _CSV_FILENAME = "People.csv";
+        private const string _Csv_Filename = "People.csv";
 
         // 1.
-        private static readonly IEnumerable<string> _CsvDefault = File.ReadAllLines(_CSV_FILENAME).Skip(1).ToList();
+        private static readonly IEnumerable<string> _CsvDefault = File.ReadAllLines(_Csv_Filename).Skip(1).ToList();
         private IEnumerable<string> _CsvRows = _CsvDefault;
         public IEnumerable<string> CsvRows
         {
@@ -24,9 +24,9 @@ namespace Assignment
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
         {
-            List<string> states =
+            List<string> states = CsvRows
                 // transform the line into tuple of states extracted from split strings
-                ( from row in CsvRows select row.Split(',')[(int) CsvColumn.State] )
+                .Select(line => line.Split(',')[(int) CsvColumn.State])
                 .Distinct() // remove duplicates
                 .OrderBy((string state) => state) // compare by state string
                 .ToList(); // force query to execute
@@ -47,6 +47,8 @@ namespace Assignment
                     from row in CsvRows
                     select row.Split(',')
                     into row
+                    // filter out malformed data
+                    where row.Length == Enum.GetValues(typeof(CsvColumn)).Length
                     orderby
                         row[(int) CsvColumn.State],
                         row[(int) CsvColumn.City],

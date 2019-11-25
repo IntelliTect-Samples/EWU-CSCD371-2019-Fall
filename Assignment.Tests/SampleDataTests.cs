@@ -16,22 +16,51 @@ namespace Assignment.Tests
 
         private bool HasDuplicates(IEnumerable<string> items)
         {
-            return items
+            bool hasDuplicates =
+                items
                 .Where(item1 => items.Count(item2 => item1 == item2) > 1)
                 .ToList()
                 .Any();
+
+            return hasDuplicates;
         }
 
         private bool IsAscendingOrder(List<string> items)
         {
-            bool hasDescendingElements = items
+            bool hasDescendingElements = 
+                items
                 .Where((string state, int i) => i < items.Count - 1) // ignore last element which would cause index OoB
                 .Select((string state, int i) => (state, items[i + 1])) // pair up elements sequentially
                 .Select(((string First, string Second) pair) => // compare elements of pair to check ascending order
                         string.CompareOrdinal(pair.First, pair.Second) < 0
-                ).Any(isAscending => isAscending == false); // find any result that indicates descending order
+                ).Any(isAscending => !isAscending); // find any result that indicates descending order
 
             return !hasDescendingElements;
+        }
+
+        [TestMethod]
+        public void UseDefaultCsvData_DiscardsCustomData_RevertsToDefaultData()
+        {
+            List<string> data = new List<string>()
+                { "8,Joly,Scneider,jscneider7@pagesperso-orange.fr,53 Grim Point,Spokane,WA,99022" };
+            Sut.CsvRows = data;
+
+            Sut.UseDefaultCsvData();
+
+            Assert.IsFalse(Enumerable.SequenceEqual(data, Sut.CsvRows));
+        }
+
+        [TestMethod]
+        public void CsvRows_AcceptsCustomData_CsvRowsMatchesCustomData()
+        {
+            List<string> data = new List<string>()
+                { "8,Joly,Scneider,jscneider7@pagesperso-orange.fr,53 Grim Point,Spokane,WA,99022" };
+
+            Sut.CsvRows = data;
+            IEnumerable<string> cache = Sut.CsvRows; // need to reset sut before asserting
+            Sut.UseDefaultCsvData();
+
+            Assert.IsTrue(Enumerable.SequenceEqual(data, cache));
         }
 
         [TestMethod]
@@ -67,31 +96,6 @@ namespace Assignment.Tests
             bool isAscending = IsAscendingOrder(sutData);
 
             Assert.IsTrue(isAscending, message: "Has elements that are in descending order");
-        }
-
-        [TestMethod]
-        public void UseDefaultCsvData_DiscardsCustomData_RevertsToDefaultData()
-        {
-            List<string> data = new List<string>()
-                { "8,Joly,Scneider,jscneider7@pagesperso-orange.fr,53 Grim Point,Spokane,WA,99022" };
-            Sut.CsvRows = data;
-
-            Sut.UseDefaultCsvData();
-
-            Assert.IsFalse(Enumerable.SequenceEqual(data, Sut.CsvRows));
-        }
-
-        [TestMethod]
-        public void CsvRows_AcceptsCustomData_CsvRowsMatchesCustomData()
-        {
-            List<string> data = new List<string>()
-                { "8,Joly,Scneider,jscneider7@pagesperso-orange.fr,53 Grim Point,Spokane,WA,99022" };
-
-            Sut.CsvRows = data;
-            IEnumerable<string> cache = Sut.CsvRows; // need to reset sut before asserting
-            Sut.UseDefaultCsvData();
-
-            Assert.IsTrue(Enumerable.SequenceEqual(data, cache));
         }
 
         [TestMethod]
@@ -133,12 +137,52 @@ namespace Assignment.Tests
         }
 
         [TestMethod]
+        public void PeopleProperty_GivenMalformedData_FiltersOutMismatchedLengthEntries()
+        {
+            Sut.CsvRows = new List<string>()
+            {
+                "8,Joly,Scneider,jscneider7@pagesperso-orange.fr,53 Grim PointSpokane,WA,99022",
+                "15,Phillida,Chastagnier,1 Rutledge Point,Spokane,WA,99021",
+            };
+            IEnumerable<IPerson> people = Sut.People;
+            Sut.UseDefaultCsvData();
+
+            bool hasMalformedEntries = people.Any();
+
+            Assert.IsFalse(hasMalformedEntries, message: "Contains malformed entries.");
+        }
+
+        [TestMethod]
+        public void PeopleProperty_GivenWellFormedPartialData_ReturnsPartialInstantiation()
+        {
+            Sut.CsvRows = new List<string>() { "8,Joly,Scneider,,,Spokane,WA,99022" };
+            Person sutperson = ((List<Person>) Sut.People)[0];
+            Sut.UseDefaultCsvData();
+            Person dataPerson = new Person()
+            {
+                FirstName = "Joly",
+                LastName = "Scneider",
+                Address = new Address()
+                {
+                    State = "WA",
+                    City = "Spokane",
+                    Zip = "99022"
+                }
+            };
+
+            bool match = sutperson == dataPerson;
+
+            Assert.IsTrue(match, message: "Doesn't match.");
+        }
+
+        [TestMethod]
         public void PeopleProperty_ConvertsCsvDataToPersonObjects_AllPersonObjectsHaveAddressObject()
         {
             IEnumerable<IPerson> people = Sut.People;
 
-            bool missingAddressObjects =
-                (from person in people select person.Address)
+            bool missingAddressObjects = 
+                people
+                .Select(person => person.Address)
                 .Any(address => address is null);
 
             Assert.IsFalse(missingAddressObjects, message: "Address object is missing.");
@@ -154,7 +198,7 @@ namespace Assignment.Tests
             IAddress address = Sut.People.First().Address;
             Sut.UseDefaultCsvData();
 
-            // I could have done a manual item by item comparison here, but I wanted give reflection a try
+            // I could have done a manual item-by-item comparison here, but I wanted give reflection a try
             bool containsMismatch = (
                 // pair up address properties with raw data using csv enum, then check that they match
                 from property in address.GetType().GetProperties()
@@ -173,7 +217,8 @@ namespace Assignment.Tests
         public void PeopleProperty_ConvertsCsvDataToPersonObjects_AllPeopleInCsvArePresentAsPersonObjects()
         {
             List<Person> people = (List<Person>) Sut.People;
-            List<string[]> data = Sut.CsvRows
+            List<string[]> data = 
+                Sut.CsvRows
                 .Select(row => row.Split(','))
                 .ToList();
 
@@ -201,24 +246,15 @@ namespace Assignment.Tests
         {
             IEnumerable<IPerson> people = Sut.People;
 
-            List<IAddress> addresses = (
-                from person in people
-                select person.Address
-                ).ToList();
+            List<Address> addresses = 
+                people
+                .Select(person => (Address) person.Address)
+                .ToList();
 
             bool outOfOrder = addresses
-                .Where((IAddress address, int i) => i < addresses.Count - 1)
-                .Select((IAddress address, int i) => (address, addresses[i + 1]))
-                .Select(((IAddress First, IAddress Second) pair) =>
-                {
-                    int compState = string.CompareOrdinal(pair.First.State, pair.Second.State);
-                    if (compState != 0) return compState < 0;
-
-                    int compCity = string.CompareOrdinal(pair.First.City, pair.Second.City);
-                    if (compCity != 0) return compCity < 0;
-
-                    return string.CompareOrdinal(pair.First.Zip, pair.Second.Zip) <= 0;
-                })
+                .Where((Address address, int i) => i < addresses.Count - 1)
+                .Select((Address address, int i) => (address, addresses[i + 1]))
+                .Select(((Address First, Address Second) pair) => pair.First.CompareTo(pair.Second) <= 0)
                 .Any(ascending => ascending == false);
 
             Assert.IsFalse(outOfOrder, message: "Addresses not in ascending State-City-Zip order.");
