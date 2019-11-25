@@ -16,11 +16,10 @@ namespace Assignment
 
         // uses cached csv data from people.csv by default
         private static readonly IEnumerable<string> _CsvDefault = File.ReadAllLines(_CSV_FILENAME).Skip(1).ToList();
-        private IEnumerable<string> _CsvData = _CsvDefault;
+        private IEnumerable<string> _CsvData = _CsvDefault; // allow use of custom data without destroying cached default
         public IEnumerable<string> CsvData { get => _CsvData; set => _CsvData = value ?? _CsvData; } // make sure it's never null
-        public void UseDefaultCsvData() => CsvData = _CsvDefault;
 
-        public SampleData() => UseDefaultCsvData();
+        public void UseDefaultCsvData() => _CsvData = _CsvDefault;
 
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
