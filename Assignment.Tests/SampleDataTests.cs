@@ -128,5 +128,31 @@ namespace Assignment.Tests
             //Assert
             Assert.IsTrue(isOrdered);
         }
+
+        [TestMethod]
+        public void FilterByEmailAddress_FilterByWebsite_ReturnsCorrectPeople()
+        {
+            //Arrange
+            SampleData sampleData = new SampleData(Environment.CurrentDirectory + "//MockPeople.csv");
+            (string firstName, string lastName)[] expectedNames = { ("Chadd", "Stennine"), ("Joe", "Smith") };
+            (string firstName, string lastName)[] actualNames = sampleData.FilterByEmailAddress(email => email.Contains("wired.com")).ToArray();
+            //Act
+            bool namesAreCorrect = Enumerable.SequenceEqual(expectedNames, actualNames);
+            //Assert
+            Assert.IsTrue(namesAreCorrect);
+        }
+
+        [TestMethod]
+        public void FilterByEmailAddress_FilterByEntireAddress_ReturnsCorrectPerson()
+        {
+            //Arrange
+            SampleData sampleData = new SampleData(Environment.CurrentDirectory + "//MockPeople.csv");
+            (string firstName, string lastName)[] expectedName = { ("Joe", "Smith") };
+            (string firstName, string lastName)[] actualName = sampleData.FilterByEmailAddress(email => email.Equals("jsmith@wired.com")).ToArray();
+            //Act
+            bool namesIsCorrect = Enumerable.SequenceEqual(expectedName, actualName);
+            //Assert
+            Assert.IsTrue(namesIsCorrect);
+        }
     }
 }
