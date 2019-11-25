@@ -13,17 +13,23 @@ namespace Assignment
         public SampleData(string csvFilePath)
         {
             CsvRows = File.ReadAllLines(csvFilePath).Skip(1);
-            People = CsvRows.Select(csvRow => new Person(csvRow)).OrderBy(person => person.Address.State).ThenBy(person => person.Address.City).ThenBy(person => person.Address.Zip);
+            People = GenerateSortedCollectionOfPeople();
         }
 
         public SampleData(IEnumerable<string> hardCodedCollection)
         {
             this.CsvRows = hardCodedCollection;
+            People = GenerateSortedCollectionOfPeople();
         }
 
         public enum Information
         {
             Id, FirstName, LastName, Email, StreetAddress, City, State, Zip
+        }
+
+        public IEnumerable<IPerson> GenerateSortedCollectionOfPeople()
+        {
+            return CsvRows.Select(csvRow => new Person(csvRow)).OrderBy(person => person.Address.State).ThenBy(person => person.Address.City).ThenBy(person => person.Address.Zip);
         }
 
         // 2.
