@@ -18,4 +18,9 @@
     <PackageReference Include="coverlet.collector" Version="1.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Assignment.Interfaces\Assignment.Interfaces.csproj" />
+    <ProjectReference Include="..\Assignment\Assignment.csproj" />
+  </ItemGroup>
+
 </Project>

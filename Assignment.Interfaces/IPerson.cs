@@ -12,6 +12,6 @@ namespace Assignment
         string City { get; }
         string State { get; }
         string Zip { get; }
-        string EmailAddress { get; }
+        string Email { get; }
     }
 }
