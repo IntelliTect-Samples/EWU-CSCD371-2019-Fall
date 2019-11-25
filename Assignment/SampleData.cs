@@ -47,7 +47,7 @@ namespace Assignment
             IEnumerable<string> states = GetUniqueSortedListOfStatesGivenCsvRows().Select(person => person.Split(",")[(int)Column.State]);
             string[] sortStates = states.ToArray();
 
-            return string.Join(", ", sortStates);
+            return string.Join(",", sortStates);
         }
 
         // 4.
@@ -69,9 +69,9 @@ namespace Assignment
                     Zip = person[(int)Column.Zip]
                 }
             })
-            .OrderBy(person => person.Address.State)
-            .ThenBy(person => person.Address.City)
-            .ThenBy(person => person.Address.Zip);
+            .OrderBy(person => person.State)
+            .ThenBy(person => person.City)
+            .ThenBy(person => person.Zip);
 
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(Predicate<string> filter)
@@ -80,16 +80,26 @@ namespace Assignment
             {
                 throw new ArgumentNullException(nameof(filter));
             }
-
-            return People.Where(person => filter(person.Email))
-                .Select(person => (person.FirstName, person.LastName));
+            else
+            {
+                return People.Where(person => (person.Email != null && filter(person.Email)))
+               .Select(person => (person.FirstName, person.LastName));
+            } 
         }
 
         // 6.
         public string GetAggregateListOfStatesGivenPeopleCollection(IEnumerable<IPerson> people)
         {
-            IEnumerable<string> peoples = people.Select(person => person.State);
-            return peoples.Distinct().Aggregate((x,y) => x + ", " + y);
+            if (people is null)
+            {
+                throw new ArgumentNullException(nameof(people));
+            }
+            else
+            {
+                IEnumerable<string?> peoples = people.Select(person => person.State);
+                return peoples.Distinct().Aggregate((x, y) => x + "," + y);
+            }
+           
         }
     }
 }

@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# CS8619: Nullability of reference types in value doesn't match target type.
+dotnet_diagnostic.CS8619.severity = none #it is okay, I check for Nullability before the call
+
+# CS8603: Possible null reference return.
+dotnet_diagnostic.CS8603.severity = none #it is okay, I check for Nullability before the call
