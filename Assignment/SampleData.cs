@@ -5,19 +5,46 @@ using System.Linq;
 
 namespace Assignment
 {
+    public enum PersonInfo
+    {
+        Id, FirstName, LastName, Email, StreetAddress, City, State, Zip
+    }
     public class SampleData : ISampleData
     {
+        private string _fileName;
+
+        public SampleData(string fileName)
+        {
+            _fileName = fileName;
+        }
+
+        public SampleData()
+        {
+            _fileName = "People.csv";
+        }
+
         // 1.
-        public IEnumerable<string> CsvRows => File.ReadAllLines("People.csv")
+        public IEnumerable<string> CsvRows => File.ReadAllLines(_fileName)
             .Skip(1);
 
         // 2.
-        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() 
-            => throw new NotImplementedException();
+        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
+        {
+            var orderedLine = CsvRows.OrderBy(line => line.Split(",")[(int)PersonInfo.State]);
+            return orderedLine.Select(state => state.Split(",")[(int)PersonInfo.State]).Distinct();
+        }
 
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
-            => throw new NotImplementedException();
+        {
+            IEnumerable<string> states = CsvRows.Select(state => state.Split(",")[(int)PersonInfo.State]).Distinct();
+            string[] statesArray = states.ToArray();
+            Array.Sort(statesArray);
+
+            string result = string.Join(", ", statesArray);
+
+            return result;
+        }
 
         // 4.
         public IEnumerable<IPerson> People => throw new NotImplementedException();
