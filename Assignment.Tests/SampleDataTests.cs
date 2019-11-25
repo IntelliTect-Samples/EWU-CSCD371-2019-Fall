@@ -14,14 +14,15 @@ namespace Assignment.Tests
     [TestClass]
     public class SampleDataTests
     {
-        public string FileName = string.Empty;
-        public string[] Rows = new string[0];
+        private string _FileName = "TestPeople.csv";
+        private string _TempFileName = string.Empty;
+        private string[] _Rows = new string[0];
 
         [TestInitialize]
         public void TestInitialize()
         {
-            FileName = Path.GetTempFileName();
-            Rows = new string[]
+            _TempFileName = Path.GetTempFileName();
+            _Rows = new string[]
             {
                 "Id,FirstName,LastName,Email,StreetAddress,City,State,Zip",
                 "4,Fremont,Pallaske,fpallaske3@umich.edu,16958 Forster Crossing,Atlanta,GA,10687",
@@ -29,20 +30,20 @@ namespace Assignment.Tests
                 "6,Darline,Brauner,dbrauner5@biglobe.ne.jp,33 Menomonie Trail,Atlanta,GA,10687",
             };
 
-            using (var sw = new StreamWriter(@FileName))
-                foreach (string row in Rows)
+            using (var sw = new StreamWriter(@_TempFileName))
+                foreach (string row in _Rows)
                     sw.WriteLine(row);
         }
 
         [TestCleanup]
         public void TestCleanup()
         {
-            if (File.Exists(@FileName))
-                File.Delete(@FileName);
+            if (File.Exists(@_TempFileName))
+                File.Delete(@_TempFileName);
         }
 
         [TestMethod]
-        public void SampleDataConstructor_ThrowsExceptionOnEmptyFileName()
+        public void SampleDataConstructor_ThrowsExceptionOnEmpty_TempFileName()
         {
             Assert.ThrowsException<ArgumentNullException>(
                     () => new SampleData(""));
@@ -51,9 +52,9 @@ namespace Assignment.Tests
         [TestMethod]
         public void SampleData_CsvRows_Enumerates()
         {
-            var sut = new SampleData(FileName);
+            var sut = new SampleData(_TempFileName);
 
-            var pairs = Rows.Skip(1).Zip(sut.CsvRows, (row, sutRow) => (row, sutRow));
+            var pairs = _Rows.Skip(1).Zip(sut.CsvRows, (row, sutRow) => (row, sutRow));
 
             foreach (var (expected, actual) in pairs)
                 Assert.AreEqual(expected, actual);
@@ -121,12 +122,12 @@ namespace Assignment.Tests
         {
             var expectedPeople = new Person[]
             {
-                SampleData.ParsePerson(Rows[1]),
-                SampleData.ParsePerson(Rows[2]),
-                SampleData.ParsePerson(Rows[3]),
+                SampleData.ParsePerson(_Rows[1]),
+                SampleData.ParsePerson(_Rows[2]),
+                SampleData.ParsePerson(_Rows[3]),
             };
 
-            var sut = new SampleData(FileName);
+            var sut = new SampleData(_TempFileName);
 
             var pairs = expectedPeople.Zip(sut.People, (expected, person) => (expected, person));
 
@@ -145,7 +146,7 @@ namespace Assignment.Tests
                 ("Darline", "Brauner"),
             };
 
-            var sut = new SampleData(FileName);
+            var sut = new SampleData(_TempFileName);
 
             var pairs = expectedTuples.Zip(sut.FilterByEmailAddress((email) => true), (e, p) => (e, p));
 
@@ -157,7 +158,7 @@ namespace Assignment.Tests
         [TestMethod]
         public void GetAggregateListOfStatesGivenPeopleCollection_Success()
         {
-            var sut = new SampleData(@FileName);
+            var sut = new SampleData(@_TempFileName);
 
             Assert.AreEqual(
                 sut.GetAggregateListOfStatesGivenPeopleCollection(sut.People),
@@ -167,7 +168,7 @@ namespace Assignment.Tests
         [TestMethod]
         public void GetAggregateSortedListOfStatesUsingCsvRows_Success()
         {
-            var sut = new SampleData(@FileName);
+            var sut = new SampleData(@_TempFileName);
 
             Assert.AreEqual(
                 sut.GetAggregateSortedListOfStatesUsingCsvRows(),
@@ -182,13 +183,55 @@ namespace Assignment.Tests
                 "GA", "TX"
             };
 
-            var sut = new SampleData(@FileName);
+            var sut = new SampleData(@_TempFileName);
 
             var pairs = expected.Zip(sut.GetUniqueSortedListOfStatesGivenCsvRows(), (e, a) => (e, a));
 
             foreach (var (e, a) in pairs)
                 Assert.IsTrue(e.Equals(a),
                         $"E: {e.ToString()} A: {a.ToString()}");
+        }
+
+        [TestMethod]
+        public void SampleData_CsvRowsFromFile_Enumerates()
+        {
+            var sut = new SampleData(_FileName);
+
+            var pairs = File
+                .ReadAllLines(@_FileName)
+                .Skip(1)
+                .Zip(sut.CsvRows, (row, sutRow) => (row, sutRow));
+
+            foreach (var (expected, actual) in pairs)
+                Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void GetUniqueSortedListOfStatesGivenCsvRows_FromFile_Success()
+        {
+            var expected = new List<string>()
+            {
+                "AL", "CA", "DC", "FL", "GA", "MD", "MO",
+                "MT", "NC", "NV", "TN", "TX", "VA", "WA"
+            };
+
+            var sut = new SampleData(@_FileName);
+
+            var pairs = expected.Zip(sut.GetUniqueSortedListOfStatesGivenCsvRows(), (e, a) => (e, a));
+
+            foreach (var (e, a) in pairs)
+                Assert.IsTrue(e.Equals(a),
+                        $"E: {e.ToString()} A: {a.ToString()}");
+        }
+
+        [TestMethod]
+        public void GetAggregateSortedListOfStatesUsingCsvRows_FromFile_Success()
+        {
+            var sut = new SampleData(@_FileName);
+
+            Assert.AreEqual(
+                sut.GetAggregateSortedListOfStatesUsingCsvRows(),
+                "AL, CA, DC, FL, GA, MD, MO, MT, NC, NV, TN, TX, VA, WA");
         }
     }
 }
