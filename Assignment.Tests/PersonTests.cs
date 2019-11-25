@@ -49,5 +49,59 @@ namespace Assignment.Tests
             //Assert
             Assert.AreEqual<IAddress>(expected, spongebob.Address);
         }
+
+        [TestMethod]
+        public void Equals_DifferentPerson_ReturnsFalse()
+        {
+            //Arrange
+            string csvRow = "1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202";
+            string csvRowTwo = "2,Eugene,Krabs,moneymoneymoney@gmail.com,765 Calico Drive,Spokane,WA,99201";
+            Person spongebob = new Person(csvRow);
+            Person mrKrabs = new Person(csvRowTwo);
+            //Act
+            bool peopleAreEqual = spongebob.Equals(mrKrabs);
+            //Assert
+            Assert.IsFalse(peopleAreEqual);
+        }
+
+        [TestMethod]
+        public void Equals_SamePerson_ReturnsTrue()
+        {
+            //Arrange
+            string csvRow = "1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202";
+            Person spongebob = new Person(csvRow);
+            Person spingebobTwo = new Person(csvRow);
+            //Act
+            bool peopleAreEqual = spongebob.Equals(spingebobTwo);
+            //Assert
+            Assert.IsTrue(peopleAreEqual);
+        }
+
+        [TestMethod]
+        public void GetHashCode_DifferentPerson_ReturnsDifferentHashCodes()
+        {
+            //Arrange
+            string csvRow = "1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202";
+            string csvRowTwo = "2,Eugene,Krabs,moneymoneymoney@gmail.com,765 Calico Drive,Spokane,WA,99201";
+            Person spongebob = new Person(csvRow);
+            Person mrKrabs = new Person(csvRowTwo);
+            //Act
+            bool HashCodesAreSame = spongebob.GetHashCode() == mrKrabs.GetHashCode();
+            //Assert
+            Assert.IsFalse(HashCodesAreSame);
+        }
+
+        [TestMethod]
+        public void GetHashCode_SamePerson_ReturnsSameHashCodes()
+        {
+            //Arrange
+            string csvRow = "1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202";
+            Person spongebob = new Person(csvRow);
+            Person spongebobTwo = new Person(csvRow);
+            //Act
+            bool HashCodesAreSame = spongebob.GetHashCode() == spongebobTwo.GetHashCode();
+            //Assert
+            Assert.IsTrue(HashCodesAreSame);
+        }
     }
 }

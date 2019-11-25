@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Assignment
+﻿namespace Assignment
 {
     public class Address : IAddress
     {

@@ -69,7 +69,7 @@ namespace Assignment.Tests
             SampleData sampleData = new SampleData(Environment.CurrentDirectory + "//MockPeople.csv");
             //Act
             string[] actualData = sampleData.GetUniqueSortedListOfStatesGivenCsvRows().ToArray();
-            bool isSorted = Enumerable.SequenceEqual(actualData,actualData.OrderBy(state => state));
+            bool isSorted = Enumerable.SequenceEqual(actualData, actualData.OrderBy(state => state));
             //Assert
             Assert.IsTrue(isSorted);
         }
@@ -95,6 +95,38 @@ namespace Assignment.Tests
             int numberOfPeople = sampleData.People.Count();
             //Assert
             Assert.AreEqual<int>(sampleData.CsvRows.Count(), numberOfPeople);
+        }
+
+        [TestMethod]
+        public void People_MockCsv_ReturnsCorrectPeople()
+        {
+            //Arrange
+            SampleData sampleData = new SampleData(Environment.CurrentDirectory + "//MockPeople.csv");
+            Person[] expectedPeople = sampleData.CsvRows.Select(csvRow => new Person(csvRow)).ToArray();
+            IPerson[] actualPeople = sampleData.People.ToArray();
+            //Act
+            bool hasAllPeople = true;
+            foreach (Person person in expectedPeople)
+            {
+                if (hasAllPeople)
+                    hasAllPeople = actualPeople.Contains(person);
+            }
+            //Assert
+            Assert.IsTrue(hasAllPeople);
+        }
+
+        [TestMethod]
+        public void People_MockCsv_PeopleAreSorted()
+        {
+            //Arrange
+            SampleData sampleData = new SampleData(Environment.CurrentDirectory + "//MockPeople.csv");
+            string expectedNames = "Chadd,Joe,Henri,Karin,Priscilla";
+            IPerson[] people = sampleData.People.ToArray();
+            string actualNames = people.Select(person => person.FirstName).Aggregate((personOne, personTwo) => personOne + "," + personTwo);
+            //Act
+            bool isOrdered = expectedNames.Equals(actualNames);
+            //Assert
+            Assert.IsTrue(isOrdered);
         }
     }
 }

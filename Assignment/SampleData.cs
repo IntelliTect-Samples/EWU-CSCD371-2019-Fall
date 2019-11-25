@@ -13,6 +13,7 @@ namespace Assignment
         public SampleData(string csvFilePath)
         {
             CsvRows = File.ReadAllLines(csvFilePath).Skip(1);
+            People = CsvRows.Select(csvRow => new Person(csvRow)).OrderBy(person => person.Address.State).ThenBy(person => person.Address.City).ThenBy(person => person.Address.Zip);
         }
 
         public SampleData(IEnumerable<string> hardCodedCollection)
@@ -35,7 +36,7 @@ namespace Assignment
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
         {
-            return GetUniqueSortedListOfStatesGivenCsvRows().Aggregate((StateOne,StateTwo) => StateOne + "," + StateTwo);
+            return GetUniqueSortedListOfStatesGivenCsvRows().Aggregate((StateOne, StateTwo) => StateOne + "," + StateTwo);
         }
 
         // 4.

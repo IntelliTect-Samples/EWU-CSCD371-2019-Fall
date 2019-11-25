@@ -15,5 +15,19 @@
             EmailAddress = data[(int)SampleData.Information.Email];
             Address = new Address(csvRow);
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Person person &&
+                   FirstName.Equals(person.FirstName) &&
+                   LastName.Equals(person.LastName) &&
+                   Address.Equals(person.Address) &&
+                   EmailAddress.Equals(person.EmailAddress);
+        }
+
+        public override int GetHashCode()
+        {
+            return (FirstName, LastName, Address, EmailAddress).GetHashCode();
+        }
     }
 }
