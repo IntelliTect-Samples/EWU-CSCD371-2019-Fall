@@ -16,7 +16,7 @@ namespace Assignment
     public class SampleData : ISampleData
     {
 
-        private string? _FileName;
+        private readonly string? _FileName;
 
         public SampleData(string? fileName)
         {
@@ -34,9 +34,7 @@ namespace Assignment
         {
             get
             {
-                using StreamReader streamReader = new StreamReader(_FileName);
-                streamReader.ReadLine();
-                yield return streamReader.ReadLine();
+                return from line in File.ReadAllLines(_FileName) where !string.IsNullOrEmpty(line) where !(line.Contains("State")) select line;
             }
         }
 
@@ -55,32 +53,70 @@ namespace Assignment
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
         {
+            IEnumerable<string> result = CsvRows.Select(line => line.Split(',')[6]).Distinct().OrderBy(line => line);
 
-            var sorted = CsvRows.Select(line => new
-            {
-                State = line.Split(',')[6],
-                City = line.Split(',')[5],
-                Zip = line.Split(',')[7],
-                Line = line
-            }).Distinct().OrderBy(x => x.State).ThenBy(x => x.City).ThenBy(x => x.Zip);
-
-            IEnumerable<string> result = (IEnumerable<string>)sorted;
             return result;
         }
 
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
-            => throw new NotImplementedException();
+        {
+            string result = string.Join(",", CsvRows.Select(line => CreatePerson(line))
+                .Select(person => person.Address.State).OrderBy(line => line).ToArray());
+
+            return result;
+        }
 
         // 4.
-        public IEnumerable<IPerson> People => throw new NotImplementedException();
+        public IEnumerable<IPerson> People
+        {
+            get
+            {
+                return from row in CsvRows select CreatePerson(row);
+            }
+        }
+
+        private Person CreatePerson(string? csvRow)
+        {
+            if (string.IsNullOrEmpty(csvRow)) throw new ArgumentNullException(nameof(csvRow));
+
+            string[] line = csvRow.Split(',');
+
+            string firstName = line[1];
+            string lastName = line[2];
+            string email = line[3];
+            Address address = new Address(line[4], line[5], line[6], line[7]);
+
+            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(address.ToString()))
+            {
+                throw new ArgumentNullException(nameof(csvRow), "Some part of the row was empty");
+            }
+
+            return new Person(firstName, lastName, address, email);
+        }
 
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
-            Predicate<string> filter) => throw new NotImplementedException();
+            Predicate<string> filter)
+        {
+            if (filter is null) throw new ArgumentNullException(nameof(filter));
+
+
+            return from person in People
+                   where filter(person.Email)
+                   select (person.FirstName, person.LastName);
+        }
 
         // 6.
         public string GetAggregateListOfStatesGivenPeopleCollection(
-            IEnumerable<IPerson> people) => throw new NotImplementedException();
+            IEnumerable<IPerson> people)
+        {
+            if (people is null) throw new ArgumentNullException(nameof(people));
+
+            string result = string.Join(",", people.Select(person => person.Address.State)
+                .Distinct());
+
+            return result;
+        }
     }
 }
