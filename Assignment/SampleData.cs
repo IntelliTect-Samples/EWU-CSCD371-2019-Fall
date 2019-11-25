@@ -7,33 +7,66 @@ namespace Assignment
 {
     public class SampleData : ISampleData
     {
+        private readonly string _FileName;
+
+        public SampleData()
+        {
+            _FileName = "People.csv";
+        }
+
+        public SampleData(string file)
+        {
+            _FileName = file;
+        }
+
+        public enum Column
+        {
+            Id,
+            FirstName,
+            LastName,
+            Email,
+            StreetAddress,
+            City,
+            State,
+            Zip
+        }
+
         // 1.
-        public IEnumerable<string> CsvRows => File.ReadAllLines("People.csv").Skip(1);
+        public IEnumerable<string> CsvRows => File.ReadAllLines(_FileName).Skip(1);
 
         // 2.
-        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() 
-            => throw new NotImplementedException();
+        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
+        {
+            IEnumerable<string> orderedStates = CsvRows.OrderBy(person => person.Split(",")[(int)Column.State]).Distinct();
+            return orderedStates;
+        }
 
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
-            => throw new NotImplementedException();
+        {
+            IEnumerable<string> states = GetUniqueSortedListOfStatesGivenCsvRows().Select(person => person.Split(",")[(int)Column.State]);
+            string[] sortStates = states.ToArray();
+
+            return string.Join(", ", sortStates);
+        }
 
         // 4.
         public IEnumerable<IPerson> People => CsvRows.Select(person => person.Split(","))
             .Select(person => new Person 
             {
-                FirstName = person[1],
-                LastName = person[2],
-                StreetAddress = person[4],
-                City = person[5],
-                State = person[6],
-                Zip = person[7],
+                FirstName = person[(int)Column.FirstName],
+                LastName = person[(int)Column.LastName],
+                Email = person[(int)Column.Email],
+                StreetAddress = person[(int)Column.StreetAddress],
+                City = person[(int)Column.City],
+                State = person[(int)Column.State],
+                Zip = person[(int)Column.Zip],
                 Address = new Address
                 {
-                    StreetAddress = person[4],
-                    City = person[5],
-                    State = person[6],
-                    Zip = person[7]
+                    StreetAddress = person[(int)Column.StreetAddress],
+                    City = person[(int)Column.City],
+                    State = person[(int)Column.State],
+                    Zip = person[(int)Column.Zip]
                 }
             })
             .OrderBy(person => person.Address.State)
@@ -41,41 +74,22 @@ namespace Assignment
             .ThenBy(person => person.Address.Zip);
 
         // 5.
-        public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
-            Predicate<string> filter) => throw new NotImplementedException();
+        public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(Predicate<string> filter)
+        {
+            if (filter is null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+
+            return People.Where(person => filter(person.Email))
+                .Select(person => (person.FirstName, person.LastName));
+        }
 
         // 6.
-        public string GetAggregateListOfStatesGivenPeopleCollection(
-            IEnumerable<IPerson> people) => throw new NotImplementedException();
-
-        enum Column
+        public string GetAggregateListOfStatesGivenPeopleCollection(IEnumerable<IPerson> people)
         {
-            StreetAddress,
-            City,
-            State,
-            Zip
+            IEnumerable<string> peoples = people.Select(person => person.State);
+            return peoples.Distinct().Aggregate((x,y) => x + ", " + y);
         }
-        /** IN CLASS RANDOM CRAP
-        public string SelectStateWithChildAddresses()
-        {
-            List<Address> addresses = new List<Address>();
-
-            File.ReadAllLines("Person.csv").Select(item =>
-            {
-                string[] columns = item.Split(",");
-                addresses.Add(new Address()
-                {
-                    StreetAddress = columns[(int)Column.StreetAddress],
-                    State = columns[(int)Column.State],
-                    City = columns[(int)Column.City],
-                    Zip = columns[(int)Column.Zip],
-                });
-                return 1;
-            });
-
-            IEnumerable<IGrouping<string, Address>> thing = addresses.GroupBy(a=>a.State);
-
-            return "";
-        } */
     }
 }
