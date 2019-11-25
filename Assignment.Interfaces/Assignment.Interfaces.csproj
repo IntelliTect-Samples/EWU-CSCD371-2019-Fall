@@ -5,11 +5,4 @@
     <RootNamespace>Assignment</RootNamespace>
   </PropertyGroup>
 
-  <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <CombinePath BasePath="$(ProjectDir)/../Assignment" Paths="Libraries">
-      <Output TaskParameter="CombinedPaths" PropertyName="LibrariesPath"/>
-    </CombinePath>    
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(LibrariesPath)"></Copy>
-  </Target>-->
-
 </Project>
