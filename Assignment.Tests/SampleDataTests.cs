@@ -10,6 +10,13 @@ namespace Assignment.Tests
     public class SampleDataTests
     {
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SampleData_UsingNullFilePath_ThrowsException()
+        {
+            var sut = new SampleData(null!);
+        }
+
+        [TestMethod]
         public void CsvRows_HasProperCount()
         {
             var sut = new SampleData();
@@ -27,6 +34,37 @@ namespace Assignment.Tests
             IEnumerable<string> query = sut.GetUniqueSortedListOfStatesGivenCsvRows();
 
             Assert.IsTrue(query.Zip(query.Skip(1), (first, second) => first.CompareTo(second) < 0).All(state => state));
+        }
+
+        [TestMethod]
+        public void GetUniqueSortedListOfStatesGivenCsvRows_UsingHardCodedAddresses_ReturnsWA()
+        {
+            string filepath = Path.GetFullPath("TestFile.txt");
+            var sut = new SampleData(filepath);
+
+            try
+            {
+                var addresses = new List<string>()
+                {
+                    "1,First1,Last1,email1,street address1,Spokane,WA,99201",
+                    "2,First2,Last2,email2,street address2,Spokane,WA,99201",
+                    "3,First3,Last3,email3,street address3,Spokane,WA,99201"
+                };
+
+                File.AppendAllLines(filepath, addresses);
+
+                IEnumerable<string> query = sut.GetUniqueSortedListOfStatesGivenCsvRows();
+                
+                Assert.AreEqual<int>(1, query.Count());
+                Assert.IsTrue(query.Contains("WA"));
+            }
+            finally
+            {
+                if (File.Exists(filepath))
+                {
+                    File.Delete(filepath);
+                }
+            }
         }
 
         [TestMethod]

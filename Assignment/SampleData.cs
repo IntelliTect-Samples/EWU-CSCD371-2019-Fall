@@ -7,8 +7,19 @@ namespace Assignment
 {
     public class SampleData : ISampleData
     {
+        private string FilePath { get; }
+
+        public SampleData(string filepath)
+        {
+            FilePath = filepath ?? throw new ArgumentNullException(nameof(filepath));
+        }
+
+        public SampleData()
+        {
+            FilePath = "People.csv";
+        }
         // 1.
-        public IEnumerable<string> CsvRows => File.ReadAllLines("People.csv").Skip(1);
+        public IEnumerable<string> CsvRows => File.ReadAllLines(FilePath).Skip(1);
 
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
@@ -18,7 +29,7 @@ namespace Assignment
 
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
-            => String.Join(',', GetUniqueSortedListOfStatesGivenCsvRows());
+            => string.Join(',', GetUniqueSortedListOfStatesGivenCsvRows());
 
         // 4.
         public IEnumerable<IPerson> People
