@@ -14,6 +14,8 @@ namespace Assignment
 
         public Address Address { get;set; }
 
+        public string EmailAddress { get; set; }
+
         public Person(string fname, string lname, string streetAddress, string city, string state, string zip, string email)
         {
             FirstName = fname ?? throw new ArgumentNullException(nameof(fname));

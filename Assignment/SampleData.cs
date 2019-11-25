@@ -19,22 +19,13 @@ namespace Assignment
         {
             _FilePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
         }
-        public IEnumerable<string> CsvRows 
-        {
-            get
-            {
-                foreach (string line in File.ReadAllLines(_FilePath).Skip(1).ToArray())
-                {
-                    yield return line;
-                }
-            }
-        }
+        public IEnumerable<string> CsvRows => File.ReadAllLines("People.csv").Skip(1);
 
         public static IPerson CreatePerson(string line)
         {
             //0     1       2           3                  4         5     6   7
             //1,Priscilla,Jenyns,pjenyns0@state.gov,7884 Corry Way,Helena,MT,70577
-            if(string.IsNullOrEmpty(line)) throw new ArgumentNullException(nameof(line));
+            if (string.IsNullOrEmpty(line)) throw new ArgumentNullException(nameof(line));
             string[] items = line.Split(',');
             IPerson person = new Person(items[1], items[2], items[4], items[5], items[6], items[7], items[3]);
             return person;
@@ -48,23 +39,18 @@ namespace Assignment
             }
         }
 
-        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
-        {
-            var states = CsvRows.Select(line => CreatePerson(line)).Select(item => item.State).Distinct();
-            return states;
-        }
+        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() =>
+            CsvRows.Select(line => line.Split(',')[(int)Columns.State]).Distinct().OrderBy(states => states);
 
-        public string GetAggregateSortedListOfStatesUsingCsvRows()
-        {
-            throw new NotImplementedException();
-        }
-        public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(Predicate<string> filter)
-        {
-            throw new NotImplementedException();
-        }   
-        public string GetAggregateListOfStatesGivenPeopleCollection(IEnumerable<IPerson> people)
-        {
-            throw new NotImplementedException();
-        }
+        public string GetAggregateSortedListOfStatesUsingCsvRows() =>
+            String.Join(',', GetUniqueSortedListOfStatesGivenCsvRows());
+
+        public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(Predicate<string> filter) =>
+            People.Where(person => filter(person.EmailAddress))
+            .Select(person => (person.FirstName, person.LastName));
+
+        public string GetAggregateListOfStatesGivenPeopleCollection(IEnumerable<IPerson> people) =>
+            GetUniqueSortedListOfStatesGivenCsvRows().Aggregate<string>((i, j) => $"{i}, {j}");
+
     }
 }
