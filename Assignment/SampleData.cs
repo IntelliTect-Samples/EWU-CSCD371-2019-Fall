@@ -12,7 +12,7 @@ namespace Assignment
 
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
-            => CsvRows.Select(line => line.Split(',')[6])
+            => CsvRows.Select(line => line.Split(',')[(int)Column.State])
                 .Distinct()
                 .OrderBy(states => states);
 
@@ -25,15 +25,15 @@ namespace Assignment
             => CsvRows.Select(line => line.Split(','))
                     .Select(line => new Person
                     {
-                        FirstName = line[1],
-                        LastName = line[2],
-                        EmailAddress = line[3],
+                        FirstName = line[(int)Column.FirstName],
+                        LastName = line[(int)Column.LastName],
+                        EmailAddress = line[(int)Column.Email],
                         Address = new Address
                         {
-                            StreetAddress = line[4],
-                            City = line[5],
-                            State = line[6],
-                            Zip = line[7]
+                            StreetAddress = line[(int)Column.StreetAddress],
+                            City = line[(int)Column.City],
+                            State = line[(int)Column.State],
+                            Zip = line[(int)Column.Zip]
                         }
                     })
                     .OrderBy(person => person.Address!.State)
@@ -51,5 +51,10 @@ namespace Assignment
             people.Select(person => person.Address.State)
             .Distinct()
             .Aggregate((first, second) => $"{first},{second}");
+
+        public enum Column
+        {
+            Id, FirstName, LastName, Email, StreetAddress, City, State, Zip
+        }
     }
 }

@@ -62,7 +62,9 @@ namespace Assignment.Tests
 
             IEnumerable<IPerson> people = sut.People;
 
-            Assert.AreEqual(testPerson.FirstName, people.First().FirstName);
+            Assert.AreEqual<int>(50, people.Count());
+            Assert.AreEqual((testPerson.FirstName, testPerson.LastName), (people.First().FirstName, people.First().LastName));
+            Assert.AreEqual((testPerson.Address.State, testPerson.Address.StreetAddress), (people.First().Address.State, people.First().Address.StreetAddress));
         }
 
         [TestMethod]
@@ -71,7 +73,7 @@ namespace Assignment.Tests
             var sut = new SampleData();
             var testEmail = "kbutteryn@woothemes.com";
 
-            var result = sut.FilterByEmailAddress(email => email == testEmail);
+            IEnumerable<(string FirstName, string LastName)> result = sut.FilterByEmailAddress(email => email == testEmail);
 
             Assert.IsTrue(result.Contains(("Karel", "Buttery")));
         }
