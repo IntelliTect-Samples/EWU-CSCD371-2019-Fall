@@ -120,11 +120,13 @@ namespace Assignment.Tests
         [TestMethod]
         public void SampleDataPeople_ReturnsPeopleFromFile()
         {
+            // These are out of order because they
+            // are ordered by State, city and zip
             var expectedPeople = new Person[]
             {
                 SampleData.ParsePerson(_Rows[1]),
-                SampleData.ParsePerson(_Rows[2]),
                 SampleData.ParsePerson(_Rows[3]),
+                SampleData.ParsePerson(_Rows[2]),
             };
 
             var sut = new SampleData(_TempFileName);
@@ -139,11 +141,13 @@ namespace Assignment.Tests
         [TestMethod]
         public void FilterByEmailAddress_GetsAllPeopleFromTautology()
         {
+            // These are out of order because they
+            // are ordered by State, city and zip
             var expectedTuples = new (string, string)[]
             {
                 ("Fremont", "Pallaske"),
-                ("Melisa", "Kerslake"),
                 ("Darline", "Brauner"),
+                ("Melisa", "Kerslake"),
             };
 
             var sut = new SampleData(_TempFileName);

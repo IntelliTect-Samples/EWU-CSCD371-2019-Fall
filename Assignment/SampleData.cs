@@ -44,11 +44,11 @@ namespace Assignment
 
         public IEnumerable<IPerson> People
         {
-            get
-            {
-                return from line in CsvRows
-                    select ParsePerson(line);
-            }
+            get => CsvRows
+                    .Select(x => ParsePerson(x))
+                    .OrderBy(p => p.Address.State)
+                    .ThenBy(p => p.Address.City)
+                    .ThenBy(p => p.Address.Zip);
         }
 
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
