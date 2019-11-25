@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
 
 namespace Assignment
 {
     public interface ISampleData
     {
         // 1.
-        IEnumerable<string> CsvRows { get; }
+        IEnumerable<string> CsvRows {get;}
         
         // 2.
         IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows();
