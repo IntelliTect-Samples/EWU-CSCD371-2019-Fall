@@ -80,7 +80,7 @@ namespace Assignment.Tests
         }
 
         [TestMethod]
-        public void GetAggregateSortedListOfStatesUsingCsvRows_ReturnsCommaSepString()
+        public void GetAggregateSortedListOfStatesUsingCsvRows_ReturnsCommaSepStatesString()
         {
             //Arrange
             string list;
@@ -134,7 +134,19 @@ namespace Assignment.Tests
             {
                 Assert.Fail("More matches to email than expected.");
             }
-            
+        }
+
+        [TestMethod]
+        public void GetAggregateListOfStatesGivenPeopleCollection_ReturnsCommaSepStatesString()
+        {
+            //Arrange
+            string list;
+
+            //Act
+            list = sData.GetAggregateListOfStatesGivenPeopleCollection(sData.People);
+
+            //Assert
+            Assert.AreEqual("AL,AZ,CA,DC,FL,GA,IN,KS,LA,MD,MN,MO,MT,NC,NE,NH,NV,NY,OR,PA,SC,TN,TX,UT,VA,WA,WV", list);
         }
     }
 }
