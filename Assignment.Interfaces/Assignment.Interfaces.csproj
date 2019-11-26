@@ -5,6 +5,10 @@
     <RootNamespace>Assignment</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="IntelliTect.Analyzers" Version="0.1.3" />
+  </ItemGroup>
+
   <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <CombinePath BasePath="$(ProjectDir)/../Assignment" Paths="Libraries">
       <Output TaskParameter="CombinedPaths" PropertyName="LibrariesPath"/>
