@@ -11,15 +11,15 @@ namespace Assignment
         private const string _Csv_Filename = "People.csv";
 
         // 1.
-        private static readonly IEnumerable<string> _CsvDefault = File.ReadAllLines(_Csv_Filename).Skip(1).ToList();
-        private IEnumerable<string> _CsvRows = _CsvDefault;
+        private static IEnumerable<string> CsvDefault { get; } = File.ReadAllLines(_Csv_Filename).Skip(1).ToList();
+        private IEnumerable<string> _CsvRows = CsvDefault;
         public IEnumerable<string> CsvRows
         {
             get => new List<string>(_CsvRows); // ensuring immutable list
             set => _CsvRows = value is IEnumerable<string> ? new List<string>(value) : _CsvRows; // avoiding nulls
         }
 
-        public void UseDefaultCsvData() => _CsvRows = _CsvDefault;
+        public void UseDefaultCsvData() => _CsvRows = CsvDefault;
 
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
@@ -74,7 +74,15 @@ namespace Assignment
 
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
-            Predicate<string> filter) => throw new NotImplementedException();
+            Predicate<string> filter)
+        {
+            IEnumerable<ValueTuple<string, string>> filtered =
+                from person in People
+                where filter(person.EmailAddress)
+                select (person.FirstName, person.LastName);
+
+            return filtered.ToList();
+        }
 
         // 6.
         public string GetAggregateListOfStatesGivenPeopleCollection(

@@ -9,6 +9,10 @@ namespace Assignment
         public string State { get; set; } = "";
         public string Zip { get; set; } = "";
 
+        public override int GetHashCode() =>
+            (StreetAddress, City, State, Zip).GetHashCode();
+
+        #region IEquatable methods
         public override bool Equals(object? obj) =>
             obj is Address address && Equals(address);
 
@@ -25,10 +29,9 @@ namespace Assignment
 
         public static bool operator !=(Address leftSide, Address rightSide)
             => !(leftSide?.Equals(rightSide) ?? false);
+        #endregion
 
-        public override int GetHashCode() =>
-            (StreetAddress, City, State, Zip).GetHashCode();
-
+        #region IComparable methods
         public int CompareTo(Address other)
         {
             int compState = string.Compare(State, other?.State);
@@ -39,5 +42,34 @@ namespace Assignment
 
             return string.Compare(Zip, other?.Zip);
         }
+
+        public static bool operator >=(Address leftSide, Address rightSide)
+        {
+            if (leftSide is null) return rightSide is null ? true : false;
+
+            return leftSide.CompareTo(rightSide) >= 0;
+        }
+
+        public static bool operator <=(Address leftSide, Address rightSide)
+        {
+            if (leftSide is null) return true;
+
+            return leftSide.CompareTo(rightSide) <= 0;
+        }
+
+        public static bool operator >(Address leftSide, Address rightSide)
+        {
+            if (leftSide is null) return false;
+
+            return leftSide.CompareTo(rightSide) > 0;
+        }
+
+        public static bool operator <(Address leftSide, Address rightSide)
+        {
+            if (leftSide is null) return rightSide is null ? false : true;
+
+            return leftSide.CompareTo(rightSide) < 0;
+        }
+        #endregion
     }
 }

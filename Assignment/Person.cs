@@ -9,6 +9,10 @@ namespace Assignment
         public string EmailAddress { get; set; } = "";
         public IAddress Address { get; set; } = new Address();
 
+        public override int GetHashCode() =>
+            (FirstName, LastName, EmailAddress, Address.GetHashCode()).GetHashCode();
+
+        #region IEquatable methods
         public override bool Equals(object? obj) =>
             obj is Person person && Equals(person);
 
@@ -27,8 +31,6 @@ namespace Assignment
 
         public static bool operator !=(Person leftSide, Person rightSide)
             => !(leftSide?.Equals(rightSide) ?? false);
-
-        public override int GetHashCode() => 
-            (FirstName, LastName, EmailAddress, Address.GetHashCode()).GetHashCode();
+        #endregion
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Assignment.Tests
 {
@@ -16,13 +17,10 @@ namespace Assignment.Tests
 
         private bool HasDuplicates(IEnumerable<string> items)
         {
-            bool hasDuplicates =
-                items
-                .Where(item1 => items.Count(item2 => item1 == item2) > 1)
-                .ToList()
-                .Any();
+            IEnumerable<string> duplicates =
+                items.Where(item1 => items.Count(item2 => item1 == item2) > 1);
 
-            return hasDuplicates;
+            return duplicates.Any();
         }
 
         private bool IsAscendingOrder(List<string> items)
@@ -58,7 +56,7 @@ namespace Assignment.Tests
 
             Sut.CsvRows = data;
             IEnumerable<string> cache = Sut.CsvRows; // need to reset sut before asserting
-            Sut.UseDefaultCsvData();
+            Sut.UseDefaultCsvData(); // reset cached SUT, so it doesn't affect future tests
 
             Assert.IsTrue(Enumerable.SequenceEqual(data, cache));
         }
@@ -80,8 +78,15 @@ namespace Assignment.Tests
         [TestMethod]
         public void GetUniqueSortedListOfStatesGivenCsvRows_ReturnsListOfUniqueStates_FiltersOutDuplicates()
         {
-            // linq verification without hardcoded list
+            List<string> data = new List<string>()
+            {
+                "8,Joly,Scneider,jscneider7@pagesperso-orange.fr,53 Grim Point,Spokane,WA,99022",
+                "8,Joly,Scneider,jscneider7@pagesperso-orange.fr,53 Grim Point,Spokane,WA,99022"
+            };
+            Sut.CsvRows = data;
+
             IEnumerable<string> sutData = Sut.GetUniqueSortedListOfStatesGivenCsvRows();
+            Sut.UseDefaultCsvData();
 
             bool hasDuplicates = HasDuplicates(sutData);
 
@@ -93,6 +98,7 @@ namespace Assignment.Tests
         {
             List<string> sutData = (List<string>) Sut.GetUniqueSortedListOfStatesGivenCsvRows();
 
+            // linq verification without hardcoded list
             bool isAscending = IsAscendingOrder(sutData);
 
             Assert.IsTrue(isAscending, message: "Has elements that are in descending order");
@@ -101,7 +107,7 @@ namespace Assignment.Tests
         [TestMethod]
         public void GetUniqueSortedListOfStatesGivenCsvRows_HardcodedList_ReturnsSortedUniqueStates()
         {
-            // use custom, hardcoded csv data
+            // use custom, hardcoded spokane based csv data
             Sut.CsvRows = new List<string>()
             {
                 "8,Joly,Scneider,jscneider7@pagesperso-orange.fr,53 Grim Point,Spokane,WA,99022",
@@ -111,9 +117,9 @@ namespace Assignment.Tests
             IEnumerable<string> expected = new List<string>() { "WA" };
 
             IEnumerable<string> sutData = Sut.GetUniqueSortedListOfStatesGivenCsvRows();
-            Sut.UseDefaultCsvData(); // reset cached SUT, so it doesn't affect future tests
+            Sut.UseDefaultCsvData();
 
-            Assert.IsTrue(Enumerable.SequenceEqual(expected, sutData));
+            Assert.IsTrue(Enumerable.SequenceEqual(expected, sutData), message: "List mismatch.");
         }
 
         [TestMethod]
@@ -137,7 +143,7 @@ namespace Assignment.Tests
         }
 
         [TestMethod]
-        public void PeopleProperty_GivenMalformedData_FiltersOutMismatchedLengthEntries()
+        public void PeopleProperty_GivenMalformedData_FiltersOutMalformedEntries()
         {
             Sut.CsvRows = new List<string>()
             {
@@ -199,18 +205,18 @@ namespace Assignment.Tests
             Sut.UseDefaultCsvData();
 
             // I could have done a manual item-by-item comparison here, but I wanted give reflection a try
-            bool containsMismatch = (
+            IEnumerable<bool> Mismatches =
                 // pair up address properties with raw data using csv enum, then check that they match
                 from property in address.GetType().GetProperties()
                 let value = (string) property.GetValue(address)!
                 let index = (int) Enum.Parse(typeof(SampleData.CsvColumn), property.Name)
                 select value == dataSplit[index]
                 // now find any instances of mismatched data
-                into match where match == false
-                select match
-                ).Any();
+                into match
+                where !match
+                select match;
 
-            Assert.IsFalse(containsMismatch, message: "Address object doesn't match raw data.");
+            Assert.IsFalse(Mismatches.Any(), message: "Address object doesn't match raw data.");
         }
 
         [TestMethod]
@@ -222,7 +228,7 @@ namespace Assignment.Tests
                 .Select(row => row.Split(','))
                 .ToList();
 
-            List<string> dataNames = (
+            IEnumerable<string> dataNames =
                 from row in data
                 orderby
                     row[(int) SampleData.CsvColumn.State],
@@ -230,15 +236,12 @@ namespace Assignment.Tests
                     row[(int) SampleData.CsvColumn.Zip]
                 let first = row[(int) SampleData.CsvColumn.FirstName]
                 let last = row[(int) SampleData.CsvColumn.LastName]
-                select $"{first} {last}"
-                ).ToList();
+                select $"{first} {last}";
 
-            List<string> sutNames = (
-                from person in people
-                select $"{person.FirstName} {person.LastName}"
-                ).ToList();
+            IEnumerable<string> sutNames =
+                people.Select(person => $"{person.FirstName} {person.LastName}");
 
-            Assert.IsTrue(Enumerable.SequenceEqual(dataNames, sutNames), message: "Names do not match.");
+            Assert.IsTrue(Enumerable.SequenceEqual(dataNames, sutNames), message: "Lists of names do not match.");
         }
 
         [TestMethod]
@@ -255,15 +258,31 @@ namespace Assignment.Tests
                 .Where((Address address, int i) => i < addresses.Count - 1)
                 .Select((Address address, int i) => (address, addresses[i + 1]))
                 .Select(((Address First, Address Second) pair) => pair.First.CompareTo(pair.Second) <= 0)
-                .Any(ascending => ascending == false);
+                .Any(ascending => !ascending);
 
             Assert.IsFalse(outOfOrder, message: "Addresses not in ascending State-City-Zip order.");
         }
 
         [TestMethod]
-        public void FilterByEmailAddressTest()
+        public void FilterByEmailAddress_FilterByEmailsContainingNumber_ReturnsExactlyAllNamesMatchingEmailCriteria()
         {
-            Assert.Inconclusive();
+            IEnumerable<ValueTuple<string,string>> expected =
+                from row in Sut.CsvRows
+                select row.Split(',')
+                into row
+                let email = row[(int) SampleData.CsvColumn.EmailAddress]
+                where Regex.IsMatch(email, "\\d+")
+                orderby
+                    row[(int) SampleData.CsvColumn.State],
+                    row[(int) SampleData.CsvColumn.City],
+                    row[(int) SampleData.CsvColumn.Zip]
+                let first = row[(int) SampleData.CsvColumn.FirstName]
+                let last = row[(int) SampleData.CsvColumn.LastName]
+                select (first, last);
+
+            IEnumerable<ValueTuple<string,string>> filtered = Sut.FilterByEmailAddress(email => Regex.IsMatch(email, "\\d+"));
+
+            Assert.IsTrue(Enumerable.SequenceEqual(expected, filtered), message: "Filtered doesn't match expected.");
         }
 
         [TestMethod]
