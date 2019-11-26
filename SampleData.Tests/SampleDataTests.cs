@@ -69,6 +69,13 @@ namespace Assignment.Tests
             }
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void CsvRows_NullFile_ThrowsException()
+        {
+            SampleData sampleData = new SampleData(null!);            
+        }
+
         // -------- 2 : GetUniqueSortedListOfStatesGivenCsvRows TEST --------//
 
         [TestMethod]
