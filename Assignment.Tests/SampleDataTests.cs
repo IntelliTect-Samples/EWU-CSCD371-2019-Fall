@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assignment.Tests
 {
@@ -24,7 +25,8 @@ namespace Assignment.Tests
         {
             SampleData sampleData = new SampleData();
             IEnumerable<string> uniqueList = sampleData.GetUniqueSortedListOfStatesGivenCsvRows();
-            string[] expectedList = {"AL","AZ","CA","CA","CA","CA","CA","DC","DC","DC","FL","FL","GA","GA","GA","IN","KS","LA","LA","MD","MD","MN","MO","MT","NC","NC","NC","NE","NH","NV","NV","NY","NY","OR","PA","PA","SC","TN","TX","TX","TX","TX","TX","UT","VA","VA","WA","WA","WA","WV"};
+            string[] expectedList = {"AL","AZ","CA","DC","FL","GA","IN","KS","LA","MD","MN","MO","MT","NC","NE","NH","NV",
+                "NY","OR","PA","SC","TN","TX","UT","VA","WA","WV" };
 
             int count = 0;
             foreach (string line in uniqueList)
@@ -39,7 +41,7 @@ namespace Assignment.Tests
         {
             SampleData sampleData = new SampleData("../../../../Assignment/TestPeople.csv");
             string aggregateList = sampleData.GetAggregateSortedListOfStatesUsingCsvRows();
-            string expectedList = "WA,WA,WA,WA";
+            string expectedList = "WA";
 
             Assert.AreEqual(expectedList, aggregateList);
         }
@@ -49,7 +51,7 @@ namespace Assignment.Tests
         {
             SampleData sampleData = new SampleData();
             string aggregateList = sampleData.GetAggregateSortedListOfStatesUsingCsvRows();
-            string expectedList = "AL,AZ,CA,CA,CA,CA,CA,DC,DC,DC,FL,FL,GA,GA,GA,IN,KS,LA,LA,MD,MD,MN,MO,MT,NC,NC,NC,NE,NH,NV,NV,NY,NY,OR,PA,PA,SC,TN,TX,TX,TX,TX,TX,UT,VA,VA,WA,WA,WA,WV";
+            string expectedList = "AL,AZ,CA,DC,FL,GA,IN,KS,LA,MD,MN,MO,MT,NC,NE,NH,NV,NY,OR,PA,SC,TN,TX,UT,VA,WA,WV";
 
             Assert.AreEqual(expectedList, aggregateList);
         }
@@ -80,7 +82,10 @@ namespace Assignment.Tests
         public void FilterByEmailAddressGoesWell()
         {
             SampleData sampleData = new SampleData();
-            sampleData.FilterByEmailAddress(null); //Should not work!
+            string testEmail = "atoall@fema.gov";
+            IEnumerable<(string first, string last)> person = sampleData.FilterByEmailAddress(email => email == testEmail); //Should not work!
+
+            Assert.IsTrue(person.Contains(("Amelia", "Toal")));
         }
 
         [TestMethod]
@@ -94,7 +99,11 @@ namespace Assignment.Tests
         [TestMethod]
         public void GetAggregateListOfStatesWithPeopleGiven()
         {
+            SampleData sampleData = new SampleData();
+            string expectedList = sampleData.GetAggregateSortedListOfStatesUsingCsvRows();
+            string aggregateList = sampleData.GetAggregateListOfStatesGivenPeopleCollection(sampleData.People);
 
+            Assert.AreEqual(expectedList, aggregateList);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Assignment
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
         {
             IEnumerable<string> orderedStates = CsvRows.OrderBy(person => person.Split(",")[(int)Column.State]).Distinct();
-            return orderedStates.Select(person => person.Split(",")[(int)Column.State]);
+            return orderedStates.Select(person => person.Split(",")[(int)Column.State]).Distinct();
         }
 
         // 3.
@@ -93,8 +93,8 @@ namespace Assignment
             }
             else
             {
-                IEnumerable<string?> peoples = people.Select(person => person.State);
-                return peoples.Distinct().Aggregate((x, y) => x + "," + y);
+                return people.Select(person => ((Person)person).Address.State)
+                    .Distinct().Aggregate((x, y) => x + "," + y);
             }
            
         }
