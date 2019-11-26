@@ -41,7 +41,7 @@ namespace Assignment.Tests {
             }
 
             //Assert
-            Assert.AreEqual("CA FL GA MT TX ", actualString);
+            Assert.AreEqual("AL AZ CA DC FL GA IN KS LA MD MN MO MT NC NE NH NV NY OR PA SC TN TX UT VA WA WV ", actualString);
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace Assignment.Tests {
             SampleData sampleData = new SampleData();
 
             //Assert
-            Assert.AreEqual("CA,FL,GA,MT,TX", sampleData.GetAggregateSortedListOfStatesUsingCsvRows());
+            Assert.AreEqual("AL,AZ,CA,DC,FL,GA,IN,KS,LA,MD,MN,MO,MT,NC,NE,NH,NV,NY,OR,PA,SC,TN,TX,UT,VA,WA,WV", sampleData.GetAggregateSortedListOfStatesUsingCsvRows());
         }
 
         [TestMethod]
@@ -66,7 +66,7 @@ namespace Assignment.Tests {
             }
 
             //Assert
-            Assert.AreEqual(5, count);
+            Assert.AreEqual(50, count);
         }
 
         [TestMethod]
@@ -109,7 +109,7 @@ namespace Assignment.Tests {
             //Act
 
             //Assert
-            Assert.AreEqual("CA,FL,GA,MT,TX", sampleData.GetAggregateListOfStatesGivenPeopleCollection(people));
+            Assert.AreEqual("AL,AZ,CA,DC,FL,GA,IN,KS,LA,MD,MN,MO,MT,NC,NE,NH,NV,NY,OR,PA,SC,TN,TX,UT,VA,WA,WV", sampleData.GetAggregateListOfStatesGivenPeopleCollection(people));
         }
     }
 }
