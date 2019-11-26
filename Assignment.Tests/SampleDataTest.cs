@@ -91,5 +91,20 @@ namespace Assignment.Tests
             //Assert
             Assert.AreEqual("AL,AZ,CA,DC,FL,GA,IN,KS,LA,MD,MN,MO,MT,NC,NE,NH,NV,NY,OR,PA,SC,TN,TX,UT,VA,WA,WV", list);
         }
+
+        [TestMethod]
+        public void People_ReturnsIEnumerableOfInstantiatedPeople()
+        {
+            //Arrange
+            IEnumerable<IPerson> people;
+            
+            //Act
+            people = sData.People;
+
+            //Assert
+            Assert.IsNotNull(people);
+            Assert.AreEqual(50, people.Count());
+            Assert.IsNotNull(people.First().Address, people.First().EmailAddress, people.First().FirstName, people.First().LastName);
+        }
     }
 }
