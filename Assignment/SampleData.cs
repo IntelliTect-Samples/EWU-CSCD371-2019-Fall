@@ -85,7 +85,28 @@ namespace Assignment
         }
 
         // 6.
+        // "Use the people parameter from ISampleData.GetUniqueListOfStates for your data source."
+        // I assume this is what the above assignment requirement is asking for? best sense I can make of it
+        public static IEnumerable<string> GetUniqueListOfStates(IEnumerable<IPerson> people)
+        {
+            List<string> states =
+                people
+                .Select(person => person.Address.State)
+                .Distinct()
+                .OrderBy((string state) => state)
+                .ToList();
+
+            return states;
+        }
+
         public string GetAggregateListOfStatesGivenPeopleCollection(
-            IEnumerable<IPerson> people) => throw new NotImplementedException();
+            IEnumerable<IPerson> people)
+        {
+            IEnumerable<string> states = GetUniqueListOfStates(people);
+            string result =
+                states.Aggregate((aggregate, state) => string.Concat(aggregate,",",state));
+
+            return result;
+        }
     }
 }

@@ -288,7 +288,11 @@ namespace Assignment.Tests
         [TestMethod]
         public void GetAggregateListOfStatesGivenPeopleCollectionTest()
         {
-            Assert.Inconclusive();
+            string expected = Sut.GetAggregateSortedListOfStatesUsingCsvRows();
+
+            var states = Sut.GetAggregateListOfStatesGivenPeopleCollection(Sut.People);
+
+            Assert.AreEqual<string>(expected, states, message: "Does not match expected.");
         }
     }
 }
