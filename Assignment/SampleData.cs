@@ -1,58 +1,54 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace Assignment
 {
     public class SampleData : ISampleData
     {
-        internal enum columns
+        private enum Columns
         {
             Id, FirstName, LastName, Email, StreetAddress, City, State, Zip
         }
 
-        // 1.
         public IEnumerable<string> CsvRows =>
             File.ReadAllLines("People.csv").Skip(1);
 
-        // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() =>
-            CsvRows.Select(line => line.Split(',')[6])
+            CsvRows.Select(line => line.Split(',')[(int)Columns.State])
                    .Distinct()
                    .OrderBy(state => state);
 
-        // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows() =>
             string.Join(',', GetUniqueSortedListOfStatesGivenCsvRows());
 
-        // 4.
         public IEnumerable<IPerson> People =>
             CsvRows.Select(line => line.Split(','))
                    .Select(fields => new Person(
-                                fields[(int)columns.FirstName],
-                                fields[(int)columns.LastName],
-                                fields[(int)columns.Email],
+                                fields[(int)Columns.FirstName],
+                                fields[(int)Columns.LastName],
+                                fields[(int)Columns.Email],
                                 new Address(
-                                    fields[(int)columns.StreetAddress],
-                                    fields[(int)columns.City],
-                                    fields[(int)columns.State],
-                                    fields[(int)columns.Zip]
+                                    fields[(int)Columns.StreetAddress],
+                                    fields[(int)Columns.City],
+                                    fields[(int)Columns.State],
+                                    fields[(int)Columns.Zip]
                                 )
-                            )
-                           );
+                            ));
 
-        // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
             Predicate<string> filter
         ) =>
             People.Where(person => filter(person.EmailAddress))
                   .Select(person => (person.FirstName, person.LastName));
 
-        // 6.
         public string GetAggregateListOfStatesGivenPeopleCollection(
             IEnumerable<IPerson> people
         ) =>
-            throw new NotImplementedException();
+            people?.Select(p => p.Address.State)
+                  .Distinct()
+                  .Aggregate((list, state) => $"{list}, {state}")
+            ?? throw new ArgumentNullException(nameof(people));
     }
 }
