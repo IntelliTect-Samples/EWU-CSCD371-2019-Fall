@@ -26,7 +26,7 @@ namespace Assignment.Tests
             Assert.AreEqual(person.FirstName, first);
             Assert.AreEqual(person.LastName, last);
             Assert.AreEqual(person.Address, address);
-            Assert.AreEqual(person.Email, email);
+            Assert.AreEqual(person.EmailAddress, email);
         }
 
         [TestMethod]

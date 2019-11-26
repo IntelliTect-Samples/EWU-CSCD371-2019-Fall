@@ -103,7 +103,7 @@ namespace Assignment
 
 
             return from person in People
-                   where filter(person.Email)
+                   where filter(person.EmailAddress)
                    select (person.FirstName, person.LastName);
         }
 

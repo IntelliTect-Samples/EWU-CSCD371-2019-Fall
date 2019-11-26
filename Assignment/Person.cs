@@ -7,7 +7,7 @@ namespace Assignment
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public IAddress Address { get; set; }
-        public string Email { get; set; }
+        public string EmailAddress { get; set; }
 
         public Person(string firstName, string lastName, IAddress address, string email)
         {
@@ -19,7 +19,7 @@ namespace Assignment
             FirstName = firstName;
             LastName = lastName;
             Address = address;
-            Email = email;
+            EmailAddress = email;
         }
     }
 }

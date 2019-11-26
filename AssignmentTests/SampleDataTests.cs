@@ -116,7 +116,7 @@ namespace Assignment.Tests
                 Assert.IsNotNull(person.Address.City);
                 Assert.IsNotNull(person.Address.State);
                 Assert.IsNotNull(person.Address.StreetAddress);
-                Assert.IsNotNull(person.Email);
+                Assert.IsNotNull(person.EmailAddress);
                 Assert.IsNotNull(person.FirstName);
                 Assert.IsNotNull(person.LastName);
             }
