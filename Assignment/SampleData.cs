@@ -24,15 +24,13 @@ namespace Assignment
                     yield return ara;
                 }
             }
-            
-
         }
 
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
             => CsvRows.Select(myList =>
                 myList.Split(",")[6]
-            ).Distinct().OrderBy(myList=>myList);
+            ).Distinct().OrderBy(myState=>myState);
 
 
         // 3.
