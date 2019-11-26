@@ -26,11 +26,14 @@ namespace Assignment
                 && ((Address) Address).Equals((Address) other.Address);
         }
 
-        public static bool operator ==(Person leftSide, Person rightSide) 
-            => leftSide?.Equals(rightSide) ?? false;
+        public static bool operator ==(Person leftSide, Person rightSide)
+            => leftSide?.Equals(rightSide)
+                ?? leftSide is null && rightSide is null
+                    ? true
+                    : false;
 
         public static bool operator !=(Person leftSide, Person rightSide)
-            => !(leftSide?.Equals(rightSide) ?? false);
+            => !(leftSide == rightSide);
         #endregion
     }
 }

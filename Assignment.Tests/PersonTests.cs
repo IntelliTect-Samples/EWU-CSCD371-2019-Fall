@@ -56,126 +56,53 @@ namespace Assignment.Tests
             Address = FakeDifferentAddress
         };
 
-        // will refactor to data driven testing later
-
-        [TestMethod]
-        public void ObjectEquals_NullData_ReturnsFalse()
+        private static IEnumerable<object[]> GetObjectEqualsData()
         {
-            bool areEqual = FakePerson.Equals((object) null!);
-
-            Assert.IsFalse(areEqual);
+            yield return new object[] { new ValueTuple<Person, object, bool>(FakePerson, null!, false) };
+            yield return new object[] { new ValueTuple<Person, object, bool>(FakePerson, FakePerson, true) };
+            yield return new object[] { new ValueTuple<Person, object, bool>(FakePerson, FakeSamePerson, true) };
+            yield return new object[] { new ValueTuple<Person, object, bool>(FakePerson, FakeDifferentPerson, false) };
+            yield return new object[] { new ValueTuple<Person, object, bool>(FakePerson, FakeSamePersonDifferentAddress, false) };
         }
 
-        [TestMethod]
-        public void ObjectEquals_SameData_ReturnsTrue()
-        {
-            bool areEqual = FakePerson.Equals((object) FakeSamePerson);
+        [DataTestMethod]
+        [DynamicData(nameof(GetObjectEqualsData), DynamicDataSourceType.Method)]
+        public void ObjectEquals_GivenTestCase_MatchesExpected((Person Left, object Right, bool Expected) testData)
+            => Assert.AreEqual<bool>(testData.Expected, testData.Left.Equals(testData.Right));
 
-            Assert.IsTrue(areEqual);
+        private static IEnumerable<object[]> GetPersonEqualsData()
+        {
+            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, null!, false) };
+            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakePerson, true) };
+            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakeSamePerson, true) };
+            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakeDifferentPerson, false) };
+            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakeSamePersonDifferentAddress, false) };
         }
 
-        [TestMethod]
-        public void ObjectEquals_DifferentData_ReturnsFalse()
-        {
-            bool areEqual = FakePerson.Equals((object) FakeDifferentPerson);
+        [DataTestMethod]
+        [DynamicData(nameof(GetPersonEqualsData), DynamicDataSourceType.Method)]
+        public void PersonEquals_GivenTestCase_MatchesExpected((Person Left, Person Right, bool Expected) testData)
+            => Assert.AreEqual<bool>(testData.Expected, testData.Left.Equals(testData.Right));
 
-            Assert.IsFalse(areEqual);
+        private static IEnumerable<object[]> GetOperatorEqualsData()
+        {
+            yield return new object[] { new ValueTuple<Person, Person, bool>(null!, null!, true) };
+            yield return new object[] { new ValueTuple<Person, Person, bool>(null!, FakePerson, false) };
+            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, null!, false) };
+            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakePerson, true) };
+            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakeSamePerson, true) };
+            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakeDifferentPerson, false) };
+            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakeSamePersonDifferentAddress, false) };
         }
 
-        [TestMethod]
-        public void ObjectEquals_SamePersonDifferentAddress_ReturnsFalse()
-        {
-            bool areEqual = FakePerson.Equals((object) FakeSamePersonDifferentAddress);
+        [DataTestMethod]
+        [DynamicData(nameof(GetOperatorEqualsData), DynamicDataSourceType.Method)]
+        public void OperatorEquals_GivenTestCase_MatchesExpected((Person Left, Person Right, bool Expected) testData)
+            => Assert.AreEqual<bool>(testData.Expected, testData.Left == testData.Right);
 
-            Assert.IsFalse(areEqual);
-        }
-
-        [TestMethod]
-        public void PersonEquals_NullData_ReturnsFalse()
-        {
-            bool areEqual = FakePerson.Equals((Person) null!);
-
-            Assert.IsFalse(areEqual);
-        }
-
-        [TestMethod]
-        public void PersonEquals_SameData_ReturnsTrue()
-        {
-            bool areEqual = FakePerson.Equals(FakeSamePerson);
-
-            Assert.IsTrue(areEqual);
-        }
-
-        [TestMethod]
-        public void PersonEquals_DifferentData_ReturnsFalse()
-        {
-            bool areEqual = FakePerson.Equals(FakeDifferentPerson);
-
-            Assert.IsFalse(areEqual);
-        }
-
-        [TestMethod]
-        public void PersonEquals_SamePersonDifferentAddress_ReturnsFalse()
-        {
-            bool areEqual = FakePerson.Equals(FakeSamePersonDifferentAddress);
-
-            Assert.IsFalse(areEqual);
-        }
-
-        [TestMethod]
-        public void OperatorEquals_RightNullData_ReturnsFalse()
-        {
-            bool areEqual = FakePerson == null!;
-
-            Assert.IsFalse(areEqual);
-        }
-
-        [TestMethod]
-        public void OperatorEquals_LeftNullData_ReturnsFalse()
-        {
-            bool areEqual = null! == FakePerson;
-
-            Assert.IsFalse(areEqual);
-        }
-
-        [TestMethod]
-        public void OperatorEquals_SameData_ReturnsTrue()
-        {
-            bool areEqual = FakePerson == FakeSamePerson;
-
-            Assert.IsTrue(areEqual);
-        }
-
-        [TestMethod]
-        public void OperatorEquals_SamePersonDifferentAddress_ReturnsFalse()
-        {
-            bool areEqual = FakePerson == FakeSamePersonDifferentAddress;
-
-            Assert.IsFalse(areEqual);
-        }
-
-        [TestMethod]
-        public void OperatorNotEquals_RightNullData_ReturnsTrue()
-        {
-            bool areNotEqual = FakePerson != null!;
-
-            Assert.IsTrue(areNotEqual);
-        }
-
-        [TestMethod]
-        public void OperatorNotEquals_LeftNullData_ReturnsTrue()
-        {
-            bool areNotEqual = null! != FakePerson;
-
-            Assert.IsTrue(areNotEqual);
-        }
-
-        [TestMethod]
-        public void OperatorNotEquals_SameData_ReturnsFalse()
-        {
-            bool areNotEqual = FakePerson != FakeSamePerson;
-
-            Assert.IsFalse(areNotEqual);
-        }
+        [DataTestMethod]
+        [DynamicData(nameof(GetOperatorEqualsData), DynamicDataSourceType.Method)]
+        public void OperatorNotEquals_GivenEqualsTestCase_MatchesOppositeOfExpected((Person Left, Person Right, bool Expected) testData)
+            => Assert.AreEqual<bool>(!testData.Expected, testData.Left != testData.Right);
     }
 }

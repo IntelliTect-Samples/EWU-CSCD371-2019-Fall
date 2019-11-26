@@ -25,10 +25,13 @@ namespace Assignment
         }
 
         public static bool operator ==(Address leftSide, Address rightSide)
-            => leftSide?.Equals(rightSide) ?? false;
+            => leftSide?.Equals(rightSide) 
+                ?? leftSide is null && rightSide is null
+                    ? true
+                    : false;
 
         public static bool operator !=(Address leftSide, Address rightSide)
-            => !(leftSide?.Equals(rightSide) ?? false);
+            => !(leftSide == rightSide);
         #endregion
 
         #region IComparable methods

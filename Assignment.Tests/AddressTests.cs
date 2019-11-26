@@ -31,87 +31,70 @@ namespace Assignment.Tests
             Zip = "differentzip"
         };
 
-        // will refactor to data driven testing later
-
-        [TestMethod]
-        public void ObjectEquals_SameData_ReturnsTrue()
+        private static IEnumerable<object[]> GetObjectEqualsData()
         {
-            bool areEqual = FakeAddress.Equals((object) FakeSameAddress);
-
-            Assert.IsTrue(areEqual);
+            yield return new object[] { new ValueTuple<Address, object, bool>(FakeAddress, null!, false) };
+            yield return new object[] { new ValueTuple<Address, object, bool>(FakeAddress, FakeAddress, true) };
+            yield return new object[] { new ValueTuple<Address, object, bool>(FakeAddress, FakeSameAddress, true) };
+            yield return new object[] { new ValueTuple<Address, object, bool>(FakeAddress, FakeDifferentAddress, false) };
+            yield return new object[] { new ValueTuple<Address, object, bool>(FakeDifferentAddress, FakeAddress, false) };
         }
 
-        [TestMethod]
-        public void ObjectEquals_DifferentData_ReturnsFalse()
-        {
-            bool areEqual = FakeAddress.Equals((object) FakeDifferentAddress);
+        [DataTestMethod]
+        [DynamicData(nameof(GetObjectEqualsData), DynamicDataSourceType.Method)]
+        public void ObjectEquals_GivenTestCase_MatchesExpected((Address Left, object Right, bool Expected) testData)
+            => Assert.AreEqual<bool>(testData.Expected, testData.Left.Equals(testData.Right));
 
-            Assert.IsFalse(areEqual);
+        private static IEnumerable<object[]> GetAddressEqualsData()
+        {
+            yield return new object[] { new ValueTuple<Address, Address, bool>(FakeAddress, null!, false) };
+            yield return new object[] { new ValueTuple<Address, Address, bool>(FakeAddress, FakeAddress, true) };
+            yield return new object[] { new ValueTuple<Address, Address, bool>(FakeAddress, FakeSameAddress, true) };
+            yield return new object[] { new ValueTuple<Address, Address, bool>(FakeAddress, FakeDifferentAddress, false) };
+            yield return new object[] { new ValueTuple<Address, Address, bool>(FakeDifferentAddress, FakeAddress, false) };
         }
 
-        [TestMethod]
-        public void AddressEquals_SameData_ReturnsTrue()
-        {
-            bool areEqual = FakeAddress.Equals(FakeSameAddress);
+        [DataTestMethod]
+        [DynamicData(nameof(GetAddressEqualsData), DynamicDataSourceType.Method)]
+        public void AddressEquals_GivenTestCase_MatchesExpected((Address Left, Address Right, bool Expected) testData)
+            => Assert.AreEqual<bool>(testData.Expected, testData.Left.Equals(testData.Right));
 
-            Assert.IsTrue(areEqual);
+        private static IEnumerable<object[]> GetOperatorEqualsData()
+        {
+            yield return new object[] { new ValueTuple<Address, Address, bool>(null!, null!, true) };
+            yield return new object[] { new ValueTuple<Address, Address, bool>(null!, FakeAddress, false) };
+            yield return new object[] { new ValueTuple<Address, Address, bool>(FakeAddress, null!, false) };
+            yield return new object[] { new ValueTuple<Address, Address, bool>(FakeAddress, FakeAddress, true) };
+            yield return new object[] { new ValueTuple<Address, Address, bool>(FakeAddress, FakeSameAddress, true) };
+            yield return new object[] { new ValueTuple<Address, Address, bool>(FakeAddress, FakeDifferentAddress, false) };
+            yield return new object[] { new ValueTuple<Address, Address, bool>(FakeDifferentAddress, FakeAddress, false) };
         }
 
-        [TestMethod]
-        public void AddressEquals_DifferentData_ReturnsFalse()
-        {
-            bool areEqual = FakeAddress.Equals(FakeDifferentAddress);
+        [DataTestMethod]
+        [DynamicData(nameof(GetOperatorEqualsData), DynamicDataSourceType.Method)]
+        public void OperatorEquals_GivenTestCase_MatchesExpected((Address Left, Address Right, bool Expected) testData)
+            => Assert.AreEqual<bool>(testData.Expected, testData.Left == testData.Right);
 
-            Assert.IsFalse(areEqual);
+        [DataTestMethod]
+        [DynamicData(nameof(GetOperatorEqualsData), DynamicDataSourceType.Method)]
+        public void OperatorNotEquals_GivenEqualsTestCase_MatchesOppositeOfExpected((Address Left, Address Right, bool Expected) testData)
+            => Assert.AreEqual<bool>(!testData.Expected, testData.Left != testData.Right);
+
+        private static IEnumerable<object[]> GetCompareToData()
+        {
+            yield return new object[] { new ValueTuple<Address, Address, int>(FakeAddress, null!, 1) };
+            yield return new object[] { new ValueTuple<Address, Address, int>(FakeAddress, FakeAddress, 0) };
+            yield return new object[] { new ValueTuple<Address, Address, int>(FakeAddress, FakeSameAddress, 0) };
+            yield return new object[] { new ValueTuple<Address, Address, int>(FakeAddress, FakeDifferentAddress, 1) }; // diff is smaller
+            yield return new object[] { new ValueTuple<Address, Address, int>(FakeDifferentAddress, FakeAddress, -1) };
         }
 
-        // dont need to test negation, it's passing through to address equals
-        [TestMethod]
-        public void OperatorEquals_SameData_ReturnsTrue()
-        {
-            bool areEqual = FakeAddress == FakeSameAddress;
+        [DataTestMethod]
+        [DynamicData(nameof(GetCompareToData), DynamicDataSourceType.Method)]
+        public void CompareTo_GivenTestCase_MatchesExpected((Address Left, Address Right, int Expected) testData)
+            => Assert.AreEqual<int>(testData.Expected, testData.Left.CompareTo(testData.Right));
 
-            Assert.IsTrue(areEqual);
-        }
-
-        // dont need to test negation, it's passing through to address equals
-        [TestMethod]
-        public void OperatorNotEquals_SameData_ReturnsTrue()
-        {
-            bool areNotEqual = FakeAddress != FakeSameAddress;
-
-            Assert.IsFalse(areNotEqual);
-        }
-
-        [TestMethod]
-        public void CompareTo_NullData_ReturnsGreaterThanZero()
-        {
-            int expected = 1;
-            int comparison = FakeAddress.CompareTo(null!);
-
-            Assert.AreEqual<int>(expected, comparison);
-        }
-
-        [TestMethod]
-        public void CompareTo_SameData_ReturnsZero()
-        {
-            int expected = 0;
-            int comparison = FakeAddress.CompareTo(FakeSameAddress);
-
-            Assert.AreEqual<int>(expected, comparison);
-        }
-
-        [TestMethod]
-        public void CompareTo_DifferentData_ReturnsGreaterThanZero()
-        {
-            // fakediff state starts with d, fake starts with s, so fakediff is smaller
-            int expected = 1;
-            int comparison = FakeAddress.CompareTo(FakeDifferentAddress);
-
-            Assert.AreEqual<int>(expected, comparison);
-        }
-
-        public static IEnumerable<object[]> GetGreaterEqualData()
+        private static IEnumerable<object[]> GetGreaterEqualData()
         {
             // have to use a tuple because differing param types, but still have to wrap in array to satisfy dynamicdata method requirements
             yield return new object[] { new ValueTuple<Address, Address, bool>(null!, null!, true) };
@@ -128,7 +111,7 @@ namespace Assignment.Tests
         public void OperaterGreaterEqual_GivenTestCase_MatchesExpected((Address Left, Address Right, bool Expected) testData)
             => Assert.AreEqual<bool>(testData.Expected, testData.Left >= testData.Right);
 
-        public static IEnumerable<object[]> GetLessEqualData()
+        private static IEnumerable<object[]> GetLessEqualData()
         {
             yield return new object[] { new ValueTuple<Address, Address, bool>(null!, null!, true) };
             yield return new object[] { new ValueTuple<Address, Address, bool>(FakeAddress, null!, false) };
@@ -144,7 +127,7 @@ namespace Assignment.Tests
         public void OperaterLessEqual_GivenTestCase_MatchesExpected((Address Left, Address Right, bool Expected) testData)
             => Assert.AreEqual<bool>(testData.Expected, testData.Left <= testData.Right);
 
-        public static IEnumerable<object[]> GetGreaterData()
+        private static IEnumerable<object[]> GetGreaterData()
         {
             // why do I have to wrap the return in an array?  won't run if I only return the tuple
             yield return new object[] { new ValueTuple<Address, Address, bool>(null!, null!, false) };
@@ -161,7 +144,7 @@ namespace Assignment.Tests
         public void OperaterGreater_GivenTestCase_MatchesExpected((Address Left, Address Right, bool Expected) testData)
             => Assert.AreEqual<bool>(testData.Expected, testData.Left > testData.Right);
 
-        public static IEnumerable<object[]> GetLesserData()
+        private static IEnumerable<object[]> GetLesserData()
         {
             yield return new object[] { new ValueTuple<Address, Address, bool>(null!, null!, false) };
             yield return new object[] { new ValueTuple<Address, Address, bool>(FakeAddress, null!, false) };
