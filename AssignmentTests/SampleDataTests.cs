@@ -1,5 +1,6 @@
 using Assignment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -66,6 +67,49 @@ namespace Assignment.Tests {
 
             //Assert
             Assert.AreEqual(5, count);
+        }
+
+        [TestMethod]
+        public void FilterByEmailAddress_IsCorrect() {
+            //Arrange
+            SampleData sampleData = new SampleData();
+            (string, string) expectedPriscilla = ("Priscilla", "Jenyns");
+            (string, string) expectedFremont = ("Fremont", "Pallaske");
+            (string, string) expectedMelisa = ("Melisa", "Kerslake");
+            (string, string) actualPriscillaString = ("", "");
+            (string, string) actualFremontString = ("", "");
+            (string, string) actualMelisaString = ("", "");
+
+            //Act
+            IEnumerable<(string, string)> actualPriscilla = sampleData.FilterByEmailAddress("pjenyns0@state.gov");
+            IEnumerable<(string, string)> actualFremont = sampleData.FilterByEmailAddress("fpallaske3@umich.edu");
+            IEnumerable<(string, string)> actualMelisa = sampleData.FilterByEmailAddress("mkerslake4@dion.ne.jp");
+            foreach ((string, string) name in actualPriscilla) {
+                actualPriscillaString = name;
+            }
+            foreach ((string, string) name in actualFremont) {
+                actualFremontString = name;
+            }
+            foreach ((string, string) name in actualMelisa) {
+                actualMelisaString = name;
+            }
+
+            //Assert
+            Assert.AreEqual(expectedPriscilla, actualPriscillaString);
+            Assert.AreEqual(expectedFremont, actualFremontString);
+            Assert.AreEqual(expectedMelisa, actualMelisaString);
+        }
+
+        [TestMethod]
+        public void GetAggregateListOfStatesGivenPeopleCollection_IsCorrect() {
+            //Arrange
+            SampleData sampleData = new SampleData();
+            IEnumerable<IPerson> people = sampleData.People;
+
+            //Act
+
+            //Assert
+            Assert.AreEqual("CA,FL,GA,MT,TX", sampleData.GetAggregateListOfStatesGivenPeopleCollection(people));
         }
     }
 }

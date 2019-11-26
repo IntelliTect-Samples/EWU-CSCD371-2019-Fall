@@ -16,7 +16,7 @@ namespace Assignment {
         IEnumerable<IPerson> People { get; }
 
         // 5.
-        IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(Predicate<string> filter);
+        IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(string filter);
 
         // 6.
         string GetAggregateListOfStatesGivenPeopleCollection(IEnumerable<IPerson> people);
