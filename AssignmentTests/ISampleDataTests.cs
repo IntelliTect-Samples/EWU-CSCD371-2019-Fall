@@ -24,7 +24,27 @@ namespace AssignmentTests
         }
 
         [TestMethod]
-        public void GetUniqueSortedListOfStates()
+        public void GetUniqueSortedListOfStates_UsingSpokaneHardCoded()
+        {
+            SampleData sd = new SampleData();
+            sd.FileName = @"SpokaneHardCoded.csv";
+            IEnumerable<string> rows = sd.CsvRows;
+            IEnumerable<string> states = sd.GetUniqueSortedListOfStatesGivenCsvRows();
+
+
+            IEnumerable<string> expectedRows = from s in rows
+                                               let line = s.Split(',')
+                                               let state = line[6]
+                                               orderby state
+                                               select state;
+            expectedRows = expectedRows.Select(x => x).Distinct();
+
+            CollectionAssert.AreEqual(expectedRows.ToList(), states.ToList());
+
+        }
+
+        [TestMethod]
+        public void GetUniqueSortedListOfStates_UsingLinq()
         {
             SampleData sd = new SampleData();
             IEnumerable<string> rows = sd.CsvRows;
@@ -51,5 +71,70 @@ namespace AssignmentTests
 
             Assert.AreEqual(expectedList, list);
         }
+
+        [TestMethod]
+        public void GetPeopleListSortedByStateCityZip()
+        {
+            SampleData sd = new SampleData();
+            IEnumerable<IPerson> people = sd.People;
+            IEnumerable<string> rows = sd.CsvRows;
+
+            int expectedCount = rows.Count();
+
+            Assert.AreEqual(expectedCount, people.Count());
+
+            rows = from line in rows
+                   let s = line.Split(',')
+                   orderby s[6], s[5], s[7]
+                   select line;
+
+            int index = 0;
+            foreach(string line in rows)
+            {
+                IPerson pElement = people.ElementAt(index);
+                string[] s = line.Split(',');
+                Assert.AreEqual(pElement.FirstName, s[1]);
+                Assert.AreEqual(pElement.LastName, s[2]);
+                Assert.AreEqual(pElement.EmailAddress, s[3]);
+                Assert.AreEqual(pElement.Address.StreetAddress, s[4]);
+                Assert.AreEqual(pElement.Address.City, s[5]);
+                Assert.AreEqual(pElement.Address.State, s[6]);
+                Assert.AreEqual(pElement.Address.Zip, s[7]);
+                index++;
+            }
+
+
+
+        }
+
+        [TestMethod]
+        public void GetFilteredEmailNames_ValidEmailEntered()
+        {
+            SampleData sd = new SampleData();
+            string validEmail = "eloseked@posterous.com";
+            Predicate<string> pred = delegate (string s) { return s.Equals(validEmail); };
+            IEnumerable <(string FirstName, string LastName)> names = sd.FilterByEmailAddress(pred);
+
+            int expectedCount = 1;
+            int count = names.Count();
+
+            (string FirstName, string LastName) expectedName = ("Editha", "Loseke");
+
+            Assert.AreEqual(expectedCount, count);
+            Assert.AreEqual(expectedName, names.First());
+        }
+
+        [TestMethod]
+        public void GetAggregateSortedListFromPeople()
+        {
+            SampleData sd = new SampleData();
+            string list = sd.GetAggregateListOfStatesGivenPeopleCollection(sd.People);
+            IEnumerable<string> expectedList = sd.GetUniqueSortedListOfStatesGivenCsvRows();
+            IEnumerable<string> splitList = list.Split(',');
+
+            Assert.AreEqual(expectedList.Count(), splitList.Count());
+            CollectionAssert.AreEqual(expectedList.ToList(), splitList.ToList());
+        }
+
     }
 }
