@@ -4,6 +4,8 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <NoWarn>CA1065</NoWarn>
   </PropertyGroup>
+  
+  
 
   <ItemGroup>
     <ProjectReference Include="..\Assignment.Interfaces\Assignment.Interfaces.csproj" />

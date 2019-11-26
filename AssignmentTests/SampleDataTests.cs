@@ -11,21 +11,21 @@ namespace AssignmentTests
     public class SampleDataTests
     {
         [TestMethod]
-        public void SampleData_CsvRows_ReturnsListFirstLineSkipped()
+        public void CsvRows_UsingValidFile_ReturnsListFirstLineSkipped()
         {
             // Arrange
             SampleData data = new SampleData();
-            int lineCount = File.ReadAllLines("People.csv").Count();
+            int lineCount = File.ReadAllLines("People.csv").Skip(1).Count();
 
             // Act
 
 
             // Assert
-            Assert.AreEqual(data.CsvRows.Count(), lineCount - 1);
+            Assert.AreEqual(data.CsvRows.Count(), lineCount);
         }
 
         [TestMethod]
-        public void SampleData_GetUniqueSortedListOfStatesGivenCsvRows_ReturnsSortedUniqueStates()
+        public void GetUniqueSortedListOfStatesGivenCsvRows_GivenValidCsvRows_ReturnsSortedUniqueStates()
         {
             // Arrange
             SampleData data = new SampleData();
@@ -51,10 +51,10 @@ namespace AssignmentTests
         }
 
         [TestMethod]
-        public void SampleData_GetUniqueSortedListOfStatesGivenCsvRows_ReturnsSortedUniqueStatesOfSpokaneAddresses()
+        public void GetUniqueSortedListOfStatesGivenCsvRows_GivenValidListOfStates_ReturnsSortedUniqueStatesOfSpokaneAddresses()
         {
             // Arrange
-            string path = Path.GetFullPath("TestPeople.csv");
+            string path = Path.GetFullPath("TestPeopleSpokane.csv");
             SampleData data = new SampleData(path);
             IEnumerable<string> actualStates = data.GetUniqueSortedListOfStatesGivenCsvRows();
             List<string> lines = data.CsvRows.ToList();
@@ -75,7 +75,7 @@ namespace AssignmentTests
         }
 
         [TestMethod]
-        public void SampleData_GetAggregateSortedListOfStatesUsingCsvRows_ReturnsSortedStringOfStates()
+        public void GetAggregateSortedListOfStatesUsingCsvRows_GivenValidListOfOrderedStates_ReturnsSortedStringOfStates()
         {
             // Arrange
             SampleData data = new SampleData();
@@ -87,6 +87,68 @@ namespace AssignmentTests
 
             // Assert
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void People_GivenValidCsvRows_ReturnsCorrectlySortedListOfPeople()
+        {
+            // Arrange
+            string path = Path.GetFullPath("TestPeople.csv");
+            SampleData data = new SampleData(path);
+            IEnumerable<IPerson> sut = data.People;
+            string[] expectedFirstNames = { "Luke", "John", "Ben", "Jackie", "John", "Jerett" };
+            List<string> sutFirstNames = new List<string>();
+
+            // Act
+            foreach(IPerson p in sut)
+            {
+                sutFirstNames.Add(p.FirstName);
+            }
+
+
+            // Assert
+            Assert.IsTrue(expectedFirstNames.SequenceEqual(sutFirstNames.ToArray()));
+        }
+
+        [TestMethod]
+        public void FilterByEmailAddress_UsingTestPeople_ReturnsCorrectNames()
+        {
+            // Arrange
+            string path = Path.GetFullPath("TestPeople.csv");
+            SampleData data = new SampleData(path);
+            IEnumerable<(string FirstName, string LastName)> sutNames = data.FilterByEmailAddress(email => email.Contains("gmail.com"));
+            List <(string, string)> expectedNames = new List<(string, string)>();
+
+            // Act
+            expectedNames.Add(("John", "Ryan"));
+            expectedNames.Add(("John", "Link"));
+            expectedNames.Add(("Ben", "Smith"));
+            expectedNames.Add(("Jerett", "Latimer"));
+            expectedNames.Add(("Luke", "Mason"));
+
+            // Assert
+            CollectionAssert.Contains(sutNames.ToList(), expectedNames[0]);
+            CollectionAssert.Contains(sutNames.ToList(), expectedNames[1]);
+            CollectionAssert.Contains(sutNames.ToList(), expectedNames[2]);
+
+        }
+
+        [TestMethod]
+        public void GetAggregateListOfStatesGivenPeopleCollection_UsingTestPeople_ReturnsCorrectListOfStates()
+        {
+            // Arrange
+            string path = Path.GetFullPath("TestPeople.csv");
+            SampleData data = new SampleData(path);
+            string states = data.GetAggregateListOfStatesGivenPeopleCollection(data.People);
+            string expected = data.GetAggregateSortedListOfStatesUsingCsvRows();
+
+            // Act
+
+
+            // Assert
+            Assert.AreEqual(states, expected);
+            
+
         }
     }
 }
