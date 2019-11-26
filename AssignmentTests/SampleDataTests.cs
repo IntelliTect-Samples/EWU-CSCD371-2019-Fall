@@ -44,7 +44,7 @@ namespace AssignmentTests
             }
 
             // Assert
-            Assert.AreEqual(actualStates.Count(), distinctStates.Count());
+            Assert.AreEqual(actualStates.Count(), distinctStates.Count);
             // Checks if sorted using Linq
             Assert.IsTrue(actualStates.SequenceEqual(actualStates.OrderBy(x => x)));
 
@@ -71,7 +71,7 @@ namespace AssignmentTests
             }
 
             // Assert
-            Assert.AreEqual(actualStates.Count(), spokaneAddresses.Count());
+            Assert.AreEqual(actualStates.Count(), spokaneAddresses.Count);
         }
 
         [TestMethod]

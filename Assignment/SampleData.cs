@@ -11,20 +11,20 @@ namespace Assignment
     }
     public class SampleData : ISampleData
     {
-        private string _fileName;
+        private string _FileName;
 
         public SampleData(string fileName)
         {
-            _fileName = fileName;
+            _FileName = fileName;
         }
 
         public SampleData()
         {
-            _fileName = "People.csv";
+            _FileName = "People.csv";
         }
 
         // 1.
-        public IEnumerable<string> CsvRows => File.ReadAllLines(_fileName)
+        public IEnumerable<string> CsvRows => File.ReadAllLines(_FileName)
             .Skip(1);
 
         // 2.
@@ -60,25 +60,18 @@ namespace Assignment
         private IPerson CreatePerson(string x)
         {
             string[] line = x.Split(",");
-            return new Person()
-            {
-                FirstName = line[(int)PersonInfo.FirstName],
-                LastName = line[(int)PersonInfo.LastName],
-                EmailAddress = line[(int)PersonInfo.Email],
-                Address = CreateAddress(line)
-
-            };
+            return new Person(line[(int)PersonInfo.FirstName],
+                line[(int)PersonInfo.LastName],
+                CreateAddress(line),
+                line[(int)PersonInfo.Email]);
         }
 
         private IAddress CreateAddress(string[] line)
         {
-            return new Address
-            {
-                StreetAddress = line[(int)PersonInfo.StreetAddress],
-                City = line[(int)PersonInfo.City],
-                State = line[(int)PersonInfo.State],
-                Zip = line[(int)PersonInfo.Zip]
-            };
+            return new Address(line[(int)PersonInfo.StreetAddress], 
+                line[(int)PersonInfo.City],
+                line[(int)PersonInfo.State],
+                line[(int)PersonInfo.Zip]);
         }
 
         // 5.
