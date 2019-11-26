@@ -122,7 +122,8 @@ namespace Assignment.Tests
             SampleData sampleData = new SampleData(Environment.CurrentDirectory + "//MockPeople.csv");
             string expectedNames = "Chadd,Joe,Henri,Karin,Priscilla";
             IPerson[] people = sampleData.People.ToArray();
-            string actualNames = people.Select(person => person.FirstName).Aggregate((personOne, personTwo) => personOne + "," + personTwo);
+            string actualNames = people.Select(person => person.FirstName)
+                .Aggregate((personOne, personTwo) => personOne + "," + personTwo);
             //Act
             bool isOrdered = expectedNames.Equals(actualNames);
             //Assert
@@ -153,6 +154,19 @@ namespace Assignment.Tests
             bool namesIsCorrect = Enumerable.SequenceEqual(expectedName, actualName);
             //Assert
             Assert.IsTrue(namesIsCorrect);
+        }
+
+        [TestMethod]
+        public void GetAggregateListOfStatesGivenPeopleCollection_MockCsv_ReturnsCorrectStates()
+        {
+            //Arrange
+            SampleData sampleData = new SampleData(Environment.CurrentDirectory + "//MockPeople.csv");
+            string expectedStates = sampleData.GetUniqueSortedListOfStatesGivenCsvRows().Aggregate((stateOne, stateTwo) => stateOne + "," + stateTwo);
+            //Act
+            string actualStates = sampleData.GetAggregateListOfStatesGivenPeopleCollection(sampleData.People);
+            bool statesAreCorrect = expectedStates.Equals(actualStates);
+            //Assert
+            Assert.IsTrue(statesAreCorrect);
         }
     }
 }

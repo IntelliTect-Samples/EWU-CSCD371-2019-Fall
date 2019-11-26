@@ -1,4 +1,6 @@
-﻿namespace Assignment
+﻿using System;
+
+namespace Assignment
 {
     public class Address : IAddress
     {
@@ -9,11 +11,13 @@
 
         public Address(string csvRow)
         {
+            if (csvRow is null)
+                throw new ArgumentNullException(nameof(csvRow));
             string[] data = csvRow.Split(',');
-            StreetAddress = data[(int)SampleData.Information.StreetAddress];
-            City = data[(int)SampleData.Information.City];
-            State = data[(int)SampleData.Information.State];
-            Zip = data[(int)SampleData.Information.Zip];
+            StreetAddress = data[(int)SampleData.Column.StreetAddress];
+            City = data[(int)SampleData.Column.City];
+            State = data[(int)SampleData.Column.State];
+            Zip = data[(int)SampleData.Column.Zip];
         }
 
         public override bool Equals(object? obj)

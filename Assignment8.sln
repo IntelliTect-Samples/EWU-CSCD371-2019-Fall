@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment.Interfaces", "As
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment.Tests", "Assignment.Tests\Assignment.Tests.csproj", "{32367E7C-1216-41E6-BCCF-47C537BC8E4D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment.Interfaces.Tests", "Assignment.Interfaces.Tests\Assignment.Interfaces.Tests.csproj", "{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,18 +55,6 @@ Global
 		{32367E7C-1216-41E6-BCCF-47C537BC8E4D}.Release|x64.Build.0 = Release|Any CPU
 		{32367E7C-1216-41E6-BCCF-47C537BC8E4D}.Release|x86.ActiveCfg = Release|Any CPU
 		{32367E7C-1216-41E6-BCCF-47C537BC8E4D}.Release|x86.Build.0 = Release|Any CPU
-		{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}.Debug|x64.Build.0 = Debug|Any CPU
-		{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}.Debug|x86.Build.0 = Debug|Any CPU
-		{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}.Release|x64.ActiveCfg = Release|Any CPU
-		{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}.Release|x64.Build.0 = Release|Any CPU
-		{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}.Release|x86.ActiveCfg = Release|Any CPU
-		{1051E9AC-D335-4CB2-BDDB-93CFE6C0438E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

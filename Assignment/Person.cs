@@ -1,4 +1,6 @@
-﻿namespace Assignment
+﻿using System;
+
+namespace Assignment
 {
     public class Person : IPerson
     {
@@ -9,10 +11,12 @@
 
         public Person(string csvRow)
         {
+            if (csvRow is null)
+                throw new ArgumentNullException(nameof(csvRow));
             string[] data = csvRow.Split(',');
-            FirstName = data[(int)SampleData.Information.FirstName];
-            LastName = data[(int)SampleData.Information.LastName];
-            EmailAddress = data[(int)SampleData.Information.Email];
+            FirstName = data[(int)SampleData.Column.FirstName];
+            LastName = data[(int)SampleData.Column.LastName];
+            EmailAddress = data[(int)SampleData.Column.Email];
             Address = new Address(csvRow);
         }
 

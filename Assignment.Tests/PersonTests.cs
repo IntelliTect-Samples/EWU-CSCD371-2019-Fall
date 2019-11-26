@@ -1,63 +1,71 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Assignment.Tests
 {
     [TestClass]
     public class PersonTests
     {
+        private const string csvRowSpongebob = "1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202";
+        private const string csvRowMrKrabs = "2,Eugene,Krabs,moneymoneymoney@gmail.com,765 Calico Drive,Spokane,WA,99201";
+
         [TestMethod]
-        public void Constructor_CsvRow_CorrectFirstName()
+        public void Constructor_csvRowSpongebob_CorrectFirstName()
         {
             //Arrange
-            string csvRow = "1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202";
             //Act
-            Person spongebob = new Person(csvRow);
+            Person spongebob = new Person(csvRowSpongebob);
             //Assert
             Assert.AreEqual<string>("Spongebob", spongebob.FirstName);
         }
 
         [TestMethod]
-        public void Constructor_CsvRow_CorrectLastName()
+        public void Constructor_csvRowSpongebob_CorrectLastName()
         {
             //Arrange
-            string csvRow = "1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202";
             //Act
-            Person spongebob = new Person(csvRow);
+            Person spongebob = new Person(csvRowSpongebob);
             //Assert
             Assert.AreEqual<string>("Squarepants", spongebob.LastName);
         }
 
         [TestMethod]
-        public void Constructor_CsvRow_CorrectAddressEmailAddress()
+        public void Constructor_csvRowSpongebob_CorrectAddressEmailAddress()
         {
             //Arrange
-            string csvRow = "1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202";
             //Act
-            Person spongebob = new Person(csvRow);
+            Person spongebob = new Person(csvRowSpongebob);
             //Assert
             Assert.AreEqual<string>("jellyfishgod@gmail.com", spongebob.EmailAddress);
         }
 
         [TestMethod]
-        public void Constructor_CsvRow_CorrectAddress()
+        public void Constructor_csvRowSpongebob_CorrectAddress()
         {
             //Arrange
-            string csvRow = "1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202";
             Address expected = new Address("1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202");
             //Act
-            Person spongebob = new Person(csvRow);
+            Person spongebob = new Person(csvRowSpongebob);
             //Assert
             Assert.AreEqual<IAddress>(expected, spongebob.Address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Constructor_NullCsvRowSpongebob_ThrowsException()
+        {
+            //Arrange
+            //Act
+            _ = new Person(null!);
+            //Assert
         }
 
         [TestMethod]
         public void Equals_DifferentPerson_ReturnsFalse()
         {
             //Arrange
-            string csvRow = "1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202";
-            string csvRowTwo = "2,Eugene,Krabs,moneymoneymoney@gmail.com,765 Calico Drive,Spokane,WA,99201";
-            Person spongebob = new Person(csvRow);
-            Person mrKrabs = new Person(csvRowTwo);
+            Person spongebob = new Person(csvRowSpongebob);
+            Person mrKrabs = new Person(csvRowMrKrabs);
             //Act
             bool peopleAreEqual = spongebob.Equals(mrKrabs);
             //Assert
@@ -68,9 +76,8 @@ namespace Assignment.Tests
         public void Equals_SamePerson_ReturnsTrue()
         {
             //Arrange
-            string csvRow = "1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202";
-            Person spongebob = new Person(csvRow);
-            Person spingebobTwo = new Person(csvRow);
+            Person spongebob = new Person(csvRowSpongebob);
+            Person spingebobTwo = new Person(csvRowSpongebob);
             //Act
             bool peopleAreEqual = spongebob.Equals(spingebobTwo);
             //Assert
@@ -81,10 +88,8 @@ namespace Assignment.Tests
         public void GetHashCode_DifferentPerson_ReturnsDifferentHashCodes()
         {
             //Arrange
-            string csvRow = "1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202";
-            string csvRowTwo = "2,Eugene,Krabs,moneymoneymoney@gmail.com,765 Calico Drive,Spokane,WA,99201";
-            Person spongebob = new Person(csvRow);
-            Person mrKrabs = new Person(csvRowTwo);
+            Person spongebob = new Person(csvRowSpongebob);
+            Person mrKrabs = new Person(csvRowMrKrabs);
             //Act
             bool HashCodesAreSame = spongebob.GetHashCode() == mrKrabs.GetHashCode();
             //Assert
@@ -95,9 +100,8 @@ namespace Assignment.Tests
         public void GetHashCode_SamePerson_ReturnsSameHashCodes()
         {
             //Arrange
-            string csvRow = "1,Spongebob,Squarepants,jellyfishgod@gmail.com,1391 Mudlick Road,Spokane,WA,99202";
-            Person spongebob = new Person(csvRow);
-            Person spongebobTwo = new Person(csvRow);
+            Person spongebob = new Person(csvRowSpongebob);
+            Person spongebobTwo = new Person(csvRowSpongebob);
             //Act
             bool HashCodesAreSame = spongebob.GetHashCode() == spongebobTwo.GetHashCode();
             //Assert

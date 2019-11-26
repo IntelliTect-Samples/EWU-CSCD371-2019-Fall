@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Assignment.Tests
 {
@@ -47,6 +48,16 @@ namespace Assignment.Tests
             Address spongebobsAddress = new Address(csvRow);
             //Assert
             Assert.AreEqual("99202", spongebobsAddress.Zip);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Constructor_NullCsvRow_ThrowsException()
+        {
+            //Arrange
+            //Act
+            _ = new Address(null!);
+            //Assert
         }
 
         [TestMethod]
