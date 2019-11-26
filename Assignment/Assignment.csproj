@@ -14,10 +14,10 @@
     <None Update="People.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="People %28copy%29.csv">
+    <None Update="TestFile.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestFile %28copy%29.csv">
+    <None Update="SmallerPersonFile.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -196,9 +196,9 @@ namespace Assignment.Tests
 
             ValueTuple<string, string>[] expectedNames = 
             {
+                ("Editha", "Loseke"),
                 ("Priscilla", "Jenyns"),
                 ("Karin", "Joder"),
-                ("Editha", "Loseke")
             };
 
             IEnumerable<(string FirstName, string LastName)> actualNames = sample.FilterByEmailAddress(email => email.EndsWith(".gov", StringComparison.CurrentCulture));
