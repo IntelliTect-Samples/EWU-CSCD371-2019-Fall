@@ -65,7 +65,7 @@ namespace Assignment
                 FirstName = attrArray[1],
                 LastName = attrArray[2],
                 Address = address,
-                Email = attrArray[3]
+                EmailAddress = attrArray[3]
             };
         }
         public static Address newAddress(string streetAddress, string city, string state, string zip)
@@ -82,7 +82,7 @@ namespace Assignment
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(Predicate<string> filter)
             => from person in People
-               where filter(person.Email)
+               where filter(person.EmailAddress)
                select (person.FirstName, person.LastName);
 
         // 6.

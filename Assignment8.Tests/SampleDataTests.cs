@@ -121,7 +121,7 @@ namespace Assignment8.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void SampleDataConstructor_Null()
         {
-            SampleData sampleData = new SampleData(null);
+            _ = new SampleData(null);
         }
     }
 }
