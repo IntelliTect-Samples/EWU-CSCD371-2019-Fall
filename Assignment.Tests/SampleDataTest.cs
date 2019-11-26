@@ -8,13 +8,13 @@ namespace Assignment.Tests
     [TestClass]
     public class SampleDataTest
     {
-        private readonly SampleData sData = new SampleData();
+        private readonly SampleData _SData = new SampleData();
 
         [TestMethod]
         public void CsvRowsIsEnumerable()
         {
             //Arrange
-            IEnumerable<string> collection = sData.CsvRows;
+            IEnumerable<string> collection = _SData.CsvRows;
             List<string> enumerated = new List<string>();
 
             //Act
@@ -24,7 +24,7 @@ namespace Assignment.Tests
             }
 
             //Assert
-            Assert.AreEqual(collection.Count(), enumerated.Count());
+            Assert.AreEqual(collection.Count(), enumerated.Count);
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace Assignment.Tests
             IEnumerable<string> list;
 
             //Act
-            list = sData.CsvRows;
+            list = _SData.CsvRows;
 
             //Assert
             Assert.AreNotEqual("Id,FirstName,LastName,Email,StreetAddress,City,State,Zip", list.First());
@@ -47,7 +47,7 @@ namespace Assignment.Tests
             IEnumerable<string> states;
 
             //Act
-            states = sData.GetUniqueSortedListOfStatesGivenCsvRows();
+            states = _SData.GetUniqueSortedListOfStatesGivenCsvRows();
 
             //Assert
             foreach (string s in states)
@@ -70,7 +70,7 @@ namespace Assignment.Tests
             string[] states;
 
             //Act
-            states = sData.GetUniqueSortedListOfStatesGivenCsvRows().ToArray();
+            states = _SData.GetUniqueSortedListOfStatesGivenCsvRows().ToArray();
 
             //Assert
             for(int i = 1; i < states.Length; i++)
@@ -86,7 +86,7 @@ namespace Assignment.Tests
             string list;
 
             //Act
-            list = sData.GetAggregateSortedListOfStatesUsingCsvRows();
+            list = _SData.GetAggregateSortedListOfStatesUsingCsvRows();
 
             //Assert
             Assert.AreEqual("AL,AZ,CA,DC,FL,GA,IN,KS,LA,MD,MN,MO,MT,NC,NE,NH,NV,NY,OR,PA,SC,TN,TX,UT,VA,WA,WV", list);
@@ -99,7 +99,7 @@ namespace Assignment.Tests
             IEnumerable<IPerson> people;
             
             //Act
-            people = sData.People;
+            people = _SData.People;
 
             //Assert
             Assert.IsNotNull(people);
@@ -118,7 +118,7 @@ namespace Assignment.Tests
 
             //Act
             peoplePrePop.Add(("Adrea", "Lay"));
-            people = sData.FilterByEmailAddress(email => email.Equals("alayz@spotify.com"));
+            people = _SData.FilterByEmailAddress(email => email.Equals("alayz@spotify.com"));
             names = people.ToArray();
             namesPrePop = peoplePrePop.ToArray();
 
@@ -143,7 +143,7 @@ namespace Assignment.Tests
             string list;
 
             //Act
-            list = sData.GetAggregateListOfStatesGivenPeopleCollection(sData.People);
+            list = _SData.GetAggregateListOfStatesGivenPeopleCollection(_SData.People);
 
             //Assert
             Assert.AreEqual("AL,AZ,CA,DC,FL,GA,IN,KS,LA,MD,MN,MO,MT,NC,NE,NH,NV,NY,OR,PA,SC,TN,TX,UT,VA,WA,WV", list);
