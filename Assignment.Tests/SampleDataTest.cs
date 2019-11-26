@@ -106,5 +106,35 @@ namespace Assignment.Tests
             Assert.AreEqual(50, people.Count());
             Assert.IsNotNull(people.First().Address, people.First().EmailAddress, people.First().FirstName, people.First().LastName);
         }
+
+        [TestMethod]
+        public void FilterByEmailAddress_ReturnsCorrectNames()
+        {
+            //Arrange
+            IEnumerable<(string first, string last)> people;
+            List<(string first, string last)> peoplePrePop = new List<(string first, string last)>();
+            (string first, string last)[] names;
+            (string first, string last)[] namesPrePop;
+
+            //Act
+            peoplePrePop.Add(("Adrea", "Lay"));
+            people = sData.FilterByEmailAddress(email => email.Equals("alayz@spotify.com"));
+            names = people.ToArray();
+            namesPrePop = peoplePrePop.ToArray();
+
+            //Assert
+            try
+            {
+                for (int i = 0; i < names.Length; i++)
+                {
+                    Assert.AreEqual(names[i], namesPrePop[i]);
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Assert.Fail("More matches to email than expected.");
+            }
+            
+        }
     }
 }
