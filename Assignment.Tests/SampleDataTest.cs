@@ -8,11 +8,12 @@ namespace Assignment.Tests
     [TestClass]
     public class SampleDataTest
     {
+        private readonly SampleData sData = new SampleData();
+
         [TestMethod]
         public void CsvRowsIsEnumerable()
         {
             //Arrange
-            SampleData sData = new SampleData();
             IEnumerable<string> collection = sData.CsvRows;
             List<string> enumerated = new List<string>();
 
@@ -27,10 +28,22 @@ namespace Assignment.Tests
         }
 
         [TestMethod]
+        public void CsvRows_SkipsFirstRow()
+        {
+            //Arrange
+            IEnumerable<string> list;
+
+            //Act
+            list = sData.CsvRows;
+
+            //Assert
+            Assert.AreNotEqual("Id,FirstName,LastName,Email,StreetAddress,City,State,Zip", list.First());
+        }
+
+        [TestMethod]
         public void GetUniqueSortedListOfStatesGivenCsvRows_ReturnsDistinctList()
         {
             //Arrange
-            SampleData sData = new SampleData();
             IEnumerable<string> states;
 
             //Act
@@ -54,7 +67,6 @@ namespace Assignment.Tests
         public void GetUniqueSortedListOfStatesGivenCsvRows_ReturnsSortedList()
         {
             //Arrange
-            SampleData sData = new SampleData();
             string[] states;
 
             //Act
@@ -65,6 +77,19 @@ namespace Assignment.Tests
             {
                 Assert.IsTrue(states[i].CompareTo(states[i - 1]) > 0);
             }
+        }
+
+        [TestMethod]
+        public void GetAggregateSortedListOfStatesUsingCsvRows_ReturnsCommaSepString()
+        {
+            //Arrange
+            string list;
+
+            //Act
+            list = sData.GetAggregateSortedListOfStatesUsingCsvRows();
+
+            //Assert
+            Assert.AreEqual("AL,AZ,CA,DC,FL,GA,IN,KS,LA,MD,MN,MO,MT,NC,NE,NH,NV,NY,OR,PA,SC,TN,TX,UT,VA,WA,WV", list);
         }
     }
 }

@@ -9,9 +9,8 @@ namespace Assignment
     {
         // 1.
         public IEnumerable<string> CsvRows
-            => from line in File.ReadAllLines("People.csv")
-               where !line.StartsWith("Id")
-               select line;
+            => (from line in File.ReadAllLines("People.csv")
+               select line).Skip(1);
 
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
@@ -25,7 +24,11 @@ namespace Assignment
 
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
-            => throw new NotImplementedException();
+        {
+            string[] stateArr = GetUniqueSortedListOfStatesGivenCsvRows().ToArray();
+
+            return string.Join(',', stateArr);
+        }
 
         // 4.
         public IEnumerable<IPerson> People => throw new NotImplementedException();
