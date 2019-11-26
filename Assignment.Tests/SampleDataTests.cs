@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,7 +11,7 @@ namespace Assignment.Tests
 
         private static readonly SampleData _SampleData = new SampleData();
         private static readonly SampleData _TestData   = new SampleData {Path = "TestPeople.csv"};
-        
+
         [TestMethod]
         public void GetUniqueSortedListOfStates_Hardcoded_ReturnsCorrectlySortedList()
         {
@@ -44,10 +43,10 @@ namespace Assignment.Tests
         public void People_ReturnsCorrectlySortedListOfPeople()
         {
             var people = _TestData.People;
-            
-            var expected = new[]{ "G", "I", "A", "K", "E", "C"};
-            var given = people.Select(person => person.FirstName).ToArray();
-            
+
+            var expected = new[] {"G", "I", "A", "K", "E", "C"};
+            var given    = people.Select(person => person.FirstName).ToArray();
+
             Assert.IsTrue(expected[0] == given[0]);
             Assert.IsTrue(expected[2] == given[2]);
             Assert.IsTrue(expected[3] == given[3]);
@@ -58,7 +57,7 @@ namespace Assignment.Tests
         public void People_FilterByEmail_ReturnsCorrectlyFilteredList()
         {
             var people = _TestData.FilterByEmailAddress(email => email.EndsWith(".com"));
-            
+
             var given = people.Select(person => person.FirstName).ToArray();
             Assert.IsTrue(given.Length == 2);
             Assert.IsTrue(given[0] == "A");
@@ -74,6 +73,7 @@ namespace Assignment.Tests
             Assert.IsTrue(states[0] == "WA");
             Assert.IsTrue(states[1] == "WI");
         }
+
     }
 
 }

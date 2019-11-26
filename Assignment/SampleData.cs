@@ -8,18 +8,23 @@ namespace Assignment
 
     public class SampleData : ISampleData
     {
-        public string Path { get; set; } 
-        
+
+        public string Path { get; set; }
+
         // 1.
         public IEnumerable<string> CsvRows => File.ReadAllLines(Path ?? "People.csv").Skip(1);
 
         // 2.
-        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() =>
-            CsvRows.Select(s => s.Split(",")[6]).Distinct().OrderBy(state => state);
+        public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
+        {
+            return CsvRows.Select(s => s.Split(",")[6]).Distinct().OrderBy(state => state);
+        }
 
         // 3.
-        public string GetAggregateSortedListOfStatesUsingCsvRows() =>
-            GetUniqueSortedListOfStatesGivenCsvRows().Aggregate((a, b) => $"{a},{b}");
+        public string GetAggregateSortedListOfStatesUsingCsvRows()
+        {
+            return GetUniqueSortedListOfStatesGivenCsvRows().Aggregate((a, b) => $"{a},{b}");
+        }
 
         // 4.
         public IEnumerable<IPerson> People
@@ -28,8 +33,8 @@ namespace Assignment
             {
                 return CsvRows.Select(s =>
                                {
-                                   var      cols    = s.Split(",");
-                                   string[] address = cols.Skip(4).Take(4).ToArray();
+                                   var cols    = s.Split(",");
+                                   var address = cols.Skip(4).Take(4).ToArray();
 
                                    return new Person
                                    {
