@@ -5,4 +5,8 @@
     <RootNamespace>Assignment</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+  </ItemGroup>
+
 </Project>
