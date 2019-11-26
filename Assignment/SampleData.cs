@@ -11,7 +11,7 @@ namespace Assignment
 
         public SampleData()
         {
-            _FileName = "People.csv";
+            _FileName = "../../../../Assignment/People.csv";
         }
 
         public SampleData(string file)
@@ -38,13 +38,13 @@ namespace Assignment
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
         {
             IEnumerable<string> orderedStates = CsvRows.OrderBy(person => person.Split(",")[(int)Column.State]).Distinct();
-            return orderedStates;
+            return orderedStates.Select(person => person.Split(",")[(int)Column.State]);
         }
 
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
         {
-            IEnumerable<string> states = GetUniqueSortedListOfStatesGivenCsvRows().Select(person => person.Split(",")[(int)Column.State]);
+            IEnumerable<string> states = GetUniqueSortedListOfStatesGivenCsvRows();
             string[] sortStates = states.ToArray();
 
             return string.Join(",", sortStates);
@@ -57,10 +57,7 @@ namespace Assignment
                 FirstName = person[(int)Column.FirstName],
                 LastName = person[(int)Column.LastName],
                 Email = person[(int)Column.Email],
-                StreetAddress = person[(int)Column.StreetAddress],
-                City = person[(int)Column.City],
-                State = person[(int)Column.State],
-                Zip = person[(int)Column.Zip],
+
                 Address = new Address
                 {
                     StreetAddress = person[(int)Column.StreetAddress],
@@ -69,9 +66,9 @@ namespace Assignment
                     Zip = person[(int)Column.Zip]
                 }
             })
-            .OrderBy(person => person.State)
-            .ThenBy(person => person.City)
-            .ThenBy(person => person.Zip);
+            .OrderBy(person => person.Address.State)
+            .ThenBy(person => person.Address.City)
+            .ThenBy(person => person.Address.Zip);
 
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(Predicate<string> filter)

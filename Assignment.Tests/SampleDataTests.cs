@@ -1,4 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
 
 namespace Assignment.Tests
 {
@@ -6,21 +8,36 @@ namespace Assignment.Tests
     public class SampleDataTests
     {
         [TestMethod]
-        public void SampleData_ReturnUniqueSorted_WithHardCodedList()
+        public void GetUniqueSortedListWithHardCodedFile()
         {
+            SampleData sampleData = new SampleData("../../../../Assignment/TestPeople.csv");
+            IEnumerable<string> uniqueList = sampleData.GetUniqueSortedListOfStatesGivenCsvRows();
 
+            foreach (string line in uniqueList)
+            {
+                Assert.AreEqual("WA", line);
+            }
         }
 
         [TestMethod]
-        public void SampleData_ReturnUniqueSorted_WithPeopleCsv()
+        public void GetUniqueSortedListWithCsvFile()
         {
+            SampleData sampleData = new SampleData();
+            IEnumerable<string> uniqueList = sampleData.GetUniqueSortedListOfStatesGivenCsvRows();
+            string[] expectedList = {"AL","AZ","CA","CA","CA","CA","CA","DC","DC","DC","FL","FL","GA","GA","GA","IN","KS","LA","LA","MD","MD","MN","MO","MT","NC","NC","NC","NE","NH","NV","NV","NY","NY","OR","PA","PA","SC","TN","TX","TX","TX","TX","TX","UT","VA","VA","WA","WA","WA","WV"};
 
+            int count = 0;
+            foreach (string line in uniqueList)
+            {
+                Assert.AreEqual(expectedList[count], line);
+                count++;
+            }
         }
 
         [TestMethod]
         public void GetAggregateListWithHardCodedFile()
         {
-            SampleData sampleData = new SampleData("TestPeople.csv");
+            SampleData sampleData = new SampleData("../../../../Assignment/TestPeople.csv");
             string aggregateList = sampleData.GetAggregateSortedListOfStatesUsingCsvRows();
             string expectedList = "WA,WA,WA,WA";
 
@@ -32,31 +49,50 @@ namespace Assignment.Tests
         {
             SampleData sampleData = new SampleData();
             string aggregateList = sampleData.GetAggregateSortedListOfStatesUsingCsvRows();
-            string expectedList = "AL,AZ,CA,DC,FL,GA,IN,KS,LA,MD,MN,MO,MT,NC,NE,NH,NV,NY,OR,PA,SC,TN,TX,UT,VA,WA,WV";
+            string expectedList = "AL,AZ,CA,CA,CA,CA,CA,DC,DC,DC,FL,FL,GA,GA,GA,IN,KS,LA,LA,MD,MD,MN,MO,MT,NC,NC,NC,NE,NH,NV,NV,NY,NY,OR,PA,PA,SC,TN,TX,TX,TX,TX,TX,UT,VA,VA,WA,WA,WA,WV";
 
             Assert.AreEqual(expectedList, aggregateList);
         }
 
         [TestMethod]
-        public void SampleData_ReturnPeopleFromPeopleCsv()
+        public void GetPeopleFromPeopleCsv()
         {
+            SampleData sampleData = new SampleData();
+            IEnumerable<IPerson> people = sampleData.People;
+            int count = 0;
+            foreach(Person person in people)
+            {
+                count++;
+            }
 
+            Assert.AreEqual(50, count);
         }
 
         [TestMethod]
-        public void SampleData_ThrowException_WithNullFilter()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FilterByEmailAddressThrowsException()
         {
-
+            SampleData sampleData = new SampleData();
+            sampleData.FilterByEmailAddress(null);
         }
 
         [TestMethod]
-        public void SampleData_ThrowException_WithNullPeople()
+        public void FilterByEmailAddressGoesWell()
         {
-
+            SampleData sampleData = new SampleData();
+            sampleData.FilterByEmailAddress(null); //Should not work!
         }
 
         [TestMethod]
-        public void SampleData_ReturnAggregateList_WithListOfPeople()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void GetAggregateListOfStatesGivenPeopleCollectionThrowsException()
+        {
+            SampleData sampleData = new SampleData();
+            sampleData.GetAggregateListOfStatesGivenPeopleCollection(null);
+        }
+
+        [TestMethod]
+        public void GetAggregateListOfStatesWithPeopleGiven()
         {
 
         }
