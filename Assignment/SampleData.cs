@@ -33,7 +33,7 @@ namespace Assignment {
                 {
                     FirstName = columns[0],
                     LastName = columns[1],
-                    Email = columns[2],
+                    EmailAddress = columns[2],
                     Address = new Address
                     {
                         StreetAddress = columns[3],
@@ -49,7 +49,7 @@ namespace Assignment {
             People.Select(line =>
                 (line.FirstName, line.LastName)
             ).Where(item =>
-                filter.Equals(People.Select(line => line.Email))
+                filter.Equals(People.Select(line => line.EmailAddress))
             );
 
 
