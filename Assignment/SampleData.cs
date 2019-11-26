@@ -9,9 +9,7 @@ namespace Assignment {
 
         // 1.
         public IEnumerable<string> CsvRows =>
-            File.ReadAllLines(PeoplePath).Where(item =>
-                     !string.IsNullOrEmpty(item)
-                ).Skip(1);
+            File.ReadAllLines(PeoplePath).Skip(1);
 
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() =>
