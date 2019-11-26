@@ -11,10 +11,13 @@ namespace Assignment
     }
     public class SampleData : ISampleData
     {
-        private string _FileName;
+        private string? _FileName;
 
         public SampleData(string fileName)
         {
+            if(fileName is null) throw new ArgumentNullException(nameof(fileName));
+            if (!File.Exists(fileName)) throw new FileNotFoundException("File not found", nameof(fileName));
+
             _FileName = fileName;
         }
 

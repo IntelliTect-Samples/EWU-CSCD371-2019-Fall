@@ -1,5 +1,6 @@
 using Assignment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -10,6 +11,20 @@ namespace AssignmentTests
     [TestClass]
     public class SampleDataTests
     {
+        [TestMethod]
+        [ExpectedException(typeof(FileNotFoundException))]
+        public void SampleDataConstructor_InvalidFileName_ThrowsException()
+        {
+            _ = new SampleData("InvalidFile.txt");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SampleDataConstructor_NullFileName_ThrowsException()
+        {
+            _ = new SampleData(null!);
+        }
+
         [TestMethod]
         public void CsvRows_UsingValidFile_ReturnsListFirstLineSkipped()
         {
@@ -147,8 +162,6 @@ namespace AssignmentTests
 
             // Assert
             Assert.AreEqual(states, expected);
-            
-
         }
     }
 }
