@@ -8,7 +8,6 @@ namespace Assignment
     {
         string? FirstName { get; }
         string? LastName { get; }
-        string? Email { get; }
         string? StreetAddress { get; }
         string? City { get; }
         string? State { get; }

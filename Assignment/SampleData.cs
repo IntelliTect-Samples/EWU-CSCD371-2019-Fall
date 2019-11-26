@@ -79,7 +79,7 @@ namespace Assignment
             }
             else
             {
-                return People.Where(person => (person.Email != null && filter(person.Email)))
+                return People.Where(person => (((Person)person).Email != null && filter(((Person)person).Email)))
                .Select(person => (person.FirstName, person.LastName));
             } 
         }
