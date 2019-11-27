@@ -58,51 +58,54 @@ namespace Assignment.Tests
 
         private static IEnumerable<object[]> GetObjectEqualsData()
         {
-            yield return new object[] { new ValueTuple<Person, object, bool>(FakePerson, null!, false) };
-            yield return new object[] { new ValueTuple<Person, object, bool>(FakePerson, FakePerson, true) };
-            yield return new object[] { new ValueTuple<Person, object, bool>(FakePerson, FakeSamePerson, true) };
-            yield return new object[] { new ValueTuple<Person, object, bool>(FakePerson, FakeDifferentPerson, false) };
-            yield return new object[] { new ValueTuple<Person, object, bool>(FakePerson, FakeSamePersonDifferentAddress, false) };
+            yield return new object[] { FakePerson, null!, false };
+            yield return new object[] { FakePerson, FakePerson, true };
+            yield return new object[] { FakePerson, FakeSamePerson, true };
+            yield return new object[] { FakePerson, FakeDifferentPerson, false };
+            yield return new object[] { FakePerson, FakeSamePersonDifferentAddress, false };
         }
 
         [DataTestMethod]
         [DynamicData(nameof(GetObjectEqualsData), DynamicDataSourceType.Method)]
-        public void ObjectEquals_GivenTestCase_MatchesExpected((Person Left, object Right, bool Expected) testData)
-            => Assert.AreEqual<bool>(testData.Expected, testData.Left.Equals(testData.Right));
+        public void ObjectEquals_GivenTestCase_MatchesExpected(Person left, object right, bool expected)
+            => Assert.AreEqual<bool>(expected, left?.Equals(right) ?? !expected);
+        // I know left cannot be null, but adding null handling because assignment doesn't
+        // allow disabling/pragma of nullable warnings, and they have to be handled,
+        // and compiler/analyzers are still giving nullable warnings on left!.Equals(right)
 
         private static IEnumerable<object[]> GetPersonEqualsData()
         {
-            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, null!, false) };
-            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakePerson, true) };
-            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakeSamePerson, true) };
-            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakeDifferentPerson, false) };
-            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakeSamePersonDifferentAddress, false) };
+            yield return new object[] { FakePerson, null!, false };
+            yield return new object[] { FakePerson, FakePerson, true };
+            yield return new object[] { FakePerson, FakeSamePerson, true };
+            yield return new object[] { FakePerson, FakeDifferentPerson, false };
+            yield return new object[] { FakePerson, FakeSamePersonDifferentAddress, false };
         }
 
         [DataTestMethod]
         [DynamicData(nameof(GetPersonEqualsData), DynamicDataSourceType.Method)]
-        public void PersonEquals_GivenTestCase_MatchesExpected((Person Left, Person Right, bool Expected) testData)
-            => Assert.AreEqual<bool>(testData.Expected, testData.Left.Equals(testData.Right));
+        public void PersonEquals_GivenTestCase_MatchesExpected(Person left, Person right, bool expected)
+            => Assert.AreEqual<bool>(expected, left?.Equals(right) ?? !expected);
 
         private static IEnumerable<object[]> GetOperatorEqualsData()
         {
-            yield return new object[] { new ValueTuple<Person, Person, bool>(null!, null!, true) };
-            yield return new object[] { new ValueTuple<Person, Person, bool>(null!, FakePerson, false) };
-            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, null!, false) };
-            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakePerson, true) };
-            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakeSamePerson, true) };
-            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakeDifferentPerson, false) };
-            yield return new object[] { new ValueTuple<Person, Person, bool>(FakePerson, FakeSamePersonDifferentAddress, false) };
+            yield return new object[] { null!, null!, true };
+            yield return new object[] { null!, FakePerson, false };
+            yield return new object[] { FakePerson, null!, false };
+            yield return new object[] { FakePerson, FakePerson, true };
+            yield return new object[] { FakePerson, FakeSamePerson, true };
+            yield return new object[] { FakePerson, FakeDifferentPerson, false };
+            yield return new object[] { FakePerson, FakeSamePersonDifferentAddress, false };
         }
 
         [DataTestMethod]
         [DynamicData(nameof(GetOperatorEqualsData), DynamicDataSourceType.Method)]
-        public void OperatorEquals_GivenTestCase_MatchesExpected((Person Left, Person Right, bool Expected) testData)
-            => Assert.AreEqual<bool>(testData.Expected, testData.Left == testData.Right);
+        public void OperatorEquals_GivenTestCase_MatchesExpected(Person left, Person right, bool expected)
+            => Assert.AreEqual<bool>(expected, left == right);
 
         [DataTestMethod]
         [DynamicData(nameof(GetOperatorEqualsData), DynamicDataSourceType.Method)]
-        public void OperatorNotEquals_GivenEqualsTestCase_MatchesOppositeOfExpected((Person Left, Person Right, bool Expected) testData)
-            => Assert.AreEqual<bool>(!testData.Expected, testData.Left != testData.Right);
+        public void OperatorNotEquals_GivenEqualsTestCase_MatchesOppositeOfExpected(Person left, Person right, bool expected)
+            => Assert.AreEqual<bool>(!expected, left != right);
     }
 }
