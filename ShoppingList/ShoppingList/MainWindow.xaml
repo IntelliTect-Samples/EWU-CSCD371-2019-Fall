@@ -7,6 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <ListBox ItemsSource="{Binding ShoppingList}" Grid.Column="1" Grid.RowSpan="3">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:Item}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding Price}" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Grid.Row="1" Height="Auto" Content="Add Item" Command="{Binding Path=AddItemCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
     </Grid>
 </Window>
