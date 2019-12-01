@@ -7,6 +7,30 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
+        <ListBox
+            x:Name="listBox"
+            Grid.Column="0"
+            Background="#FFFFFFFF"
+            SelectionMode="Single"
+            SelectionChanged="listBoxChanged"
+            FontSize="18" />
+
+        <Button
+            x:Name="btn"
+            Content="Append"
+            Grid.Column="1"
+            HorizontalAlignment="right" 
+            VerticalAlignment="top"
+            Click="AddBtnClick" />
+        
+        <TextBox
+            x:Name="textBox"
+            Grid.Column="1"
+            />
     </Grid>
 </Window>
