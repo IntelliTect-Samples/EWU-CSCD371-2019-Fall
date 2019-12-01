@@ -5,32 +5,73 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        d:DataContext="{d:DesignInstance Type=local:ListModel}"
+        Title="MainWindow" Height="550" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="1" />
+        <StackPanel Grid.Column="2" />
+
         <ListBox
-            x:Name="listBox"
+            x:Name="ShoppingList"
+            ItemsSource="{ Binding ShoppingList }"
             Grid.Column="0"
-            Background="#FFFFFFFF"
+            Grid.RowSpan="3"
+            Background="Blue"
             SelectionMode="Single"
             SelectionChanged="listBoxChanged"
-            FontSize="18" />
+            FontSize="30">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:Item}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <TextBox
+            x:Name="TextToAppend"
+            Grid.Column="1"
+            Grid.Row="0"
+            Margin="15,15,15,15"
+            />
 
         <Button
-            x:Name="btn"
+            x:Name="AppendBtn"
             Content="Append"
             Grid.Column="1"
-            HorizontalAlignment="right" 
-            VerticalAlignment="top"
-            Click="AddBtnClick" />
-        
-        <TextBox
-            x:Name="textBox"
-            Grid.Column="1"
+            Grid.Row="1"
+            Click="AddBtnClick"
+            Margin="15,15,15,15"
             />
+
+        <TextBox
+            x:Name="TextToChange"
+            Grid.Column="2"
+            Grid.Row="0"
+            Margin="15,15,15,15"
+            />
+
+        <Button
+            x:Name="ChangeBtn"
+            Content="Change"
+            Grid.Column="2"
+            Grid.Row="1"
+            Click="ChangeBtnClick"
+            Margin="15,15,15,15"
+            />
+
     </Grid>
 </Window>

@@ -21,9 +21,11 @@ namespace ShoppingList
         public void OnAppendItem()
         {
             ShoppingList.Add(new Item() {
-                Name=$"",
+                Name="SomeName",
                 Amount=1,
             });
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShoppingList)));
         }
     }
 }
