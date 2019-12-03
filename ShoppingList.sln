@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 		..\README.md = ..\README.md
+		TestSuppressions.cs = TestSuppressions.cs
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingList.Tests", "ShoppingList.Tests\ShoppingList.Tests.csproj", "{5CDDD646-A591-4B04-91D1-C137E4BDF2B1}"
