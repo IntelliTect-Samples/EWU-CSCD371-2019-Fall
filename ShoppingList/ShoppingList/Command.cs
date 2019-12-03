@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 
 namespace ShoppingList
@@ -14,13 +12,11 @@ namespace ShoppingList
             Method = method ?? throw new ArgumentNullException(nameof(method));
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
+        public bool CanExecute(object parameter) => true;
 
         public void Execute(object parameter) => Method?.Invoke();
 
-        public event EventHandler CanExecuteChanged;
+#pragma warning disable CS0067 // best to keep this here just in case, even though it doesn't appear used.
+        public event EventHandler? CanExecuteChanged;
     }
 }

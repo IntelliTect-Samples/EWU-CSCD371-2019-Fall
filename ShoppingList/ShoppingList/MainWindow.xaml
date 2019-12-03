@@ -5,8 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
+        Title="MainWindow" Height="600" Width="300" FontFamily="Lucida" FontSize="24">
+    <Grid Background="DimGray">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListBox x:Name="ShoppingListBox" Grid.Row="0" Background="WhiteSmoke"
+                 ItemsSource="{Binding ShoppingItems}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="string">
+                    <StackPanel Orientation="Horizontal">
+                        <!--<TextBlock Text="# "/>-->
+                        <TextBlock Text="{Binding}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBox Visibility="Collapsed" Grid.Row="1" Background="LightGray" BorderThickness="1" BorderBrush="DimGray"/>
+        <Button Content="Add Item" Command="{Binding AddItemCommand}" Grid.Row="2" Background="LightGray"/>
     </Grid>
+    <!--
+    <Grid Background="DimGray">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="{Binding Text}" Background="White" />
+        <Button Grid.Row="1" Content="Button" Command="{Binding ChangeNameCommand}"/>
+        <ListBox ItemsSource="{Binding People}" Grid.Column="1" Grid.RowSpan="3">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:Person}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding FirstName}"/>
+                        <TextBlock Text="{Binding LastName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Content="Add Person" Command="{Binding AddPersonCommand}" Grid.Column="1" Grid.Row="4"/>
+    </Grid>
+    -->
 </Window>
