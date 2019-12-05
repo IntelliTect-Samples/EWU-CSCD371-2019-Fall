@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowsModelView}" 
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        
     </Grid>
 </Window>
