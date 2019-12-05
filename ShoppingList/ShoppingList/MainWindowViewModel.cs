@@ -1,88 +1,46 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace ShoppingList
 {
-    class MainWindowViewModel : BaseViewModel
+    public class MainWindowViewModel : BaseViewModel
     {
-        public ObservableCollection<string> ShoppingItems { get; } = new ObservableCollection<string>();
+        public ObservableCollection<Item> ShoppingItems { get; } = new ObservableCollection<Item>();
 
-        private string? _SelectedItem;
-        public string? SelectedItem
+        private Item? _SelectedListItem;
+        public Item? SelectedListItem
         {
-            get => _SelectedItem;
-            set => SetProperty(ref _SelectedItem, value);
+            get => _SelectedListItem;
+            set
+            {
+                // intentially not using ?. as I dont want to ?? inside the isnullorwhitespace function
+                if (_SelectedListItem != null && string.IsNullOrWhiteSpace(_SelectedListItem.Text))
+                {
+                    ShoppingItems.Remove(_SelectedListItem);
+                }
+                SetProperty(ref _SelectedListItem, value);
+            }
         }
 
         public MainWindowViewModel()
         {
             AddItemCommand = new Command(OnAddItem);
-            ItemClickedCommand = new Command(OnItemClicked);
+            DeselectCommand = new Command(OnDeselect);
         }
 
         public ICommand AddItemCommand { get; }
-        public void OnAddItem()
+        private void OnAddItem()
         {
-            if (SelectedItem is null)
-            {
-                ShoppingItems.Add($"Item {ShoppingItems.Count + 1}");
-            }
-            else
-            {
-                ShoppingItems.Add($"{SelectedItem} +");
-            }
+            ShoppingItems.Add(new Item());
+            SelectedListItem = ShoppingItems[ShoppingItems.Count-1];
         }
 
-        public ICommand ItemClickedCommand { get; }
-        public void OnItemClicked()
+        public ICommand DeselectCommand { get; }
+        private void OnDeselect()
         {
-            ShoppingItems.RemoveAt(ShoppingItems.Count - 1);
+            SelectedListItem = null;
         }
     }
-    /*
-    private string _Text;
-    public string Text
-    {
-        get => _Text;
-        set => SetProperty(ref _Text, value, nameof(Text));
-    }
-
-    public ObservableCollection<Person> People { get; } = new ObservableCollection<Person>();
-
-    public MainWindowViewModel()
-    {
-        ChangeNameCommand = new Command(OnChangedName);
-        AddPersonCommand = new Command(OnAddPerson);
-
-        _Text = "Hello World";
-
-        People.Add(new Person("Mario", "Mario"));
-        People.Add(new Person("Luigi", "Mario"));
-    }
-
-    public ICommand ChangeNameCommand { get; }
-    public void OnChangedName()
-    {
-        Text = "test";
-    }
-
-    public ICommand AddPersonCommand { get; }
-    public void OnAddPerson()
-    {
-        People.Add(new Person("Toad", ""));
-    }
-}
-
-public class Person
-{
-    public Person(string first, string last)
-    {
-        FirstName = first;
-        LastName = last;
-    }
-
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-}
-*/
 }

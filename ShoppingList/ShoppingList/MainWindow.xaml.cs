@@ -12,5 +12,8 @@ namespace ShoppingList
             DataContext = new MainWindowViewModel();
             InitializeComponent();
         }
+
+        private void FocusItemEditor(object sender, RoutedEventArgs e)
+            => ItemEditor.Focus();
     }
 }
