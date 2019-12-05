@@ -6,4 +6,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MvvmLightLibsStd10" Version="5.4.0.1-alpha" />
+  </ItemGroup>
+
 </Project>
