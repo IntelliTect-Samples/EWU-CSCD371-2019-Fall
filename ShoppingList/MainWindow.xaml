@@ -10,6 +10,11 @@
         Background="{DynamicResource MaterialDesignPaper}"
         Topmost="True">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" />
+        <Button Content="Add Item" Command="{Binding AddItem}" Grid.Row="2"/>
     </Grid>
 </Window>
