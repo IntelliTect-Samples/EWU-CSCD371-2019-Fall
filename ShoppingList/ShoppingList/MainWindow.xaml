@@ -6,29 +6,40 @@
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
-        Title="MainWindow" Height="600" Width="300" FontFamily="Lucida" FontSize="24">
+        Title="Shopping List" Height="600" Width="300" MinHeight="150" MinWidth="125"
+        FontFamily="Lucida" FontSize="24">
     
     <Window.Resources>
         <local:ItemEditorVisibilityConverter x:Key="ItemEditorVisibilityConverter"/>
+
+        <DataTemplate DataType="{x:Type local:Item}" x:Key="ShoppingItemTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding Text}" Grid.Row="0"/>
+                <Line Stretch="Fill" Stroke="LightGray" X2="1" Grid.Row="1"/>
+            </Grid>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid Background="DimGray">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <ListBox Grid.Row="0" Background="WhiteSmoke"
-                 ItemsSource="{Binding ShoppingItems}" SelectedItem="{Binding SelectedListItem}">
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type local:Item}">
-                    <TextBlock Text="{Binding Text}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
+                 ItemsSource="{Binding ShoppingItems}" SelectedItem="{Binding SelectedListItem}"
+                 ItemTemplate="{StaticResource ShoppingItemTemplate}">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
         </ListBox>
 
         <TextBox x:Name="ItemEditor" Grid.Row="1" Background="LightGray" BorderThickness="1.5" BorderBrush="DimGray"
@@ -40,7 +51,7 @@
             </TextBox.InputBindings>
         </TextBox>
 
-        <Button Grid.Row="2" Background="LightGray"
-                Content="Add Item" Command="{Binding AddItemCommand}" Click="FocusItemEditor"/>
+        <Button Grid.Row="2" Background="LightGray" Content="Add Item"
+                Command="{Binding AddItemCommand}" Click="FocusItemEditor"/>
     </Grid>
 </Window>

@@ -16,7 +16,7 @@ namespace ShoppingList
 
         public void Execute(object parameter) => Method?.Invoke();
 
-#pragma warning disable CS0067 // will be useful if CanExecute gets functionality
+#pragma warning disable CS0067 // part of ICommand, unused in this instance but required to be defined.
         public event EventHandler? CanExecuteChanged;
     }
 }

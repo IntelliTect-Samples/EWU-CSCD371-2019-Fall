@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace ShoppingList
@@ -15,7 +13,7 @@ namespace ShoppingList
             get => _SelectedListItem;
             set
             {
-                // intentially not using ?. as I dont want to ?? inside the isnullorwhitespace function
+                // intentially not using ?. as I dont want to confuse item==null with item.text==null
                 if (_SelectedListItem != null && string.IsNullOrWhiteSpace(_SelectedListItem.Text))
                 {
                     ShoppingItems.Remove(_SelectedListItem);
@@ -34,13 +32,10 @@ namespace ShoppingList
         private void OnAddItem()
         {
             ShoppingItems.Add(new Item());
-            SelectedListItem = ShoppingItems[ShoppingItems.Count-1];
+            SelectedListItem = ShoppingItems[ShoppingItems.Count - 1];
         }
 
         public ICommand DeselectCommand { get; }
-        private void OnDeselect()
-        {
-            SelectedListItem = null;
-        }
+        private void OnDeselect() => SelectedListItem = null;
     }
 }
