@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
-
+//comment put here to enable pull request, delete later
 namespace ShoppingList
 {
     public class Command : ICommand
