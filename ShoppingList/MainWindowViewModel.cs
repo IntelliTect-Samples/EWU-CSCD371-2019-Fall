@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace ShoppingList
 {
-    class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
     {
         public ObservableCollection<Item> Items { get; } = new ObservableCollection<Item>();
 
