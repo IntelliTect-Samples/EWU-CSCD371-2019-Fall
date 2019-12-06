@@ -26,6 +26,7 @@ namespace ShoppingList
         {
             AddItemCommand = new Command(OnAddItem);
             DeselectCommand = new Command(OnDeselect);
+            DeleteItemCommand = new Command(OnDeleteItem);
         }
 
         public ICommand AddItemCommand { get; }
@@ -37,5 +38,14 @@ namespace ShoppingList
 
         public ICommand DeselectCommand { get; }
         private void OnDeselect() => SelectedListItem = null;
+
+        public ICommand DeleteItemCommand { get; }
+        private void OnDeleteItem()
+        {
+            if (SelectedListItem is null) return;
+
+            SelectedListItem.Text = "";
+            OnDeselect();
+        }
     }
 }

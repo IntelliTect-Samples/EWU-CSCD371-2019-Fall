@@ -13,7 +13,7 @@
         <local:ItemEditorVisibilityConverter x:Key="ItemEditorVisibilityConverter"/>
 
         <DataTemplate DataType="{x:Type local:Item}" x:Key="ShoppingItemTemplate">
-            <Grid>
+            <Grid MouseLeftButtonUp="FocusItemEditorEvent">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
@@ -33,7 +33,7 @@
 
         <ListBox Grid.Row="0" Background="WhiteSmoke"
                  ItemsSource="{Binding ShoppingItems}" SelectedItem="{Binding SelectedListItem}"
-                 ItemTemplate="{StaticResource ShoppingItemTemplate}">
+                 ItemTemplate="{StaticResource ShoppingItemTemplate}" MouseLeftButtonDown="DeselectEvent">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -42,16 +42,24 @@
             </ListBox.ItemContainerStyle>
         </ListBox>
 
-        <TextBox x:Name="ItemEditor" Grid.Row="1" Background="LightGray" BorderThickness="1.5" BorderBrush="DimGray"
-                 Text="{Binding SelectedListItem.Text, UpdateSourceTrigger=PropertyChanged}"
-                 Visibility="{Binding SelectedListItem, Converter={StaticResource ItemEditorVisibilityConverter}}">
-            <TextBox.InputBindings>
-                <KeyBinding Key="Enter" Command="{Binding DeselectCommand}"/>
-                <KeyBinding Key="Tab" Command="{Binding DeselectCommand}"/>
-            </TextBox.InputBindings>
-        </TextBox>
+        <Grid Grid.Row="1" Visibility="{Binding SelectedListItem, Converter={StaticResource ItemEditorVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="ItemEditor" Grid.Column="0" Background="LightGray" BorderThickness="1.5" BorderBrush="DimGray"
+                     Text="{Binding SelectedListItem.Text, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding DeselectCommand}"/>
+                    <KeyBinding Key="Tab" Command="{Binding DeselectCommand}"/>
+                </TextBox.InputBindings>
+            </TextBox>
+            <Button Content="Remove" FontSize="18" Grid.Column="1"
+                    Command="{Binding DeleteItemCommand}"/>
+        </Grid>
 
+        <!--using code behind for click instead of a binding, to force events occur in proper order (make new item, focus textbox)-->
         <Button Grid.Row="2" Background="LightGray" Content="Add Item"
-                Command="{Binding AddItemCommand}" Click="FocusItemEditor"/>
+               Click="AddItemEvent"/>
     </Grid>
 </Window>

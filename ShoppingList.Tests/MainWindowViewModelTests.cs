@@ -47,5 +47,18 @@ namespace ShoppingList.Tests
             Assert.IsNotNull(startItem);
             Assert.IsNull(viewModel.SelectedListItem);
         }
+
+        [TestMethod]
+        public void DeleteItem()
+        {
+            MainWindowViewModel viewModel = new MainWindowViewModel();
+            viewModel.AddItemCommand.Execute(null);
+            viewModel.SelectedListItem!.Text = "item 1";
+
+            viewModel.DeleteItemCommand.Execute(null);
+
+            Assert.IsNull(viewModel.SelectedListItem);
+            Assert.AreEqual<int>(0, viewModel.ShoppingItems.Count);
+        }
     }
 }
