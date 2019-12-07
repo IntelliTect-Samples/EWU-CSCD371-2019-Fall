@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\GlobalSuppresions.cs" Link="GlobalSuppresions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MaterialDesignColors" Version="1.2.1-ci837" />
     <PackageReference Include="MaterialDesignThemes" Version="3.0.0-ci837" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.0.1-alpha" />
