@@ -40,7 +40,10 @@ namespace ShoppingList.Tests
 
             vm.AddItem.Execute(null);
 
-            CollectionAssert.AreEqual(initial, vm.Items);
+            CollectionAssert.AreEqual(
+                initial.Select(item => item.Name).ToList(),
+                vm.Items.Select(item => item.Name).ToList()
+            );
             Assert.AreEqual<string>("", vm.NewItemName);
         }
 
