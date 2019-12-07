@@ -5,16 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="Shopping List" Height="400" Width="600"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         Topmost="True">
+    <Window.Resources>
+        <local:ItemVisibilityConverter x:Key="ItemVisibilityConverter" />
+        
+        <DataTemplate DataType="{x:Type local:Item}" x:Key="ItemTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Name}" Grid.Column="0" />
+                <Button Command="{Binding ElementName=ItemList, Path=DataContext.RemoveItem}"
+                        CommandParameter="{Binding}"
+                        Background="Red" BorderBrush="Red"
+                        HorizontalAlignment="Right" Height="15" Width="15"
+                        HorizontalContentAlignment="Right" Grid.Column="1" />
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" />
-        <Button Content="Add Item" Command="{Binding AddItem}" Grid.Row="2"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        
+        <ListBox x:Name="ItemList"
+                 ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"
+                 ItemTemplate="{StaticResource ItemTemplate}"
+                 HorizontalContentAlignment="Stretch"
+                 Grid.Row="0" Grid.Column="0"
+                 Grid.ColumnSpan="2"/>
+        
+        <TextBox Text="{Binding NewItemName}"
+                 Grid.Row="1" Grid.Column="0" />
+        
+        <Button Content="Add Item"
+                Command="{Binding AddItem}" CommandParameter="{Binding Text, ElementName=NewItem}"
+                Grid.Row="1" Grid.Column="1"/>
+
+        <DockPanel Visibility="{Binding SelectedItem, Converter={StaticResource ItemVisibilityConverter}}"
+                   Grid.Row="3" Grid.Column="0"
+                   Grid.ColumnSpan="2">
+            <TextBlock Text="Name:" Margin="10,5,10,5"/>
+            <TextBox Text="{Binding SelectedItem.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        </DockPanel>
     </Grid>
 </Window>
