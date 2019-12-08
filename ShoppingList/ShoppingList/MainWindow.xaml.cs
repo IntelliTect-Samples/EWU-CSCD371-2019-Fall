@@ -1,4 +1,9 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace ShoppingList
 {
@@ -9,6 +14,7 @@ namespace ShoppingList
     {
         public MainWindow()
         {
+            this.DataContext = new MainWindowViewModel();
             InitializeComponent();
         }
     }

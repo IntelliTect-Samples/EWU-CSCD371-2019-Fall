@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         Title="MainWindow" Height="450" Width="800">
+    
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+
+        </Grid.ColumnDefinitions>
+
+        <ListBox 
+            x:Name="ShoppingList" 
+            ItemsSource="{Binding MyShoppingList}"
+            SelectedItem="{Binding SelectedShopItem}">
+            
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="x:Type local:ShopItem">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
     </Grid>
 </Window>
