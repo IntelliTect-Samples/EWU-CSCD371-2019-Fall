@@ -21,7 +21,7 @@
             SelectedItem="{Binding SelectedShopItem}">
             
             <ListBox.ItemTemplate>
-                <DataTemplate DataType="x:Type local:ShopItem">
+                <DataTemplate DataType="{x:Type local:ShopItem}">
                     <StackPanel>
                         <TextBlock Text="{Binding Name}"/>
                     </StackPanel>
