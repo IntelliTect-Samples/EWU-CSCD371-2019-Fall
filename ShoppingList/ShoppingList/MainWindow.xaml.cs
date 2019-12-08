@@ -1,31 +1,22 @@
-﻿using System.Windows;
+﻿
+using System.Windows;
 
 namespace ShoppingList
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+		public ViewModel ViewModel { get; }
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ListModel();
+            DataContext = new MainWindowViewModel();
+			ViewModel = new ViewModel();
         }
 
-        public void listBoxChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
-        }
-
-        public void AddBtnClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        public void ChangeBtnClick(object sender, RoutedEventArgs e)
-        {
-
-        }
+		private void TextBoxGotKeyboardFocus(object sender,
+				System.Windows.Input.KeyboardFocusChangedEventArgs e)
+		{
+			ViewModel.MainWindow.SelectedItem = null;
+		}
     }
 }
