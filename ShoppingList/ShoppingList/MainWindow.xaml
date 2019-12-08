@@ -7,6 +7,18 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         Title="MainWindow" Height="550" Width="800">
+
+	<Window.Resources>
+		<DataTemplate DataType="{x:Type local:Item}">
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="-> " />
+				<TextBlock Text="{Binding Name}" />
+			<StackPanel Orientation="Horizontal">
+		</DataTemplate>
+
+		<local:ItemVisibilityConverter x:Key="ItemVisibilityConverter" />
+	</Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -26,6 +38,7 @@
         <ListBox
             x:Name="ShoppingList"
             ItemsSource="{ Binding ShoppingList }"
+			SelectedItem="{ Binding SelectedItem }"
             Grid.Column="0"
             Grid.RowSpan="3"
             Background="Blue"
