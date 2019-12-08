@@ -4,30 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
-        mc:Ignorable="d"
+        mc:Ignorable="d"        
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="300" FontFamily="Lucida" FontSize="24">
     
-    <Grid>
+    <Grid Background="DimGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>
-
         </Grid.ColumnDefinitions>
-
-        <ListBox 
-            x:Name="ShoppingList" 
-            ItemsSource="{Binding MyShoppingList}"
-            SelectedItem="{Binding SelectedShopItem}">
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListBox x:Name="ShoppingListBox" Grid.Row="0" Background="WhiteSmoke"
+                 ItemsSource="{Binding MyShoppingList}" SelectedItem="{Binding SelectedShopItem, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:ShopItem}">
-                    <StackPanel>
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Name}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
+        <TextBox Visibility="Collapsed" Grid.Row="1" Background="LightGray" BorderThickness="1" BorderBrush="DimGray"/>
+        <Button Content="Add Item" Command="{Binding OnAddItem}" Grid.Row="2" Background="LightGray"/>
     </Grid>
 </Window>

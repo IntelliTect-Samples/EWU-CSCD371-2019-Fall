@@ -18,6 +18,20 @@ namespace ShoppingList
             set => SetProperty(ref _SelectedShopItem, value);
         }
 
+        private string _NewName;
+        public string NewName
+        {
+            get => _NewName;
+            set => SetProperty(ref _NewName, value);
+        }
+
+        private string _NewPrice;
+        public string NewPrice
+        {
+            get => _NewPrice;
+            set => SetProperty(ref _NewPrice, value);
+        }
+
         public RelayCommand AddItem { get; }
         public RelayCommand<ShopItem> RemoveItem { get; }
 
