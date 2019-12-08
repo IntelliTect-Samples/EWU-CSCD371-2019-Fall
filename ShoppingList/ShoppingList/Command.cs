@@ -12,6 +12,7 @@ namespace ShoppingList
         public Command(Action method)
         {
             Method = method ?? throw new ArgumentNullException(nameof(method));
+            /*TODO*/
         }
 
         public bool CanExecute(object parameter)
