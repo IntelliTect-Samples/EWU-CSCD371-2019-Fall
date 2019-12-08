@@ -18,32 +18,23 @@ namespace ShoppingList
             set => SetProperty(ref _SelectedShopItem, value);
         }
 
-        private string _NewName;
+        private string _NewName = "";
         public string NewName
         {
             get => _NewName;
             set => SetProperty(ref _NewName, value);
         }
 
-        private string _NewPrice;
-        public string NewPrice
-        {
-            get => _NewPrice;
-            set => SetProperty(ref _NewPrice, value);
-        }
-
         public RelayCommand AddItem { get; }
-        public RelayCommand<ShopItem> RemoveItem { get; }
 
         public MainWindowViewModel()
         {
-            MyShoppingList.Add(new ShopItem("Banana", 1.0));
-            MyShoppingList.Add(new ShopItem("Apple", 1.50));
-            MyShoppingList.Add(new ShopItem("Peach", 2.00));
+            MyShoppingList.Add(new ShopItem("Banana"));
+            MyShoppingList.Add(new ShopItem("Apple"));
+            MyShoppingList.Add(new ShopItem("Peach"));
             _SelectedShopItem = MyShoppingList.First();
 
             AddItem = new RelayCommand(OnAddItem);
-            RemoveItem = new RelayCommand<ShopItem>(OnRemoveItem);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -60,12 +51,14 @@ namespace ShoppingList
 
         private void OnAddItem()
         {
-
+            if (!string.IsNullOrWhiteSpace(NewName))
+            {
+                var newItem = new ShopItem(NewName);
+                MyShoppingList.Add(newItem);
+                SelectedShopItem = newItem;
+                NewName = "";
+            }
         }
 
-        private void OnRemoveItem(ShopItem item)
-        {
-
-        }
     }
 }

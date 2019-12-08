@@ -7,13 +7,10 @@ namespace ShoppingList
     public class ShopItem
     {
         public string Name { get; set; }
-        public double Price { get; set; }
 
-
-        public ShopItem(string name, double price)
+        public ShopItem(string name)
         {
             Name = name;
-            Price = price;
         }
     }
 }
