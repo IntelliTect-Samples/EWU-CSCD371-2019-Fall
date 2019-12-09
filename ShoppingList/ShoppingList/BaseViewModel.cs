@@ -10,7 +10,7 @@ namespace ShoppingList
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private void SetProperty<T>(ref T field, T value,
+        protected void SetProperty<T>(ref T field, T value,
             [CallerMemberName]string? propertyName = null)
         {
             if(!EqualityComparer<T>.Default.Equals(field, value))
