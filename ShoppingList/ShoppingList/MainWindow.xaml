@@ -44,17 +44,22 @@
 
         <Grid Grid.Row="1" Visibility="{Binding SelectedListItem, Converter={StaticResource ItemEditorVisibilityConverter}}">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="ItemEditor" Grid.Column="0" Background="LightGray" BorderThickness="1.5" BorderBrush="DimGray"
+            <StackPanel Grid.Column="0">
+                <Button Content="↑" Command="{Binding MoveUpCommand}" Width="20" Height="20" FontSize="16"/>
+                <Button Content="↓" Command="{Binding MoveDownCommand}" Width="20" Height="20" FontSize="16"/>
+            </StackPanel>
+            <TextBox x:Name="ItemEditor" Grid.Column="1" Background="LightGray" BorderThickness="1.5" BorderBrush="DimGray"
                      Text="{Binding SelectedListItem.Text, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding DeselectCommand}"/>
                     <KeyBinding Key="Tab" Command="{Binding DeselectCommand}"/>
                 </TextBox.InputBindings>
             </TextBox>
-            <Button Content="Remove" FontSize="18" Grid.Column="1"
+            <Button Content="Remove" FontSize="18" Grid.Column="2"
                     Command="{Binding DeleteItemCommand}"/>
         </Grid>
 

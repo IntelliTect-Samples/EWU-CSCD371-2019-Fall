@@ -19,7 +19,7 @@ namespace ShoppingList.Tests
         }
 
         [TestMethod]
-        public void SelectedListItem_Set_RemovesCurrentSelectedBlankItemFromShoppingItems()
+        public void SelectedListItem_Setter_RemovesCurrentSelectedBlankItemFromShoppingItems()
         {
             MainWindowViewModel viewModel = new MainWindowViewModel();
             viewModel.AddItemCommand.Execute(null);
@@ -49,7 +49,7 @@ namespace ShoppingList.Tests
         }
 
         [TestMethod]
-        public void DeleteItem()
+        public void DeleteItem_RemovesItemFromList()
         {
             MainWindowViewModel viewModel = new MainWindowViewModel();
             viewModel.AddItemCommand.Execute(null);
@@ -59,6 +59,37 @@ namespace ShoppingList.Tests
 
             Assert.IsNull(viewModel.SelectedListItem);
             Assert.AreEqual<int>(0, viewModel.ShoppingItems.Count);
+        }
+
+        [TestMethod]
+        public void MoveUp_ShiftsSelectedItemTowardStartOfList()
+        {
+            MainWindowViewModel viewModel = new MainWindowViewModel();
+            viewModel.AddItemCommand.Execute(null);
+            viewModel.SelectedListItem!.Text = "item 1";
+            viewModel.AddItemCommand.Execute(null);
+            viewModel.SelectedListItem!.Text = "item 2";
+            Item expected = viewModel.SelectedListItem;
+
+            viewModel.MoveUpCommand.Execute(null);
+
+            Assert.AreEqual<Item>(expected, viewModel.ShoppingItems[0]); // ref comparison is fine
+        }
+
+        [TestMethod]
+        public void MoveDown_ShiftsSelectedItemTowardEndOfList()
+        {
+            MainWindowViewModel viewModel = new MainWindowViewModel();
+            viewModel.AddItemCommand.Execute(null);
+            viewModel.SelectedListItem!.Text = "item 1";
+            viewModel.AddItemCommand.Execute(null);
+            viewModel.SelectedListItem!.Text = "item 2";
+            Item expected = viewModel.SelectedListItem;
+            viewModel.SelectedListItem = viewModel.ShoppingItems[0];
+
+            viewModel.MoveDownCommand.Execute(null);
+
+            Assert.AreEqual<Item>(expected, viewModel.ShoppingItems[0]); // ref comparison is fine
         }
     }
 }

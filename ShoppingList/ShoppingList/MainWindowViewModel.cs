@@ -7,6 +7,7 @@ namespace ShoppingList
     {
         public ObservableCollection<Item> ShoppingItems { get; } = new ObservableCollection<Item>();
 
+        private int SelectedIndex { get; set; }
         private Item? _SelectedListItem;
         public Item? SelectedListItem
         {
@@ -19,6 +20,7 @@ namespace ShoppingList
                     ShoppingItems.Remove(_SelectedListItem);
                 }
                 SetProperty(ref _SelectedListItem, value);
+                SelectedIndex = ShoppingItems.IndexOf(value!);
             }
         }
 
@@ -27,6 +29,8 @@ namespace ShoppingList
             AddItemCommand = new Command(OnAddItem);
             DeselectCommand = new Command(OnDeselect);
             DeleteItemCommand = new Command(OnDeleteItem);
+            MoveUpCommand = new Command(OnMoveUp);
+            MoveDownCommand = new Command(OnMoveDown);
         }
 
         public ICommand AddItemCommand { get; }
@@ -46,6 +50,24 @@ namespace ShoppingList
 
             SelectedListItem.Text = "";
             OnDeselect();
+        }
+
+        // moves toward start of list
+        public ICommand MoveUpCommand { get; }
+        private void OnMoveUp()
+        {
+            if (SelectedListItem is null || SelectedIndex <= 0) return;
+
+            ShoppingItems.Move(SelectedIndex, --SelectedIndex);
+        }
+
+        // moves toward end of list
+        public ICommand MoveDownCommand { get; }
+        private void OnMoveDown()
+        {
+            if (SelectedListItem is null || SelectedIndex == ShoppingItems.Count - 1) return;
+
+            ShoppingItems.Move(SelectedIndex, ++SelectedIndex);
         }
     }
 }
