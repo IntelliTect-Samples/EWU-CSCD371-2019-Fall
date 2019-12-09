@@ -7,6 +7,21 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="TitleRow" Height="2*"/>
+            <RowDefinition x:Name="ListRow" Height="15*"/>
+            <RowDefinition x:Name="AddButtonRow" Height="1*"/>
+            <RowDefinition x:Name="EditRow" Height="1*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Shopping List" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <ListBox Grid.Row="1" x:Name="ShoppingList" ItemsSource="{Binding Items}" SelectedItem="{Binding CurrentItem}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:ShoppingItem}">
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Grid.Row="2" Content="Add" Name="AddButton" Command="{Binding AddItemCommand}"/>
+        <TextBox x:Name="EditBox" Grid.Row="3" Text="{Binding CurrentItem.Name, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </Window>
