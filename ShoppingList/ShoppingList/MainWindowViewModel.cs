@@ -52,7 +52,7 @@ namespace ShoppingList
 
         private void OnAddNewItem()
         {
-            if(Text != "")
+            if(!string.IsNullOrWhiteSpace(Text))
             {
                 ShoppingList.Add(new ShoppingItem(Text));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShoppingList)));
