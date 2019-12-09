@@ -5,8 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        TextElement.FontSize="25"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
+        Title="MainWindow" MinHeight="450" MinWidth="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" VerticalAlignment="Center">
+            <TextBox Background="BurlyWood" Text="{Binding Text}" TextAlignment="Center"/>
+            <Button Content="Add New Item" Command="{Binding AddNewItemCommand}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="0">
+            <TextBlock TextAlignment="Center" Text="Edit Item"/>
+            <TextBox Background="BurlyWood" TextAlignment="Center" Text="{Binding SelectedItem.Name, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+        <ListBox Background="BurlyWood" Grid.Column="1" Grid.RowSpan="3" ItemsSource="{Binding ShoppingList}" SelectedItem="{Binding SelectedItem}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:ShoppingItem}">
+                    <StackPanel >
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
     </Grid>
 </Window>
