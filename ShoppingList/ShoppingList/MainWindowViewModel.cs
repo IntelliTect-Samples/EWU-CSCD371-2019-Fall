@@ -38,8 +38,6 @@ namespace ShoppingList
 
         public ICommand AddNewItemCommand { get; }
 
-        public ICommand AddPersonCommand { get; }
-
         public ObservableCollection<ShoppingItem> ShoppingList { get; } = new ObservableCollection<ShoppingItem>();
 
         public MainWindowViewModel()
