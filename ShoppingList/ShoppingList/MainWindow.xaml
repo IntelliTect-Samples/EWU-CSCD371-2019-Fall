@@ -17,7 +17,9 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <TextBox Text="{Binding ItemName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                         Background="LightBlue"/>
+                         Background="LightBlue"
+                         BorderBrush="DarkGray"
+                         BorderThickness="3"/>
             </Grid>
         </DataTemplate>
     </Window.Resources>

@@ -14,17 +14,8 @@ namespace ShoppingList
         private Item? _SelectedItem;
         private string _NewItemName;
         public RelayCommand? AddItem { get; }
-        public Item? SelectedItem
-        {
-            get => _SelectedItem;
-            set => Set(ref _SelectedItem, value);
-        }
-
-        public string NewItemName
-        {
-            get => _NewItemName;
-            set => Set(ref _NewItemName, value);
-        }
+        public Item? SelectedItem { get => _SelectedItem; set => Set(ref _SelectedItem, value); }
+        public string NewItemName { get => _NewItemName; set => Set(ref _NewItemName, value); }
 
         public MainWindowViewModel()
         {
