@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        TextElement.FontSize="25"
+        Title="Shopping List" Height="450" Width="500">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="125"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListBox x:Name="MyListBox" ItemsSource="{Binding Items}" Grid.Row="0" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch" Background="Gray">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBox Text="{Binding Name}" BorderThickness="0" Background="LightGray"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <TextBox Text="{Binding ItemName}" Grid.Row="1" Grid.Column="0" Background="LightGray"/>
+        <Button Content="Add Item" Command="{Binding AddItemCommand}" Grid.Row="1" Grid.Column="1" Background="LightSlateGray"/>
     </Grid>
 </Window>
