@@ -3,9 +3,14 @@ using System.ComponentModel;
 using System.Windows.Input;
 using System;
 
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight;
+
+using MvvmDialogs;
+
 namespace ShoppingList
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : ViewModelBase
     {
         private string _StrToAdd = "";
         public string StrToAdd
@@ -21,8 +26,6 @@ namespace ShoppingList
         	set => _SelectedItem = value;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public ObservableCollection<Item?> ShoppingList { get; } 
             = new ObservableCollection<Item?>();
 
@@ -31,8 +34,8 @@ namespace ShoppingList
 
         public MainWindowViewModel()
         {
-            AddItemCommand = new Command(OnAppendItem);
-            DeleteItemCommand = new Command(OnDeleteItem);
+            AddItemCommand = new RelayCommand(OnAppendItem);
+            DeleteItemCommand = new RelayCommand(OnDeleteItem);
         }
 
         public void OnAppendItem()
@@ -46,7 +49,7 @@ namespace ShoppingList
 
 		public void OnDeleteItem()
 		{
-			if (!(SelectedItem is null))
+			if (SelectedItem != null)
 			{
 				ShoppingList.Remove(SelectedItem);
 				SelectedItem = null;

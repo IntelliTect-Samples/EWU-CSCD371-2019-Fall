@@ -3,88 +3,76 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
-        Title="MainWindow" Height="550" Width="800">
+        MinHeight="350"
+        MinWidth="650"
+        TextElement.FontSize="20"
+        x:Name="MainWindowSizing"
+        WindowStartupLocation="CenterScreen"
+        md:DialogServiceViews.IsRegistered="True"
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainWindow}"
+        Title="Shopping List" Height="450" Width="800">
 
-	<Window.Resources>
-		<DataTemplate DataType="{x:Type local:Item}">
-			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="-> " />
-				<TextBlock Text="{Binding Name}" />
-			<StackPanel Orientation="Horizontal">
-		</DataTemplate>
+    <Window.Resources>
+        <local:ItemVisibilityConverter x:Key="ItemVisibilityConverter"/>
 
-		<local:ItemVisibilityConverter x:Key="ItemVisibilityConverter" />
-	</Window.Resources>
-
+        <DataTemplate DataType="{x:Type local:Item}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="> " />
+                <TextBlock Text="{Binding Name}" />
+            </StackPanel>
+        </DataTemplate>
+        
+    </Window.Resources>
+        
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="1" />
-        <StackPanel Grid.Column="2" />
+        <StackPanel Grid.Column="1"/>
+        <StackPanel Grid.Column="2"/>
 
-        <ListBox
-            x:Name="ShoppingList"
-            ItemsSource="{ Binding ShoppingList }"
-			SelectedItem="{ Binding SelectedItem }"
-            Grid.Column="0"
-            Grid.RowSpan="3"
-            Background="Blue"
-            SelectionMode="Single"
-            SelectionChanged="listBoxChanged"
-            FontSize="30">
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type local:Item}">
-                    <StackPanel>
-                        <TextBlock Text="{Binding Name}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ListBox 
+            x:Name="ShoppingListBox"
+            ItemsSource="{Binding ShoppingList}" 
+            SelectedItem="{Binding SelectedItem}"
+            ItemTemplate="{StaticResource ItemTemplate}"
+            Grid.Column="0">
 
-        <TextBox
-            x:Name="TextToAppend"
-            Grid.Column="1"
-            Grid.Row="0"
-            Margin="15,15,15,15"
-            />
+		</ListBox>
 
-        <Button
-            x:Name="AppendBtn"
-            Content="Append"
-            Grid.Column="1"
-            Grid.Row="1"
-            Click="AddBtnClick"
-            Margin="15,15,15,15"
-            />
+        <TextBox Text="{Binding TextToAddToList}"
+                 Grid.Column="1">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding AddItemCommand}"/>
+            </TextBox.InputBindings>
+        </TextBox>
 
-        <TextBox
-            x:Name="TextToChange"
-            Grid.Column="2"
-            Grid.Row="0"
-            Margin="15,15,15,15"
-            />
+        <TextBox Text="{Binding SelectedItem.Name, UpdateSourceTrigger=PropertyChanged}" 
+                 Grid.Column="1" Grid.Row="1" 
+                 Visibility="{Binding SelectedItem, Converter={StaticResource ItemVisibilityConverter}}"/>
 
-        <Button
-            x:Name="ChangeBtn"
-            Content="Change"
-            Grid.Column="2"
-            Grid.Row="1"
-            Click="ChangeBtnClick"
-            Margin="15,15,15,15"
-            />
+        <Button Content="Delete From List"
+                Command="{Binding DeleteItemCommand}"
+                Visibility="{Binding SelectedItem, Converter={StaticResource ItemVisibilityConverter}}"
+                Grid.Column="2" Grid.Row="1"/>
 
+        <Button Content="Add To List" 
+                Command="{Binding AddItemCommand}" 
+                Grid.Column="2" Grid.Row="0"/>
     </Grid>
 </Window>
