@@ -45,7 +45,6 @@ namespace ShoppingList
         public MainWindowViewModel()
         {
             AddNewItemCommand = new Command(OnAddNewItem);
-            AddPersonCommand = new Command(OnAddItem);
             Text = "";
             ShoppingList.Add(new ShoppingItem("Bologna"));
             ShoppingList.Add(new ShoppingItem("Bread"));
@@ -62,12 +61,6 @@ namespace ShoppingList
                 Text = "";
             }
 
-        }
-
-        private void OnAddItem()
-        {
-            ShoppingList.Add(new ShoppingItem($"Bar{ShoppingList.Count}"));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShoppingList)));
         }
     }
 }
