@@ -5,9 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=local:MainWindowsModelView}" 
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="300">
+    
+    
+    
+    <Window.Resources>
+        <local:VisibilityConverter x:Key="VisibilityConverter"/>
+        <DataTemplate DataType="{x:Type local:Item}" x:Key="ItemTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding ItemName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         Background="LightBlue"/>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Grid Background="Aqua">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBox Text="{Binding NewItemName}"
+             Grid.Row="0" 
+             Grid.Column="0"
+             Background="AliceBlue"
+        />
+
+        <Button Content="Add Item"
+             Command="{Binding AddItem}" CommandParameter="{Binding Text, ElementName=NewItem}"
+             Grid.Row="0" Grid.Column="1"
+             Background="LightSkyBlue"
+        />
+
+        <ListBox x:Name="ItemList"
+             ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"
+             ItemTemplate="{StaticResource ItemTemplate}"
+             HorizontalContentAlignment="Stretch"
+             Grid.Row="1" 
+             Grid.Column="0"
+             Grid.ColumnSpan="2"
+             Background="LightCyan"
+        />
         
     </Grid>
 </Window>

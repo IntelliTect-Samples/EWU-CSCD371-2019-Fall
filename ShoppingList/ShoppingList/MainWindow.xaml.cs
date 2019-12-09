@@ -9,7 +9,7 @@ namespace ShoppingList
     {
         public MainWindow()
         {
-            this.DataContext = new MainWindowsModelView();
+            DataContext = new MainWindowViewModel();
             InitializeComponent();
         }
     }

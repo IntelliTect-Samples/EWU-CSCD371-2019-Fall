@@ -17,7 +17,7 @@ namespace ShoppingList
             return "Collapsed";
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type? targetType = null, object? parameter = null, CultureInfo? culture = null)
         {
             throw new InvalidOperationException();
         }
