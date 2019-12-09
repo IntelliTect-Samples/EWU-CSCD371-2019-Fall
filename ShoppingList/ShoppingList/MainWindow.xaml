@@ -4,9 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow"
+        MinWidth="800"
+        MinHeight="600">
+    <Grid Margin="150">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="10*" />
+        </Grid.RowDefinitions>
 
+        <TextBox materialDesign:HintAssist.Hint="Add New Item"
+                 materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
+                 materialDesign:HintAssist.FloatingScale="0.50"
+                 BorderBrush="Gray"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 FontSize="24"
+                 VerticalAlignment="Center" />
+        <Rectangle Grid.Row="0"
+                   Grid.Column="1"
+                   Fill="Black" />
+        <Button Grid.Row="0"
+                Grid.Column="1"
+                Content="Add Item"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Margin="5"
+                FontSize="24" />
     </Grid>
 </Window>
