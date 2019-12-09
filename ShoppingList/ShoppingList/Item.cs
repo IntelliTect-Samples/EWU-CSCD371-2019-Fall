@@ -2,6 +2,16 @@
 {
     public class Item
     {
-        public string Name { get; set; } = "New Item";
+        public string Name { get; set; } = "";
+
+        public Item(string name)
+        {
+            Name = name;
+        }
+
+        public Item()
+        {
+            Name = "";
+        }
     }
 }
