@@ -1,14 +1,7 @@
-using System;
-
-namespace ShoppingList
+﻿namespace ShoppingList
 {
-    public struct Item
+    public class Item
     {
-        public string Name;
-
-        public Item(string name)
-        {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-        }
+        public string Name { get; set; } = "New Item";
     }
 }

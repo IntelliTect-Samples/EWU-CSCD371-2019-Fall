@@ -1,59 +1,58 @@
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Input;
-using System;
-
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight;
-
-using MvvmDialogs;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ShoppingList
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private string _StrToAdd = "";
-        public string StrToAdd
-    	{
-        	get => _StrToAdd;
-        	set => _StrToAdd = value;
-        }
-        
-        private Item? _SelectedItem = null;
+        public ObservableCollection<Item> ShoppingList { get; } = new ObservableCollection<Item>();
+
+        private Item? _SelectedItem;
         public Item? SelectedItem
         {
-        	get => _SelectedItem!;
-        	set => _SelectedItem = value;
+            get => _SelectedItem;
+            set => Set(ref _SelectedItem, value);
         }
 
-        public ObservableCollection<Item?> ShoppingList { get; } 
-            = new ObservableCollection<Item?>();
+        private string _NameToAppend = "";
+        public string NameToAppend
+        {
+            get => _NameToAppend;
+            set => Set(ref _NameToAppend, value);
+        }
 
-        public ICommand AddItemCommand { get; }
-        public ICommand DeleteItemCommand { get; }
+        public RelayCommand AddItem { get; }
+        public RelayCommand<Item> RemoveItem { get; }
+
+        private void OnAddItem()
+        {
+            if (!string.IsNullOrWhiteSpace(NameToAppend))
+            {
+                var newItem = new Item { Name = NameToAppend };
+                ShoppingList.Add(newItem);
+                SelectedItem = newItem;
+                NameToAppend = "";
+            }
+        }
+
+        private void OnRemoveItem(Item item)
+        {
+            if (object.ReferenceEquals(SelectedItem, item))
+                SelectedItem = null;
+
+            ShoppingList.RemoveAt(
+                ShoppingList.Zip(
+                    Enumerable.Range(0, ShoppingList.Count))
+                        .First(en => object.ReferenceEquals(en.First, item))
+                            .Second);
+        }
 
         public MainWindowViewModel()
         {
-            AddItemCommand = new RelayCommand(OnAppendItem);
-            DeleteItemCommand = new RelayCommand(OnDeleteItem);
+            AddItem = new RelayCommand(OnAddItem);
+            RemoveItem = new RelayCommand<Item>(OnRemoveItem);
         }
-
-        public void OnAppendItem()
-        {
-			if (!string.IsNullOrWhiteSpace(StrToAdd))
-				ShoppingList.Add(new Item(StrToAdd));
-
-			StrToAdd = "";
-			SelectedItem = null;
-        }
-
-		public void OnDeleteItem()
-		{
-			if (SelectedItem != null)
-			{
-				ShoppingList.Remove(SelectedItem);
-				SelectedItem = null;
-			}
-		}
     }
 }

@@ -1,22 +1,16 @@
-﻿
-using System.Windows;
+﻿using System.Windows;
 
 namespace ShoppingList
 {
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
     public partial class MainWindow : Window
     {
-		public ViewModelLocator ViewModel { get; }
-		
         public MainWindow()
         {
-			ViewModel = new ViewModelLocator();
+            DataContext = new MainWindowViewModel();
             InitializeComponent();
         }
-
-		private void TextBoxGotKeyboardFocus(object sender,
-				System.Windows.Input.KeyboardFocusChangedEventArgs e)
-		{
-			ViewModel.mainWindow.SelectedItem = null;
-		}
     }
 }
