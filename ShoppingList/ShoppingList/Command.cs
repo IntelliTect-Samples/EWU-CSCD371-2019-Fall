@@ -22,5 +22,6 @@ namespace ShoppingList
         public void Execute(object parameter) => Method?.Invoke();
 
         public event EventHandler CanExecuteChanged;
+
     }
 }
