@@ -5,8 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
+        Title="Shopping List" Height="800" Width="800" MinHeight="150" MinWidth="125"
+        FontFamily="Lucida" FontSize="24">
 
+    <Window.Resources>
+        <local:ItemVisibilityConverter x:Key="VisibilityConverter"/>
+    </Window.Resources>
+
+    <Grid Background="Azure">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Width="200" HorizontalAlignment="Left">
+            <Button Content="Edit Item" Command="{Binding AddItemCommand}">
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <TextBox Background="LemonChiffon" Width="500" HorizontalAlignment="Right" Text="{Binding SelectedItem.ItemName, UpdateSourceTrigger=PropertyChanged}">
+            </TextBox>
+        </StackPanel>
+        <ListBox Background="AntiqueWhite" Margin="200,140,200,107" Grid.Row="1" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:Item}">
+                    <TextBlock Text="{Binding ItemName}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">
+            <TextBox Background="LemonChiffon" Width="500" Text="{Binding NewItemText}">
+            </TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="0" Width="200" HorizontalAlignment="Left">
+            <Button Content="Add Item" Command="{Binding AddItemCommand}">
+            </Button>
+        </StackPanel>
     </Grid>
+
 </Window>
