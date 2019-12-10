@@ -9,26 +9,8 @@
 
 
     <Window.Resources>
-        <Style x:Key="EditTextStyle" TargetType="TextBlock">
-            <Setter Property="FontStyle" Value="Italic" />
-            <Setter Property="Foreground" Value="Navy" />
-        </Style>
 
-        <Style TargetType="ButtonBase" x:Key="MyButtonStyle">
-            <Setter Property="Background" Value="BurlyWood" />
-        </Style>
 
-        <Style TargetType="Button" BasedOn="{StaticResource MyButtonStyle}">
-            <Style.Triggers>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Foreground" Value="BlanchedAlmond" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style TargetType="ToggleButton" BasedOn="{StaticResource MyButtonStyle}">
-
-        </Style>
 
         <DataTemplate DataType="{x:Type local:ShoppingItem}" x:Key="ShoppingItemTemplate">
             <StackPanel>
@@ -42,22 +24,29 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-
-            <ColumnDefinition />
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition >
-                
-            </RowDefinition>
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.ColumnSpan="4">
-            
+        
+        <StackPanel Grid.Row="1"  Grid.Column="1" Background="AliceBlue">
+            <TextBlock Text="Edit Item"></TextBlock>
             <TextBox Text="{Binding SelectedItem.ItemName, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
-        <ListBox ItemsSource="{Binding ShoppingList}" Grid.Column="1" Grid.RowSpan="1" x:Name="ShoppingListList"
+        <StackPanel Grid.Row="2" Background="Fuchsia">
+            <TextBlock Text="New Item"></TextBlock>
+            <TextBox Text="{Binding NewShoppingItem}"/>
+            <Button Command="{Binding AddShoppingItemCommand}">
+                <TextBlock Text="Add Item" />
+            </Button>
+        </StackPanel>
+
+        <ListBox ItemsSource="{Binding ShoppingList}" Grid.Column="1" Grid.ColumnSpan="1" Grid.RowSpan="1" x:Name="ShoppingListList"
                  SelectedItem="{Binding SelectedItem}" ItemTemplate="{StaticResource ShoppingItemTemplate}" />
     </Grid>
 </Window>

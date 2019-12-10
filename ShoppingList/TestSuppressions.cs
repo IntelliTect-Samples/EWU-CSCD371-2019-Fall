@@ -1,0 +1,1 @@
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "Underscores in test method naming useful for understanding what test the method is performing")]
