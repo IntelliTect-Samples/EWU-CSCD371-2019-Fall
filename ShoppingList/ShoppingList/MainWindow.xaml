@@ -43,8 +43,7 @@
                 </TextBlock.TextDecorations>
             </TextBlock>
             <TextBlock Text="Name:" FontSize="16" Margin="10,0,0,0" />
-            <TextBox Text="{Binding SelectedItem.Name}" FontSize="16" TextAlignment="Center" Height="35"/>
-            <Button x:Name="ChangeItemNameBtn" HorizontalAlignment="Stretch" Width="178" Height="35" Content="Change Item Name" FontSize="16" Grid.Row="1" Margin="0,30,0,0"/>
+            <TextBox Text="{Binding SelectedItem.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="16" TextAlignment="Center" Height="35"/>
         </StackPanel>
 
         <Button x:Name="AddItemBtn" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="100" Height="35" Content="Add Item" FontSize="16" Grid.Row="0" Command="{Binding AddItemCommand}"/>
