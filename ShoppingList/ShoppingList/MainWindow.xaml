@@ -7,52 +7,64 @@
         mc:Ignorable="d" Topmost="True"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Background="Gray">
+    <Window.Resources>
+        <local:ItemVisibilityConverter x:Key="ItemVisibilityConverter"/>
+        <DataTemplate DataType="{x:Type local:Item}" x:Key="ItemTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Name}" Grid.Column="0"/>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition />
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <ListBox x:Name="ItemList"
+                 ItemsSource="{Binding ShoppingList}" 
+                 SelectedItem="{Binding SelectedItem}"
+                 ItemTemplate="{StaticResource ItemTemplate}"
+                 Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
 
-        <TextBlock Grid.ColumnSpan="4"
-                   Text="Shopping List" 
-                   Background="DodgerBlue" 
-                   HorizontalAlignment="Center" 
-                   FontSize="20"/>
+        <TextBlock Text="Shopping List" 
+                   FontSize="22" 
+                   FontWeight="Heavy" 
+                   FontStyle="Italic" 
+                   HorizontalAlignment="Center"
+                   Grid.Row="0" Grid.ColumnSpan="2"/>
 
-        <ListBox x:Name="ItemList" 
-                 Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" 
-                 ItemsSource="{Binding ShoppingList}"
-                 SelectedItem="{Binding SelectedItem}">
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type local:Item}">
-                    <TextBlock Text="{Binding Name}" FontSize="12"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
-        <TextBlock Text="Enter A New Item:"
-                   Grid.Row="2"
-                   Background="Gray"/>
-
-        <TextBox Grid.Row="3" Text="{Binding NewName}" Background="Yellow">
+        <TextBox Text="{Binding NewName}"
+                 Grid.Row="2" Grid.Column="0" >
             <TextBox.InputBindings>
-                <KeyBinding Key="{Binding AddItemButton}"/>
+                <KeyBinding Key="Enter" 
+                            Command="{Binding AddItem}" 
+                             CommandParameter="{Binding Text, ElementName=NewItem}"/>
             </TextBox.InputBindings>
         </TextBox>
 
-        <Button x:Name="AddItemButton"
-                    Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"
-                    Content="Add Item"
-                    Command="{Binding AddItemCommand}"
-                    CommandParameter="{Binding Name, ElementName=ItemList}"/>
+        <Button Content="Add Item"
+                Command="{Binding AddItemCommand}" 
+                CommandParameter="{Binding Text, ElementName=NewItem}"
+                Grid.Row="3" Grid.Column="0"/>
+
+        <DockPanel Visibility="{Binding SelectedItem, Converter={StaticResource ItemVisibilityConverter}}"
+                   Grid.Row="2" Grid.Column="1"
+                   Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <TextBlock Text="Edit Name:" Background="Gray"/>
+            <TextBox Text="{Binding SelectedItem.Name, UpdateSourceTrigger=PropertyChanged}"/>
+
+        </DockPanel>
     </Grid>
 </Window>
