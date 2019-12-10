@@ -5,10 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"        
-        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
-        Title="MainWindow" Height="600" Width="450" FontFamily="Lucida" FontSize="24">
-    
+        Title="MainWindow" Height="600" Width="450" FontSize="24">
+
+    <Window.Resources>
+
+        <local:VisibilityConverter x:Key="Visibility"/>
+
+    </Window.Resources>
+
+
     <Grid Background="DimGray">
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
@@ -17,17 +24,28 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        
         <ListBox x:Name="ShoppingListBox" Grid.Row="0" Grid.Column="0" Background="WhiteSmoke"
                  ItemsSource="{Binding MyShoppingList}" SelectedItem="{Binding SelectedShopItem}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:ShopItem}">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel>
                         <TextBlock Text="{Binding Name}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <TextBox Text="{Binding NewName}" Grid.Row="1" Background="LightGray" BorderThickness="1" BorderBrush="DimGray"/>
-        <Button Content="Add Item" Command="{Binding AddItem}" CommandParameter="{Binding Text, ElementName=NewItem}" Grid.Row="2" Background="LightSlateGray"/>
+        
+        <TextBox Text="{Binding NewName}" 
+                 Grid.Row="1" 
+                 Background="LightGray" 
+                 BorderThickness="1" 
+                 BorderBrush="DimGray"/>
+        
+        <Button Content="Add Item" 
+                Command="{Binding AddItem}"
+                Grid.Row="2" 
+                Background="LightSlateGray"/>
+    
     </Grid>
 </Window>
