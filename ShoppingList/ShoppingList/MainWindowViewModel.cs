@@ -56,18 +56,20 @@ namespace ShoppingList
         public ICommand MoveUpCommand { get; }
         private void OnMoveUp()
         {
-            if (SelectedListItem is null || SelectedIndex <= 0) return;
-
-            ShoppingItems.Move(SelectedIndex, --SelectedIndex);
+            if (SelectedListItem is Item && SelectedIndex > 0)
+            {
+                ShoppingItems.Move(SelectedIndex, --SelectedIndex);
+            }
         }
 
         // moves toward end of list
         public ICommand MoveDownCommand { get; }
         private void OnMoveDown()
         {
-            if (SelectedListItem is null || SelectedIndex == ShoppingItems.Count - 1) return;
-
-            ShoppingItems.Move(SelectedIndex, ++SelectedIndex);
+            if (SelectedListItem is Item && SelectedIndex < ShoppingItems.Count - 1)
+            {
+                ShoppingItems.Move(SelectedIndex, ++SelectedIndex);
+            }
         }
     }
 }

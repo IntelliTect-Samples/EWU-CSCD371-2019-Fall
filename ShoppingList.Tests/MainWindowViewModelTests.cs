@@ -62,6 +62,30 @@ namespace ShoppingList.Tests
         }
 
         [TestMethod]
+        public void MoveUp_CannotReorder_DoesNotThrow()
+        {
+            MainWindowViewModel viewModel = new MainWindowViewModel();
+            viewModel.AddItemCommand.Execute(null);
+            viewModel.SelectedListItem!.Text = "item 1";
+
+            viewModel.MoveUpCommand.Execute(null);
+
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void MoveDown_CannotReorder_DoesNotThrow()
+        {
+            MainWindowViewModel viewModel = new MainWindowViewModel();
+            viewModel.AddItemCommand.Execute(null);
+            viewModel.SelectedListItem!.Text = "item 1";
+
+            viewModel.MoveDownCommand.Execute(null);
+
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
         public void MoveUp_ShiftsSelectedItemTowardStartOfList()
         {
             MainWindowViewModel viewModel = new MainWindowViewModel();
