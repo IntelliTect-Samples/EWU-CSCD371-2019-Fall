@@ -46,36 +46,6 @@ namespace ShoppingList.Tests
         }
 
         [TestMethod]
-        public void RemoveItem_Success()
-        {
-            var sut = new MainWindowViewModel();
-
-            var expected = new Item("expected");
-            var items = new List<Item>();
-
-            var names = new[] 
-            {
-                "one",
-                "two",
-                "expected",
-                "three",
-                "four",
-            };
-
-            foreach (string name in names)
-            {
-                var it = new Item(name);
-                sut.ShoppingList.Add(it);
-                if (name != "expected")
-                    items.Add(it);
-            }
-
-            sut.RemoveItem.Execute(expected);
-
-            CollectionAssert.AreEqual(items, sut.ShoppingList);
-        }
-
-        [TestMethod]
         public void RemoveItem_SelectedItem_ClearsSelection()
         {
             var sut = new MainWindowViewModel();
