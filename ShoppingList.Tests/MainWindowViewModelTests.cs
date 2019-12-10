@@ -40,7 +40,7 @@ namespace ShoppingList.Tests
             viewModel.AddShoppingItemCommand.Execute(viewModel.NewShoppingItem);
 
             Assert.AreNotEqual(shoppingListSize + 1, viewModel.ShoppingList.Count);
-            Assert.AreNotEqual("", viewModel.ShoppingList[viewModel.ShoppingList.Count - 1].ItemName);
+            Assert.AreNotEqual(inputString, viewModel.ShoppingList[viewModel.ShoppingList.Count - 1].ItemName);
         }
 
         [TestMethod]
