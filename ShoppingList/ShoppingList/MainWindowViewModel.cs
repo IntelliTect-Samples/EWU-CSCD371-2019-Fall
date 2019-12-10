@@ -41,7 +41,7 @@ namespace ShoppingList
 
         private void OnAddShoppingItem()
         {
-            if(!(NewShoppingItem.Length == 0))
+            if(!String.IsNullOrWhiteSpace(NewShoppingItem))
             {
                 var newShoppingItem = new ShoppingItem(NewShoppingItem);
                 ShoppingList.Add(newShoppingItem);

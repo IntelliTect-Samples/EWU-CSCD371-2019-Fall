@@ -27,15 +27,17 @@ namespace ShoppingList.Tests
         }
 
         [TestMethod]
-        public void OnAddShopingItem_DoesntAddEmptyItem()
+        [DataRow("\n")]
+        [DataRow("  ")]
+        [DataRow(" ")]
+        public void OnAddShopingItem_DoesntAddEmptyItem(string inputString)
         {
             MainWindowViewModel viewModel = new MainWindowViewModel();
 
-            viewModel.NewShoppingItem = "";
+            viewModel.NewShoppingItem = inputString;
             int shoppingListSize = viewModel.ShoppingList.Count;
 
-            ICommand addItemCommand = viewModel.AddShoppingItemCommand;
-            addItemCommand.Execute(viewModel.NewShoppingItem);
+            viewModel.AddShoppingItemCommand.Execute(viewModel.NewShoppingItem);
 
             Assert.AreNotEqual(shoppingListSize + 1, viewModel.ShoppingList.Count);
             Assert.AreNotEqual("", viewModel.ShoppingList[viewModel.ShoppingList.Count - 1].ItemName);
