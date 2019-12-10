@@ -29,8 +29,8 @@ namespace ShoppingList
             set => SetProperty(ref _Text, value);
         }
 
-        private ShoppingItem _SelectedItem;
-        public ShoppingItem SelectedItem
+        private ShoppingItem? _SelectedItem;
+        public ShoppingItem? SelectedItem
         {
             get => _SelectedItem;
             set => SetProperty(ref _SelectedItem, value);
@@ -56,9 +56,9 @@ namespace ShoppingList
             {
                 ShoppingList.Add(new ShoppingItem(Text));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShoppingList)));
-                Text = "";
-            }
 
+            }
+            Text = "";
         }
     }
 }

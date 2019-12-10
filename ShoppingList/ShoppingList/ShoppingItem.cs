@@ -3,9 +3,9 @@
     public class ShoppingItem
     {
 
-        public ShoppingItem(string v1)
+        public ShoppingItem(string name)
         {
-            this.Name = v1;
+            this.Name = name;
         }
 
         public string Name { get; set; }
