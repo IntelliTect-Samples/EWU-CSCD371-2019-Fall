@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ShoppingList
 {
@@ -38,14 +39,6 @@ namespace ShoppingList
                 MyShoppingList.Add(newItem);
                 SelectedShopItem = newItem;
                 NewName = "";
-            }
-        }
-
-        private void OnEditItem()
-        {
-            if(!(SelectedShopItem is null))
-            {
-
             }
         }
     }

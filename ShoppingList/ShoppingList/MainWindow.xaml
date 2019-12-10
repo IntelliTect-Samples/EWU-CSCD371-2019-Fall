@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"        
-        Title="MainWindow" Height="600" Width="450" FontSize="24">
+        Title="MainWindow" Height="600" Width="450" FontSize="24" >
 
     <Window.Resources>
 
@@ -23,10 +23,15 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
-        <ListBox x:Name="ShoppingListBox" Grid.Row="0" Grid.Column="0" Background="WhiteSmoke"
-                 ItemsSource="{Binding MyShoppingList}" SelectedItem="{Binding SelectedShopItem}">
+        <ListBox x:Name="ShoppingListBox" 
+                 Grid.Row="0"
+                 Background="WhiteSmoke"
+                 ItemsSource="{Binding MyShoppingList}" 
+                 SelectedItem="{Binding SelectedShopItem}">
+            
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:ShopItem}">
                     <StackPanel>
@@ -34,6 +39,7 @@
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            
         </ListBox>
         
         <TextBox Text="{Binding NewName}" 
@@ -45,7 +51,15 @@
         <Button Content="Add Item" 
                 Command="{Binding AddItem}"
                 Grid.Row="2" 
-                Background="LightSlateGray"/>
-    
+                Background="LightSlateGray"
+                BorderBrush="Black"
+                BorderThickness="2"/>
+
+        <DockPanel Visibility="{Binding SelectedShopItem, Converter={StaticResource Visibility}}"
+                   Grid.Row="3" Grid.Column="0"
+                   Grid.ColumnSpan="2">
+            <TextBlock Text="Edit Name:" Margin="10,5"/>
+            <TextBox Text="{Binding SelectedShopItem.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        </DockPanel>
     </Grid>
 </Window>
