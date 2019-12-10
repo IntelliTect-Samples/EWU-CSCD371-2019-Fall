@@ -9,7 +9,7 @@ namespace ShoppingList
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<ShopItem> ShopList { get; } =  new ObservableCollection<ShopItem>();
+        private ObservableCollection<ShopItem> ShopList { get; } =  new ObservableCollection<ShopItem>() { new ShopItem("test") };
 
         public ICommand AddListItemCommand { get; }
 

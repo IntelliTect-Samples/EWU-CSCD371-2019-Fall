@@ -13,6 +13,14 @@
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
         <ListBox Background="LightGray" Grid.Row ="1" Name="ShopList" HorizontalAlignment="Left" VerticalAlignment="Top"
-        ItemsSource="{Binding ShopList}"/>
+        ItemsSource="{Binding ShopList}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:ShopItem}">
+                    <StackPanel >
+                        <TextBlock Text="{Binding Text}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>
