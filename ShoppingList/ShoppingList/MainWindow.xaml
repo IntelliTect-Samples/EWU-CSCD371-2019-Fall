@@ -35,11 +35,11 @@
 
         <DataTemplate DataType="{x:Type local:Person}" x:Key="PersonTemplate">
             <StackPanel>
-                <TextBlock Text="{Binding LastName}">
+                <TextBlock Text="{Binding Text}">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding FirstName}" Value="Kevin">
+                                <DataTrigger Binding="{Binding Text}" Value="Kevin">
                                     <Setter Property="Foreground" Value="MistyRose" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -60,29 +60,14 @@
             <RowDefinition />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="{Binding Text}"
-                   TextAlignment="Center" Background="Fuchsia" />
         <StackPanel Grid.Row="1">
             <ToggleButton Content="Button" Command="{Binding ChangeNameCommand}"/>
-            <TextBlock Text="First Name" Style="{StaticResource EditTextStyle}" />
-            <TextBox Text="{Binding SelectedPerson.FirstName, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock Text="Last Name" Style="{StaticResource EditTextStyle}" />
-            <TextBox Text="{Binding SelectedPerson.LastName}"/>
+            <TextBlock Text="Item to Add:" Style="{StaticResource EditTextStyle}" />
+            <TextBox Text="{Binding SelectedPerson.Text, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
-
-        <TextBlock Grid.Column="0" Grid.Row="2" TextWrapping="Wrap">
-            <TextBlock.Text>
-                <MultiBinding StringFormat="Hi {0} {1} you are {2} years old">
-                    <Binding Path="SelectedPerson.FirstName" />
-                    <Binding Path="SelectedPerson.LastName" />
-                    <Binding Path="SelectedPerson" Converter="{StaticResource PersonAgeConverter}" />
-                </MultiBinding>
-            </TextBlock.Text>
-        </TextBlock>
 
         <ListBox ItemsSource="{Binding People}" Grid.Column="1" Grid.RowSpan="2" x:Name="PeopleList"
                  SelectedItem="{Binding SelectedPerson}" ItemTemplate="{StaticResource PersonTemplate}" />
-
 
         <StackPanel Grid.Row="2" Grid.Column="1">
             <Button Content="Add Person" Command="{Binding AddPersonCommand}" />

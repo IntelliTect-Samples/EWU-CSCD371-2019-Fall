@@ -48,13 +48,12 @@ namespace ShoppingList
         public MainWindowViewModel(Func<DateTime> getNow)
         {
             Text = "Hello World";
-            ChangeNameCommand = new Command(OnChangeName, () => CanExecute);
             AddPersonCommand = new Command(OnAddPerson);
 
             var dob = getNow().Subtract(TimeSpan.FromDays(30 * 365));
 
-            People.Add(new Person("Kevin", "Bost", dob));
-            People.Add(new Person("Mark", "Mc", dob));
+            People.Add(new Person("Steak"));
+            People.Add(new Person("Potatoes"));
 
             SelectedPerson = People.First();
             GetNow = getNow ?? throw new ArgumentNullException(nameof(getNow));
@@ -62,15 +61,7 @@ namespace ShoppingList
 
         private void OnAddPerson()
         {
-            var dob = GetNow().Subtract(TimeSpan.FromDays(30 * 365));
-            People.Add(new Person("Foo", $"Bar {People.Count}", dob));
-            CanExecute = true;
-            ChangeNameCommand.InvokeCanExecuteChanged();
-        }
-
-        private void OnChangeName()
-        {
-            Text = "Kevin";
+            People.Add(new Person(Text));
         }
     }
 }

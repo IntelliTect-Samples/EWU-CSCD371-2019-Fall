@@ -8,11 +8,11 @@ namespace ShoppingList
     {
         public object Convert(object value, Type targetType = null, object parameter = null, CultureInfo culture = null)
         {
-            if (value is Person person)
+            /*if (value is Person person)
             {
                 int age = DateTime.Now.Year - person.DOB.Year;
                 return age;
-            }
+            }*/
             return null;
         }
 
