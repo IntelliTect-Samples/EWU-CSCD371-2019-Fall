@@ -47,7 +47,7 @@ namespace ShoppingList
 
         public MainWindowViewModel(Func<DateTime> getNow)
         {
-            Text = "Hello World";
+            Text = "<Edit Me>";
             AddPersonCommand = new Command(OnAddPerson);
 
             var dob = getNow().Subtract(TimeSpan.FromDays(30 * 365));

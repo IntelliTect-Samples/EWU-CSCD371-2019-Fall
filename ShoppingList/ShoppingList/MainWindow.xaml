@@ -14,17 +14,17 @@
 
         <Style x:Key="EditTextStyle" TargetType="TextBlock">
             <Setter Property="FontStyle" Value="Italic" />
-            <Setter Property="Foreground" Value="Navy" />
+            <Setter Property="Foreground" Value="White" />
         </Style>
 
         <Style TargetType="ButtonBase" x:Key="MyButtonStyle">
-            <Setter Property="Background" Value="BurlyWood" />
+            <Setter Property="Background" Value="LightGoldenrodYellow" />
         </Style>
 
         <Style TargetType="Button" BasedOn="{StaticResource MyButtonStyle}">
             <Style.Triggers>
                 <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Foreground" Value="BlanchedAlmond" />
+                    <Setter Property="Foreground" Value="DarkGray" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -39,7 +39,7 @@
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Text}" Value="Kevin">
+                                <DataTrigger Binding="{Binding Text}" Value="Placeholder">
                                     <Setter Property="Foreground" Value="MistyRose" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -50,7 +50,7 @@
         </DataTemplate>
     </Window.Resources>
 
-    <Grid Background="Lime">
+    <Grid Background="CadetBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -61,8 +61,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1">
-            <ToggleButton Content="Button" Command="{Binding ChangeNameCommand}"/>
-            <TextBlock Text="Item to Add:" Style="{StaticResource EditTextStyle}" />
+            <TextBlock Text="Edit Item:" Style="{StaticResource EditTextStyle}" />
             <TextBox Text="{Binding SelectedPerson.Text, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
@@ -70,7 +69,7 @@
                  SelectedItem="{Binding SelectedPerson}" ItemTemplate="{StaticResource PersonTemplate}" />
 
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <Button Content="Add Person" Command="{Binding AddPersonCommand}" />
+            <Button Content="Add Item" Command="{Binding AddPersonCommand}" />
         </StackPanel>
     </Grid>
 </Window>
