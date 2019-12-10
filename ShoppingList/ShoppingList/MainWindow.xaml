@@ -6,35 +6,146 @@
         xmlns:local="clr-namespace:ShoppingList"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="Shopping List"
         MinWidth="800"
         MinHeight="600">
-    <Grid Margin="150">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10*" />
-            <ColumnDefinition Width="2*" />
-        </Grid.ColumnDefinitions>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
             <RowDefinition Height="10*" />
         </Grid.RowDefinitions>
 
-        <TextBox materialDesign:HintAssist.Hint="Add New Item"
-                 materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
-                 materialDesign:HintAssist.FloatingScale="0.50"
-                 BorderBrush="Gray"
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                 FontSize="24"
-                 VerticalAlignment="Center" />
-        <Rectangle Grid.Row="0"
-                   Grid.Column="1"
-                   Fill="Black" />
-        <Button Grid.Row="0"
-                Grid.Column="1"
-                Content="Add Item"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Margin="5"
-                FontSize="24" />
+        <materialDesign:ColorZone Mode="PrimaryMid"
+                                  VerticalAlignment="Stretch"
+                                  materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                  MaxHeight="140">
+            <Grid Margin="10"
+                  VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="8*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <Viewbox Grid.Column="1">
+                    <materialDesign:ColorZone Mode="Standard"
+                                              CornerRadius="10"
+                                              Panel.ZIndex="1"
+                                              materialDesign:ShadowAssist.ShadowDepth="Depth2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Viewbox Margin="25">
+                                <TextBox x:Name="ItemName"
+                                         materialDesign:HintAssist.Hint="Item Name"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                         Width="300"
+                                         MinWidth="150"
+                                         Text="{Binding NewName}" />
+                            </Viewbox>
+
+                            <Viewbox Grid.Column="1"
+                                     Margin="25">
+                                <ComboBox x:Name="ItemAmount"
+                                          materialDesign:HintAssist.Hint="Amount"
+                                          MinWidth="72"
+                                          ItemsSource="{Binding Amounts}"
+                                          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                          SelectedIndex="{Binding NewAmount}">
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                </ComboBox>
+                            </Viewbox>
+
+                            <Viewbox Grid.Column="2"
+                                     Margin="25">
+                                <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                                        ToolTip="Add Item to List"
+                                        Background="LimeGreen"
+                                        BorderBrush="Green"
+                                        Command="{Binding AddItemCommand}"
+                                        MouseEnter="AddButton_OnMouseEnter"
+                                        MouseLeave="AddButton_OnMouseLeave">
+                                    <materialDesign:PackIcon
+                                        Kind="CheckBold"
+                                        Height="20"
+                                        Width="20" />
+                                </Button>
+                            </Viewbox>
+                        </Grid>
+                    </materialDesign:ColorZone>
+                </Viewbox>
+            </Grid>
+        </materialDesign:ColorZone>
+
+        <Grid Grid.Row="1"
+              Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <ListBox x:Name="Items"
+                     Grid.Column="1"
+                     ItemsSource="{Binding Items}"
+                     Margin="10"
+                     HorizontalAlignment="Stretch"
+                     HorizontalContentAlignment="Stretch"
+                     SelectionMode="Single"
+                     SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}"
+                     SelectedIndex="{Binding SelectedIndex}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type local:Item}">
+                        <materialDesign:Card
+                            Background="WhiteSmoke"
+                            Foreground="Black"
+                            UniformCornerRadius="6"
+                            ToolTip="Click to Edit"
+                            MouseEnter="Card_OnMouseEnter"
+                            MouseLeave="Card_OnMouseLeave">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="10">
+                                    <TextBlock Text="{Binding Name}"
+                                               FontSize="18"
+                                               TextWrapping="Wrap"
+                                               Margin="10 0 10 0" />
+                                    <TextBlock Text="{Binding GetAmountString}"
+                                               Foreground="DarkGray"
+                                               FontSize="18" />
+                                </StackPanel>
+
+                                <Button Grid.Column="1"
+                                        Padding="0"
+                                        Margin="5"
+                                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                                        ToolTip="Remove Item"
+                                        Height="30"
+                                        Width="30"
+                                        Click="RemoveButton_OnClick"
+                                        Command="{Binding RemoveItemCommand, RelativeSource={RelativeSource AncestorType=Window}}">
+                                    <materialDesign:PackIcon
+                                        Kind="CloseBoxOutline"
+                                        Height="25"
+                                        Width="25" />
+                                </Button>
+                            </Grid>
+                        </materialDesign:Card>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
     </Grid>
+
 </Window>
