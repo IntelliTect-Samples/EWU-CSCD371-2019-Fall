@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace ShoppingList
 {
@@ -22,6 +21,7 @@ namespace ShoppingList
         }
 
         private string _Name;
+
         public string Name
         {
             get => _Name;

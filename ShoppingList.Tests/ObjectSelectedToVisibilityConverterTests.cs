@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Windows.Data;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Windows;
 
 namespace ShoppingList.Tests
@@ -18,7 +15,7 @@ namespace ShoppingList.Tests
             //Act
             object visibility = converter.Convert(null!, null!, null!, null!);
             //Assert
-            Assert.AreEqual(Visibility.Collapsed,visibility);
+            Assert.AreEqual(Visibility.Collapsed, visibility);
         }
 
         [TestMethod]

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace ShoppingList
@@ -23,6 +21,7 @@ namespace ShoppingList
         }
 
         private ShoppingItem? _CurrentItem;
+
         public ShoppingItem? CurrentItem
         {
             get => _CurrentItem;
@@ -41,14 +40,11 @@ namespace ShoppingList
                 new ShoppingItem("Pineapples")
             };
             AddItemCommand = new Command(OnAddItem);
-            
         }
 
         public void OnAddItem()
         {
             Items.Add(new ShoppingItem("New Item"));
         }
-
-       
     }
 }

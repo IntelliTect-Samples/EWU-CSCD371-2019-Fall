@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
+
 namespace ShoppingList
 {
     public class Command : ICommand
@@ -21,7 +20,9 @@ namespace ShoppingList
         public void Execute(object parameter) => Method?.Invoke();
 
 #pragma warning disable CS0067 // CanExecuteChanged is never used
+
         public event EventHandler? CanExecuteChanged;
+
 #pragma warning restore CS0067 // Just making the interface work
     }
 }

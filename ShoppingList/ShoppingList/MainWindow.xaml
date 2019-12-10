@@ -7,26 +7,25 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
-        <local:ObjectSelectedToVisibilityConverter x:Key="converter"/>
+        <local:ObjectSelectedToVisibilityConverter x:Key="converter" />
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="TitleRow" Height="2*"/>
-            <RowDefinition x:Name="ListRow" Height="15*"/>
-            <RowDefinition x:Name="AddButtonRow" Height="Auto"/>
+            <RowDefinition x:Name="TitleRow" Height="2*" />
+            <RowDefinition x:Name="ListRow" Height="15*" />
+            <RowDefinition x:Name="AddButtonRow" Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="Shopping List" VerticalAlignment="Center" HorizontalAlignment="Center" />
         <ListBox Grid.Row="1" x:Name="ShoppingList" ItemsSource="{Binding Items}" SelectedItem="{Binding CurrentItem}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:ShoppingItem}">
-                    <TextBlock Text="{Binding Name}"/>
+                    <TextBlock Text="{Binding Name}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel Grid.Row="2">
-            <Button Content="Add" Name="AddButton" Command="{Binding AddItemCommand}"/>
-            <TextBox Visibility="{Binding CurrentItem, Converter={StaticResource converter}}" x:Name="EditBox" Text="{Binding CurrentItem.Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Add" Name="AddButton" Command="{Binding AddItemCommand}" />
+            <TextBox Visibility="{Binding CurrentItem, Converter={StaticResource converter}}" x:Name="EditBox" Text="{Binding CurrentItem.Name, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
-        
     </Grid>
 </Window>
