@@ -4,9 +4,55 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Topmost="True"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Background="Gray">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.ColumnSpan="4"
+                   Text="Shopping List" 
+                   Background="DodgerBlue" 
+                   HorizontalAlignment="Center" 
+                   FontSize="20"/>
+
+        <ListBox x:Name="ItemList" 
+                 Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" 
+                 ItemsSource="{Binding ShoppingList}"
+                 SelectedItem="{Binding SelectedItem}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:Item}">
+                    <TextBlock Text="{Binding Name}" FontSize="12"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <TextBlock Text="Enter A New Item:"
+                   Grid.Row="2"
+                   Background="Gray"/>
+
+        <TextBox Grid.Row="3" Text="{Binding NewName}" Background="Yellow">
+            <TextBox.InputBindings>
+                <KeyBinding Key="{Binding AddItemButton}"/>
+            </TextBox.InputBindings>
+        </TextBox>
+
+        <Button x:Name="AddItemButton"
+                    Grid.Row="2" Grid.Column="1" Grid.RowSpan="2"
+                    Content="Add Item"
+                    Command="{Binding AddItemCommand}"
+                    CommandParameter="{Binding Name, ElementName=ItemList}"/>
     </Grid>
 </Window>
