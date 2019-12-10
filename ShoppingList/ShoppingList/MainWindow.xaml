@@ -6,7 +6,59 @@
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Window.Resources>
+        <local:VisibilityConverter x:Key="VisibilityConverter"/>
 
+        <Style x:Key="EditTextStyle" TargetType="TextBlock">
+            <Setter Property="FontStyle" Value="Italic"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="Fuchsia">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ListBox x:Name="ItemList"
+                 Grid.Column="0"
+                 Background="Lime"
+                 Height="450"
+                 Width="500"
+                 ItemsSource="{Binding Items}"
+                 SelectedItem="{Binding SelectedItem}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Column="1">
+            <Button x:Name="btn_AddItem"
+                    Height="25"
+                    Width="75"
+                    Command="{Binding AddItemCommand}">Add</Button>
+            <TextBox x:Name="txt_AddItem"
+                    Height="25"
+                    Width="100"
+                     Text="{Binding NewItem}"/>
+            <Button x:Name="btn_EditName"
+                    Height="25"
+                    Width="75"
+                    Command="{Binding ChangeNameCommand}"
+                    Visibility="{Binding SelectedItem, Converter={StaticResource VisibilityConverter}}">Edit</Button>
+            <TextBox x:Name="txt_EditItem"
+                    Height="25"
+                    Width="100"
+                    Text="{Binding SelectedItem.Name}"
+                    Visibility="{Binding SelectedItem, Converter={StaticResource VisibilityConverter}}"/>
+
+        </StackPanel>
     </Grid>
 </Window>
