@@ -8,9 +8,9 @@ namespace ShoppingList
 {
     public class ShoppingItem : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName]string propertyName = null)
+        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName]string? propertyName = null)
         {
             if (!EqualityComparer<T>.Default.Equals(field, newValue))
             {
@@ -30,6 +30,8 @@ namespace ShoppingList
 
         public ShoppingItem(string name)
         {
+            if (name is null)
+                throw new ArgumentNullException(nameof(name));
             _Name = name;
         }
     }

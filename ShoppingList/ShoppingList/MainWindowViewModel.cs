@@ -9,9 +9,9 @@ namespace ShoppingList
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName]string propertyName = null)
+        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName]string? propertyName = null)
         {
             if (!EqualityComparer<T>.Default.Equals(field, newValue))
             {
@@ -22,8 +22,8 @@ namespace ShoppingList
             return false;
         }
 
-        private ShoppingItem _CurrentItem;
-        public ShoppingItem CurrentItem
+        private ShoppingItem? _CurrentItem;
+        public ShoppingItem? CurrentItem
         {
             get => _CurrentItem;
             set => SetProperty(ref _CurrentItem, value);
@@ -35,10 +35,13 @@ namespace ShoppingList
 
         public MainWindowViewModel()
         {
-            Items = new ObservableCollection<ShoppingItem>();
-            Items.Add(new ShoppingItem("test1"));
-            Items.Add(new ShoppingItem("test1"));
+            Items = new ObservableCollection<ShoppingItem>
+            {
+                new ShoppingItem("Bananas"),
+                new ShoppingItem("Pineapples")
+            };
             AddItemCommand = new Command(OnAddItem);
+            
         }
 
         public void OnAddItem()

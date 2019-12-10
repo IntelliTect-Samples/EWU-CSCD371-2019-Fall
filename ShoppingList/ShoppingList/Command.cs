@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
-//comment put here to enable pull request, delete later
 namespace ShoppingList
 {
     public class Command : ICommand
@@ -21,6 +20,8 @@ namespace ShoppingList
 
         public void Execute(object parameter) => Method?.Invoke();
 
-        public event EventHandler CanExecuteChanged;
+#pragma warning disable CS0067 // CanExecuteChanged is never used
+        public event EventHandler? CanExecuteChanged;
+#pragma warning restore CS0067 // Just making the interface work
     }
 }
