@@ -4,19 +4,72 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
+        WindowStartupLocation="CenterOwner"
+        DataContext="{Binding Source={StaticResource Locator}, Path=MainWindow}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <ListBox ItemsSource="{Binding ShoppingList}" Grid.Column="1" Grid.RowSpan="3">
+        Title="Your Shopping List" Height="450" Width="800">
+
+    <Window.Resources>
+        <local:ItemVisibilityConverter x:Key="ItemVisibilityConverter"/>
+    </Window.Resources>
+
+    <Grid Background="Bisque">
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ListBox x:Name="ShoppingListListBox"
+                 Grid.Row="0" Grid.Column="0"
+                 Background="BlanchedAlmond"
+                 ItemsSource="{Binding ShoppingList}"
+                 SelectedItem="{Binding SelectedItem}" SelectionChanged="ShoppingListListBox_SelectionChanged">
+
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:Item}">
-                    <StackPanel>
-                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap"/>
-                        <TextBlock Text="{Binding Price}" TextWrapping="Wrap"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="1" Height="Auto" Content="Add Item" Command="{Binding Path=AddItemCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+
+        <TextBox Text="{Binding TextToAdd, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Row="1"
+                 Background="White"
+                 BorderBrush="Black"
+                 BorderThickness="1"
+                 GotKeyboardFocus="TextBoxGotKeyboardFocus"
+                 LostKeyboardFocus="TextBoxLostKeyboardFocus">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding AddItemCommand}"/>
+            </TextBox.InputBindings>
+        </TextBox>
+        
+        <Button Content="Add Item"
+                Command="{Binding AddItemCommand}"
+                Grid.Row="2"
+                Grid.Column="0"/>
+        
+        <Button Content="Edit Item"
+                Command="{Binding EditItemCommand}"
+                Grid.Row="2"
+                Grid.Column="1"
+                Visibility="{Binding SelectedItem, Converter={StaticResource ItemVisibilityConverter}}"/>
+        
+        <Button Content="Delete Item"
+                Command="{Binding DeleteItemCommand}"
+                Grid.Row="2"
+                Grid.Column="2"
+                Visibility="{Binding SelectedItem, Converter={StaticResource ItemVisibilityConverter}}"/>
+        
     </Grid>
 </Window>

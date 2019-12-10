@@ -1,30 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Text;
-using System.Windows.Documents;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ShoppingList
 {
-    class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
     {
         public ObservableCollection<Item> ShoppingList { get; } = new ObservableCollection<Item>();
-        private readonly Command _AddItemCommand;
+        public ICommand AddItemCommand { get; }
+        public ICommand DeleteItemCommand { get; }
 
-        public ICommand AddItemCommand => _AddItemCommand;
-        
+        private Item? _SelectedItem = null;
+        public Item? SelectedItem
+        {
+            get => _SelectedItem;
+            set => SetProperty(ref _SelectedItem, value);
+        }
+
+        private string _TextToAdd = "";
+        public string TextToAdd
+        {
+            get => _TextToAdd;
+            set => SetProperty(ref _TextToAdd, value);
+        }
 
         public MainWindowViewModel()
         {
-            _AddItemCommand = new Command(OnAddItem);
-            ShoppingList.Add(new Item("New Item", 1));
+            DeleteItemCommand = new RelayCommand(OnDeleteItem);
+            AddItemCommand = new RelayCommand(OnAddItem);
         }
 
         private void OnAddItem()
         {
-            ShoppingList.Add(new Item("Temp", 10));
+            if (!string.IsNullOrWhiteSpace(TextToAdd))
+            {
+                bool inList = false;
+                foreach (Item item in ShoppingList)
+                {
+                    if (item.Name == TextToAdd)
+                    {
+                        inList = true;
+                    }
+                }
+                if (!inList) ShoppingList.Add(new Item(TextToAdd));
+                else
+                {
+                    MessageBoxResult result = MessageBox.Show("That item is already on the list!", "Your Shopping List");
+                }
+            }
+            SelectedItem = null;
+            TextToAdd = "";
+        }
+
+        private void OnDeleteItem()
+        {
+            if (SelectedItem != null)
+            {
+                ShoppingList.Remove(SelectedItem);
+                SelectedItem = null;
+            }
         }
     }
 }

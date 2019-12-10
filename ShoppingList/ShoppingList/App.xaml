@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:ShoppingList"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <ResourceDictionary>
+
+            <local:ViewModelLocator
+            x:Key="Locator"/>
+        </ResourceDictionary>
+
     </Application.Resources>
 </Application>
