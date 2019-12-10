@@ -5,16 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         Title="MainWindow" Height="350" Width="400" MinHeight="350" MinWidth="400">
     <Grid Background="SlateGray">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
-        <ListView Background="LightGray" Grid.Row ="1" Name="ShopList" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <ListBox Background="LightGray" Grid.Row ="1" Name="ShopList" HorizontalAlignment="Left" VerticalAlignment="Top">
             <ListViewItem Content="Orange Juice"></ListViewItem>
             <ListViewItem Content="Milk"></ListViewItem>
-        </ListView>
+        </ListBox>
 
     </Grid>
 </Window>
