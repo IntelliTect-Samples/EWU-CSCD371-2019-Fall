@@ -10,7 +10,6 @@
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         Title="MainWindow" MinHeight="200" MinWidth="400" Height="300" Width="600">
     <Window.Resources>
-        <local:PersonAgeConverter x:Key="PersonAgeConverter" />
 
         <Style x:Key="EditTextStyle" TargetType="TextBlock">
             <Setter Property="FontStyle" Value="Italic" />

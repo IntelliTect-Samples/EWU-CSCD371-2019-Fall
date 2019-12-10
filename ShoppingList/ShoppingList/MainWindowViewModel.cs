@@ -10,10 +10,10 @@ namespace ShoppingList
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private void SetProperty<T>(ref T field, T value,
-            [CallerMemberName]string propertyName = null)
+            [CallerMemberName]string propertyName = "Text")
         {
             if (!EqualityComparer<T>.Default.Equals(field, value))
             {
@@ -22,14 +22,14 @@ namespace ShoppingList
             }
         }
 
-        private string _Text;
+        private string _Text = "";
         public string Text
         {
-            get => _Text;
+            get => _Text = "<Edit Me>";
             set => SetProperty(ref _Text, value);
         }
 
-        private Person _SelectedPerson;
+        private Person _SelectedPerson = new Person("");
         public Person SelectedPerson
         {
             get => _SelectedPerson;
@@ -38,25 +38,16 @@ namespace ShoppingList
 
         public ObservableCollection<Person> People { get; } = new ObservableCollection<Person>();
 
-        public Command ChangeNameCommand { get; }
-
         public ICommand AddPersonCommand { get; }
-        private Func<DateTime> GetNow { get; }
 
-        private bool CanExecute { get; set; }
-
-        public MainWindowViewModel(Func<DateTime> getNow)
+        public MainWindowViewModel()
         {
-            Text = "<Edit Me>";
             AddPersonCommand = new Command(OnAddPerson);
-
-            var dob = getNow().Subtract(TimeSpan.FromDays(30 * 365));
 
             People.Add(new Person("Steak"));
             People.Add(new Person("Potatoes"));
 
             SelectedPerson = People.First();
-            GetNow = getNow ?? throw new ArgumentNullException(nameof(getNow));
         }
 
         private void OnAddPerson()
