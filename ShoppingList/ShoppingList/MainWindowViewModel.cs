@@ -20,14 +20,16 @@ namespace ShoppingList
         public MainWindowViewModel()
         {
             AddListItemCommand = new Command(OnAddItem);
+            ShopList.Add(new ShopItem("Cheese"));
+            ShopList.Add(new ShopItem("An Entire Cow"));
         }
 
         private void OnAddItem()
         {
             if (ItemText.Length > 0)
             {
-                ShopList.Add(ItemText);
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ItemText)));
+                ShopList.Add(new ShopItem(ItemText));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShopList)));
                 ItemText = "";
             }
             

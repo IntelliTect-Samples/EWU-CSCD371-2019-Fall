@@ -12,10 +12,7 @@
             <RowDefinition />
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
-        <ListBox Background="LightGray" Grid.Row ="1" Name="ShopList" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <ListViewItem Content="Orange Juice"></ListViewItem>
-            <ListViewItem Content="Milk"></ListViewItem>
-        </ListBox>
-
+        <ListBox Background="LightGray" Grid.Row ="1" Name="ShopList" HorizontalAlignment="Left" VerticalAlignment="Top"
+        ItemsSource="{Binding ShopList}"/>
     </Grid>
 </Window>
