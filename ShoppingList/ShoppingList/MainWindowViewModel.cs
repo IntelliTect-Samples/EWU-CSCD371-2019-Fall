@@ -9,8 +9,8 @@ namespace ShoppingList
     {
         public ObservableCollection<ShopItem> MyShoppingList { get; } = new ObservableCollection<ShopItem>();
 
-        private ShopItem _SelectedShopItem;
-        public ShopItem SelectedShopItem
+        private ShopItem? _SelectedShopItem;
+        public ShopItem? SelectedShopItem
         {
             get => _SelectedShopItem;
             set => Set(ref _SelectedShopItem, value);
@@ -23,7 +23,7 @@ namespace ShoppingList
             set => Set(ref _NewName, value);
         }
 
-        public RelayCommand AddItem { get; }
+        public RelayCommand? AddItem { get; }
 
         public MainWindowViewModel()
         {

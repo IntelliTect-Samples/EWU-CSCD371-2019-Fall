@@ -5,7 +5,7 @@ namespace ShoppingList
 {
     public class VisibilityConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType = null, object parameter = null, CultureInfo culture = null)
+        public object Convert(object value, Type? targetType = null, object? parameter = null, CultureInfo? culture = null)
         {
             if (value is ShopItem)
             {
@@ -14,7 +14,7 @@ namespace ShoppingList
             return "Collapsed";
         }
 
-        public object ConvertBack(object value, Type targetType = null, object parameter = null, CultureInfo culture = null)
+        public object ConvertBack(object value, Type? targetType = null, object? parameter = null, CultureInfo? culture = null)
         {
             throw new InvalidOperationException();
         }
