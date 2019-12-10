@@ -10,7 +10,12 @@ namespace ShoppingList
 
         public Item(string name)
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrEmpty(name)) {
+                throw new ArgumentNullException(nameof(name));
+            } else
+            {
+                Name = name;
+            }
         }
     }
 }

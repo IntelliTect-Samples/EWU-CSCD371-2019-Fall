@@ -9,11 +9,7 @@ namespace ShoppingList.Test
         [TestMethod]
         public void TestMethod()
         {
-            ObservableCollection<Item> items = new ObservableCollection<Item>();
-            Item item = new Item("Another item", 12);
-            items.Add(item);
-
-            Assert.AreEqual(items.Count, 1);
+            
         }
     }
 }
