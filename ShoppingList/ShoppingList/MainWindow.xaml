@@ -53,22 +53,16 @@
                 <KeyBinding Key="Enter" Command="{Binding AddItemCommand}"/>
             </TextBox.InputBindings>
         </TextBox>
-        
+
         <Button Content="Add Item"
                 Command="{Binding AddItemCommand}"
                 Grid.Row="2"
                 Grid.Column="0"/>
         
-        <Button Content="Edit Item"
-                Command="{Binding EditItemCommand}"
-                Grid.Row="2"
-                Grid.Column="1"
-                Visibility="{Binding SelectedItem, Converter={StaticResource ItemVisibilityConverter}}"/>
-        
         <Button Content="Delete Item"
                 Command="{Binding DeleteItemCommand}"
                 Grid.Row="2"
-                Grid.Column="2"
+                Grid.Column="1"
                 Visibility="{Binding SelectedItem, Converter={StaticResource ItemVisibilityConverter}}"/>
         
     </Grid>
