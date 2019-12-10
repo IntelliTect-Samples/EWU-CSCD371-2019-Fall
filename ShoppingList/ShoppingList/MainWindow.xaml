@@ -73,10 +73,9 @@
                                         Command="{Binding AddItemCommand}"
                                         MouseEnter="AddButton_OnMouseEnter"
                                         MouseLeave="AddButton_OnMouseLeave">
-                                    <materialDesign:PackIcon
-                                        Kind="CheckBold"
-                                        Height="20"
-                                        Width="20" />
+                                    <materialDesign:PackIcon Kind="CheckBold"
+                                                             Height="20"
+                                                             Width="20" />
                                 </Button>
                             </Viewbox>
                         </Grid>
@@ -103,13 +102,12 @@
                      SelectedIndex="{Binding SelectedIndex}">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type local:Item}">
-                        <materialDesign:Card
-                            Background="WhiteSmoke"
-                            Foreground="Black"
-                            UniformCornerRadius="6"
-                            ToolTip="Click to Edit"
-                            MouseEnter="Card_OnMouseEnter"
-                            MouseLeave="Card_OnMouseLeave">
+                        <materialDesign:Card Background="WhiteSmoke"
+                                             Foreground="Black"
+                                             UniformCornerRadius="6"
+                                             ToolTip="Click to Edit"
+                                             MouseEnter="Card_OnMouseEnter"
+                                             MouseLeave="Card_OnMouseLeave">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="10*" />
@@ -135,10 +133,9 @@
                                         Width="30"
                                         Click="RemoveButton_OnClick"
                                         Command="{Binding RemoveItemCommand, RelativeSource={RelativeSource AncestorType=Window}}">
-                                    <materialDesign:PackIcon
-                                        Kind="CloseBoxOutline"
-                                        Height="25"
-                                        Width="25" />
+                                    <materialDesign:PackIcon Kind="CloseBoxOutline"
+                                                             Height="25"
+                                                             Width="25" />
                                 </Button>
                             </Grid>
                         </materialDesign:Card>
