@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace ShoppingList {
     public class MainWindowViewModel : INotifyPropertyChanged {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
         private string _Text = "";
         private Item _SelectedItem = new Item("");
 
