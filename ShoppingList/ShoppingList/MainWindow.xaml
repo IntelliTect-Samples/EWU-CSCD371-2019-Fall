@@ -4,9 +4,58 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Topmost="True"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        <Window.Resources>
+            <local:VisibilityConverter x:Key="converter" />
+        </Window.Resources>
 
-    </Grid>
+        <Grid Background="Black" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400*" />
+                <ColumnDefinition Width="350*" />
+                <ColumnDefinition Width="50*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition  />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0" Grid.Row="2" Visibility="{Binding SelectedItem, Converter={StaticResource converter}}">
+                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" FontSize="20"  Text="{Binding SelectedItem.ItemName}"/>
+                <Button VerticalAlignment="Center" HorizontalAlignment="Center" Height="auto" Width ="300" FontSize="20" Content="Edit Selected Item" Command="{Binding ChangeItemCommand}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="4">
+                <ToggleButton Height="auto" FontSize="20" Content="Remove Selected Item on List" Command="{Binding RemoveItemCommand}" />
+            </StackPanel>
+
+            <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontStyle="Oblique" TextAlignment="Center" Background="White" Width="350">
+            Shopping List
+            </TextBlock>
+
+            <ListBox ItemsSource="{Binding ShoppingList}" FontSize="20" FontStyle="Oblique"  Grid.Column="1" Grid.Row="2" x:Name="ShoppingList"
+                 SelectedItem="{Binding SelectedItem}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type local:Item}">
+                        <StackPanel>
+                            <TextBlock TextAlignment="Center" Text="{Binding ItemName}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <StackPanel Grid.Column="1" Grid.Row="3">
+                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Width="350" FontSize="20" Text="{Binding Item}" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2">
+                <Button Height="auto" FontSize="20" Content="Add Item to List" Command="{Binding AddItemCommand}"/>
+            </StackPanel>
+
+        </Grid>
 </Window>
