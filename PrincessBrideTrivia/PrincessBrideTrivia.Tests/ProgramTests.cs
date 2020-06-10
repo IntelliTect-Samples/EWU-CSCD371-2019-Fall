@@ -1,11 +1,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using PrincessBrideTrivia;
 
 namespace PrincessBrideTrivia.Tests
 {
     [TestClass]
     public class ProgramTests
     {
+        
         [TestMethod]
         public void LoadQuestions_RetrievesQuestionsFromFile()
         {
@@ -47,7 +49,7 @@ namespace PrincessBrideTrivia.Tests
         public void GetFilePath_ReturnsFileThatExists()
         {
             // Arrange
-
+            
             // Act
             string filePath = Program.GetFilePath();
 
@@ -86,5 +88,26 @@ namespace PrincessBrideTrivia.Tests
                 File.AppendAllLines(filePath, lines);
             }
         }
+        [TestMethod]
+        public void LoadQuestions_TestsNonNull()
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 2);
+
+                // Act
+                Question[] questions = Program.LoadQuestions(filePath);
+
+                // Assert 
+                Assert.IsNotNull(questions[1]);
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
+
     }
 }
