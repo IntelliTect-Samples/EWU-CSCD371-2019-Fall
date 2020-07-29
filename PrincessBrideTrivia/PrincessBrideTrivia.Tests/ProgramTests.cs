@@ -6,6 +6,85 @@ namespace PrincessBrideTrivia.Tests
     [TestClass]
     public class ProgramTests
     {
+        //This unit test could still fail, but the odds that it will are very very slim.
+        [TestMethod]
+        public void RandomizeQuestionOrder_CheckOrderRandomized()
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 5);
+
+                // Act
+                Question[] questions = Program.LoadQuestions(filePath);
+                string[] answerIndices = new string[questions.Length];
+
+
+                // Log all the correct answer indices for future use.
+                for (int i = 0; i < questions.Length; i++)
+                {
+                    answerIndices[i] = questions[i].CorrectAnswerIndex;
+                    Program.RandomizeAnswerOrder(questions[i]);
+                }
+
+                //Check that at least 1 of the answer orders is different
+                bool answerIndexChanged = false;
+
+                for (int i = 0;  i < questions.Length; i++)
+                {
+                    if (answerIndices[i] != questions[i].CorrectAnswerIndex)
+                    {
+                        answerIndexChanged = true;
+                        break;
+                    }
+                }
+
+                //Assert
+                Assert.IsTrue(answerIndexChanged);
+
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
+
+        //This test may run RandomizeQuestionOrder multiple times. But because
+        [TestMethod]
+        public void RandomizeQuestionOrder_CheckAnswerNotChanged()
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 1);
+
+                // Act
+                Question[] questions = Program.LoadQuestions(filePath);
+
+                string originalAnswerIndex = questions[0].CorrectAnswerIndex;
+                string originalAnswer = questions[0].Answers[int.Parse(originalAnswerIndex) - 1];
+                string newAnswerIndex;
+                string newAnswer;
+
+                //Assure that the answers are in a different order before assertion
+                do
+                {
+                    Program.RandomizeAnswerOrder(questions[0]);
+
+                    newAnswerIndex = questions[0].CorrectAnswerIndex;
+                    newAnswer = questions[0].Answers[int.Parse(newAnswerIndex) - 1];
+                } while (newAnswerIndex == originalAnswerIndex);
+
+                // Assert
+                Assert.IsTrue(newAnswer == originalAnswer);
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
 
         [TestMethod]
         public void LoadQuestions_CheckForNull()
