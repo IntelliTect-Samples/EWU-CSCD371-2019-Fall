@@ -66,6 +66,41 @@ namespace PrincessBrideTrivia
             return "Trivia.txt";
         }
 
+        public static void RandomizeAnswerOrder(Question question)
+        {
+            int correctIndex = int.Parse(question.CorrectAnswerIndex) - 1;
+            Console.WriteLine("The correct answer is " + correctIndex);
+
+            Random rand = new Random();
+            //For each answer in answers, pick a random other one to swap with. Or stay put.
+            for (int i  = 0; i < question.Answers.Length; i++)
+            {
+                //pick a random index to swap with
+                int swapIndex = rand.Next(0, question.Answers.Length);
+                if (swapIndex == i)
+                {
+                    //stay put
+                    continue;
+
+                }
+
+                string temp = question.Answers[swapIndex];
+                question.Answers[swapIndex] = question.Answers[i];
+                question.Answers[i] = temp;
+
+                if (correctIndex == i)
+                {
+                    correctIndex = swapIndex;
+                    question.CorrectAnswerIndex = (swapIndex + 1).ToString();
+                }
+                else if (correctIndex == swapIndex)
+                {
+                    correctIndex = i;
+                    question.CorrectAnswerIndex = (i + 1).ToString();
+                }
+            }
+        }
+
         public static Question[] LoadQuestions(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
@@ -89,6 +124,7 @@ namespace PrincessBrideTrivia
                 question.Answers[1] = answer2;
                 question.Answers[2] = answer3;
                 question.CorrectAnswerIndex = correctAnswerIndex;
+                RandomizeAnswerOrder(question);
                 questions[i] = question;
             }
             return questions;
