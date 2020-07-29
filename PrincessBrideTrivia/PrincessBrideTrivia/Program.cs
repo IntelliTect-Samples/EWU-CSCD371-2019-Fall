@@ -69,19 +69,14 @@ namespace PrincessBrideTrivia
         public static void RandomizeAnswerOrder(Question question)
         {
             int correctIndex = int.Parse(question.CorrectAnswerIndex) - 1;
-            Console.WriteLine("The correct answer is " + correctIndex);
 
             Random rand = new Random();
-            //For each answer in answers, pick a random other one to swap with. Or stay put.
             for (int i  = 0; i < question.Answers.Length; i++)
             {
-                //pick a random index to swap with
                 int swapIndex = rand.Next(0, question.Answers.Length);
                 if (swapIndex == i)
                 {
-                    //stay put
                     continue;
-
                 }
 
                 string temp = question.Answers[swapIndex];

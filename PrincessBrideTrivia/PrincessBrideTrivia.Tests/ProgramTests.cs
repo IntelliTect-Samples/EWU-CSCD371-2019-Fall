@@ -6,7 +6,7 @@ namespace PrincessBrideTrivia.Tests
     [TestClass]
     public class ProgramTests
     {
-        //This unit test could still fail, but the odds that it will are very very slim.
+
         [TestMethod]
         public void RandomizeQuestionOrder_CheckOrderRandomized()
         {
@@ -21,14 +21,12 @@ namespace PrincessBrideTrivia.Tests
                 string[] answerIndices = new string[questions.Length];
 
 
-                // Log all the correct answer indices for future use.
                 for (int i = 0; i < questions.Length; i++)
                 {
                     answerIndices[i] = questions[i].CorrectAnswerIndex;
                     Program.RandomizeAnswerOrder(questions[i]);
                 }
 
-                //Check that at least 1 of the answer orders is different
                 bool answerIndexChanged = false;
 
                 for (int i = 0;  i < questions.Length; i++)
@@ -50,7 +48,6 @@ namespace PrincessBrideTrivia.Tests
             }
         }
 
-        //This test may run RandomizeQuestionOrder multiple times. But because
         [TestMethod]
         public void RandomizeQuestionOrder_CheckAnswerNotChanged()
         {
@@ -68,7 +65,6 @@ namespace PrincessBrideTrivia.Tests
                 string newAnswerIndex;
                 string newAnswer;
 
-                //Assure that the answers are in a different order before assertion
                 do
                 {
                     Program.RandomizeAnswerOrder(questions[0]);
