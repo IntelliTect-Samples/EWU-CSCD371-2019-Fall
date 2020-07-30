@@ -52,7 +52,6 @@ namespace Logger.Tests
             string path = Path.GetFullPath(Path.GetRandomFileName());
             FileLogger logger = new FileLogger(path);
             logger.ClassName = className;
-            //write a few lines to a file.
             string[] fileContents = { "Hello", "World", "Test" };
             File.WriteAllLines(path, fileContents);
 
