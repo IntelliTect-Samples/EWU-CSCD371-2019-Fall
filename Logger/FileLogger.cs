@@ -5,12 +5,16 @@ using System.Text;
 
 namespace Logger
 {
-    class FileLogger : BaseLogger
+    public class FileLogger : BaseLogger
     {
         public string FilePath { get; }
 
         public FileLogger(string path)
         {
+            if (path == null)
+            {
+                throw new ArgumentNullException("path");
+            }
             FilePath = path;
         }
 
