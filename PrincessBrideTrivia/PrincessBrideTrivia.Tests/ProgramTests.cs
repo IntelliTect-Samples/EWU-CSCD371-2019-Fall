@@ -6,6 +6,107 @@ namespace PrincessBrideTrivia.Tests
     [TestClass]
     public class ProgramTests
     {
+
+        [TestMethod]
+        public void RandomizeQuestionOrder_CheckOrderRandomized()
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 5);
+
+                // Act
+                Question[] questions = Program.LoadQuestions(filePath);
+                string[] answerIndices = new string[questions.Length];
+
+
+                for (int i = 0; i < questions.Length; i++)
+                {
+                    answerIndices[i] = questions[i].CorrectAnswerIndex;
+                    Program.RandomizeAnswerOrder(questions[i]);
+                }
+
+                bool answerIndexChanged = false;
+
+                for (int i = 0;  i < questions.Length; i++)
+                {
+                    if (answerIndices[i] != questions[i].CorrectAnswerIndex)
+                    {
+                        answerIndexChanged = true;
+                        break;
+                    }
+                }
+
+                //Assert
+                Assert.IsTrue(answerIndexChanged);
+
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
+
+        [TestMethod]
+        public void RandomizeQuestionOrder_CheckAnswerNotChanged()
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 1);
+
+                // Act
+                Question[] questions = Program.LoadQuestions(filePath);
+
+                string originalAnswerIndex = questions[0].CorrectAnswerIndex;
+                string originalAnswer = questions[0].Answers[int.Parse(originalAnswerIndex) - 1];
+                string newAnswerIndex;
+                string newAnswer;
+
+                do
+                {
+                    Program.RandomizeAnswerOrder(questions[0]);
+
+                    newAnswerIndex = questions[0].CorrectAnswerIndex;
+                    newAnswer = questions[0].Answers[int.Parse(newAnswerIndex) - 1];
+                } while (newAnswerIndex == originalAnswerIndex);
+
+                // Assert
+                Assert.IsTrue(newAnswer == originalAnswer);
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
+
+        [TestMethod]
+        public void LoadQuestions_CheckForNull()
+        {
+            string filePath = Path.GetRandomFileName();
+            try
+            {
+                // Arrange
+                GenerateQuestionsFile(filePath, 2);
+
+                // Act
+                Question[] questions = Program.LoadQuestions(filePath);
+
+                // Assert
+                for (int i = 0; i < questions.Length; i++)
+                {
+                    Assert.IsNotNull(questions[i]);
+                }
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+        }
+
+
         [TestMethod]
         public void LoadQuestions_RetrievesQuestionsFromFile()
         {
