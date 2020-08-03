@@ -12,7 +12,7 @@
         public BaseLogger CreateLogger(string className)
         {
 
-            if (FilePath == null)
+            if (string.IsNullOrWhiteSpace(FilePath))
             {
                 return null;
             }

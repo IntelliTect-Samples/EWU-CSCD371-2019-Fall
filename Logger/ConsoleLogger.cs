@@ -26,8 +26,7 @@ namespace Logger
                     break;
             }
 
-            string finalMessage = string.Format("{0} {1} {2} {3}",
-                                                DateTime.Now, ClassName, loggingLevel, message);
+            string finalMessage = $"{DateTime.Now} {ClassName} {loggingLevel} {message}";
             Console.WriteLine(finalMessage);
         }
     }

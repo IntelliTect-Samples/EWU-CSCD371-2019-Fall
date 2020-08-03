@@ -11,10 +11,11 @@ namespace Logger
 
         public FileLogger(string path)
         {
-            if (path == null)
+            if (string.IsNullOrWhiteSpace(path))
             {
-                throw new ArgumentNullException("path");
+                throw new ArgumentNullException("message", nameof(path));
             }
+
             FilePath = path;
         }
 
@@ -38,8 +39,7 @@ namespace Logger
                     break;
             }
 
-            string finalMessage = string.Format("{0} {1} {2} {3} {4}",
-                                                DateTime.Now, ClassName, loggingLevel, message, System.Environment.NewLine);
+            string finalMessage = $"{DateTime.Now} {ClassName} {loggingLevel} {message} {Environment.NewLine}";
             File.AppendAllText(FilePath, finalMessage);
 
         }
