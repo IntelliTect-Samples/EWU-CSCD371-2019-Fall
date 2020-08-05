@@ -8,25 +8,7 @@ namespace Logger
     {
         public override void Log(LogLevel logLevel, string message)
         {
-            string loggingLevel;
-
-            switch (logLevel)
-            {
-                case LogLevel.Information:
-                    loggingLevel = "Information";
-                    break;
-                case LogLevel.Error:
-                    loggingLevel = "Error";
-                    break;
-                case LogLevel.Warning:
-                    loggingLevel = "Warning";
-                    break;
-                default:
-                    loggingLevel = "Debug";
-                    break;
-            }
-
-            string finalMessage = $"{DateTime.Now} {ClassName} {loggingLevel} {message}";
+            string finalMessage = $"{DateTime.Now} {ClassName} {logLevel} {message}";
             Console.WriteLine(finalMessage);
         }
     }
