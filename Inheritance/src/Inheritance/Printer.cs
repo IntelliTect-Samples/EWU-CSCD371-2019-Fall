@@ -18,7 +18,7 @@ namespace Inheritance
     }
     public static class Printer
     {
-        public static void Print(Item item, TextWriter writer)
+        public static void Print(IItem item, TextWriter writer)
         {
             writer.WriteLine(item.PrintInfo());
         }
