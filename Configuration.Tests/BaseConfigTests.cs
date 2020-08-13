@@ -18,7 +18,7 @@ namespace Configuration.Tests
         [DataRow("success", true)]
         public void CheckValidConfigTest(string name, bool expected)
         {
-            bool returned = BaseConfig.CheckValidConfig(name);
+            bool returned = BaseConfig.CheckValidConfigName(name);
 
             Assert.AreEqual(expected, returned);
         }

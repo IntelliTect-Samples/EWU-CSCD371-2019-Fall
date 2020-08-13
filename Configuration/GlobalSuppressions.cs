@@ -5,4 +5,5 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "Globalization not necessary.", Scope = "member", Target = "~M:Configuration.BaseConfig.CheckValidConfig(System.String)~System.Boolean")]
+[assembly: SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "Globalization not necessary.")]
+[assembly: SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "Passing literals as parameters is ok")]

@@ -10,7 +10,7 @@ namespace Configuration
 
         public abstract bool SetConfigValue(string name, string? value);
 
-        public static bool CheckValidConfig(string name)
+        public static bool CheckValidConfigName(string name)
         {
             if (string.IsNullOrEmpty(name) || name.Contains(' ') || name.Contains('='))
             {
