@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Configuration
 {
-    class EnvironmentConfig : BaseConfig
+    public class EnvironmentConfig : BaseConfig
     {
         public override bool GetConfigValue(string name, out string? value)
         {
