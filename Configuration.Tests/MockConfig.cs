@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Configuration.Tests
 {
-    class MockConfig : BaseConfig
+    public class MockConfig : BaseConfig
     {
-        private Dictionary<string, string> ConfigValues = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> ConfigValues = new Dictionary<string, string>();
 
         public MockConfig()
         {
@@ -39,6 +39,12 @@ namespace Configuration.Tests
             }
             else
             {
+                if (ConfigValues.ContainsKey(name))
+                {
+                    ConfigValues.Remove(name);
+                    ConfigValues.Add(name, value);
+                    return true;
+                }
                 ConfigValues.Add(name, value);
                 return true;
             }

@@ -17,4 +17,9 @@
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Configuration.Tests\Configuration.Tests.csproj" />
+    <ProjectReference Include="..\SampleApp\SampleApp.csproj" />
+  </ItemGroup>
+	
 </Project>

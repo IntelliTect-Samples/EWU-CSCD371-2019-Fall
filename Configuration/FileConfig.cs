@@ -8,7 +8,21 @@ namespace Configuration
     public class FileConfig : BaseConfig
     {
 
-        protected const string ConfigFile = "config.settings";
+        public string ConfigFile { get; }
+
+        public FileConfig()
+        {
+            ConfigFile = "config.settings";
+        }
+
+        public FileConfig(string? configFile)
+        {
+            if (string.IsNullOrEmpty(configFile))
+            {
+                throw new ArgumentNullException(nameof(configFile));
+            }
+            ConfigFile = configFile;
+        }
 
         public override bool GetConfigValue(string name, out string? value)
         {
@@ -64,8 +78,8 @@ namespace Configuration
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    //trying to unset a value that doesn't exist because the file doesn't exist.
-                    return false;
+                    //trying to unset a value that doesn't exist because the file doesn't exist. Return true but do nothing.
+                    return true;
                 }
                 else
                 {
@@ -100,6 +114,11 @@ namespace Configuration
                     return true;
                 }
 
+            }
+            if (string.IsNullOrEmpty(value))
+            {
+                //Unset a setting not in the file return true but do nothing
+                return true;
             }
             File.AppendAllText(ConfigFile, $"{name}={value}{Environment.NewLine}");
             return true;
