@@ -15,7 +15,7 @@ namespace Mailbox
 
         public override bool Equals([AllowNull] object obj)
         {
-            return obj is Person && Equals((Person)obj);
+            return obj is Person person && Equals(person);
         }
 
         public static bool operator ==(Person left, Person right)
@@ -35,7 +35,7 @@ namespace Mailbox
 
         public override int GetHashCode()
         {
-            return (FirstName, LastName).GetHashCode();
+            return HashCode.Combine(FirstName, LastName);
         }
     }
 
