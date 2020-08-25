@@ -10,6 +10,11 @@ namespace Mailbox
         private Stream Source { get; }
         public DataLoader(Stream source)
         {
+            if (source is null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
             Source = source;
         }
 
