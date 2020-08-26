@@ -16,7 +16,6 @@ namespace Assignment6
 
             public bool IsReadOnly { get; set; }
 
-
             public Array(int capacity)
             {
                 Items = new List<T>(capacity);
@@ -46,8 +45,8 @@ namespace Assignment6
             public IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
 
 
-            //Not a feature of normal arrays, but needed to implement. Decided explicit implementation of interface
-            void ICollection<T>.Add(T item)
+            //Not a feature of normal arrays, but needed to implement for collection initializer
+            public void Add(T item)
             {
                 if (item is null)
                 {
@@ -60,7 +59,8 @@ namespace Assignment6
                 Items.Add(item);
             }
 
-        //Not a feature of normal arrays, but needed to implement. Decided explicit implementation of interface
+
+        //Not a feature of normal arrays. Decided explicit implementation of interface
         bool ICollection<T>.Remove(T item)
             {
                 if (item is null)

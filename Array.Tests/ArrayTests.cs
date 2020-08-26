@@ -148,7 +148,139 @@ namespace Array.Tests
             }
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Array_Add_CapacityExceeded()
+        {
+            Array<int> array = new Array<int>(1);
+            ((ICollection<int>)array).Add(1);
+            ((ICollection<int>)array).Add(2);
+        }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Array_Add_AddNull()
+        {
+            Array<string> array = new Array<string>(1);
+            ((ICollection<string>)array).Add("hello");
+            ((ICollection<string>)array).Add(null);
+        }
+
+        [TestMethod]
+        public void Array_Add_AddSucceeded()
+        {
+            Array<string> array = new Array<string>(1);
+            ((ICollection<string>)array).Add("hello");
+
+            Assert.IsTrue(array.Contains("hello"));
+        }
+
+        [TestMethod]
+        public void Array_Add_CollectionInitializer()
+        {
+            Array<int> array = new Array<int>(6){1,2,3,4,5};
+            Assert.IsTrue(array.Contains(4));
+            Assert.IsTrue(array.Contains(5));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Array_Add_CollectionInitAddNull()
+        {
+            Array<string> _ = new Array<string>(5)
+            {
+                "hello",
+                "world",
+                null
+            };
+        }
+
+        [TestMethod]
+        public void Array_Add_CollectionInitAddSucceeded()
+        {
+            Array<string> array = new Array<string>(1)
+            {
+                "hello"
+            };
+
+            Assert.IsTrue(array.Contains("hello"));
+        }
+
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Array_Remove_RemoveNull()
+        {
+            Array<string> array = new Array<string>(1)
+            {
+                "hello"
+            };
+
+            ((ICollection<string>)array).Remove(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Array_Remove_ItemNotExist()
+        {
+            Array<string> array = new Array<string>(1)
+            {
+                "hello"
+            };
+
+            ((ICollection<string>)array).Remove("Test");
+        }
+
+
+        [TestMethod]
+        public void Array_Remove_ItemRemoved()
+        {
+            Array<string> array = new Array<string>(1)
+            {
+                "hello"
+            };
+
+            ((ICollection<string>)array).Remove("hello");
+
+            Assert.AreEqual(0, array.Count);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Array_Get_OutOfBounds()
+        {
+            Array<int> array = new Array<int>(5) { 1, 2, 3, 4, 5 };
+
+            int _ = array[5];
+        }
+
+        [TestMethod]
+        public void Array_Get_ReturnsValue()
+        {
+            Array<int> array = new Array<int>(5) { 1, 2, 3, 4, 5 };
+
+            int value = array[3];
+
+            Assert.AreEqual(4, value);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Array_Set_OutOfBounds()
+        {
+            Array<int> array = new Array<int>(5) { 1, 2, 3, 4, 5 };
+            array[6] = 3;
+        }
+
+        [TestMethod]
+        public void Array_Set_SetsValue()
+        {
+            Array<int> array = new Array<int>(5) { 1, 2, 3, 4, 5 };
+            array[3] = 3;
+            Assert.AreEqual(3, array[3]);
+        }
 
         [TestMethod]
         public void Array_Foreach_CanIterate()
@@ -176,21 +308,7 @@ namespace Array.Tests
 
             foreach (int item in array)
             {
-                Assert.AreNotEqual(list[item - 1], item);
-            }
-        }
-        [TestMethod]
-        public void Array_CollectionInitializer_NoNull()
-        {
-            List<int> list = new List<int>()
-            {
-                1,2,3,4,5
-            };
-            Array<int> array = new Array<int>(list);
-
-            foreach (int item in array)
-            {
-                Assert.AreNotEqual(list[item - 1], item);
+                Assert.AreEqual(list[item - 1], item);
             }
         }
     }
