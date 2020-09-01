@@ -31,4 +31,8 @@
 	  </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sorter\Sorter.csproj" />
+  </ItemGroup>
+
 </Project>
