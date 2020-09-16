@@ -7,8 +7,8 @@ namespace Assignment
 {
     public class SampleData : ISampleData
     {
-        private static string FileName { get; } = "People.csv";
-        private enum Columns
+        private static string FileName { get; set; } = "People.csv";
+        public enum Column
         {
             Id,
             FirstName,
@@ -20,13 +20,23 @@ namespace Assignment
             Zip
         };
 
+        public SampleData(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                throw new ArgumentNullException(nameof(fileName));
+            }
+
+            FileName = fileName;
+        }
+
         // 1.
         public IEnumerable<string> CsvRows => File.ReadAllLines(Path.GetFullPath(FileName)).Skip(1);
 
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows()
         {
-            return CsvRows.Select(line => line.Split(',')[(int)Columns.State]).Distinct().OrderBy(state => state);
+            return CsvRows.Select(line => line.Split(',')[(int)Column.State]).Distinct().OrderBy(state => state);
         }
 
         // 3.
@@ -38,13 +48,13 @@ namespace Assignment
         {
             get
             {
-                IEnumerable<string> sortedRows = CsvRows.OrderBy(row => row.Split(',', (int)Columns.State)).ThenBy(row => row.Split(',', (int)Columns.City)).ThenBy(row => row.Split(',', (int)Columns.Zip));
+                IEnumerable<string> sortedRows = CsvRows.OrderBy(row => row.Split(',')[(int)Column.State]).ThenBy(row => row.Split(',')[(int)Column.City]).ThenByDescending(row => row.Split(',')[(int)Column.Zip]);
                 IEnumerable<IPerson> people = sortedRows.Select(person =>
                 {
                     string[] split = person.Split(",");
-                    return new Person(split[(int)Columns.FirstName], split[(int)Columns.LastName],
-                        new Address(split[(int)Columns.StreetAddress], split[(int)Columns.City], split[(int)Columns.State], split[(int)Columns.Zip]),
-                        split[(int)Columns.Email]);
+                    return new Person(split[(int)Column.FirstName], split[(int)Column.LastName],
+                        new Address(split[(int)Column.StreetAddress], split[(int)Column.City], split[(int)Column.State], split[(int)Column.Zip]),
+                        split[(int)Column.Email]);
                 });
                 return people;
             }
@@ -70,8 +80,12 @@ namespace Assignment
                 throw new ArgumentNullException(nameof(people));
             }
 
-            IEnumerable<string> states = people.Select(person => person.Address.State);
-            return states.Distinct().OrderBy(state => state).Aggregate((state1, state2) => $"{state1},{state2}");
+            return people
+                .Select(person => person.Address.State)
+                .Distinct()
+                .OrderBy(state => state.ToString())
+                .Aggregate((state1, state2) => state1 + "," + state2)
+                .ToString();
         }
     }
 }
