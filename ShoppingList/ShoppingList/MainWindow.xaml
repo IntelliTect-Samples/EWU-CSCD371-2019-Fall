@@ -4,9 +4,41 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShoppingList"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        mc:Ignorable="d" Topmost="True"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
+        Title="MainWindow" MinWidth="300" MinHeight="175" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        
+
+        <ListBox Background="Fuchsia" ItemsSource="{Binding ShoppingList}" SelectedItem="{Binding SelectedItem}" Grid.Column="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:Item}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Background="White" Text="{Binding ItemName}"/>
+                        <TextBlock HorizontalAlignment="Right" Background="Blue" Text="{Binding ItemQuantity}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Background="AliceBlue" Grid.Column="1">
+            <TextBlock Text="Item Name"/>
+            <TextBox Text="{Binding SelectedItem.ItemName}"/>
+            <TextBlock Text="Item Quantity"/>
+            <TextBox Text="{Binding SelectedItem.ItemQuantity}"/>
+            <Button Background="Aqua" Grid.Column="1" Content="{Binding SelectedItem}" Command="{Binding AddListItemCommand}"/>
+        </StackPanel>
+        
+        
+
 
     </Grid>
 </Window>
