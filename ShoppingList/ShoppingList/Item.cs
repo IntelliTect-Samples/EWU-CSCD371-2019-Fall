@@ -10,7 +10,7 @@
         }
 
 
-        private int _ItemQuantity = 0;
+        private int _ItemQuantity;
         public int ItemQuantity
         {
             get => _ItemQuantity;

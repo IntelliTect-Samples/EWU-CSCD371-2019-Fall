@@ -21,6 +21,9 @@ namespace ShoppingList
 
         public void Execute(object parameter) => Method?.Invoke();
 
+#pragma warning disable CS0067 //this isn't my code, so I disabled the warning
         public event EventHandler? CanExecuteChanged;
+#pragma warning restore CS0067
+
     }
 }

@@ -6,7 +6,7 @@ namespace ShoppingList
 {
     public class BaseNotifyPropertyChanged : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -14,7 +14,7 @@ namespace ShoppingList
         }
 
         public void SetProperty<T>(ref T field, T value,
-            [CallerMemberName] string propertyName = null)
+            [CallerMemberName] string? propertyName = null)
         {
             if (!EqualityComparer<T>.Default.Equals(field, value))
             {
